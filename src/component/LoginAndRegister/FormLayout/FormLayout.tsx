@@ -9,7 +9,7 @@ export const FormLayout = () => {
 
     useEffect(() => {
         const url = window.location.href;
-        if (url.includes('loadSignup')) 
+        if (url.includes('loadSignup'))
             setShowForm(false);
     }, []);
 
@@ -25,6 +25,15 @@ export const FormLayout = () => {
                     </p>
                 </div>
                 <div className="content_left">
+                    {/* <div className={`body_content_left ${showForm ? 'showLoginForm' : 'showSignupForm'
+                        } `}>
+                        <div className="loadLogin">
+                            <LoginForm />
+                        </div>
+                        <div className="loadSignup">
+                            <SignUpForm />
+                        </div>
+                    </div> */}
                     {
                         showForm ? <LoginForm /> : <SignUpForm />
                     }

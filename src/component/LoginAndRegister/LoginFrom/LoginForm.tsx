@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LoginForm.css';
 import { TextField, InputAdornment, Button, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
@@ -13,7 +13,6 @@ export default function LoginForm() {
     };
 
     return (
-     
             <form action="login">
                 <h1>Login</h1>
                 <div className="form_login">
