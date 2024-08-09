@@ -12,55 +12,63 @@ export default function LoginForm() {
         setShowPassword(!showPassword);
     };
 
+    const handleLogin = () => {
+        window.location.href = '/login';
+    };
+
+    const handleSignup = () => {
+        window.location.href = '/loadSignup';
+    };
+
     return (
-            <form action="login">
-                <h1>Login</h1>
-                <div className="form_login">
-                    <TextField
-                        id="standard-basic"
-                        label="Username"
-                        variant="standard"
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <PersonIcon />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <br />
-                    <TextField
-                        id="standard-basic"
-                        label="Password"
-                        type={showPassword ? 'text' : 'password'}
-                        variant="standard"
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
-                                    </IconButton>
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </div>
+        <form action="login">
+            <h1>Login</h1>
+            <div className="form_login">
+                <TextField
+                    id="standard-basic"
+                    label="Username"
+                    variant="standard"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <PersonIcon />
+                            </InputAdornment>
+                        )
+                    }}
+                />
+                <br />
+                <TextField
+                    id="standard-basic"
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    variant="standard"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={handleClickShowPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
+                />
+            </div>
 
-                <div className="forgot">
-                    <a href='/forget_password'>Forgot Password?</a>
-                </div>
+            <div className="forgot">
+                <a href='/forget_password'>Forgot Password?</a>
+            </div>
 
-                <div className="button">
-                    <Button variant="contained" color="primary" href='/login'>Login</Button>
-                </div>
+            <div className="button">
+                <Button variant="contained" color="primary" onClick={handleLogin}>Login</Button>
+            </div>
 
-                <div className="signup">
-                    <p>Don't have an account? </p>
-                    <Button variant="text" href='/loadSignup'>Sign up</Button>
-                </div>
-            </form>
+            <div className="signup">
+                <p>Don't have an account? </p>
+                <Button variant="text" onClick={handleSignup}>Sign up</Button>
+            </div>
+        </form>
     );
 }

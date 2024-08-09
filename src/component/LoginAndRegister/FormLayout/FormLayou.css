@@ -24,8 +24,8 @@
   position: relative;
   display: flex;
   width: 100%;
-  overflow: hidden; /* Đảm bảo rằng các form không vượt ra ngoài khu vực chứa 
-  height: 100%; /* Đảm bảo rằng chiều cao là 100% của container 
+  overflow: hidden; 
+  height: 100%; 
 }
 
 .loadLogin, .loadSignup {
@@ -55,8 +55,8 @@
 
 .showSignupForm .loadSignup {
   transform: translateX(0);
-} */
-
+} 
+*/
 @media screen and (max-width: 768px) {
   .body .wrapper {
     width: 90vw; /* Giảm chiều rộng của wrapper để phù hợp với màn hình nhỏ */

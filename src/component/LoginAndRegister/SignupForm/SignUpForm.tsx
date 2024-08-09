@@ -6,6 +6,7 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import MailIcon from '@mui/icons-material/Mail';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 
+
 export default function SignUpForm() {
     const [gender, setGender] = React.useState<string>('');
 
@@ -13,9 +14,15 @@ export default function SignUpForm() {
     const handleChange = (event: SelectChangeEvent<string>) => {
         setGender(event.target.value);
     };
+    const handleLogin = () => {
+        window.location.href = '/loadLogin';
+    };
 
+    const handleSignUp = () => {
+        window.location.href = '/login';
+    };
     return (
-        <form action="login">
+        <form action="login" style={{padding: '50px'}}>
             <h1>Sign Up</h1>
             <div className="form_login">
                 <TextField
@@ -115,9 +122,9 @@ export default function SignUpForm() {
             </div>
 
             <div className="button">
-                <Button variant="text" href='/loadLo'>Login </Button>
-                <Button variant="contained" color="primary" href='/login'>Sign Up</Button>
-
+            <Button variant="text" onClick={handleLogin}>Login</Button>
+            <Button variant="contained" color="primary" onClick={handleSignUp}>Sign Up</Button>
+                        
             </div>
         </form>
     );
