@@ -1,0 +1,35 @@
+.body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: url("../../../assets/anh-dep-thien-nhien-2-1.jpg");
+  background-size: cover;
+}
+.body .wrapper {
+  display: flex;
+  width: 55vw;
+  height: 65vh;
+  margin: auto;
+}
+.body .wrapper .content_right {
+  width: 50%;
+  padding: 20px;
+}
+.body .wrapper .content_left {
+  width: 50%;
+}
+@media screen and (max-width: 768px) {
+  .body .wrapper {
+    width: 90vw; /* Giảm chiều rộng của wrapper để phù hợp với màn hình nhỏ */
+    height: auto; /* Cho phép chiều cao tự động mở rộng theo nội dung */
+  }
+
+  .body .wrapper .content_right {
+    display: none; /* Ẩn phần bên phải trên các thiết bị di động */
+  }
+
+  .body .wrapper .content_left {
+    width: 100%; /* Mở rộng phần bên trái chiếm toàn bộ chiều rộng */
+  }
+}
+/*# sourceMappingURL=FormLayou.css.map */
