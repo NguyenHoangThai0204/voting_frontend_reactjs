@@ -1,0 +1,24 @@
+Dùng:
+    + TypeScript:Nó có thể tự sữa lỗi khi biên dịch mà không cần chạy chương tình.
+    + UI dùng Material ui
+
+Chọn thư mục:
+    npm create vite@latest
+Gõ 
+    y để tạo phiên bản
+Chọn lần lượt;
+    React
+    TypeScript
+Gõ:
+    npm install @mui/material @emotion/react @emotion/styled
+    npm install @fontsource/roboto
+    npm i 
+    npm run dev
+Tạo id duy nhất tự động:
+    npm install uuid
+Tự tạo css
+    npm install sass
+
+sass styles.scss styles.css
+
+sass --watch styles.scss:styles.css

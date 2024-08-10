@@ -1,0 +1,12 @@
+.home_layout {
+  display: flex;
+  height: 100vh;
+}
+.home_layout .menu_left {
+  width: 10vw;
+}
+.home_layout .content_right {
+  width: 90vw;
+}
+
+/*# sourceMappingURL=HomeLayout.css.map */

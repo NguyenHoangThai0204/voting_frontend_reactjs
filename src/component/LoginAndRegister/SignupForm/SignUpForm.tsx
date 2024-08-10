@@ -6,7 +6,6 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import MailIcon from '@mui/icons-material/Mail';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 
-
 export default function SignUpForm() {
     const [gender, setGender] = React.useState<string>('');
 

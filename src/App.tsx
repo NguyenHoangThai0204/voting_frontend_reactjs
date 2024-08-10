@@ -1,8 +1,11 @@
 
 // import Login from './component/LoginFrom/LoginForm'
 // import { HomeLayout } from "./component/HomeLayout/HomeLayout"
-
-import { FormLayout } from "./component/LoginAndRegister/FormLayout/FormLayout"
+// import { FormLayout } from "./component/LoginAndRegister/FormLayout/FormLayout"
+// import { Home } from "@mui/icons-material"
+// import { HomeLayout } from "./component/Home/HomeLayout/HomeLayout"
+// import { MenuLayout } from "./component/Home/Menu/MenuLayout"
+import { HomeLayout } from "./component/Home/HomeLayout/HomeLayout"
 
 function App() {
 
@@ -10,7 +13,11 @@ function App() {
     <div>
       {/* <Login /> */}
       {/* <HomeLayout /> */}
-      <FormLayout />
+      {/* <FormLayout /> */}
+      {/* <Home /> nút icon */}
+      {/* <HomeLayout /> */}
+      {/* <MenuLayout /> */}
+      <HomeLayout />
     </div>
   )
 }
