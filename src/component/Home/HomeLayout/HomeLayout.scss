@@ -1,13 +1,47 @@
 .home_layout {
-    display: flex;
+    display: block;
     height: 100vh;
-  
-    .menu_left {
-      width: 10vw;
+    position: relative;
+    .header_home{
+      width: 100%;
+      background-color: aqua;
+      position: fixed;
+      z-index: 10;
+      top: 0;
     }
-  
-    .content_right {
-      width: 90vw;
+    .content_home{
+      display: flex;
+      margin: auto;
+      background-color: aquamarine;
+      top: 50px;
+      position: relative;
+      .menu_left {
+        width: 10%;
+      }
+      .content_right {
+        width: 90%;
+        overflow-y: auto;
+        height: 100px;
+      }
     }
   }
-  
+  @media screen and (max-width: 768px) {
+    .home_layout .content_home {
+      display: flex;
+      flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+    }
+    
+    .home_layout .content_home .menu_left {
+      width: 100%;
+      order: 2; /* Menu ở dưới */
+      background-color: white;
+      bottom: 0;
+      position: fixed;
+    }
+    
+    .home_layout .content_home .content_right {
+      width: 100%;
+      order: 1; /* Nội dung ở trên */
+      height: auto; /* Đảm bảo nội dung không bị giới hạn chiều cao */
+    }
+  }

@@ -1,7 +1,5 @@
 .wrapper {
     display: flex;
-    height: 100vh;
-
     .icon_menu {
         font-size: 20px;
         padding: 10px;
@@ -28,3 +26,23 @@
         color: inherit;
     }
 }
+@media screen and (max-width: 768px) {
+    .wrapper {
+      display: flex;
+      
+    }
+    .wrapper .menu{
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+    .wrapper .icon_menu {
+      display: inline-block;
+      margin: 10px;
+    }
+    .wrapper .icon_menu.menuClick {
+      background-color: yellow;
+      border-radius: 15px;
+    }
+    
+  }

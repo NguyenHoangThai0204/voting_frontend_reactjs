@@ -1,7 +1,7 @@
-import React from 'react'
 
+import "./ContentHome.css"
 export const ContentHome = () => {
   return (
-    <div>ContentHome</div>
+    <div className="conadsf">ContentHome</div>
   )
 }

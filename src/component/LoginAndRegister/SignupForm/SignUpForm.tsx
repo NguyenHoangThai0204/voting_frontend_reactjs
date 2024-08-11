@@ -5,9 +5,15 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import MailIcon from '@mui/icons-material/Mail';
 import TransgenderIcon from '@mui/icons-material/Transgender';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export default function SignUpForm() {
     const [gender, setGender] = React.useState<string>('');
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
 
     // Định nghĩa kiểu cho event là SelectChangeEvent
     const handleChange = (event: SelectChangeEvent<string>) => {
@@ -70,13 +76,15 @@ export default function SignUpForm() {
                 <TextField
                     id="password"
                     label="Password"
-                    type='password'
+                    type={showPassword ? 'text' :'password' }
                     variant="standard"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton edge="end">
-                                    <VisibilityOffIcon />
+                                <IconButton edge="end"
+                                    onClick={handleClickShowPassword}
+                                >
+                                    {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                                 </IconButton>
                             </InputAdornment>
                         )
@@ -86,13 +94,15 @@ export default function SignUpForm() {
                 <TextField
                     id="confirm-password"
                     label="Confirm Password"
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     variant="standard"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton edge="end">
-                                    <VisibilityOffIcon />
+                                <IconButton edge="end"
+                                    onClick={handleClickShowPassword}
+                                >
+                                    {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                                 </IconButton>
                             </InputAdornment>
                         )
