@@ -24,25 +24,37 @@
 .home_layout .content_home .content_right {
   width: 90%;
   overflow-y: auto;
-  height: 100px;
+  flex-grow: 1; /* Điều chỉnh chiều cao để không làm đẩy footer */
+}
+.home_layout .footer_home {
+  width: 100%;
+  background-color: gray;
+  position: relative;
+  z-index: 1;
 }
 
 @media screen and (max-width: 768px) {
   .home_layout .content_home {
     display: flex;
-    flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+    flex-direction: column;
   }
   .home_layout .content_home .menu_left {
     width: 100%;
-    order: 2; /* Menu ở dưới */
+    order: 2;
     background-color: white;
-    bottom: 0;
     position: fixed;
+    bottom: 0;
   }
   .home_layout .content_home .content_right {
     width: 100%;
-    order: 1; /* Nội dung ở trên */
-    height: auto; /* Đảm bảo nội dung không bị giới hạn chiều cao */
+    order: 1;
+    flex-grow: 1;
+  }
+  .home_layout .footer_home {
+    width: 100%;
+    order: 3;
+    background-color: gray;
+    position: relative;
   }
 }
 
