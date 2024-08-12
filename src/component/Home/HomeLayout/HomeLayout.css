@@ -15,7 +15,6 @@
   display: flex;
   margin: auto;
   top: 70px;
-  padding: 5px;
   position: relative;
 }
 .home_layout .content_home .menu_left {
@@ -34,7 +33,7 @@
   z-index: 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .home_layout .content_home {
     display: flex;
     flex-direction: column;

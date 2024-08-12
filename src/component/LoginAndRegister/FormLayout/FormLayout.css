@@ -6,17 +6,18 @@
 .body .wrapper {
   display: flex;
   width: 55vw;
-  height: 65vh;
+  height: 85vh;
   margin: 15px auto;
-  background: url("../../../assets/anh-dep-thien-nhien-2-1.jpg");
+  background: white;
   background-size: cover;
 }
-.body .wrapper .content_right {
+.body .wrapper .content_login_right {
   width: 50%;
   padding: 20px;
 }
-.body .wrapper .content_left {
+.body .wrapper .content_login_left {
   width: 50%;
+  display: contents;
 }
 
 @media screen and (max-width: 900px) {
@@ -24,14 +25,13 @@
     width: 100vw;
     height: max-content;
     display: flex;
-    background: white;
     flex-direction: column;
   }
-  .body .wrapper .content_right {
+  .body .wrapper .content_login_right {
     display: none;
   }
-  .body .wrapper .content_left {
-    width: 100%;
+  .body .wrapper .content_login_left {
+    width: 90%;
   }
 }
 

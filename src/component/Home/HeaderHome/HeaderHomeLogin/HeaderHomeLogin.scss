@@ -41,7 +41,7 @@
         }
     }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
     .wrapper {
         width: 90%;
         margin: 15px auto;
@@ -53,6 +53,7 @@
             text-align: center;
         }
         .overlay{
+
             .close{
                 right: 0;
                 top: -18px;

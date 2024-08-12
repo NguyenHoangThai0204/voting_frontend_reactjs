@@ -2,8 +2,13 @@
   display: flex;
   width: 100%;
 }
+.wrapper a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+}
 .wrapper .icon_menu {
-  font-size: 20px;
+  font-size: 18px;
   padding: 10px;
   margin-right: 10px;
   height: max-content;
@@ -25,7 +30,7 @@
   color: inherit;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .wrapper {
     display: flex;
   }

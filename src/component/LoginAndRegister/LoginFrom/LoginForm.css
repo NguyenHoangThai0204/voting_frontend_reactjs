@@ -3,10 +3,11 @@ form {
   width: 25vw;
   margin: auto;
   padding: 50px;
+  height: 95%;
   justify-content: center;
   backdrop-filter: blur(30px);
 }
-form h1 {
+form h2 {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -16,7 +17,7 @@ form .form_login {
   margin: 5px;
 }
 form .form_login #standard-basic {
-  font-size: 20px;
+  font-size: 18px;
   padding: 2px;
 }
 form .button {
@@ -43,7 +44,7 @@ form .signup {
 
 @media screen and (max-width: 900px) {
   form {
-    width: 100%;
+    width: 90%;
     padding: 20px;
   }
   form h1 {

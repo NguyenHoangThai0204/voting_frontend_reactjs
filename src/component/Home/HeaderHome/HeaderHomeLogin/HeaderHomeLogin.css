@@ -41,7 +41,7 @@
   top: 3%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .wrapper {
     width: 90%;
     margin: 15px auto;

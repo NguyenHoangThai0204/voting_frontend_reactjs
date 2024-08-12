@@ -16,7 +16,7 @@ export const FormLayout = () => {
     return (
         <div className="body">
             <div className="wrapper">
-                <div className="content_right">
+                <div className="content_login_right">
                     <h1>
                         Chào mừng bạn đến với cuộc biểu tình
                     </h1>
@@ -24,7 +24,7 @@ export const FormLayout = () => {
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio nihil in. Veritatis voluptatem labore odio eveniet, maiores doloribus alias!
                     </p>
                 </div>
-                <div className="content_left">
+                <div className="content_login_left">
                     {
                         showForm ? <LoginForm onSignUpClick={() => setShowForm(false)} /> : 
                         <SignUpForm  onLoginClick={() => setShowForm(true)}/>

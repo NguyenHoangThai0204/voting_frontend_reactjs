@@ -7,6 +7,8 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 // import MailIcon from '@mui/icons-material/Mail';
 // import TransgenderIcon from '@mui/icons-material/Transgender';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import "../LoginFrom/LoginForm.css";
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
     // const [gender, setGender] = React.useState<string>('');
@@ -25,14 +27,15 @@ export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
         window.location.href = '/login';
     };
     return (
-        <form action="login" style={{padding: '50px'}}>
-            <h1>Sign Up</h1>
+        <form action="login">
+            <h2>Sign Up</h2>
             <div className="form_login">
                 <TextField
                     id="phone-number"
                     label="Phone number"
                     variant="standard"
                     type='number'
+                    size="small"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -43,9 +46,10 @@ export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
                 />
                 <br />
                 <TextField
-                    id="full-name"
-                    label="Full Name"
+                    id="username"
+                    label="Username ( Last name )"
                     variant="standard"
+                    size="small"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -73,6 +77,7 @@ export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
                 <br /> */}
                 <TextField
                     id="password"
+                    size="small"
                     label="Password"
                     type={showPassword ? 'text' :'password' }
                     variant="standard"
@@ -133,6 +138,15 @@ export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
             <Button variant="contained" color="primary" onClick={handleSignUp}>Sign Up</Button>
                         
             </div>
+            <Button
+                    variant="outlined"
+                    startIcon={<GoogleIcon />}
+                    href="https://accounts.google.com/signin" // Thay thế bằng liên kết đăng nhập Google của bạn
+                    target="_blank" // Mở liên kết trong tab mới
+                    rel="noopener noreferrer" // Bảo mật liên kết
+                >
+                    Đăng kí với Google
+                </Button>
         </form>
     );
 }
