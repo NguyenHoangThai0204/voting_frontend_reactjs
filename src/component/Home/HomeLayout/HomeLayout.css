@@ -6,7 +6,6 @@
 }
 .home_layout .header_home {
   width: 100%;
-  background-color: aqua;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -15,7 +14,7 @@
   display: flex;
   margin: auto;
   background-color: aquamarine;
-  top: 50px;
+  top: 70px;
   position: relative;
 }
 .home_layout .content_home .menu_left {
@@ -25,6 +24,7 @@
   width: 90%;
   overflow-y: auto;
   flex-grow: 1; /* Điều chỉnh chiều cao để không làm đẩy footer */
+  padding: 15px;
 }
 .home_layout .footer_home {
   width: 100%;

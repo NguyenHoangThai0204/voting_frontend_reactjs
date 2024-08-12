@@ -5,7 +5,6 @@
 
   .header_home {
     width: 100%;
-    background-color: aqua;
     position: fixed;
     z-index: 10;
     top: 0;
@@ -15,7 +14,7 @@
     display: flex;
     margin: auto;
     background-color: aquamarine;
-    top: 50px;
+    top: 70px;
     position: relative;
 
     .menu_left {
@@ -26,6 +25,8 @@
       width: 90%;
       overflow-y: auto;
       flex-grow: 1; /* Điều chỉnh chiều cao để không làm đẩy footer */
+
+      padding: 15px;
     }
   }
 
@@ -40,21 +41,21 @@
 @media screen and (max-width: 768px) {
   .home_layout .content_home {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
   }
 
   .home_layout .content_home .menu_left {
     width: 100%;
     order: 2;
     background-color: white;
-    position: fixed; 
+    position: fixed;
     bottom: 0;
   }
 
   .home_layout .content_home .content_right {
     width: 100%;
-    order: 1; 
-    flex-grow: 1; 
+    order: 1;
+    flex-grow: 1;
   }
 
   .home_layout .footer_home {

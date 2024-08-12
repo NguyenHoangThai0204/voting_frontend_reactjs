@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+}
+.wrapper .but_signup {
+  width: 45%;
+  text-align: right;
+}
+.wrapper .but_login {
+  width: 55%;
+  text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper .but_signup {
+    display: none;
+  }
+  .wrapper .but_login {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=HeaderHomeLogin.css.map */
