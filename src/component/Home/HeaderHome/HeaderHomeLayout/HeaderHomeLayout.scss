@@ -35,6 +35,34 @@
         }
     }
 }
+@media screen and (max-width: 1060px){
+    .header_home{
+        height: 70px;
+        justify-content: center;
+        width: 100%;
+        .header_home_content{
+            margin: 0;
+            align-items: center;
+            .header_home_title{
+                width: 25%;
+                h1{
+                    font-size: 1.2rem;
+                }
+                p{
+                    display: none;
+                }
+            }
+            .inputSearch{
+                width: 45%;
+            }
+            .formLogin{
+                width: 35%;
+                
+            }
+        }
+    }
+    
+}
 @media screen and (max-width: 768px){
     .header_home{
         height: 70px;

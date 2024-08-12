@@ -8,21 +8,22 @@
     position: fixed;
     z-index: 10;
     top: 0;
+    border-bottom: 1px solid rgb(215, 214, 214);
   }
 
   .content_home {
     display: flex;
-    margin: auto;
-    background-color: aquamarine;
+    margin: auto; 
     top: 70px;
+    padding: 5px;
     position: relative;
 
     .menu_left {
-      width: 10%;
+      width: 7%;
     }
 
     .content_right {
-      width: 90%;
+      width: 93%;
       overflow-y: auto;
       flex-grow: 1; /* Điều chỉnh chiều cao để không làm đẩy footer */
 

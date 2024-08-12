@@ -1,5 +1,5 @@
 
-// import Login from './component/LoginFrom/LoginForm'
+// import Login from './component/LoginAndRegister/LoginFrom/LoginForm'
 // import { HomeLayout } from "./component/HomeLayout/HomeLayout"
 // import { FormLayout } from "./component/LoginAndRegister/FormLayout/FormLayout"
 // import { Home } from "@mui/icons-material"
@@ -11,13 +11,14 @@ function App() {
 
   return (
     <div>
-      {/* <Login /> */}
+      
       {/* <HomeLayout /> */}
-      {/* <FormLayout /> */}
+      
       {/* <Home /> nút icon */}
       {/* <HomeLayout /> */}
       {/* <MenuLayout /> */}
       <HomeLayout />
+      {/* <FormLayout /> */}
     </div>
   )
 }

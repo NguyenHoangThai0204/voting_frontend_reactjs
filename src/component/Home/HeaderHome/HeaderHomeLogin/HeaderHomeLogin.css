@@ -3,6 +3,7 @@
   width: 100%;
   justify-content: center;
   margin: 0;
+  /* Add this CSS to your stylesheet */
 }
 .wrapper .but_signup {
   width: 45%;
@@ -11,6 +12,18 @@
 .wrapper .but_login {
   width: 55%;
   text-align: left;
+}
+.wrapper .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: block;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it is on top */
 }
 
 @media screen and (max-width: 768px) {

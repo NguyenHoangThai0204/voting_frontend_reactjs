@@ -1,5 +1,6 @@
 .wrapper {
   display: flex;
+  width: 100%;
 }
 .wrapper .icon_menu {
   font-size: 20px;
@@ -7,6 +8,7 @@
   margin-right: 10px;
   height: max-content;
   text-align: center;
+  width: 100%;
   transition: background-color 0.3s ease;
 }
 .wrapper .icon_menu:hover {
@@ -15,7 +17,7 @@
   border-radius: 15px;
 }
 .wrapper .icon_menu.menuClick {
-  background-color: yellow;
+  background-color: #f1eeee;
   border-radius: 15px;
 }
 .wrapper a {
@@ -35,9 +37,10 @@
   .wrapper .icon_menu {
     display: inline-block;
     margin: 10px;
+    width: 100%;
   }
   .wrapper .icon_menu.menuClick {
-    background-color: yellow;
+    background-color: #f1eeee;
     border-radius: 15px;
   }
 }

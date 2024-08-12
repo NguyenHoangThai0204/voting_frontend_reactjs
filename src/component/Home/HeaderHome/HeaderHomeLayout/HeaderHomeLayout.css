@@ -36,6 +36,32 @@
   width: 20%;
 }
 
+@media screen and (max-width: 1060px) {
+  .header_home {
+    height: 70px;
+    justify-content: center;
+    width: 100%;
+  }
+  .header_home .header_home_content {
+    margin: 0;
+    align-items: center;
+  }
+  .header_home .header_home_content .header_home_title {
+    width: 25%;
+  }
+  .header_home .header_home_content .header_home_title h1 {
+    font-size: 1.2rem;
+  }
+  .header_home .header_home_content .header_home_title p {
+    display: none;
+  }
+  .header_home .header_home_content .inputSearch {
+    width: 45%;
+  }
+  .header_home .header_home_content .formLogin {
+    width: 35%;
+  }
+}
 @media screen and (max-width: 768px) {
   .header_home {
     height: 70px;

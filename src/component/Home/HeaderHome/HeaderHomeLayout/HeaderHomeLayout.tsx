@@ -14,7 +14,7 @@ export const HeaderHomeLayout = () => {
         </div>
         <div className="inputSearch">
           <TextField id="outlined-basic" className="search" label="Search" variant="outlined" size="small" 
-          InputProps={{
+          InputProps={{ 
             endAdornment: (
               <InputAdornment position="end">
                 <SearchIcon />

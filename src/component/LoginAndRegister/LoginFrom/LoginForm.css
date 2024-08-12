@@ -1,55 +1,57 @@
-.wrapper form {
+form {
   background: transparent;
-  width: 100%;
+  width: 25vw;
   margin: auto;
-  padding: 100px;
-  height: 100%;
+  padding: 50px;
   justify-content: center;
   backdrop-filter: blur(30px);
 }
-.wrapper form h1 {
+form h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-.wrapper form .form_login {
+form .form_login {
   display: grid;
   width: 100%;
   margin: 5px;
 }
-.wrapper form .form_login #standard-basic {
+form .form_login #standard-basic {
   font-size: 20px;
   padding: 2px;
 }
-.wrapper form .button {
+form .button {
   display: flex;
-}
-.wrapper form .button a {
-  margin: 15px auto;
-  width: 60%;
-  border-radius: 15px;
-}
-.wrapper form .signup {
   justify-content: center;
-  display: flex;
+  margin: 15px 0;
 }
-.wrapper form .signup a {
+form .button a {
+  margin: 15px auto;
+}
+form .forgot {
+  text-align: center;
+  margin: 15px 0;
+}
+form .forgot a {
   text-decoration: none;
   list-style: none;
 }
-.wrapper form .signup p {
-  padding: 6px 8px;
-}
-.wrapper form .forgot {
-  text-align: end;
-  margin: 15px;
-}
-.wrapper form .button {
-  width: 100%;
+form .signup {
   display: flex;
   justify-content: center;
+  align-items: baseline;
 }
-.wrapper form .button Button {
-  width: 60%;
-  padding: 5px;
+
+@media screen and (max-width: 768px) {
+  form {
+    width: 100%;
+    padding: 20px;
+  }
+  form h1 {
+    font-size: 20px;
+  }
+  form .form_login #standard-basic {
+    font-size: 15px;
+  }
 }
+
 /*# sourceMappingURL=LoginForm.css.map */

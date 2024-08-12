@@ -1,6 +1,6 @@
 import LoginForm from '../LoginFrom/LoginForm';
 import SignUpForm from '../SignupForm/SignUpForm';
-import './FormLayou.css';
+import './FormLayout.css';
 import { useState, useEffect } from 'react';
 
 export const FormLayout = () => {

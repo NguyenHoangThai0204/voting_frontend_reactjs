@@ -1,14 +1,15 @@
 import React from 'react';
-import { TextField, InputAdornment, Button, IconButton, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
+import { TextField, InputAdornment, Button, IconButton} from '@mui/material';
+// import { TextField, InputAdornment, Button, IconButton, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
-import MailIcon from '@mui/icons-material/Mail';
-import TransgenderIcon from '@mui/icons-material/Transgender';
+// import MailIcon from '@mui/icons-material/Mail';
+// import TransgenderIcon from '@mui/icons-material/Transgender';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export default function SignUpForm() {
-    const [gender, setGender] = React.useState<string>('');
+    // const [gender, setGender] = React.useState<string>('');
     const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => {
@@ -16,9 +17,9 @@ export default function SignUpForm() {
     }
 
     // Định nghĩa kiểu cho event là SelectChangeEvent
-    const handleChange = (event: SelectChangeEvent<string>) => {
-        setGender(event.target.value);
-    };
+    // const handleChange = (event: SelectChangeEvent<string>) => {
+    //     setGender(event.target.value);
+    // };
     const handleLogin = () => {
         window.location.href = '/loadLogin';
     };
@@ -57,7 +58,7 @@ export default function SignUpForm() {
                     }}
                 />
                 <br />
-                <TextField
+                {/* <TextField
                     id="email"
                     label="Email"
                     type='email'
@@ -72,7 +73,7 @@ export default function SignUpForm() {
                         )
                     }}
                 />
-                <br />
+                <br /> */}
                 <TextField
                     id="password"
                     label="Password"
@@ -91,7 +92,7 @@ export default function SignUpForm() {
                     }}
                 />
                 <br />
-                <TextField
+                {/* <TextField
                     id="confirm-password"
                     label="Confirm Password"
                     type={showPassword ? 'text' : 'password'}
@@ -108,7 +109,7 @@ export default function SignUpForm() {
                         )
                     }}
                 />
-                <br />
+                <br /> 
                 <FormControl variant="standard" fullWidth>
                     <InputLabel id="gender-label">Gender</InputLabel>
                     <Select
@@ -127,7 +128,7 @@ export default function SignUpForm() {
                         <MenuItem value="female">Female</MenuItem>
                         <MenuItem value="other">Other</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl>*/}
             </div>
 
             <div className="button">
