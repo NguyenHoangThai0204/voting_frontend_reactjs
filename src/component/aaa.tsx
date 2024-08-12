@@ -1,5 +1,7 @@
+// import { FooterHome } from "../FooterHome/FooterHome";
 import { HeaderHomeLayout } from "../HeaderHome/HeaderHomeLayout/HeaderHomeLayout";
 import { MenuLayout } from "../Menu/MenuLayout";
+// import { ContentLayout } from "../ContentLayout/ContentLayout"; // Thay đổi đường dẫn nếu cần
 import "./HomeLayout.css";
 import { ContentHome } from "../../Screens/ContentHome/ContentHome";
 
@@ -17,6 +19,9 @@ export const HomeLayout = () => {
           <ContentHome />
         </div>
       </div>
+      {/* <div className="footer_home">
+        <FooterHome />
+      </div> */}
     </div>
   );
 };

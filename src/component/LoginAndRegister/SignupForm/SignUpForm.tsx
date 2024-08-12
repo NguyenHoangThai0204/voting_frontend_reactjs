@@ -8,7 +8,7 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 // import TransgenderIcon from '@mui/icons-material/Transgender';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-export default function SignUpForm() {
+export default function SignUpForm({onLoginClick}: {onLoginClick: () => void}) {
     // const [gender, setGender] = React.useState<string>('');
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -20,9 +20,6 @@ export default function SignUpForm() {
     // const handleChange = (event: SelectChangeEvent<string>) => {
     //     setGender(event.target.value);
     // };
-    const handleLogin = () => {
-        window.location.href = '/loadLogin';
-    };
 
     const handleSignUp = () => {
         window.location.href = '/login';
@@ -132,7 +129,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="button">
-            <Button variant="text" onClick={handleLogin}>Login</Button>
+            <Button variant="text" onClick={onLoginClick}>Login</Button>
             <Button variant="contained" color="primary" onClick={handleSignUp}>Sign Up</Button>
                         
             </div>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
@@ -24,28 +24,25 @@ export function MenuLayout() {
     },
     {
       icon: <HomeIcon sx={{ fontSize: 40 }} />,
-      name: 'Home',
-      link: '/home'
+      name: 'Profile',
+      link: '/profile'
     }
   ];
 
   return (
-    <Router>
-      <div className="wrapper">
-        <div className="menu">
-          {itemMenu.map((item, index) => (
-            <Link to={item.link} key={index} onClick={() => handleClickMenu(index)}>
-              <div className={`icon_menu ${clickedIndex === index ? 'menuClick' : ''}`}>
-                <div className="icon">
-                  {item.icon}
-                </div>
-                {item.name}
+    <div className="wrapper">
+      <div className="menu">
+        {itemMenu.map((item, index) => (
+          <Link to={item.link} key={index} onClick={() => handleClickMenu(index)}>
+            <div className={`icon_menu ${clickedIndex === index ? 'menuClick' : ''}`}>
+              <div className="icon">
+                {item.icon}
               </div>
-            </Link>
-          ))}
-        </div>
+              {item.name}
+            </div>
+          </Link>
+        ))}
       </div>
-    </Router>
+    </div>
   );
 }
-

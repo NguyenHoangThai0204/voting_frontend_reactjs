@@ -25,17 +25,9 @@ export const FormLayout = () => {
                     </p>
                 </div>
                 <div className="content_left">
-                    {/* <div className={`body_content_left ${showForm ? 'showLoginForm' : 'showSignupForm'
-                        } `}>
-                        <div className="loadLogin">
-                            <LoginForm />
-                        </div>
-                        <div className="loadSignup">
-                            <SignUpForm />
-                        </div>
-                    </div> */}
                     {
-                        showForm ? <LoginForm /> : <SignUpForm />
+                        showForm ? <LoginForm onSignUpClick={() => setShowForm(false)} /> : 
+                        <SignUpForm  onLoginClick={() => setShowForm(true)}/>
                     }
                 </div>
             </div>

@@ -1,26 +1,17 @@
-
-// import Login from './component/LoginAndRegister/LoginFrom/LoginForm'
-// import { HomeLayout } from "./component/HomeLayout/HomeLayout"
-// import { FormLayout } from "./component/LoginAndRegister/FormLayout/FormLayout"
-// import { Home } from "@mui/icons-material"
-// import { HomeLayout } from "./component/Home/HomeLayout/HomeLayout"
-// import { MenuLayout } from "./component/Home/Menu/MenuLayout"
-import { HomeLayout } from "./component/Home/HomeLayout/HomeLayout"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HomeLayout } from './component/Home/HomeLayout/HomeLayout';
+import { ContentHome } from './component/Screens/ContentHome/ContentHome';
+import { ContentSetting } from './component/Screens/ContentSetting/ContentSetting';
 
 function App() {
-
   return (
-    <div>
-      
-      {/* <HomeLayout /> */}
-      
-      {/* <Home /> nút icon */}
-      {/* <HomeLayout /> */}
-      {/* <MenuLayout /> */}
-      <HomeLayout />
-      {/* <FormLayout /> */}
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeLayout />} />
+        {/* Thêm các route khác nếu cần */}
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

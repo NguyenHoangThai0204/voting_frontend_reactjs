@@ -1,14 +1,18 @@
-import { Route, Routes } from "react-router-dom"
-import { ContentHome } from "../../Screens/ContentHome/ContentHome"
-// import LoginForm from "../../LoginAndRegister/LoginFrom/LoginForm"
-
+import { ContentHome } from "../../Screens/ContentHome/ContentHome";
+import { ContentSetting } from "../../Screens/ContentSetting/ContentSetting";
 
 export const ContentLayout = () => {
+  const param = window.location.href;
+
   return (
     <div className="content">
-    <Routes>
-      <Route path="/home" element={<ContentHome />} />
-    </Routes>
-  </div>
-  )
-}
+      {param === '/home' || param === '/' ? (
+        <ContentHome />
+      ) : param === '/settings' ? (
+        <ContentSetting />
+      ) : (
+        <p>Xin chào</p>
+      )}
+    </div>
+  );
+};
