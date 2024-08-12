@@ -31,7 +31,6 @@
 @media screen and (max-width: 768px) {
     .wrapper {
       display: flex;
-      
     }
     .wrapper .menu{
       width: 100%;
@@ -42,6 +41,8 @@
       display: inline-block;
       margin: 10px;
       width: 100%;
+      font-size: 15px;
+      font-weight: 500;
     }
     .wrapper .icon_menu.menuClick {
       background-color: #f1eeee;

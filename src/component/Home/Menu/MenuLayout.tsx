@@ -21,6 +21,11 @@ export function MenuLayout() {
       icon: <SettingsIcon sx={{ fontSize: 40 }} />,
       name: 'Settings',
       link: '/settings'
+    },
+    {
+      icon: <HomeIcon sx={{ fontSize: 40 }} />,
+      name: 'Home',
+      link: '/home'
     }
   ];
 

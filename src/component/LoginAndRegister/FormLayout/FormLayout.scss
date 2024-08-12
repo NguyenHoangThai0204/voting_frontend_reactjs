@@ -7,7 +7,7 @@
         display: flex;
         width: 55vw;
         height: 65vh;
-        margin: auto;
+        margin: 15px auto;
         background: url("../../../assets/anh-dep-thien-nhien-2-1.jpg");
         background-size: cover;
         .content_right{
@@ -20,7 +20,7 @@
     }
 
   }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 900px) {
         .body {
             .wrapper{
                 width: 100vw;

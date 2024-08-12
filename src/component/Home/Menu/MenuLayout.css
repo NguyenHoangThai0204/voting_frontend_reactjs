@@ -38,6 +38,8 @@
     display: inline-block;
     margin: 10px;
     width: 100%;
+    font-size: 15px;
+    font-weight: 500;
   }
   .wrapper .icon_menu.menuClick {
     background-color: #f1eeee;
