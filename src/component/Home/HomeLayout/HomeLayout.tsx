@@ -1,7 +1,7 @@
 import { HeaderHomeLayout } from "../HeaderHome/HeaderHomeLayout/HeaderHomeLayout";
 import { MenuLayout } from "../Menu/MenuLayout";
 import "./HomeLayout.css";
-import { ContentHome } from "../../Screens/ContentHome/ContentHome";
+import { ContentLayout } from "../ContentLayout/ContentLayout";
 
 export const HomeLayout = () => {
   return (
@@ -14,7 +14,7 @@ export const HomeLayout = () => {
           <MenuLayout />
         </div>
         <div className="content_right">
-          <ContentHome />
+          <ContentLayout />
         </div>
       </div>
     </div>

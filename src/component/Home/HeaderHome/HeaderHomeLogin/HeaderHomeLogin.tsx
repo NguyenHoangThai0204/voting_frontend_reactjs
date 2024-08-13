@@ -5,7 +5,7 @@ import { FormLayout } from "../../../LoginAndRegister/FormLayout/FormLayout"
 import { useState } from "react"
 import CancelIcon from '@mui/icons-material/Cancel';
 
-export const HeaderHomeLogin = () => {
+export const HeaderHomeLogin = ({ onLogin }: { onLogin: ()=> void }) => {
 
   const [showForm, setShowForm] = useState(false)
 
@@ -20,12 +20,11 @@ export const HeaderHomeLogin = () => {
       </div>
       {showForm && (
         <div className="overlay">
-
           <div className="form">
             <div className="close">
               <CancelIcon onClick={() => setShowForm(false)} style={{ color: 'red', cursor: 'pointer' }} />
             </div>
-            <FormLayout />
+            <FormLayout onLogin={onLogin} />
           </div>
         </div>
       )}

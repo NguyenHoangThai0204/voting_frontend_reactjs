@@ -1,10 +1,18 @@
-
+import { useState } from "react";
 import "./HeaderHomeLayout.css"
 import { InputAdornment, TextField } from '@mui/material';
 import { HeaderHomeLogin } from "../HeaderHomeLogin/HeaderHomeLogin";
 import SearchIcon from '@mui/icons-material/Search';
+import { HeaderHomeLoggedin } from "../HeaderHomeLoggedin/HeaderHomeLoggedin";
 
 export const HeaderHomeLayout = () => {
+
+  const [isLogged, setIsLogged] = useState(false);
+
+  const handleIsLogged = () => {
+    setIsLogged(true);
+  }
+
   return (
     <div className="header_home">
       <div className="header_home_content">
@@ -24,7 +32,9 @@ export const HeaderHomeLayout = () => {
           />
         </div>
         <div className="formLogin">
-          <HeaderHomeLogin />
+          {
+            isLogged ? <HeaderHomeLoggedin /> : <HeaderHomeLogin onLogin={handleIsLogged} />
+          }      
         </div>
       </div>
     </div>

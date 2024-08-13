@@ -1,18 +1,18 @@
 import { ContentHome } from "../../Screens/ContentHome/ContentHome";
 import { ContentSetting } from "../../Screens/ContentSetting/ContentSetting";
+import { useLocation } from 'react-router-dom';
 
 export const ContentLayout = () => {
-  const param = window.location.href;
+  const location = useLocation();
 
-  return (
-    <div className="content">
-      {param === '/home' || param === '/' ? (
-        <ContentHome />
-      ) : param === '/settings' ? (
-        <ContentSetting />
-      ) : (
-        <p>Xin chào</p>
-      )}
-    </div>
-  );
+  console.log('Current path:', location.pathname); // Thêm dòng này để kiểm tra
+
+  switch (location.pathname) {
+    case '/home':
+      return <ContentHome />;
+    case '/settings':
+      return <ContentSetting />;
+    default:
+      return <p>Không tìm thấy trang</p>;
+  }
 };

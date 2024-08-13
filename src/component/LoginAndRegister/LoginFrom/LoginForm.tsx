@@ -5,11 +5,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useNavigate } from 'react-router-dom';
 
-export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void }) {
+export default function LoginForm({ onSignUpClick , onLogin}: { onSignUpClick: () => void, onLogin: () => void  }) {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -20,7 +22,12 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
             alert("Username and Password cannot be empty")
             return;
         }
-        window.location.href = '/login';
+        if (username === "admin" && password === "password") {
+            onLogin(); // Gọi hàm onLogin để thông báo đăng nhập thành công
+            navigate('/home'); // Chuyển hướng đến trang chủ
+        } else {
+            alert("Invalid credentials");
+        }
     };
 
     return (
