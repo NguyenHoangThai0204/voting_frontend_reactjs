@@ -19,13 +19,13 @@
   color: #f80909;
 }
 .header_home .header_home_content .header_home_title p {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #000;
 }
 .header_home .header_home_content .inputSearch {
   width: 33%;
-  height: 50px;
+  height: 45%;
 }
 .header_home .header_home_content .inputSearch .search {
   width: 100%;
@@ -36,7 +36,7 @@
   width: 20%;
 }
 
-@media screen and (max-width: 1060px) {
+@media screen and (max-width: 900px) {
   .header_home {
     height: 70px;
     justify-content: center;
@@ -56,36 +56,13 @@
     display: none;
   }
   .header_home .header_home_content .inputSearch {
-    width: 45%;
-  }
-  .header_home .header_home_content .formLogin {
-    width: 35%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .header_home {
-    height: 70px;
-    justify-content: center;
-    width: 100%;
-  }
-  .header_home .header_home_content {
-    margin: 0;
+    width: 55%;
     align-items: center;
   }
-  .header_home .header_home_content .header_home_title {
-    width: 25%;
-  }
-  .header_home .header_home_content .header_home_title h1 {
-    font-size: 1.3rem;
-  }
-  .header_home .header_home_content .header_home_title p {
-    display: none;
-  }
-  .header_home .header_home_content .inputSearch {
-    width: 45%;
-  }
   .header_home .header_home_content .formLogin {
-    width: 35%;
+    width: 15%;
+    position: relative;
+    top: 5px;
   }
 }
 

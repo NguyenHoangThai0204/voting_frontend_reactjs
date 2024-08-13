@@ -5,6 +5,7 @@
         text-decoration: none;
         color: inherit;
         display: flex;
+        margin-bottom: 5px;
     }
     .icon_menu {
         font-size: 18px;
@@ -14,7 +15,7 @@
         text-align: center;
         width: 100%;
         transition: background-color 0.3s ease;
-
+        font-size: 16px;
         &:hover {
             cursor: pointer;
             background-color: #f1f1f1;
@@ -24,6 +25,7 @@
         &.menuClick {
             background-color: #f1eeee;
             border-radius: 15px;
+            font-size: 18px;
         }
     }
 
@@ -36,6 +38,7 @@
 @media screen and (max-width: 900px) {
     .wrapper {
       display: flex;
+      margin: 0;
     }
     .wrapper .menu{
       width: 100%;

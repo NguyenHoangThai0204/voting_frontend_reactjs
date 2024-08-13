@@ -1,0 +1,15 @@
+.content_right_home {
+  display: block;
+  width: 100%;
+}
+.content_right_home .slider_content_home {
+  width: 99%;
+  margin: auto;
+  height: 250px;
+}
+.content_right_home .slider_content_home img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/*# sourceMappingURL=ContentHomeLayout.css.map */

@@ -6,6 +6,7 @@
   text-decoration: none;
   color: inherit;
   display: flex;
+  margin-bottom: 5px;
 }
 .wrapper .icon_menu {
   font-size: 18px;
@@ -15,6 +16,7 @@
   text-align: center;
   width: 100%;
   transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 .wrapper .icon_menu:hover {
   cursor: pointer;
@@ -24,6 +26,7 @@
 .wrapper .icon_menu.menuClick {
   background-color: #f1eeee;
   border-radius: 15px;
+  font-size: 18px;
 }
 .wrapper a {
   text-decoration: none;
@@ -33,6 +36,7 @@
 @media screen and (max-width: 900px) {
   .wrapper {
     display: flex;
+    margin: 0;
   }
   .wrapper .menu {
     width: 100%;

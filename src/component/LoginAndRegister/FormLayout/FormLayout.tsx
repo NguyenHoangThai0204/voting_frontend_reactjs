@@ -3,7 +3,7 @@ import SignUpForm from '../SignupForm/SignUpForm';
 import './FormLayout.css';
 import { useState, useEffect } from 'react';
 
-export const FormLayout = ({onLogin} :{onLogin: () =>void}) => {
+export const FormLayout = () => {
 
     const [showForm, setShowForm] = useState(true);
 
@@ -26,7 +26,7 @@ export const FormLayout = ({onLogin} :{onLogin: () =>void}) => {
                 </div>
                 <div className="content_login_left">
                     {
-                        showForm ? <LoginForm onLogin={onLogin} onSignUpClick={() => setShowForm(false)} /> : 
+                        showForm ? <LoginForm  onSignUpClick={() => setShowForm(false)} /> : 
                         <SignUpForm  onLoginClick={() => setShowForm(true)}/>
                     }
                 </div>

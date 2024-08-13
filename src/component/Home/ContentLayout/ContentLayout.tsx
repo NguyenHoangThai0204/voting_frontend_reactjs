@@ -1,4 +1,4 @@
-import { ContentHome } from "../../Screens/ContentHome/ContentHome";
+import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
 import { ContentSetting } from "../../Screens/ContentSetting/ContentSetting";
 import { useLocation } from 'react-router-dom';
 

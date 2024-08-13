@@ -1,6 +1,7 @@
 Dùng:
     + TypeScript:Nó có thể tự sữa lỗi khi biên dịch mà không cần chạy chương tình.
     + UI dùng Material ui
+    + @types/react-slick và react-slick slick-carousel để tạo hiệu ứng anomation
 
 Chọn thư mục:
     npm create vite@latest
@@ -12,6 +13,7 @@ Chọn lần lượt;
 Gõ:
     npm install @mui/material @emotion/react @emotion/styled
     npm install @fontsource/roboto
+    npm install react-slick slick-carousel
     npm i 
     npm run dev
 Tạo id duy nhất tự động:

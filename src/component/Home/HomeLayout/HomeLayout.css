@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .home_layout {
   display: block;
   height: 100vh;
@@ -9,43 +8,77 @@
   position: fixed;
   z-index: 10;
   top: 0;
+  background-color: white;
   border-bottom: 1px solid rgb(215, 214, 214);
+  animation: headerIn 0.8s ease-in-out forwards;
+  opacity: 0;
 }
 .home_layout .content_home {
-  display: flex;
-  margin: auto;
+  display: block;
+  margin: 0 auto;
+}
+.home_layout .content_home .body_home {
+  min-height: calc(100vh - 70px - 50px);
   top: 70px;
   position: relative;
+  display: flex;
 }
-.home_layout .content_home .menu_left {
-  width: 7%;
+.home_layout .content_home .body_home .menu_left {
+  width: 6%;
+  animation: menuIn 0.8s ease-in-out forwards;
+  opacity: 0;
+  padding: 5px;
 }
-.home_layout .content_home .content_right {
-  width: 93%;
+.home_layout .content_home .body_home .content_right {
+  width: 94%;
   overflow-y: auto;
-  flex-grow: 1; /* Điều chỉnh chiều cao để không làm đẩy footer */
-  padding: 15px;
+  flex-grow: 1;
+  height: auto;
+  margin-top: 5px;
 }
-.home_layout .footer_home {
+.home_layout .content_home .footer_home {
   width: 100%;
   background-color: gray;
   position: relative;
-  z-index: 1;
+  bottom: 0;
+  margin-top: 20px;
 }
 
+@keyframes headerIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes menuIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 @media screen and (max-width: 900px) {
   .home_layout .content_home {
     display: flex;
     flex-direction: column;
+    padding-bottom: 93px;
   }
-  .home_layout .content_home .menu_left {
+  .home_layout .content_home .body_home .menu_left {
     width: 100%;
     order: 2;
     background-color: white;
     position: fixed;
     bottom: 0;
+    z-index: 10;
   }
-  .home_layout .content_home .content_right {
+  .home_layout .content_home .body_home .content_right {
     width: 100%;
     order: 1;
     flex-grow: 1;
@@ -55,6 +88,7 @@
     order: 3;
     background-color: gray;
     position: relative;
+    margin-top: 20px;
   }
 }
 
