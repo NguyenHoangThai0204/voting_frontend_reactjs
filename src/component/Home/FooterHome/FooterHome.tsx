@@ -1,7 +1,7 @@
 import "./FooterHome.css"
 export const FooterHome = () => {
   return (
-    <div className="footer_home">
+    <div className="content_footer_home">
 
       <p>Mai Thái</p>
 

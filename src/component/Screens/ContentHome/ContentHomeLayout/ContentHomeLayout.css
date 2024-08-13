@@ -11,5 +11,22 @@
   width: 100%;
   border-radius: 20px;
 }
+.content_right_home .voting_list {
+  width: 95%;
+  height: max-content;
+  position: relative;
+  overflow-y: scroll;
+  top: 30px;
+  background-color: #f5f5f5;
+  margin: auto;
+}
+.content_right_home .voted_list {
+  width: 95%;
+  height: 100px;
+  position: relative;
+  top: 30px;
+  background-color: #f5f5f5;
+  margin: auto;
+}
 
 /*# sourceMappingURL=ContentHomeLayout.css.map */

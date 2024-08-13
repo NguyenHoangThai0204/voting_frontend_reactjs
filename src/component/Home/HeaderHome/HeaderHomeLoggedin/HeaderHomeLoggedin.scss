@@ -11,13 +11,14 @@
     .wrapper {
         display: flex;
         flex-direction: column;
+        .header__home_icon {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+        }
+        .header__home_name {
+            display: none;
+        }
     }
-    .header__home_icon {
-        width: 100%;
-        display: flex;
-        justify-content: end;
-    }
-    .header__home_name {
-        display: none;
-    }
+    
 }

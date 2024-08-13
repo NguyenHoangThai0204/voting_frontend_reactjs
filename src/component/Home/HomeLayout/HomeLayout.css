@@ -16,10 +16,10 @@
 .home_layout .content_home {
   display: block;
   margin: 0 auto;
+  margin-top: 70px;
 }
 .home_layout .content_home .body_home {
-  min-height: calc(100vh - 70px - 50px);
-  top: 70px;
+  min-height: 100vh;
   position: relative;
   display: flex;
 }
@@ -40,7 +40,7 @@
   width: 100%;
   background-color: gray;
   position: relative;
-  bottom: 0;
+  bottom: 10px;
   margin-top: 20px;
 }
 

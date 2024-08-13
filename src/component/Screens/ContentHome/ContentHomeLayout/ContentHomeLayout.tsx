@@ -9,6 +9,17 @@ export const ContentHome = () => {
       <div className="slider_content_home">
         <ContentHomeSlideAnomation />
       </div>
+      <div className="voting_list">
+        <div className="voting_list_title">
+          <h2>Voting List</h2>
+        </div>
+        
+      </div>
+      <div className="voted_list">
+        <div className="voted_list_title">
+          <h2>Voted List</h2>
+        </div>
+      </div>
     </div>
   )
 }

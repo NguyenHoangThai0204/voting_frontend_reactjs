@@ -17,11 +17,10 @@
   .content_home {
     display: block;
     margin: 0 auto;
-
+    margin-top: 70px; 
     .body_home {
-      min-height: calc(100vh - 70px - 50px); // Chiều cao tối thiểu trừ đi chiều cao header và footer
-      top: 70px;
-      position: relative;
+      min-height: 100vh;  // Chiều cao tối thiểu trừ đi chiều cao header và footer
+      position: relative; 
       display: flex;
 
       .menu_left {
@@ -44,7 +43,7 @@
       width: 100%;
       background-color: gray;
       position: relative;
-      bottom: 0;
+      bottom: 10px;
       margin-top: 20px; // Đảm bảo footer không đè lên nội dung
     }
   }
