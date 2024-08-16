@@ -36,6 +36,7 @@
         flex-grow: 1; // Điều chỉnh chiều cao để không làm đẩy footer
         height: auto;
         margin-top: 5px;
+        animation: content_right 3s ease-in-out forwards;
       }
     }
 
@@ -60,7 +61,16 @@
     opacity: 1;
   }
 }
-
+@keyframes content_right{
+  from{
+    transform: translateX(0);
+    opacity: 0;
+  }
+  to{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 @keyframes menuIn {
   from {
     transform: translateX(-100%);
