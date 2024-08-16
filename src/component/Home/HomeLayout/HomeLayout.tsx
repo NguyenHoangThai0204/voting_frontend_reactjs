@@ -3,26 +3,32 @@ import { MenuLayout } from "../Menu/MenuLayout";
 import "./HomeLayout.css";
 import { ContentLayout } from "../ContentLayout/ContentLayout";
 import { FooterHome } from "../FooterHome/FooterHome";
+import { AuthContext } from "../../../contextapi/AuthContext";
+import { useContext } from 'react';
 
 export const HomeLayout = () => {
+  const { isLogged } = useContext(AuthContext) || {};
+
   return (
     <div className="home_layout">
-      <div className="header_home">
+      <header className="header_home">
         <HeaderHomeLayout />
-      </div>
-      <div className="content_home">
+      </header>
+      <main className="content_home">
         <div className="body_home">
-          <div className="menu_left">
-            <MenuLayout />
-          </div>
-          <div className="content_right">
+          {isLogged && (
+            <aside className="menu_left">
+              <MenuLayout />
+            </aside>
+          )}
+          <section className="content_right">
             <ContentLayout />
-          </div>
+          </section>
         </div>
-        <div className="footer_home">
+        <footer className="footer_home">
           <FooterHome />
-        </div>
-      </div>
+        </footer>
+      </main>
     </div>
   );
 };

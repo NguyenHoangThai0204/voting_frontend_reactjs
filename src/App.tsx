@@ -9,12 +9,13 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeLayout />} />
         <Route path="home" element={<HomeLayout />} />
-        <Route path="settings" element={<HomeLayout/>}/>
+        <Route path="vote" element={<HomeLayout/>}/>
         <Route path="logout" element={<HomeLayout />} />
         <Route path="login" element={<HomeLayout />} />
+        <Route path="comment" element={<HomeLayout />} />
       </Routes>
     </BrowserRouter>
-    </AuthProvider>
+    </AuthProvider> 
     
   );
 }

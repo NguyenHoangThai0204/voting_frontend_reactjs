@@ -1,27 +1,26 @@
 import React, { createContext, useState, ReactNode } from 'react';
 
-interface AuthContextType {
-    isLogged: boolean;
-    login: () => void;
-    logout: () => void;
+// Tạo Context
+export const AuthContext = createContext<{
+  isLogged: boolean;
+  login: () => void;
+  logout: () => void;
+} | null>(null);
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Tạo Provider
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [isLogged, setIsLogged] = useState(false);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [isLogged, setIsLogged] = useState(false);
+  const login = () => setIsLogged(true);
+  const logout = () => setIsLogged(false);
 
-    const login = () => {
-        setIsLogged(true);
-    };
-
-    const logout = () => {
-        setIsLogged(false);
-    };
-
-    return (
-        <AuthContext.Provider value={{ isLogged, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ isLogged, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

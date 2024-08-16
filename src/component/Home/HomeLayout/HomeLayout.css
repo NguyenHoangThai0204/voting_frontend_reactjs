@@ -24,13 +24,17 @@
   display: flex;
 }
 .home_layout .content_home .body_home .menu_left {
-  width: 6%;
+  width: 8%;
   animation: menuIn 0.8s ease-in-out forwards;
   opacity: 0;
   padding: 5px;
+  transition: opacity 0.8s ease-in-out;
+}
+.home_layout .content_home .body_home .menu_left.active {
+  opacity: 1;
 }
 .home_layout .content_home .body_home .content_right {
-  width: 94%;
+  width: 92%;
   overflow-y: auto;
   flex-grow: 1;
   height: auto;

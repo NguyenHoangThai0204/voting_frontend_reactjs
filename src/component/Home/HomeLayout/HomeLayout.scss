@@ -17,21 +17,26 @@
   .content_home {
     display: block;
     margin: 0 auto;
-    margin-top: 70px; 
+    margin-top: 70px;
+
     .body_home {
       min-height: 100vh;  // Chiều cao tối thiểu trừ đi chiều cao header và footer
-      position: relative; 
+      position: relative;
       display: flex;
 
       .menu_left {
-        width: 6%;
+        width: 8%;
         animation: menuIn 0.8s ease-in-out forwards;
         opacity: 0;
         padding: 5px;
+        transition: opacity 0.8s ease-in-out; // Thêm transition
+        &.active {
+          opacity: 1;
+        }
       }
 
       .content_right {
-        width: 94%;
+        width: 92%;
         overflow-y: auto;
         flex-grow: 1; // Điều chỉnh chiều cao để không làm đẩy footer
         height: auto;
@@ -61,16 +66,18 @@
     opacity: 1;
   }
 }
-@keyframes content_right{
-  from{
+
+@keyframes content_right {
+  from {
     transform: translateX(0);
     opacity: 0;
   }
-  to{
+  to {
     transform: translateX(0);
     opacity: 1;
   }
 }
+
 @keyframes menuIn {
   from {
     transform: translateX(-100%);
@@ -84,32 +91,36 @@
 
 // Media Queries
 @media screen and (max-width: 900px) {
-  .home_layout .content_home {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 93px;
-  }
+  .home_layout {
+    .content_home {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 93px;
 
-  .home_layout .content_home .body_home .menu_left {
-    width: 100%;
-    order: 2;
-    background-color: white;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-  }
+      .body_home {
+        .menu_left {
+          width: 100%;
+          order: 2;
+          background-color: white;
+          position: fixed;
+          bottom: 0;
+          z-index: 10;
+        }
 
-  .home_layout .content_home .body_home .content_right {
-    width: 100%;
-    order: 1;
-    flex-grow: 1;
-  }
+        .content_right {
+          width: 100%;
+          order: 1;
+          flex-grow: 1;
+        }
+      }
+    }
 
-  .home_layout .footer_home {
-    width: 100%;
-    order: 3;
-    background-color: gray;
-    position: relative;
-    margin-top: 20px; // Đảm bảo footer không đè lên nội dung
+    .footer_home {
+      width: 100%;
+      order: 3;
+      background-color: gray;
+      position: relative;
+      margin-top: 20px; // Đảm bảo footer không đè lên nội dung
+    }
   }
 }

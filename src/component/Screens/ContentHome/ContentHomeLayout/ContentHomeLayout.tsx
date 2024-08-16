@@ -1,28 +1,32 @@
 
 import { ContentHomeSlideAnomation } from "../ContentHomeSlideAnomation/ContentHomeSlideAnomation";
-import { ListVoted } from "../ListVote/ListVoted";
-import { ListVoting } from "../ListVote/ListVoting";
+import { ListVoted } from "../../ContentListVote/ListVote/ListVoted";
+import { ListVoting } from "../../ContentListVote/ListVote/ListVoting";
 import "./ContentHomeLayout.css";
+import { AuthContext } from "../../../../contextapi/AuthContext";
+import { useContext } from 'react';
+import { ContentHomeGuest } from "../ContentHomeGuest/ContentHomeGuest";
 
 export const ContentHome = () => {
+
+  const authContext = useContext(AuthContext);
 
   return (
     <div className="content_right_home">
       <div className="slider_content_home">
         <ContentHomeSlideAnomation />
       </div>
-      <div className="list_vote">
-        <h2>List of voting </h2>
-        <div className="list_item_vote">
-          <ListVoting />
-        </div>
-      </div>
-      <div className="list_vote">
-        <h2>List of voted </h2>
-        <div className="list_item_vote">
-          <ListVoted/>
-        </div>
-      </div>
+      {
+        authContext?.isLogged ? (
+          <>
+            dsafg asdfg 
+          </>
+        ):(
+          <div className="">
+            <ContentHomeGuest />
+          </div>
+        )
+      }
     </div>
   )
 }

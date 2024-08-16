@@ -1,61 +1,61 @@
 .wrapper {
+  display: flex;
+  width: 100%;
+  padding: auto;
+  a {
+    text-decoration: none;
+    color: inherit;
     display: flex;
+    margin-bottom: 5px;
+  }
+
+  .icon_menu {
+    font-size: 16px;
+    margin: 5px;
+    padding: 10px;
+    height: max-content;
+    text-align: center;
     width: 100%;
-    a{
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        margin-bottom: 5px;
-    }
-    .icon_menu {
-        font-size: 18px;
-        padding: 10px;
-        margin-right: 10px;
-        height: max-content;
-        text-align: center;
-        width: 100%;
-        transition: background-color 0.3s ease;
-        font-size: 16px;
-        &:hover {
-            cursor: pointer;
-            background-color: #f1f1f1;
-            border-radius: 15px;
-        }
+    transition: background-color 0.3s ease, font-size 0.3s ease;
 
-        &.menuClick {
-            background-color: #f1eeee;
-            border-radius: 15px;
-            font-size: 18px;
-        }
+    &:hover {
+      cursor: pointer;
+      background-color: #f1f1f1;
+      border-radius: 15px;
     }
 
-    // Styles for links
-    a {
-        text-decoration: none;
-        color: inherit;
+    &.menuClick {
+      background-color: #f1eeee;
+      border-radius: 15px;
+      font-size: 17px; // Chỉ áp dụng cho item được click
     }
+  }
 }
+
+// Media Query cho màn hình nhỏ hơn
 @media screen and (max-width: 900px) {
-    .wrapper {
-      display: flex;
-      margin: 0;
-    }
-    .wrapper .menu{
+  .wrapper {
+    display: flex;
+    margin: 0;
+
+    .menu {
       width: 100%;
       display: flex;
       justify-content: space-around;
     }
-    .wrapper .icon_menu {
+
+    .icon_menu {
       display: inline-block;
       margin: 10px;
       width: 100%;
       font-size: 15px;
       font-weight: 500;
     }
-    .wrapper .icon_menu.menuClick {
+
+    .icon_menu.menuClick {
       background-color: #f1eeee;
       border-radius: 15px;
+      font-size: 16px;
     }
-    
   }
-  
+}

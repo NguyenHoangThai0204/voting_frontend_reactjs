@@ -1,6 +1,6 @@
 .item {
     border-radius: 15px;
-    width: 23%;
+    width: 28%;
     height: max-content;
     padding: 20px;
     margin-right: 8px;
@@ -23,9 +23,9 @@ img {
     width: 100%;
     display: flex;
 }
+
 @media screen and (max-width:900px) {
     .item{
-        width: 48%;
-        margin: auto;
+        margin: 0 5px 0 0;
     }
 }

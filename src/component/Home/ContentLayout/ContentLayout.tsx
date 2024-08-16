@@ -1,6 +1,6 @@
 import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
-import { ContentSetting } from "../../Screens/ContentSetting/ContentSetting";
 import { useLocation } from 'react-router-dom';
+import { ContentVoteLayout } from "../../Screens/ContentVote/ContentVoteLayout/ContentVoteLayout";
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -10,8 +10,12 @@ export const ContentLayout = () => {
   switch (location.pathname) {
     case '/home':
       return <ContentHome />;
-    case '/settings':
-      return <ContentSetting />;
+    case '/':
+      return <ContentHome />;
+    case '/vote':
+      return <ContentVoteLayout />;
+    case '/comment':
+      return <p>Comment</p>;
     default:
       return <p>Không tìm thấy trang</p>;
   }

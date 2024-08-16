@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import './MenuLayout.css';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../../contextapi/AuthContext';
-
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
   export function MenuLayout() {
     const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
@@ -21,22 +21,26 @@ import { AuthContext } from '../../../contextapi/AuthContext';
 
     const itemMenu = [
       {
-        icon: <HomeIcon sx={{ fontSize: 20 }} />,
+        icon: <HomeIcon sx={{ fontSize: 18 }} />,
         name: 'Home',
         link: '/home'
       },
       {
-        icon: <SettingsIcon sx={{ fontSize: 20 }} />,
-        name: 'Settings',
-        link: '/settings'
+        icon: <HowToVoteIcon sx={{ fontSize: 18 }} />,
+        name: 'Vote',
+        link: '/vote'
       },
       {
-        icon: <LogoutIcon sx={{ fontSize: 20 }} />,
+        icon: <LibraryBooksIcon sx={{ fontSize: 18 }} />,
+        name: 'Comment',
+        link: '/comment'
+      },
+      {
+        icon: <LogoutIcon sx={{ fontSize: 18 }} />,
         name: 'Logout',
-        link: '/logout'
+        link: '/'
       }
     ];
-
     return (
       <div className="wrapper">
         <div className="menu">

@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   width: 100%;
+  padding: auto;
 }
 .wrapper a {
   text-decoration: none;
@@ -9,14 +10,13 @@
   margin-bottom: 5px;
 }
 .wrapper .icon_menu {
-  font-size: 18px;
+  font-size: 16px;
+  margin: 5px;
   padding: 10px;
-  margin-right: 10px;
   height: max-content;
   text-align: center;
   width: 100%;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
+  transition: background-color 0.3s ease, font-size 0.3s ease;
 }
 .wrapper .icon_menu:hover {
   cursor: pointer;
@@ -26,11 +26,7 @@
 .wrapper .icon_menu.menuClick {
   background-color: #f1eeee;
   border-radius: 15px;
-  font-size: 18px;
-}
-.wrapper a {
-  text-decoration: none;
-  color: inherit;
+  font-size: 17px;
 }
 
 @media screen and (max-width: 900px) {
@@ -53,6 +49,7 @@
   .wrapper .icon_menu.menuClick {
     background-color: #f1eeee;
     border-radius: 15px;
+    font-size: 16px;
   }
 }
 
