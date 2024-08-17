@@ -1,10 +1,12 @@
 .item {
     border-radius: 15px;
-    width: 28%;
+    width: 24%;
     height: max-content;
     padding: 20px;
-    margin-right: 8px;
+    margin: 6px;
+    float: left;
     background-color: aliceblue;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
 .image_container {
     position: relative;
@@ -23,9 +25,14 @@ img {
     width: 100%;
     display: flex;
 }
-
+.item:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);    
+}
 @media screen and (max-width:900px) {
     .item{
         margin: 0 5px 0 0;
+        width: 48%;
+        
     }
 }

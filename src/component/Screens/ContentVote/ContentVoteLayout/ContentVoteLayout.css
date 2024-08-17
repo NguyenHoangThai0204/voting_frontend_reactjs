@@ -1,5 +1,14 @@
 .wrapper {
   padding: 10px;
+  display: block;
+}
+.wrapper .list_vote {
+  display: block;
+  padding: 5px;
+  width: 100%;
+}
+.wrapper .list_vote .list_item_vote {
+  width: 100%;
 }
 
 @media screen and (max-width: 900px) {

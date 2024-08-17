@@ -1,3 +1,28 @@
-.wrapper{
+.wrapper_list_vote{
     display: -webkit-inline-box;
+    width: 100%;
 }
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .arrow-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .arrow-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .arrow-button svg {
+    font-size: 24px; /* Kích thước biểu tượng */
+  }
+  
