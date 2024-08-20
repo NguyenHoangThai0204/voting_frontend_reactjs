@@ -9,11 +9,25 @@
   width: max-content;
   padding: 0;
 }
-.menu_layout_setting .menu_content li {
+.menu_layout_setting .menu_content a {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.menu_layout_setting .menu_content a li {
   padding: 8px;
   margin: 5px;
+  justify-content: space-around;
+  display: flex;
 }
-.menu_layout_setting .menu_content li:hover {
+.menu_layout_setting .menu_content a li .icon {
+  margin-right: 10px;
+  width: 10%;
+}
+.menu_layout_setting .menu_content a li .name_setting {
+  width: 90%;
+}
+.menu_layout_setting .menu_content a li:hover {
   background-color: rgb(172, 170, 169);
 }
 

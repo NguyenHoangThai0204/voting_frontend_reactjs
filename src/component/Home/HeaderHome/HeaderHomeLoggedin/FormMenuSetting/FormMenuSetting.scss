@@ -9,12 +9,27 @@
     width: max-content;
     padding: 0;
 
-    li {
-      padding: 8px;
-      margin: 5px;
-    
-      &:hover {
-        background-color: rgb(172, 170, 169);
+    // Xóa gạch chân trong các liên kết
+    a {
+      text-decoration: none;
+      display: block; // Đảm bảo Link bao trùm toàn bộ li
+      color: inherit; // Giữ nguyên màu chữ
+
+      li {
+        padding: 8px;
+        margin: 5px;
+        justify-content: space-around;
+        display: flex;
+        .icon{
+          margin-right: 10px;
+          width: 10%;
+        }
+        .name_setting{
+          width: 90%;
+        }
+        &:hover {
+          background-color: rgb(172, 170, 169);
+        }
       }
     }
   }

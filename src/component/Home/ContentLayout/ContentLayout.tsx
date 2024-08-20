@@ -1,6 +1,7 @@
 import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
 import { useLocation } from 'react-router-dom';
 import { ContentVoteLayout } from "../../Screens/ContentVote/ContentVoteLayout/ContentVoteLayout";
+import { ContentVoteFormLayout } from "../../Screens/ContentVote/ContentVoteForm/ContentVoteFormLayout";
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -16,6 +17,12 @@ export const ContentLayout = () => {
       return <ContentVoteLayout />;
     case '/comment':
       return <p>Comment</p>;
+    case '/personal-page':
+      return <p>Personal Page</p>;
+    case '/setting':
+      return <p>Setting</p>;
+    case '/create-vote':
+      return <ContentVoteFormLayout />;
     default:
       return <p>Không tìm thấy trang</p>;
   }

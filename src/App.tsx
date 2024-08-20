@@ -16,6 +16,9 @@ function App() {
             <Route path="home" element={<HomeLayout />} />
             <Route path="vote" element={<HomeLayout />} />
             <Route path="comment" element={<HomeLayout />} />
+            <Route path="personal-page" element={<HomeLayout />} />
+            <Route path="setting" element={<HomeLayout />} />
+            <Route path="create-vote" element={<HomeLayout />} />
           </Route>
           
           <Route path="logout" element={<HomeLayout />} />
