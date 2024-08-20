@@ -3,7 +3,7 @@ import "./HeaderHomeLayout.css"
 import { InputAdornment, TextField } from '@mui/material';
 import { HeaderHomeLogin } from "../HeaderHomeLogin/HeaderHomeLogin";
 import SearchIcon from '@mui/icons-material/Search';
-import { HeaderHomeLoggedin } from "../HeaderHomeLoggedin/HeaderHomeLoggedin";
+import { HeaderHomeLoggedin } from "../HeaderHomeLoggedin/HeaderHomeLoggedinLayout/HeaderHomeLoggedin";
 import { AuthContext } from '../../../../contextapi/AuthContext';
 
 export const HeaderHomeLayout = () => {

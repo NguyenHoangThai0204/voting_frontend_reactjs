@@ -6,7 +6,7 @@ import { AuthContext } from '../contextapi/AuthContext';
 const PrivateRoute = () => {
   const { isLogged } = useContext(AuthContext) || { isLogged: false, login: () => {}, logout: () => {} };
 
-  return isLogged ? <Outlet /> : <Navigate to="/login" />;
+  return isLogged ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default PrivateRoute;
