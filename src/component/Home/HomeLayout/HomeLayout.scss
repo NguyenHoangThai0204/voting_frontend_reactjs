@@ -2,13 +2,14 @@
   display: block;
   height: 100vh;
   position: relative;
+  background-color: rgb(226, 240, 231);
+
 
   .header_home {
     width: 100%;
     position: fixed;
     z-index: 10;
     top: 0;
-    background-color: white;
     border-bottom: 1px solid rgb(215, 214, 214);
     animation: headerIn 0.8s ease-in-out forwards;
     opacity: 0;
@@ -20,7 +21,7 @@
     margin-top: 70px;
 
     .body_home {
-      min-height: 100vh;  // Chiều cao tối thiểu trừ đi chiều cao header và footer
+      height: 100vh;
       position: relative;
       display: flex;
 
@@ -29,7 +30,7 @@
         animation: menuIn 0.8s ease-in-out forwards;
         opacity: 0;
         padding: 5px;
-        transition: opacity 0.8s ease-in-out; // Thêm transition
+        transition: opacity 0.8s ease-in-out;
         &.active {
           opacity: 1;
         }
@@ -38,19 +39,32 @@
       .content_right {
         width: 92%;
         overflow-y: auto;
-        flex-grow: 1; // Điều chỉnh chiều cao để không làm đẩy footer
+        flex-grow: 1;
         height: auto;
         margin-top: 5px;
         animation: content_right 3s ease-in-out forwards;
+
+        // Tùy chỉnh thanh cuộn chỉ cho .content_right
+        &::-webkit-scrollbar {
+          width: 6px; // Giảm kích thước thanh cuộn cho phần nội dung bên phải
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
       }
     }
 
     .footer_home {
       width: 100%;
-      background-color: gray;
+      background-color: rgb(47,136,138);
       position: relative;
-      bottom: 10px;
-      margin-top: 20px; // Đảm bảo footer không đè lên nội dung
     }
   }
 }
@@ -120,7 +134,6 @@
       order: 3;
       background-color: gray;
       position: relative;
-      margin-top: 20px; // Đảm bảo footer không đè lên nội dung
     }
   }
 }

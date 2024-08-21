@@ -31,4 +31,5 @@ sass --watch LoginForm.scss:LoginForm.css
 sass --watch FormLayout.scss:FormLayout.css
 sass --watch MenuLayout.scss:MenuLayout.css
 sass --watch HeaderHomeLogin.scss:HeaderHomeLogin.css
-sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css
+sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css 
+sass --watch FormMenuSetting.scss:FormMenuSetting.css      

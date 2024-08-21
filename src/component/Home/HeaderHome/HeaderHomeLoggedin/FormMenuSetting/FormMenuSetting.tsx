@@ -5,6 +5,7 @@ import { AuthContext } from "../../../../../contextapi/AuthContext";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 
 export function FormMenuSetting() {
 
@@ -12,12 +13,17 @@ export function FormMenuSetting() {
 
 
   const handleListMenuSetting = (index: number) => {
-    if (index === 2) {
+    if (index === 3) {
       authContext?.logout();
     }
   }
 
   const listItemMenuSetting = [
+    {
+      icon: <CurrencyBitcoinIcon sx={{ fontSize: 18 }} />,
+      name: "Connect wallet",
+      link: "/"
+    },
     {
       icon: <AccountCircleIcon sx={{ fontSize: 18 }} />,
       name: "Personal page",
@@ -40,7 +46,6 @@ export function FormMenuSetting() {
     <div className="menu_layout_setting">
       <ul className="menu_content">
         {
-
           listItemMenuSetting.map((item, index) => (
             <Link to={item.link} key={index} onClick={() => handleListMenuSetting(index)} >
               <li className="menu_item">

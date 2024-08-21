@@ -3,11 +3,9 @@ import { MenuLayout } from "../Menu/MenuLayout";
 import "./HomeLayout.css";
 import { ContentLayout } from "../ContentLayout/ContentLayout";
 import { FooterHome } from "../FooterHome/FooterHome";
-import { AuthContext } from "../../../contextapi/AuthContext";
-import { useContext } from 'react';
 
 export const HomeLayout = () => {
-  const { isLogged } = useContext(AuthContext) || {};
+
 
   return (
     <div className="home_layout">
@@ -16,11 +14,11 @@ export const HomeLayout = () => {
       </header>
       <main className="content_home">
         <div className="body_home">
-          {isLogged && (
-            <aside className="menu_left">
-              <MenuLayout />
-            </aside>
-          )}
+
+          <aside className="menu_left">
+            <MenuLayout />
+          </aside>
+
           <section className="content_right">
             <ContentLayout />
           </section>

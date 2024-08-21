@@ -3,7 +3,9 @@
   padding: 2px;
   background-color: white;
   box-shadow: 0 0 20px rgb(161, 159, 159);
-
+  position: relative;
+  top: 30px;
+  border-radius: 10px;
   .menu_content {
     list-style: none;
     width: max-content;
@@ -39,8 +41,7 @@
 @media screen and (max-width: 900px) {
   .wrapper {
     display: flex;
-    margin: 0;
-
+    padding: 0;
     .menu {
       width: 100%;
       display: flex;
@@ -49,7 +50,6 @@
 
     .icon_menu {
       display: inline-block;
-      margin: 10px;
       width: 100%;
       font-size: 15px;
       font-weight: 500;

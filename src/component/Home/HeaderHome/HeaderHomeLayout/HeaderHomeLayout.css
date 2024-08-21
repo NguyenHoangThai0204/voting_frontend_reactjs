@@ -2,11 +2,13 @@
   width: 100%;
   height: 70px;
   padding: 5px;
+  background-color: rgb(226, 240, 231);
 }
 .header_home .header_home_content {
   display: flex;
   width: 95%;
   height: 100%;
+  background-color: rgb(226, 240, 231);
   align-items: center;
   margin: auto;
   justify-content: space-between;
@@ -25,10 +27,12 @@
 }
 .header_home .header_home_content .inputSearch {
   width: 33%;
-  height: 45%;
+  height: max-content;
+  background-color: white;
 }
 .header_home .header_home_content .inputSearch .search {
   width: 100%;
+  background-color: white;
   height: 100%;
   border-radius: 15px;
 }

@@ -2,13 +2,13 @@
   display: block;
   height: 100vh;
   position: relative;
+  background-color: rgb(226, 240, 231);
 }
 .home_layout .header_home {
   width: 100%;
   position: fixed;
   z-index: 10;
   top: 0;
-  background-color: white;
   border-bottom: 1px solid rgb(215, 214, 214);
   animation: headerIn 0.8s ease-in-out forwards;
   opacity: 0;
@@ -19,7 +19,7 @@
   margin-top: 70px;
 }
 .home_layout .content_home .body_home {
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
   display: flex;
 }
@@ -41,12 +41,21 @@
   margin-top: 5px;
   animation: content_right 3s ease-in-out forwards;
 }
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 .home_layout .content_home .footer_home {
   width: 100%;
-  background-color: gray;
+  background-color: rgb(47, 136, 138);
   position: relative;
-  bottom: 10px;
-  margin-top: 20px;
 }
 
 @keyframes headerIn {
@@ -103,7 +112,6 @@
     order: 3;
     background-color: gray;
     position: relative;
-    margin-top: 20px;
   }
 }
 
