@@ -20,15 +20,15 @@ export function FormMenuSetting() {
 
   const listItemMenuSetting = [
     {
+      icon: <AccountCircleIcon sx={{ fontSize: 18 }} />,
+      name: "Personal page",
+      link: "/personal-page"
+    }, {
       icon: <CurrencyBitcoinIcon sx={{ fontSize: 18 }} />,
       name: "Connect wallet",
       link: "/"
     },
-    {
-      icon: <AccountCircleIcon sx={{ fontSize: 18 }} />,
-      name: "Personal page",
-      link: "/personal-page"
-    },
+
     {
       icon: <SettingsIcon sx={{ fontSize: 18 }} />,
       name: "Setting",
@@ -53,7 +53,7 @@ export function FormMenuSetting() {
                   {item.icon}
                 </div>
                 <div className="name_setting">
-                {item.name}
+                  {item.name}
                 </div>
               </li>
             </Link>

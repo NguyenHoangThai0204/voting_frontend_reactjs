@@ -4,11 +4,28 @@ import Button from '@mui/material/Button';
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export const ContentVoteFormLayout = () => {
 
   const [choices, setChoices] = useState<string[]>([""]);
-  
+  const [image, setImage] = useState<string | null>(null);
+  const [typeOfVote, setTypeOfVote] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setTypeOfVote(event.target.value as string);
+  };
+
+  const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+    }
+  }
+
   const handleAddChoice = () => {
     setChoices([...choices, ""])
   }
@@ -33,23 +50,33 @@ export const ContentVoteFormLayout = () => {
             <div className="label">Name vote:</div>
             <TextField className="text_namevote" variant="outlined" />
             <div className="label">Description:</div>
-            <TextField className="text_namevote" multiline              rows={4} variant="outlined" />
+            <TextField className="text_namevote" multiline rows={4} variant="outlined" />
           </div>
           <div className="header_content_form_right">
             <label htmlFor="upload_image_vote" className="upload_area">
-            <Button 
-                variant="contained" 
-                className="upload_button"
-                component="span"
-              > Upload image</Button>
-              {/* <input
-                style={{ display: 'none' }}
-                id="upload-photo"
-                name="upload-photo"
-                type="file"
-              />*/}
+              <input type="file"
+                id="upload_image_vote"
+                onChange={handleChangeImage}
+                style={{ display: "none" }}
+              />
+              {
+                image ?
+                  (
+                    <img
+                      src={image}
+                    ></img>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      className="upload_button"
+                      component="span"
+                    > Upload image</Button>
+                  )
+
+              }
             </label>
           </div>
+
         </div>
         <div className="label">Choices:</div>
         {
@@ -88,6 +115,22 @@ export const ContentVoteFormLayout = () => {
           <div className="date">
             <div className="label">End date:</div>
             <TextField type="datetime-local" variant="outlined" />
+          </div>
+          <div className="date">
+          <div className="label">Type of vote:</div>
+            <FormControl fullWidth>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={typeOfVote}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={"public"}>Public</MenuItem>
+                <MenuItem value={"private"}>Private</MenuItem>
+                <MenuItem value={"privatesmc"}>Private with smartcontract</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </div>
 

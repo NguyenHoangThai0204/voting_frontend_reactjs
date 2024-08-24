@@ -26,6 +26,7 @@ sass styles.scss styles.css
 sass --watch styles.scss:styles.css
 
 Các sass trong quá trình chạy:
+
 sass --watch HomeLayout.scss:HomeLayout.css
 sass --watch LoginForm.scss:LoginForm.css  
 sass --watch FormLayout.scss:FormLayout.css
@@ -34,3 +35,4 @@ sass --watch HeaderHomeLogin.scss:HeaderHomeLogin.css
 sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css 
 sass --watch FormMenuSetting.scss:FormMenuSetting.css      
 sass --watch ContentVoteFormLayout.scss:ContentVoteFormLayout.css
+
