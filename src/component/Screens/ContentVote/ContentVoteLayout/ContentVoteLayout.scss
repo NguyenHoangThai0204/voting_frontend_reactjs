@@ -1,4 +1,4 @@
-.wrapper {
+.wrapper_votelayout {
     padding: 10px;
     display: block;
 
@@ -39,7 +39,7 @@
 }
 
 @media screen and (max-width: 900px) {
-    .wrapper {
+    .wrapper_votelayout {
         flex-direction: column;
 
         .content_list_vote {

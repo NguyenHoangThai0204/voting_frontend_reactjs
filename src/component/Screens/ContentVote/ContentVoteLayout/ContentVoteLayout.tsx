@@ -5,7 +5,7 @@ import './ContentVoteLayout.css';
 
 export const ContentVoteLayout = () => {
     return (
-        <div className="wrapper">
+        <div className="wrapper_votelayout">
             <div className="content_vote">
                
             </div>

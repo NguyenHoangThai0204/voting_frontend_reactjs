@@ -3,7 +3,6 @@
   width: 100%;
   justify-content: center;
   margin: 0;
-  /* Add this CSS to your stylesheet */
 }
 .wrapper .but_signup {
   width: 45%;
@@ -11,6 +10,7 @@
 }
 .wrapper .but_login {
   width: 55%;
+  border-radius: 15px;
   text-align: left;
 }
 .wrapper .overlay {
@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it is on top */
+  z-index: 1000;
 }
 .wrapper .overlay .close {
   position: absolute;

@@ -1,0 +1,109 @@
+.wrapper_voteform {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  width: 80vw;
+  margin: auto;
+}
+.wrapper_voteform h1 {
+  color: #41B3A2;
+  font-weight: bold;
+}
+.wrapper_voteform form {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  display: block;
+}
+.wrapper_voteform form .header_content_form {
+  display: flex;
+  width: 100%;
+}
+.wrapper_voteform form .header_content_form .header_content_form_left {
+  width: 70%;
+  margin-right: auto;
+}
+.wrapper_voteform form .header_content_form .header_content_form_left .label {
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.wrapper_voteform form .header_content_form .header_content_form_left .text_namevote {
+  width: 100%;
+  margin-bottom: 15px;
+  background-color: white;
+}
+.wrapper_voteform form .header_content_form .header_content_form_right {
+  width: 28%;
+  background-color: aqua;
+}
+.wrapper_voteform form .header_content_form .header_content_form_right .upload_area {
+  width: 100%;
+  height: 100%;
+}
+.wrapper_voteform form .header_content_form .header_content_form_right .upload_button {
+  height: 100%;
+  width: 100%;
+}
+.wrapper_voteform form .label {
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 15px;
+}
+.wrapper_voteform form .text_namechoice {
+  width: 100%;
+  margin-bottom: 15px;
+  background-color: white;
+}
+.wrapper_voteform form .form_date {
+  width: 100%;
+  display: flex;
+  margin-top: 15px;
+}
+.wrapper_voteform form .form_date .date {
+  width: 50%;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .wrapper_voteform {
+    width: 100%;
+  }
+  .wrapper_voteform h1 {
+    font-size: 20px;
+  }
+  .wrapper_voteform form .header_content_form {
+    display: block;
+  }
+  .wrapper_voteform form .header_content_form .header_content_form_left {
+    width: 100%;
+  }
+  .wrapper_voteform form .header_content_form .header_content_form_left .label {
+    font-size: 15px;
+  }
+  .wrapper_voteform form .header_content_form .header_content_form_left .text_namevote {
+    width: 100%;
+  }
+  .wrapper_voteform form .header_content_form .header_content_form_right {
+    width: 100%;
+    height: 100px;
+  }
+  .wrapper_voteform form .label {
+    font-size: 15px;
+  }
+  .wrapper_voteform form .text_namechoice {
+    width: 100%;
+  }
+  .wrapper_voteform form .form_date {
+    width: 100%;
+    display: block;
+  }
+  .wrapper_voteform form .form_date .date {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+/*# sourceMappingURL=ContentVoteFormLayout.css.map */

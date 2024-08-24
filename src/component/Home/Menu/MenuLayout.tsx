@@ -23,7 +23,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
       }
     ];
     return (
-      <div className="wrapper">
+      <div className="wrapper_menu">
         <div className="menu">
           {itemMenu.map((item, index) => (
             <Link to={item.link} key={index}>

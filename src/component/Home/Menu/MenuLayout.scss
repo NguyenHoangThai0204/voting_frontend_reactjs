@@ -1,4 +1,4 @@
-.wrapper {
+.wrapper_menu {
   display: flex;
   width: 100%;
   padding: auto;
@@ -34,28 +34,36 @@
 
 // Media Query cho màn hình nhỏ hơn
 @media screen and (max-width: 900px) {
-  .wrapper {
+  .wrapper_menu {
     display: flex;
     margin: 0;
-
+    padding: 0;
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      margin-bottom: 5px;
+      width: 100%;
+    }
     .menu {
       width: 100%;
       display: flex;
       justify-content: space-around;
+      .icon_menu {
+        display: inline-block;
+        margin: 10px;
+        width: 100%;
+        font-size: 15px;
+        font-weight: 500;
+        .icon_menu.menuClick {
+          background-color: #f1eeee;
+          border-radius: 15px;
+          font-size: 16px;
+        }
+      }
     }
+    
 
-    .icon_menu {
-      display: inline-block;
-      margin: 10px;
-      width: 100%;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .icon_menu.menuClick {
-      background-color: #f1eeee;
-      border-radius: 15px;
-      font-size: 16px;
-    }
+    
   }
 }

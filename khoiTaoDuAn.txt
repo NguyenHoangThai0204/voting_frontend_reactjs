@@ -33,3 +33,4 @@ sass --watch MenuLayout.scss:MenuLayout.css
 sass --watch HeaderHomeLogin.scss:HeaderHomeLogin.css
 sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css 
 sass --watch FormMenuSetting.scss:FormMenuSetting.css      
+sass --watch ContentVoteFormLayout.scss:ContentVoteFormLayout.css

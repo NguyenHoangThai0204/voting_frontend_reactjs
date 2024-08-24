@@ -1,22 +1,22 @@
-.wrapper {
+.wrapper_votelayout {
   padding: 10px;
   display: block;
 }
-.wrapper .list_vote {
+.wrapper_votelayout .list_vote {
   display: block;
   padding: 5px;
   width: 100%;
 }
-.wrapper .list_vote .list_vote_header {
+.wrapper_votelayout .list_vote .list_vote_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
-.wrapper .list_vote h2 {
+.wrapper_votelayout .list_vote h2 {
   margin: 0;
 }
-.wrapper .list_vote .create_vote_button {
+.wrapper_votelayout .list_vote .create_vote_button {
   padding: 8px 16px;
   background-color: #28a745;
   color: white;
@@ -25,18 +25,18 @@
   cursor: pointer;
   font-size: 14px;
 }
-.wrapper .list_vote .create_vote_button:hover {
+.wrapper_votelayout .list_vote .create_vote_button:hover {
   background-color: #218838;
 }
-.wrapper .list_vote .list_item_vote {
+.wrapper_votelayout .list_vote .list_item_vote {
   width: 100%;
 }
 
 @media screen and (max-width: 900px) {
-  .wrapper {
+  .wrapper_votelayout {
     flex-direction: column;
   }
-  .wrapper .content_list_vote .list_vote {
+  .wrapper_votelayout .content_list_vote .list_vote {
     width: 100%;
     height: max-content;
     position: relative;
@@ -44,7 +44,7 @@
     margin: auto;
     padding: 5px;
   }
-  .wrapper .content_list_vote .list_vote .list_item_vote {
+  .wrapper_votelayout .content_list_vote .list_vote .list_item_vote {
     display: flex;
   }
 }
