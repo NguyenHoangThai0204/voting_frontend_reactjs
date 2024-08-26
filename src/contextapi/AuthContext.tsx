@@ -1,25 +1,37 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 
-// Tạo Context
-export const AuthContext = createContext<{
-  isLogged: boolean;
-  login: () => void;
-  logout: () => void;
-} | null>(null);
-
-interface AuthProviderProps {
-  children: ReactNode;
+interface User {
+  _id: string;
+  gmail: string;
+  password?: string; // Tùy chọn, nếu cần
+  __v?: number; // Tùy chọn, nếu cần
 }
 
-// Tạo Provider
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+interface AuthContextType {
+  isLogged: boolean;
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
+}
 
-  const login = () => setIsLogged(true);
-  const logout = () => setIsLogged(false);
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  const login = (userData: User) => {
+    setIsLogged(true);
+    setUser(userData);
+  };
+
+  const logout = () => {
+    setIsLogged(false);
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ isLogged, login, logout }}>
+    <AuthContext.Provider value={{ isLogged, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -8,6 +8,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contextapi/AuthContext';
 import { useContext } from 'react';
+import { loginUser } from '../../../api/userApi';
 
 export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void}) {
     const [showPassword, setShowPassword] = useState(false);
@@ -20,29 +21,56 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!username || !password) {
-            alert("Username and Password cannot be empty")
+            alert("Username and Password cannot be empty");
             return;
         }
-        if (username === "admin" && password === "123") {
-            authContext?.login();
-            navigate('/home'); 
-        } else {
-            alert("Invalid credentials");
-        }
-    };
+        
+        try {
+            const response = await loginUser({ gmail: username, password: password });
+      
+            console.log('Login response:', response); // Xem phản hồi từ API
+      
+            // Kiểm tra và lấy dữ liệu người dùng từ response.data
+            if (response.message === "Login success") {
+              authContext?.login(response.data); // Truyền toàn bộ dữ liệu vào context
+              console.log('Navigating to /home');
+              navigate('/home');
+            } else {
+              alert(response.message);
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred while trying to log in.');
+          }
+        };
+    
+    
+    // const handleLogin = () => {
+    //     if (!username || !password) {
+    //         alert("Username and Password cannot be empty")
+    //         return;
+    //     }
+    //     if (username === "admin" && password === "123") {
+    //         authContext?.login();
+    //         navigate('/home'); 
+    //     } else {
+
+    //         alert("Invalid credentials");
+    //     }
+    // };
 
     return (
         <form action="login">
             <h2>Login</h2>
             <div className="form_login">
                 <TextField
-                    id="standard-basic"
+                    id="username"
                     label="Username"
                     variant="standard"
                     size="small"
+                    autoComplete="username" 
                     onChange={(e) => setUsername(e.target.value)}
                     InputProps={{
                         endAdornment: (
@@ -54,11 +82,12 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
                 />
                 <br />
                 <TextField
-                    id="standard-basic"
+                    id="password"
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="standard"
                     size="small"
+                    autoComplete='current-password'
                     onChange={(e) => setPassword(e.target.value)}
                     InputProps={{
                         endAdornment: (
