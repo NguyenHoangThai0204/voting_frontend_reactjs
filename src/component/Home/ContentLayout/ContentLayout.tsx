@@ -2,6 +2,7 @@ import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/Content
 import { useLocation } from 'react-router-dom';
 import { ContentVoteLayout } from "../../Screens/ContentVote/ContentVoteLayout/ContentVoteLayout";
 import { ContentVoteFormLayout } from "../../Screens/ContentVote/ContentVoteForm/ContentVoteFormLayout";
+import ContentInformation from "../../Screens/ContentInformation/ContentInformation";
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ export const ContentLayout = () => {
     case '/comment':
       return <p>Comment</p>;
     case '/personal-page':
-      return <p>Personal Page</p>;
+      return <ContentInformation />;
     case '/setting':
       return <p>Setting</p>;
     case '/create-vote':

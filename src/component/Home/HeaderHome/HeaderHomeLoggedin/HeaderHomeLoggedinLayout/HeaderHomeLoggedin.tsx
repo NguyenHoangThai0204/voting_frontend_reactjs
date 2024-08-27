@@ -2,11 +2,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import "./HeaderHomeLoggedin.css";
 import { useState, useRef } from 'react';
 import { FormMenuSetting } from '../FormMenuSetting/FormMenuSetting';
-
+import { useContext } from 'react';
+import { AuthContext } from '../../../../../contextapi/AuthContext';
 export const HeaderHomeLoggedin = () => {
+  const authContext = useContext(AuthContext);
+  const user = authContext?.user;
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const user = "Nguyễn Hoàng Thái";
 
   const handleMouseEnter = () => {
     setShowMenu(true);
@@ -25,7 +27,7 @@ export const HeaderHomeLoggedin = () => {
         ref={menuRef}
       >
         <div className="header__home_name">
-          {user}
+          {user?.fullName}
         </div>
         <div className="header__home_icon">
           <AccountCircleIcon sx={{ fontSize: 40 }} />

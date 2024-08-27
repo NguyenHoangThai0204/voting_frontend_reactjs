@@ -28,7 +28,7 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
         }
         
         try {
-            const response = await loginUser({ gmail: username, password: password });
+            const response = await loginUser({ email: username, password: password });
       
             console.log('Login response:', response); // Xem phản hồi từ API
       

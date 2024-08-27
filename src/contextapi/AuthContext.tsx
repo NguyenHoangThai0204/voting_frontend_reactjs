@@ -1,11 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
-
-interface User {
-  _id: string;
-  gmail: string;
-  password?: string; // Tùy chọn, nếu cần
-  __v?: number; // Tùy chọn, nếu cần
-}
+import { User } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
 
 interface AuthContextType {
   isLogged: boolean;
