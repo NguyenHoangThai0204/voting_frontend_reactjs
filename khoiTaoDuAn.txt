@@ -2,7 +2,7 @@ Dùng:
     + TypeScript:Nó có thể tự sữa lỗi khi biên dịch mà không cần chạy chương tình.
     + UI dùng Material ui
     + @types/react-slick và react-slick slick-carousel để tạo hiệu ứng anomation
-
+  // eslint-disable-next-line
 Chọn thư mục:
     npm create vite@latest
 Gõ 
@@ -16,6 +16,8 @@ Gõ:
     npm install react-slick slick-carousel
     npm i 
     npm run dev
+    npm install date-fns // ngày tháng
+
 Tạo id duy nhất tự động:
     npm install uuid
 Tự tạo css
@@ -35,4 +37,4 @@ sass --watch HeaderHomeLogin.scss:HeaderHomeLogin.css
 sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css 
 sass --watch FormMenuSetting.scss:FormMenuSetting.css      
 sass --watch ContentVoteFormLayout.scss:ContentVoteFormLayout.css
-
+sass --watch ContentDetailVote.scss:ContentDetailVote.css 

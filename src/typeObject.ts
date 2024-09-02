@@ -11,16 +11,23 @@ export interface User {
     __v?: number; // Tùy chọn, nếu cần
   }
   
+
   export interface UserResponse {
     status: string;
     message: string;
     data: User;
   }
-  export interface VoteResponse {
+  export interface ListVoteResponse {
     status: string;
     message: string;
     data: Vote[];
 }
+export interface VoteResponse {
+  status: string;
+  message: string;
+  data: Vote;
+}
+
   export interface Vote {
     _id: string;
     authorId: string;

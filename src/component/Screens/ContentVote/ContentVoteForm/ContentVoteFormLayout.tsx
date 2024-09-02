@@ -164,7 +164,6 @@ export const ContentVoteFormLayout = () => {
                 onChange={handleChange}
               >
                 <MenuItem value={"public"}>Public</MenuItem>
-                <MenuItem value={"private"}>Private</MenuItem>
                 <MenuItem value={"privatesmc"}>Private with smartcontract</MenuItem>
               </Select>
             </FormControl>

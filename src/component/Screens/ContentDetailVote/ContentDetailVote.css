@@ -52,59 +52,59 @@
 }
 
 @media screen and (max-width: 900px) {
-  .wrapper_voteform {
+  .wrapper_detail_vote {
     width: 100%;
   }
-  .wrapper_voteform h1 {
+  .wrapper_detail_vote h1 {
     font-size: 20px;
   }
-  .wrapper_voteform form .header_content_form {
+  .wrapper_detail_vote form .header_content_form {
     display: block;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_left {
+  .wrapper_detail_vote form .header_content_form .header_content_form_left {
     width: 100%;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_left .label {
+  .wrapper_detail_vote form .header_content_form .header_content_form_left .label {
     font-size: 15px;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_left .text_namevote {
+  .wrapper_detail_vote form .header_content_form .header_content_form_left .text_namevote {
     width: 100%;
     margin-bottom: 15px;
     background-color: white;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_right {
+  .wrapper_detail_vote form .header_content_form .header_content_form_right {
     width: 100%;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_right .upload_area {
+  .wrapper_detail_vote form .header_content_form .header_content_form_right .upload_area {
     width: 100%;
     height: 100%;
     cursor: pointer;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_right .upload_button {
+  .wrapper_detail_vote form .header_content_form .header_content_form_right .upload_button {
     height: 100%;
     width: 100%;
   }
-  .wrapper_voteform form .header_content_form .header_content_form_right img {
+  .wrapper_detail_vote form .header_content_form .header_content_form_right img {
     background-repeat: no-repeat;
     margin: auto;
     background-size: cover;
     object-fit: cover;
     object-position: center;
   }
-  .wrapper_voteform form .label {
+  .wrapper_detail_vote form .label {
     font-size: 15px;
   }
-  .wrapper_voteform form .text_namechoice {
+  .wrapper_detail_vote form .text_namechoice {
     width: 100%;
     margin-bottom: 15px;
     background-color: white;
   }
-  .wrapper_voteform form .form_date {
+  .wrapper_detail_vote form .form_date {
     width: 100%;
     display: block;
     margin-top: 15px;
   }
-  .wrapper_voteform form .form_date .date {
+  .wrapper_detail_vote form .form_date .date {
     width: 100%;
     margin-right: 10px;
   }

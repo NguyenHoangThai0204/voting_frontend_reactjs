@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { UserResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+import { ListVoteResponse } from '../typeObject';
 import { VoteResponse } from '../typeObject';
 const API_URL = 'http://localhost:3000/api/user';
 
@@ -10,7 +11,13 @@ export const loginUser = async (data: { email: string; password: string }): Prom
 };
 
 // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
-export const getAllVotes = async (authorId: string): Promise<VoteResponse> => {
+export const getAllVotes = async (authorId: string): Promise<ListVoteResponse> => {
   const response = await axios.get(`${API_URL}/find_all_voting/${authorId}`);
+  return response.data;
+}
+
+// hàm trả về một bầu chọn dựa trên id
+export const getVoteById = async (id : string): Promise<VoteResponse> => {
+  const response = await axios.get(`${API_URL}/find_by_id_voting/${id}`);
   return response.data;
 }

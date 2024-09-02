@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .header_home {
   width: 100%;
   height: 70px;
@@ -36,6 +37,24 @@
   height: 100%;
   border-radius: 15px;
 }
+.header_home .header_home_content .search_results {
+  position: absolute;
+  width: 31%;
+  margin: auto;
+  max-height: 200px;
+  font-size: 20px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  z-index: 1000; /* Giúp hiển thị kết quả chồng lên các thành phần khác */
+}
+.header_home .header_home_content .search_results .itemSearch {
+  padding: 10px;
+  width: 100%;
+}
+.header_home .header_home_content .search_results .itemSearch:hover {
+  background-color: aqua;
+}
 .header_home .header_home_content .formLogin {
   width: 20%;
 }
@@ -62,6 +81,10 @@
   .header_home .header_home_content .inputSearch {
     width: 55%;
     align-items: center;
+  }
+  .header_home .header_home_content .inputSearch .search_results {
+    width: 50%;
+    margin: auto;
   }
   .header_home .header_home_content .formLogin {
     width: 15%;

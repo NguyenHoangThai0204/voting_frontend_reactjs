@@ -4,7 +4,7 @@ import { ListVoting } from "../../ContentListVote/ListVote/ListVoting";
 import './ContentVoteLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
-import { getAllVotes } from '../../../../api/userApi';
+import { getAllVotes } from '../../../../api/CallApi';
 import { Vote } from '../../../../typeObject';
 
 export const ContentVoteLayout = () => {
@@ -37,10 +37,6 @@ export const ContentVoteLayout = () => {
         
                     setVoting(currentVoting);
                     setVoted(votedVotes);
-
-                    console.log('Fetched Votes:', votes);
-                    console.log('Voting:', currentVoting);
-                    console.log('Voted:', votedVotes);
 
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);

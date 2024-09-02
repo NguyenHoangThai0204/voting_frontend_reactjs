@@ -8,7 +8,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contextapi/AuthContext';
 import { useContext } from 'react';
-import { loginUser } from '../../../api/userApi';
+import { loginUser } from '../../../api/CallApi';
 
 export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void}) {
     const [showPassword, setShowPassword] = useState(false);
