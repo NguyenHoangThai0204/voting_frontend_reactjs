@@ -4,16 +4,19 @@ import { useState, useRef } from 'react';
 import { FormMenuSetting } from '../FormMenuSetting/FormMenuSetting';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../../contextapi/AuthContext';
+
 export const HeaderHomeLoggedin = () => {
   const authContext = useContext(AuthContext);
   const user = authContext?.user;
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // Hàm xử lý khi hover vào phần tử
   const handleMouseEnter = () => {
     setShowMenu(true);
   };
 
+  // Hàm xử lý khi rời khỏi phần tử
   const handleMouseLeave = () => {
     setShowMenu(false);
   };

@@ -8,6 +8,11 @@
     background-color: aliceblue;
     transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
+a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
 .image_container {
     position: relative;
     display: inline-block;
@@ -20,10 +25,6 @@ img {
     position: absolute;
     top: 10px;
     right: 10px;
-}
-.but_detail {
-    width: 100%;
-    display: flex;
 }
 .item:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
