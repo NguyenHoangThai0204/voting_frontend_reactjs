@@ -16,15 +16,23 @@ export const HeaderHomeLayout = () => {
   const [results, setResults] = useState<Vote[]>([]);
   const { user } = authContext!;
 
-  const handeleText = ()=>{
+  const handeleText = () => {
     setSearchValue('');
   }
 
   useEffect(() => {
     const fetchVotes = async () => {
       try {
-        const response = await getAllVotes(user?._id?.toString() ?? '');
-        setVotes(Array.isArray(response.data) ? response.data : []);
+        const response = await getAllVotes();
+        if (user !== null) {
+          setVotes(Array.isArray(response.data) ? response.data : []);
+        } else {
+          const publicVotes = Array.isArray(response.data)
+            ? response.data.filter(vote => vote.typeContent === 'public')
+            : [];
+          setVotes(publicVotes);
+        }
+
       } catch (error) {
         console.error('Failed to fetch votes:', error);
       }

@@ -11,11 +11,15 @@ export const loginUser = async (data: { email: string; password: string }): Prom
 };
 
 // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
-export const getAllVotes = async (authorId: string): Promise<ListVoteResponse> => {
-  const response = await axios.get(`${API_URL}/find_all_voting/${authorId}`);
+export const getAllVoteUser = async (authorId: string): Promise<ListVoteResponse> => {
+  const response = await axios.get(`${API_URL}/find_all_voting_user/${authorId}`);
   return response.data;
 }
-
+// Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
+export const getAllVotes = async (): Promise<ListVoteResponse> => {
+  const response = await axios.get(`${API_URL}/find_all_voting`);
+  return response.data;
+}
 // hàm trả về một bầu chọn dựa trên id
 export const getVoteById = async (id : string): Promise<VoteResponse> => {
   const response = await axios.get(`${API_URL}/find_by_id_voting/${id}`);

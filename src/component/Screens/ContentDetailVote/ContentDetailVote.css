@@ -5,7 +5,7 @@
   width: 90vw;
 }
 .wrapper_detail_vote h1 {
-  color: #41B3A2;
+  color: #41b3a2;
   font-weight: bold;
 }
 .wrapper_detail_vote form {
@@ -41,7 +41,7 @@
   width: 27%;
   padding: 15px;
   margin: auto 10px;
-  background-color: #41B3A2;
+  background-color: #41b3a2;
 }
 .wrapper_detail_vote form .header_content_form .header_content_form_right img {
   background-repeat: no-repeat;
@@ -49,6 +49,10 @@
   background-size: cover;
   object-fit: cover;
   object-position: center;
+}
+.wrapper_detail_vote form .header_content_form .choice-wrapper:hover {
+  cursor: pointer;
+  background-color: rgb(180, 175, 175);
 }
 
 @media screen and (max-width: 900px) {

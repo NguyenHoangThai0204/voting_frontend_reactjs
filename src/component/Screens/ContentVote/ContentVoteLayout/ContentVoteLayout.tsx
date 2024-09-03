@@ -4,7 +4,7 @@ import { ListVoting } from "../../ContentListVote/ListVote/ListVoting";
 import './ContentVoteLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
-import { getAllVotes } from '../../../../api/CallApi';
+import { getAllVoteUser } from '../../../../api/CallApi';
 import { Vote } from '../../../../typeObject';
 
 export const ContentVoteLayout = () => {
@@ -23,7 +23,7 @@ export const ContentVoteLayout = () => {
                 console.log('User logged in:', user);
         
                 try {
-                    const response = await getAllVotes(user._id.toString());
+                    const response = await getAllVoteUser(user._id.toString());
                     
                     // Lấy trực tiếp mảng `Vote[]` từ `response.data`
                     const votes: Vote[] = Array.isArray(response.data) ? response.data : [];
