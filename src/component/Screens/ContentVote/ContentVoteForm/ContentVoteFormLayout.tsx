@@ -8,14 +8,24 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
+import { useLocation } from "react-router-dom";
+import {createVote} from "../../../../api/CallApi"
 
 export const ContentVoteFormLayout = () => {
+  const {authorId} = useLocation().state as { authorId: string };
   const [choices, setChoices] = useState<string[]>([""]);
-  const [descriptions, setDescriptions] = useState<string[]>([""]);
+  const [descriptionSelector, setDescriptionSelector] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
   const [image, setImage] = useState<string | null>(null);
+
   const [typeOfVote, setTypeOfVote] = useState('');
 
+  const [nameVote, setNameVote] = useState("");
+  const [description, setDescription] = useState("")
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+
+  
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
   };
@@ -30,7 +40,7 @@ export const ContentVoteFormLayout = () => {
 
   const handleAddChoice = () => {
     setChoices([...choices, ""]);
-    setDescriptions([...descriptions, ""]);
+    setDescriptionSelector([...descriptionSelector, ""]);
     setShowDescriptions([...showDescriptions, false]);
   }
 
@@ -41,17 +51,17 @@ export const ContentVoteFormLayout = () => {
   }
 
   const handleDescriptionChangeContent = (index: number, value: string) => {
-    const newDescriptions = [...descriptions];
+    const newDescriptions = [...descriptionSelector];
     newDescriptions[index] = value;
-    setDescriptions(newDescriptions);
+    setDescriptionSelector(newDescriptions);
   }
 
   const handleDeleteChoice = (index: number) => {
     const newChoices = choices.filter((_, i) => i !== index);
-    const newDescriptions = descriptions.filter((_, i) => i !== index);
+    const newDescriptions = descriptionSelector.filter((_, i) => i !== index);
     const newShowDescriptions = showDescriptions.filter((_, i) => i !== index);
     setChoices(newChoices);
-    setDescriptions(newDescriptions);
+    setDescriptionSelector(newDescriptions);
     setShowDescriptions(newShowDescriptions);
   }
 
@@ -59,6 +69,30 @@ export const ContentVoteFormLayout = () => {
     const newShowDescriptions = [...showDescriptions];
     newShowDescriptions[index] = !newShowDescriptions[index];
     setShowDescriptions(newShowDescriptions);
+  }
+
+  const handleCreateVote = async ()=>{
+    const voteData = {
+      authorId:authorId,
+      title: nameVote,
+      description: description,
+      selectors: choices.map((choice, index) => ({
+        contentSelector: choice,
+        descriptionContentSelector: descriptionSelector[index],
+      })),
+      avatar: image || "",
+      typeContent: typeOfVote,
+      timeStart: startDate,
+      timeEnd: endDate,
+      timeCreate:  new Date().toISOString()
+    }
+    try {
+      console.log(voteData);
+      await createVote(voteData);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -89,9 +123,9 @@ export const ContentVoteFormLayout = () => {
           </div>
           <div className="header_content_form_left">
             <div className="label">Name vote:</div>
-            <TextField className="text_namevote" variant="outlined" />
+            <TextField className="text_namevote" onChange={(e)=>setNameVote(e.target.value)} variant="outlined" />
             <div className="label">Description:</div>
-            <TextField className="text_namevote" multiline rows={4} variant="outlined" />
+            <TextField className="text_namevote" onChange={(e)=>{setDescription(e.target.value)}} multiline rows={4} variant="outlined" />
           </div>
         </div>
         <div className="label">Choices:</div>
@@ -134,7 +168,7 @@ export const ContentVoteFormLayout = () => {
                     placeholder={`Description for choice ${index + 1}`}
                     multiline
                     style={{width:"100%", marginBottom:"10px"}}
-                    value={descriptions[index]}
+                    value={descriptionSelector[index]}
                     onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
                   />
                 )
@@ -148,11 +182,11 @@ export const ContentVoteFormLayout = () => {
         <div className="form_date">
           <div className="date">
             <div className="label">Start date:</div>
-            <TextField type="datetime-local" variant="outlined" />
+            <TextField type="datetime-local" onChange={(e)=>{setStartDate(e.target.value)}} variant="outlined" />
           </div>
           <div className="date">
             <div className="label">End date:</div>
-            <TextField type="datetime-local" variant="outlined" />
+            <TextField type="datetime-local" onChange={(e)=>{setEndDate(e.target.value)}} variant="outlined" />
           </div>
           <div className="date">
             <div className="label">Type of vote:</div>
@@ -170,6 +204,13 @@ export const ContentVoteFormLayout = () => {
             </FormControl>
           </div>
         </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateVote}
+        >
+          Create
+        </Button>
       </form>
     </div>
   )

@@ -57,7 +57,7 @@ export const ContentVoteLayout = () => {
             <div className="list_vote">
                 <div className="list_vote_header">
                     <h2>List of voting</h2>
-                    <Link to="/create-vote" className="create_vote_button">
+                    <Link to="/create-vote" state={{authorId: user?._id}} className="create_vote_button" >
                         Create Vote
                     </Link>
                 </div>

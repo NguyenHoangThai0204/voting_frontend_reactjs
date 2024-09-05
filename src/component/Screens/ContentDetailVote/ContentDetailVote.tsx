@@ -18,6 +18,7 @@ export const ContentDetailVote = () => {
   const location = useLocation();
     // Lấy ID từ state
   const { id } = location.state as { id: string };
+  
   const [vote, setVote] = useState<Vote>();
 
   const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';

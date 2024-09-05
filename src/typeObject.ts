@@ -9,42 +9,58 @@ export interface User {
     dateOfBirth?: string;
     gender?: string;
     __v?: number; // Tùy chọn, nếu cần
-  }
+}
   
 
-  export interface UserResponse {
+export interface UserResponse {
     status: string;
     message: string;
     data: User;
   }
-  export interface ListVoteResponse {
+export interface ListVoteResponse {
     status: string;
     message: string;
     data: Vote[];
-}
+  }
 export interface VoteResponse {
   status: string;
   message: string;
   data: Vote;
-}
+  }
 
-  export interface Vote {
-    _id: string;
+export interface Vote {
+    _id:string;
     authorId: string;
-    avatar: string;
+    avatar: string | null;
     title: string;
     description: string;
     timeCreate: string;
-    timeStart: string;
-    timeEnd: string;
+    timeStart: string | null;
+    timeEnd: string| null;
     selectors: Selector[];
     typeContent: string;
 }
 
 export interface Selector {
+  _id:string;
     contentSelector: string;
     descriptionContentSelector: string;
-    _id: string;
 }
 
+export interface VoteCreate {
+  authorId: string;
+  avatar: string | null;
+  title: string;
+  description: string;
+  timeCreate: string;
+  timeStart: string | null;
+  timeEnd: string| null;
+  selectors: SelectorCreate[];
+  typeContent: string;
+}
+
+export interface SelectorCreate {
+  contentSelector: string;
+  descriptionContentSelector: string;
+}
 
