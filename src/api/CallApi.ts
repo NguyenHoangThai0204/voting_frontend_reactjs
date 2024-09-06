@@ -30,3 +30,8 @@ export const createVote = async (data: VoteCreate): Promise<VoteResponse> => {
   const response = await axios.post(`${API_URL}/create_voting`, data);
   return response.data;
 }
+
+export const getInforAuthor = async (id: string): Promise<UserResponse> => {
+  const response = await axios.post(`${API_URL}/findByIdUser`, id );
+  return response.data;
+}

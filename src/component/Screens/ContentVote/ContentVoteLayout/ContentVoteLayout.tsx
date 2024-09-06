@@ -29,10 +29,10 @@ export const ContentVoteLayout = () => {
                     const votes: Vote[] = Array.isArray(response.data) ? response.data : [];
         
                     const currentVoting = votes.filter(vote =>
-                        new Date(vote.timeEnd).getTime() > new Date().getTime()
+                        vote.timeEnd && new Date(vote.timeEnd)?.getTime() > new Date().getTime()
                     );
                     const votedVotes = votes.filter(vote =>
-                        new Date(vote.timeEnd).getTime() <= new Date().getTime()
+                        vote.timeEnd && new Date(vote.timeEnd)?.getTime() <= new Date().getTime()
                     );
         
                     setVoting(currentVoting);

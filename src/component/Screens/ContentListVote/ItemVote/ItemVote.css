@@ -35,6 +35,9 @@ h5, h3{
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     transform: scale(1.05);    
 }
+.footer_itemvote{
+    display: flex;
+}
 @media screen and (max-width:900px) {
     .item{
         margin: 0 5px 0 0;

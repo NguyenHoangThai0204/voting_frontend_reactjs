@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'; // Import Link for navigation
 export const HeaderHomeLayout = () => {
   const authContext = useContext(AuthContext);
   const [votes, setVotes] = useState<Vote[]>([]);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>("");
   const [results, setResults] = useState<Vote[]>([]);
   const { user } = authContext!;
 
@@ -73,16 +73,18 @@ export const HeaderHomeLayout = () => {
           {searchValue && (
             <Paper className="search_results">
               {results.map((vote) => (
-                <Link
-                  onClick={handeleText}
-                  to="/detail-vote"
-                  state={{ id: vote._id }}
-                >
-                  <div className='itemSearch'  >
-                    {vote.title}
-                  </div>
-                </Link>
-              ))}
+  <Link
+    onClick={handeleText}
+    key={vote._id} // Thêm key duy nhất cho mỗi phần tử
+    to="/detail-vote"
+    state={{ id: vote._id }}
+  >
+    <div className='itemSearch'>
+      {vote.title}
+    </div>
+  </Link>
+))}
+
             </Paper>
           )}
         </div>
