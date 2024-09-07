@@ -36,7 +36,10 @@ h5, h3{
     transform: scale(1.05);    
 }
 .footer_itemvote{
+    font-weight: normal;
     display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
 }
 @media screen and (max-width:900px) {
     .item{

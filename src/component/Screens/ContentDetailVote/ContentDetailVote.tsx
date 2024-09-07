@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import {getVoteById} from "../../../api/CallApi";
-import { Vote } from "../../../typeObject";
+import { Poll } from "../../../typeObject";
 import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
 
@@ -19,7 +19,7 @@ export const ContentDetailVote = () => {
     // Lấy ID từ state
   const { id } = location.state as { id: string };
   
-  const [vote, setVote] = useState<Vote | null >(null);
+  const [vote, setVote] = useState<Poll | null >(null);
   useEffect(() => {
     const fetchVote = async () => {
       try {
@@ -121,13 +121,13 @@ export const ContentDetailVote = () => {
         </div>
         <div className="label">Choices:</div>
         {
-          vote?.selectors.map((select, index) => (
+          vote?.options.map((select, index) => (
             <div key={index} className="choice-wrapper">
               <TextField
                 className="text_namechoice"
                 variant="outlined"
                 placeholder={`Choice ${index + 1}`}
-                value={select.contentSelector || ''}
+                value={select.contentOption || ''}
                 inputProps={{ readOnly: true }} 
                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
                 InputProps={{
@@ -159,7 +159,7 @@ export const ContentDetailVote = () => {
                     variant="outlined"
                     multiline
                     style={{width:"100%", marginBottom:"10px"}}
-                    value={select?.descriptionContentSelector || ''}
+                    value={select?.descriptionContentOption || ''}
                     onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
                   />
                 )

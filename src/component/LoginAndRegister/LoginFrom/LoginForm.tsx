@@ -29,13 +29,9 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
         
         try {
             const response = await loginUser({ email: username, password: password });
-      
-            console.log('Login response:', response); // Xem phản hồi từ API
-      
             // Kiểm tra và lấy dữ liệu người dùng từ response.data
             if (response.message === "Login success") {
               authContext?.login(response.data); // Truyền toàn bộ dữ liệu vào context
-              console.log('Navigating to /home');
               navigate('/home');
             } else {
               alert(response.message);
@@ -45,21 +41,6 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
             alert('An error occurred while trying to log in.');
           }
         };
-    
-    
-    // const handleLogin = () => {
-    //     if (!username || !password) {
-    //         alert("Username and Password cannot be empty")
-    //         return;
-    //     }
-    //     if (username === "admin" && password === "123") {
-    //         authContext?.login();
-    //         navigate('/home'); 
-    //     } else {
-
-    //         alert("Invalid credentials");
-    //     }
-    // };
 
     return (
         <form action="login">

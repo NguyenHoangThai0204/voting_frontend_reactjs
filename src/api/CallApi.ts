@@ -2,7 +2,7 @@ import axios from 'axios';
 import { UserResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from '../typeObject';
 import { VoteResponse } from '../typeObject';
-import { VoteCreate } from '../typeObject';
+import { PollCreate } from '../typeObject';
 const API_URL = 'http://localhost:3000/api/user';
 
 // Hàm đăng nhập người dùng
@@ -26,12 +26,12 @@ export const getVoteById = async (id : string): Promise<VoteResponse> => {
   return response.data;
 }
 //
-export const createVote = async (data: VoteCreate): Promise<VoteResponse> => {
+export const createVote = async (data: PollCreate): Promise<VoteResponse> => {
   const response = await axios.post(`${API_URL}/create_voting`, data);
   return response.data;
 }
 
 export const getInforAuthor = async (id: string): Promise<UserResponse> => {
-  const response = await axios.post(`${API_URL}/findByIdUser`, id );
+  const response = await axios.post(`${API_URL}/findByIdUser`, { id });
   return response.data;
-}
+};

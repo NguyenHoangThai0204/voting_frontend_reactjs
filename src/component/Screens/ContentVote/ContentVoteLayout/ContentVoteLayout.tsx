@@ -1,32 +1,30 @@
 import { Link } from "react-router-dom";
-import { ListVoted } from "../../ContentListVote/ListVote/ListVoted";
-import { ListVoting } from "../../ContentListVote/ListVote/ListVoting";
+// import { ListVoted } from "../../ContentListVote/ListVote/ListVoted";
+import { ListVote } from "../../ContentListVote/ListVote/ListVote";
 import './ContentVoteLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
 import { getAllVoteUser } from '../../../../api/CallApi';
-import { Vote } from '../../../../typeObject';
+import { Poll } from '../../../../typeObject';
 
 export const ContentVoteLayout = () => {
     const authContext = useContext(AuthContext); // Lấy thông tin người dùng
     const { user } = authContext!;
     
     // Khai báo state với kiểu dữ liệu cụ thể
-    const [voting, setVoting] = useState<Vote[]>([]);
-    const [voted, setVoted] = useState<Vote[]>([]);
+    const [voting, setVoting] = useState<Poll[]>([]);
+    const [voted, setVoted] = useState<Poll[]>([]);
 
     useEffect(() => {
         const fetchVotes = async () => {
             if (!user) {
                 console.log('User not logged in');
             } else {
-                console.log('User logged in:', user);
-        
                 try {
                     const response = await getAllVoteUser(user._id.toString());
                     
                     // Lấy trực tiếp mảng `Vote[]` từ `response.data`
-                    const votes: Vote[] = Array.isArray(response.data) ? response.data : [];
+                    const votes: Poll[] = Array.isArray(response.data) ? response.data : [];
         
                     const currentVoting = votes.filter(vote =>
                         vote.timeEnd && new Date(vote.timeEnd)?.getTime() > new Date().getTime()
@@ -63,14 +61,14 @@ export const ContentVoteLayout = () => {
                 </div>
                 <div className="list_item_vote">
                     {/* Render danh sách các cuộc vote */}
-                        <ListVoting voting={voting} />
+                        <ListVote vote={voting} />
                 </div>
             </div>
             <div className="list_vote">
                 <h2>List of voted</h2>
                 <div className="list_item_vote">
 
-                        <ListVoted voted={voted}/>
+                        <ListVote vote={voted}/>
 
                 </div>
             </div>

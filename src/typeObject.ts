@@ -1,5 +1,5 @@
 export interface User {
-    filter(arg0: (vote: Vote) => boolean): unknown;
+    filter(arg0: (vote: Poll) => boolean): unknown;
     _id: string;
     email: string;
     password?: string; // Tùy chọn, nếu cần
@@ -20,16 +20,16 @@ export interface UserResponse {
 export interface ListVoteResponse {
     status: string;
     message: string;
-    data: Vote[];
+    data: Poll[];
   }
 export interface VoteResponse {
   status: string;
   message: string;
-  data: Vote;
+  data: Poll;
   }
 
-export interface Vote {
-    _id:string;
+export interface Poll {
+    _id:string ;
     authorId: string;
     avatar: string | null;
     title: string;
@@ -37,17 +37,18 @@ export interface Vote {
     timeCreate: string;
     timeStart: string | null;
     timeEnd: string| null;
-    selectors: Selector[];
+    options: Option[];
     typeContent: string;
 }
 
-export interface Selector {
-  _id:string;
-    contentSelector: string;
-    descriptionContentSelector: string;
+export interface Option {
+  _id:string  ;
+  contentOption: string;
+  additonalContentOption: string | null;
+  descriptionContentOption: string;
+  votes: Vote[];
 }
-
-export interface VoteCreate {
+export interface PollCreate {
   authorId: string;
   avatar: string | null;
   title: string;
@@ -55,12 +56,22 @@ export interface VoteCreate {
   timeCreate: string;
   timeStart: string | null;
   timeEnd: string| null;
-  selectors: SelectorCreate[];
+  options: OptionCreate[];
   typeContent: string;
 }
 
-export interface SelectorCreate {
-  contentSelector: string;
-  descriptionContentSelector: string;
+export interface OptionCreate {
+contentOption: string;
+additonalContentOption: string | null;
+descriptionContentOption: string;
+votes: Vote[];
 }
+export interface Vote {
+  pollId: string;  
+  optionId: string;  
+  userId: string;  
+  timestamp: string;
+  transactionHash: string | null;  
+}
+
 

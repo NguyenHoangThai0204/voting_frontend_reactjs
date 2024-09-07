@@ -8,7 +8,7 @@ import { ContentDetailVote } from "../../Screens/ContentDetailVote/ContentDetail
 export const ContentLayout = () => {
   const location = useLocation();
 
-  console.log('Current path:', location.pathname); // Thêm dòng này để kiểm tra
+  // console.log('Current path:', location.pathname); // Thêm dòng này để kiểm tra
 
   switch (location.pathname) {
     case '/home':

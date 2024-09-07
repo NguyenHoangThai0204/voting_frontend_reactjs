@@ -1,30 +1,36 @@
 import "./ItemVote.css";
 import img from "../../../../assets/anh-dep-thien-nhien-2-1.jpg";
 import { Link } from "react-router-dom";
-import { Vote } from "../../../../typeObject";
+import { Poll } from "../../../../typeObject";
+import { useEffect, useState } from "react";
+import { getInforAuthor } from "../../../../api/CallApi";
+import { formatDistanceToNow } from 'date-fns';
+
 interface ItemVoteProps {
-  item: Vote;
+  item: Poll;
 }
 
 export const ItemVote = ({ item }: ItemVoteProps) => {
+  const [author, setAuthor] = useState<string | undefined>('');
 
-  // const [author, setAuthor] = useState<string | undefined>('');
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        const response = await getInforAuthor(item.authorId);
+        console.log('Author response:', response.data);
+        setAuthor(response.data.fullName);
+      } catch (error) {
+        console.error("Error fetching author data:", error);
+      }
+    };
+    fetchAuthor();
+  }, [item.authorId]);
 
-  // useEffect(() => {
-  //   const fetchAuthor = async () => {
-  //     const response = await getInforAuthor(item.authorId);
-  //     console.log('Author respons e:', item.authorId);
-  //     setAuthor(response.data.fullName);
-  //   }
-  //   fetchAuthor();
-  // }, [item.authorId]);
+  const timeSinceCreation = formatDistanceToNow(new Date(item.timeCreate), { addSuffix: true });
 
   return (
     <div className="item">
-     <Link
-        to="/detail-vote"
-        state={{ id: item._id }}
-      >
+      <Link to="/detail-vote" state={{ id: item._id }}>
         <div className="image_container">
           <img src={img} alt="item" />
           <div className="icon_container">
@@ -35,10 +41,10 @@ export const ItemVote = ({ item }: ItemVoteProps) => {
         <h5>{item.description}</h5>
         <div className="footer_itemvote">
           <div className="footer_left">
-            {/* {author} */}
+            {author}
           </div>
           <div className="footer_right">
-
+            {timeSinceCreation}
           </div>
         </div>
       </Link>
