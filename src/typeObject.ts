@@ -11,7 +11,6 @@ export interface User {
     __v?: number; // Tùy chọn, nếu cần
 }
   
-
 export interface UserResponse {
     status: string;
     message: string;
@@ -25,9 +24,13 @@ export interface ListVoteResponse {
 export interface VoteResponse {
   status: string;
   message: string;
-  data: Poll;
+  data: Vote;
   }
-
+  export interface PollResponse {
+    status: string;
+    message: string;
+    data: Poll;
+    }
 export interface Poll {
     _id:string ;
     authorId: string;
@@ -67,9 +70,9 @@ descriptionContentOption: string;
 votes: Vote[];
 }
 export interface Vote {
-  pollId: string;  
+  pollId: string | null;  
   optionId: string;  
-  userId: string;  
+  userId: string | null;  
   timestamp: string;
   transactionHash: string | null;  
 }

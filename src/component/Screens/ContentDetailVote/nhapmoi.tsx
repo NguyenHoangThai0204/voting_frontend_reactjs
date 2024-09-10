@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
-import {getVoteById, postVote} from "../../../api/CallApi";
+import { getVoteById, createVote } from "../../../api/CallApi"; // Giả sử bạn có hàm createVote trong CallApi
 import { Poll } from "../../../typeObject";
 import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
@@ -16,7 +16,6 @@ export const ContentDetailVote = () => {
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
   const [image, setImage] = useState<string | null>(null);
   const location = useLocation();
-    // Lấy ID từ state
   const { id } = location.state as { id: string };
   
   const [vote, setVote] = useState<Poll | null >(null);
@@ -34,28 +33,6 @@ export const ContentDetailVote = () => {
 
   const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';
   const formattedTimeEnd = vote?.timeEnd ? format(new Date(vote.timeEnd), 'dd/MM/yyyy HH:mm') : '';
-    
-  const handleVote = async (optionId: string, content: string) =>{
-    try{
-      const confirmVote = confirm('Bạn chọn: ' + content);
-      if(confirmVote){
-        const dataVote = {
-          pollId: null,
-          optionId: optionId,
-          transactionHash: null,
-          userId: null,
-          timestamp: new Date().toISOString()
-        }
-        console.log(dataVote)
-        await postVote(dataVote);
-        alert('thành công')
-      }else{
-        alert('Huỷ chọn')
-      }
-    }catch(error){
-      console.error('Error: ' + error)
-    }
-  }
 
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -64,31 +41,20 @@ export const ContentDetailVote = () => {
       setImage(imageUrl);
     }
   }
-  const handleChoiceChangeContent = (index: number, value: string) => {
-    const newChoices = [...choices];
-    newChoices[index] = value;
-    setChoices(newChoices);
-  }
 
-  const handleDescriptionChangeContent = (index: number, value: string) => {
-    const newDescriptions = [...descriptions];
-    newDescriptions[index] = value;
-    setDescriptions(newDescriptions);
-  }
-
-  const handleDeleteChoice = (index: number) => {
-    const newChoices = choices.filter((_, i) => i !== index);
-    const newDescriptions = descriptions.filter((_, i) => i !== index);
-    const newShowDescriptions = showDescriptions.filter((_, i) => i !== index);
-    setChoices(newChoices);
-    setDescriptions(newDescriptions);
-    setShowDescriptions(newShowDescriptions);
-  }
-
-  const toggleDescriptionInput = (index: number) => {
-    const newShowDescriptions = [...showDescriptions];
-    newShowDescriptions[index] = !newShowDescriptions[index];
-    setShowDescriptions(newShowDescriptions);
+  const handleVote = async (optionId: string) => {
+    try {
+      const userId = "66cbc96d367aa89344e6c0d9"; // Giả sử bạn có userId từ đâu đó
+      const response = await createVote({
+        pollId: id,
+        optionId: optionId,
+        userId: userId,
+        timestamp: new Date().toISOString()
+      });
+      console.log('Vote success:', response.data);
+    } catch (error) {
+      console.error('Error voting:', error);
+    }
   }
 
   return (
@@ -121,35 +87,33 @@ export const ContentDetailVote = () => {
           <div className="header_content_form_left">
             <div className="label">Name vote:</div>
             <TextField 
-  className="text_namevote" 
-  value={vote?.title || ''} 
-  inputProps={{ readOnly: true }} 
-  variant="outlined" 
-/>
+              className="text_namevote" 
+              value={vote?.title || ''} 
+              inputProps={{ readOnly: true }} 
+              variant="outlined" 
+            />
             <div className="label">Description:</div>
             <TextField 
-  className="text_namevote" 
-  value={vote?.description || ''} 
-  multiline 
-  rows={4} 
-  inputProps={{ readOnly: true }} 
-  variant="outlined" 
-/>
+              className="text_namevote" 
+              value={vote?.description || ''} 
+              multiline 
+              rows={4} 
+              inputProps={{ readOnly: true }} 
+              variant="outlined" 
+            />
           </div>
         </div>
         <div className="label">Choices:</div>
         {
           vote?.options.map((select, index) => (
             <div key={index} className="choice-wrapper">
-              <p>Số lượng phiếu hiện tại {select.votes.length} </p>
               <TextField
                 className="text_namechoice"
                 variant="outlined"
                 placeholder={`Choice ${index + 1}`}
                 value={select.contentOption || ''}
-                onClick={()=>handleVote(select._id, select.contentOption)}
                 inputProps={{ readOnly: true }} 
-                onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
+                onClick={() => handleVote(select._id)} // Thêm sự kiện onClick để vote
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -167,7 +131,6 @@ export const ContentDetailVote = () => {
                       >
                         <CloseIcon />
                       </IconButton>
-                      
                     </InputAdornment>
                   )
                 }}

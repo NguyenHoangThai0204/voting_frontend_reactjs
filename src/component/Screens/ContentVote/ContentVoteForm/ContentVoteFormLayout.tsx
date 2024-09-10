@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-import { createVote } from "../../../../api/CallApi"
+import { createPoll } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 
 export const ContentVoteFormLayout = () => {
@@ -97,7 +97,7 @@ export const ContentVoteFormLayout = () => {
     }
     try {
       console.log(voteData);
-      await createVote(voteData);
+      await createPoll(voteData);
       navigate("/vote");
     } catch (error) {
       console.log(error);
