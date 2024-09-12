@@ -1,5 +1,5 @@
 import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
-import { useLocation } from 'react-router-dom';
+import { useLocation  } from 'react-router-dom';
 import { ContentPollLayout } from "../../Screens/ContentPoll/ContentPollLayout/ContentPollLayout";
 import { ContentPollFormLayout } from "../../Screens/ContentPoll/ContentPollForm/ContentPollFormLayout";
 import ContentInformation from "../../Screens/ContentInformation/ContentInformation";
@@ -7,7 +7,6 @@ import { ContentDetailPoll } from "../../Screens/ContentDetailPoll/ContentDetail
 
 export const ContentLayout = () => {
   const location = useLocation();
-
   // console.log('Current path:', location.pathname); // Thêm dòng này để kiểm tra
 
   switch (location.pathname) {
@@ -25,7 +24,7 @@ export const ContentLayout = () => {
       return <p>Setting</p>;
     case '/create-poll':
       return <ContentPollFormLayout />;
-    case '/detail-poll':
+    case '/detail-poll': 
       return <ContentDetailPoll />;
     default:
       return <p>Không tìm thấy trang</p>;

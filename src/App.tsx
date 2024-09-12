@@ -16,7 +16,6 @@ function App() {
             <Route path="personal-page" element={<HomeLayout />} />
             <Route path="setting" element={<HomeLayout />} />
             <Route path="create-poll" element={<HomeLayout />} />
-            
           </Route>
           <Route path="detail-poll" element={<HomeLayout/>} />
           <Route path="comment" element={<HomeLayout />} />

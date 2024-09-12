@@ -9,8 +9,7 @@ import { getVoteById, postVote } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
-
-export const ContentDetailPoll = () => {
+export const ContentDetailPoll = ( ) => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
@@ -25,6 +24,7 @@ export const ContentDetailPoll = () => {
       try {
         const response = await getVoteById(id);
         setVote(response.data);
+
       } catch (error) {
         console.error("Error fetching vote data:", error);
       }
