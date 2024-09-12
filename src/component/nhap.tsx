@@ -43,6 +43,7 @@
 //             {vote?.selectors.map((option, index) => (
 //               <div key={index}>
 //                 <TextField className="text_option" value={option.contentSelector} inputProps={{ readOnly: true }} variant="outlined" />
+// sdfasf
 //               </div>
 //             ))}
 //           </div>
