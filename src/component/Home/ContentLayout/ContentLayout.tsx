@@ -1,9 +1,9 @@
 import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
 import { useLocation } from 'react-router-dom';
-import { ContentVoteLayout } from "../../Screens/ContentVote/ContentVoteLayout/ContentVoteLayout";
-import { ContentVoteFormLayout } from "../../Screens/ContentVote/ContentVoteForm/ContentVoteFormLayout";
+import { ContentPollLayout } from "../../Screens/ContentPoll/ContentPollLayout/ContentPollLayout";
+import { ContentPollFormLayout } from "../../Screens/ContentPoll/ContentPollForm/ContentPollFormLayout";
 import ContentInformation from "../../Screens/ContentInformation/ContentInformation";
-import { ContentDetailVote } from "../../Screens/ContentDetailVote/ContentDetailVote";
+import { ContentDetailPoll } from "../../Screens/ContentDetailPoll/ContentDetailPoll";
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -15,18 +15,18 @@ export const ContentLayout = () => {
       return <ContentHome />;
     case '/':
       return <ContentHome />;
-    case '/vote':
-      return <ContentVoteLayout />;
+    case '/poll':
+      return <ContentPollLayout />;
     case '/comment':
       return <p>Comment</p>;
     case '/personal-page':
       return <ContentInformation />;
     case '/setting':
       return <p>Setting</p>;
-    case '/create-vote':
-      return <ContentVoteFormLayout />;
-    case '/detail-vote':
-      return <ContentDetailVote />;
+    case '/create-poll':
+      return <ContentPollFormLayout />;
+    case '/detail-poll':
+      return <ContentDetailPoll />;
     default:
       return <p>Không tìm thấy trang</p>;
   }

@@ -1,5 +1,5 @@
-import { ListVote } from "../../ContentListVote/ListVote/ListVote";
-import './ContentHomeVote.css';
+import { ListPoll } from "../../ContentListPoll/ListPoll/ListPoll";
+import './ContentHomePoll.css';
 import {  useEffect, useState } from "react";
 import { getAllVotes } from '../../../../api/CallApi';
 import { Poll } from '../../../../typeObject';
@@ -42,7 +42,7 @@ export const ContentHomeVote = () => {
                
                 <div className="list_item_vote">
                     {/* Render danh sách các cuộc vote */}
-                        <ListVote vote={voting} />
+                        <ListPoll vote={voting} />
                 </div>
             </div>
             

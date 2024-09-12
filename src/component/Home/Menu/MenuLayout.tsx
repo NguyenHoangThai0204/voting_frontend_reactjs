@@ -13,8 +13,8 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
       },
       {
         icon: <HowToVoteIcon sx={{ fontSize: 18 }} />,
-        name: 'Vote',
-        link: '/vote'
+        name: 'Poll',
+        link: '/poll'
       },
       {
         icon: <LibraryBooksIcon sx={{ fontSize: 18 }} />,

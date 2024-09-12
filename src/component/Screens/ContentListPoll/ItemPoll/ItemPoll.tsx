@@ -1,4 +1,4 @@
-import "./ItemVote.css";
+import "./ItemPoll.css";
 import img from "../../../../assets/anh-dep-thien-nhien-2-1.jpg";
 import { Link } from "react-router-dom";
 import { Poll } from "../../../../typeObject";
@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { getInforAuthor } from "../../../../api/CallApi";
 import { formatDistanceToNow } from 'date-fns';
 
-interface ItemVoteProps {
+interface ItemPollProps {
   item: Poll;
 }
 
-export const ItemVote = ({ item }: ItemVoteProps) => {
+export const ItemPoll = ({ item }: ItemPollProps) => {
   const [author, setAuthor] = useState<string | undefined>('');
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const ItemVote = ({ item }: ItemVoteProps) => {
 
   return (
     <div className="item">
-      <Link to="/detail-vote" state={{ id: item._id }}>
+      <Link to="/detail-poll" state={{ id: item._id }}>
         <div className="image_container">
           <img src={img} alt="item" />
           <div className="icon_container">

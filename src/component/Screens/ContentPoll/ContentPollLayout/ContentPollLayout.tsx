@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-// import { ListVoted } from "../../ContentListVote/ListVote/ListVoted";
-import { ListVote } from "../../ContentListVote/ListVote/ListVote";
-import './ContentVoteLayout.css';
+import { ListPoll } from "../../ContentListPoll/ListPoll/ListPoll";
+import './ContentPollLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
 import { getAllVoteUser } from '../../../../api/CallApi';
 import { Poll } from '../../../../typeObject';
 
-export const ContentVoteLayout = () => {
+export const ContentPollLayout = () => {
     const authContext = useContext(AuthContext); // Lấy thông tin người dùng
     const { user } = authContext!;
     
@@ -55,21 +54,19 @@ export const ContentVoteLayout = () => {
             <div className="list_vote">
                 <div className="list_vote_header">
                     <h2>List of voting</h2>
-                    <Link to="/create-vote" state={{authorId: user?._id}} className="create_vote_button" >
+                    <Link to="/create-poll" state={{authorId: user?._id}} className="create_vote_button" >
                         Create Vote
                     </Link>
                 </div>
                 <div className="list_item_vote">
                     {/* Render danh sách các cuộc vote */}
-                        <ListVote vote={voting} />
+                        <ListPoll vote={voting} />
                 </div>
             </div>
             <div className="list_vote">
                 <h2>List of voted</h2>
                 <div className="list_item_vote">
-
-                        <ListVote vote={voted}/>
-
+                        <ListPoll vote={voted}/>
                 </div>
             </div>
         </div>

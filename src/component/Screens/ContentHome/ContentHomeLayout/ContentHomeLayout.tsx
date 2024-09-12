@@ -1,6 +1,6 @@
 
 import { ContentHomeSlideAnomation } from "../ContentHomeSlideAnomation/ContentHomeSlideAnomation";
-import { ContentHomeVote } from "../ContentHomeVote/ContentHomeVote";
+import { ContentHomeVote } from "../ContentHomePoll/ContentHomePoll";
 import "./ContentHomeLayout.css";
 // import { AuthContext } from "../../../../contextapi/AuthContext";
 // import { useContext } from 'react';

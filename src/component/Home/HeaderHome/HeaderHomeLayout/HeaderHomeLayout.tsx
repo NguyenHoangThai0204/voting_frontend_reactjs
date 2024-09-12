@@ -5,15 +5,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import { HeaderHomeLogin } from "../HeaderHomeLogin/HeaderHomeLogin";
 import { HeaderHomeLoggedin } from "../HeaderHomeLoggedin/HeaderHomeLoggedinLayout/HeaderHomeLoggedin";
 import { AuthContext } from '../../../../contextapi/AuthContext';
-import { Vote } from '../../../../typeObject';
+import { Poll } from '../../../../typeObject';
 import { getAllVotes } from '../../../../api/CallApi';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 
 export const HeaderHomeLayout = () => {
   const authContext = useContext(AuthContext);
-  const [votes, setVotes] = useState<Vote[]>([]);
+  const [votes, setVotes] = useState<Poll[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [results, setResults] = useState<Vote[]>([]);
+  const [results, setResults] = useState<Poll[]>([]);
   const { user } = authContext!;
 
   const handeleText = () => {

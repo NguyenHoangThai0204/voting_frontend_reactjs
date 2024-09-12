@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ItemVote } from '../ItemVote/ItemVote';
+import { ItemPoll } from '../ItemPoll/ItemPoll';
 import "./ListStype.css"; // Sửa tên file CSS nếu cần
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -9,7 +9,7 @@ interface ListVotingProps {
   vote: Poll[];
 }
 
-export const ListVote: React.FC<ListVotingProps> = ({ vote }) => {
+export const ListPoll: React.FC<ListVotingProps> = ({ vote }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(4); // Giới hạn số mục trên mỗi trang
 
@@ -48,7 +48,7 @@ export const ListVote: React.FC<ListVotingProps> = ({ vote }) => {
         <div style={{ display: 'block', padding: '10px' }}>
             <div className='wrapper_list_vote'>
                 {currentItems.map((item) => (
-                    <ItemVote key={item._id} item={item} />
+                    <ItemPoll key={item._id} item={item} />
                 ))}
             </div>
             <div className='pagination'>
