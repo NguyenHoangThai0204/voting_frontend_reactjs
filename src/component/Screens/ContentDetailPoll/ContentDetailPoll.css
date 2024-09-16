@@ -110,6 +110,7 @@
   }
   .wrapper_detail_vote form .form_date .date {
     width: 100%;
+    display: flex;
     margin-right: 10px;
   }
 }

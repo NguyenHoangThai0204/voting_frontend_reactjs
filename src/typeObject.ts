@@ -8,6 +8,8 @@ export interface User {
     phone?: string;
     dateOfBirth?: string;
     gender?: string;
+    role?: string;
+    address?: string;
     __v?: number; // Tùy chọn, nếu cần
 }
   
