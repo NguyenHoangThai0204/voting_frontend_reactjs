@@ -22,7 +22,7 @@ export const UsersManagement = () => {
 
   return (
     <div>
-        <table className="table table-striped" style={{ width: '100%' }} border={1}>
+        <table className="table table-striped" style={{ width: '100%'}} border={1}>
             <thead>
                 <tr>
                 <th scope="col">ID</th>
@@ -47,9 +47,9 @@ export const UsersManagement = () => {
                   <td>{user.email}</td>
                   <td>{user.address}</td>
                   <td>{user.role}</td>
-                  <td style={{textAlign:"center"}}> 
-                    <button className="btn btn-primary" style={{margin:"auto"}}>Edit</button>
-                    <button className="btn btn-danger" style={{margin:"auto"}}>Delete</button>
+                  <td style={{textAlign:"center", margin:"auto" }} > 
+                    <button className="btn btn-primary" style={{marginRight:"5px"}}>Edit</button>
+                    <button className="btn btn-danger" style={{marginLeft:"10px"}}>Delete</button>
                   </td>
                 </tr>
               ))}    

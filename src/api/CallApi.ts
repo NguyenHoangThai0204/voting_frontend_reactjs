@@ -27,7 +27,7 @@ export const getAllVotes = async (): Promise<ListVoteResponse> => {
   return response.data;
 }
 // hàm trả về một bầu chọn dựa trên id
-export const getVoteById = async (id : string): Promise<PollResponse> => {
+export const getPollById = async (id : string): Promise<PollResponse> => {
   const response = await axios.get(`${API_POLL}/find_by_id_polling/${id}`);
   return response.data;
 }

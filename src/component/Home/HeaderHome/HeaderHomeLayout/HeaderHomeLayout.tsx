@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'; // Import Link for navigation
 
 export const HeaderHomeLayout = () => {
   const authContext = useContext(AuthContext);
-  const [votes, setVotes] = useState<Poll[]>([]);
+  const [polls, setPolls] = useState<Poll[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [results, setResults] = useState<Poll[]>([]);
   const { user } = authContext!;
@@ -21,29 +21,29 @@ export const HeaderHomeLayout = () => {
   }
 
   useEffect(() => {
-    const fetchVotes = async () => {
+    const fetchPolls = async () => {
       try {
         const response = await getAllVotes();
         if (user !== null) {
-          setVotes(Array.isArray(response.data) ? response.data : []);
+          setPolls(Array.isArray(response.data) ? response.data : []);
         } else {
           const publicVotes = Array.isArray(response.data)
             ? response.data.filter(vote => vote.typeContent === 'public')
             : [];
-          setVotes(publicVotes);
+          setPolls(publicVotes);
         }
 
       } catch (error) {
         console.error('Failed to fetch votes:', error);
       }
     };
-    fetchVotes();
+    fetchPolls();
   }, [user]);
 
   useEffect(() => {
-    const filteredResults = votes.filter(vote => vote.title.toLowerCase().includes(searchValue.toLowerCase()));
+    const filteredResults = polls.filter(poll => poll.title.toLowerCase().includes(searchValue.toLowerCase()));
     setResults(filteredResults);
-  }, [searchValue, votes]);
+  }, [searchValue, polls]);
 
   return (
     <div className="header_home">
@@ -72,22 +72,22 @@ export const HeaderHomeLayout = () => {
 
           {searchValue && (
             <Paper className="search_results">
-              {results.map((vote) => (
-  <Link
-    onClick={handeleText}
-    key={vote._id} // Thêm key duy nhất cho mỗi phần tử
-    to="/detail-vote"
-    state={{ id: vote._id }}
-  >
-    <div className='itemSearch'>
-      {vote.title}
-    </div>
-  </Link>
-))}
+              {results.map((poll) => (
+                <Link
+                  onClick={handeleText}
+                  key={poll._id} // Thêm key duy nhất cho mỗi phần tử
+                  to="/detail-poll"
+                  state={{ id: poll._id }}
+                >
+                  <div className='itemSearch'>
+                    {poll.title}
+                  </div>
+                </Link>
+              ))}
 
             </Paper>
           )}
-        </div>
+        </div> 
         <div className="formLogin">
           {authContext?.isLogged ? <HeaderHomeLoggedin /> : <HeaderHomeLogin />}
         </div>

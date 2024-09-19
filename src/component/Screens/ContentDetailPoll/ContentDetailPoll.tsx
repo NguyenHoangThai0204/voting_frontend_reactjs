@@ -1,15 +1,19 @@
-import "./ContentDetailPoll.css"
+import "./ContentDetailPoll.css";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
-import { getVoteById, postVote } from "../../../api/CallApi";
+import { getPollById, postVote } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
-export const ContentDetailPoll = ( ) => {
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
+import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
+
+export const ContentDetailPoll = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
@@ -22,7 +26,7 @@ export const ContentDetailPoll = ( ) => {
   useEffect(() => {
     const fetchVote = async () => {
       try {
-        const response = await getVoteById(id);
+        const response = await getPollById(id);
         setVote(response.data);
 
       } catch (error) {
@@ -39,7 +43,7 @@ export const ContentDetailPoll = ( ) => {
     try {
       const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
 
-    if (voteEndDate && voteEndDate > new Date()) {
+      if (voteEndDate && voteEndDate > new Date()) {
         const confirmVote = confirm('Bạn chọn: ' + content);
         if (confirmVote) {
           const dataVote = {
@@ -62,7 +66,7 @@ export const ContentDetailPoll = ( ) => {
       console.error('Error: ' + error);
     }
   };
-  
+
 
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -98,6 +102,16 @@ export const ContentDetailPoll = ( ) => {
     setShowDescriptions(newShowDescriptions);
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true); // Mở modal khi nhấn vào icon
+  };
+
+  const handleClose = () => {
+    setOpen(false); // Đóng modal
+  };
+
   return (
     <div className="wrapper_voteform">
       <h1>DETAIL VOTE</h1>
@@ -126,13 +140,33 @@ export const ContentDetailPoll = ( ) => {
             </label>
           </div>
           <div className="header_content_form_left">
-            <div className="label">Name vote:</div>
-            <TextField
-              className="text_namevote"
-              value={vote?.title || ''}
-              inputProps={{ readOnly: true }}
-              variant="outlined"
-            />
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "90%" }}>
+                <div className="label">Name vote:</div>
+                <TextField
+                  className="text_namevote"
+                  value={vote?.title || ''}
+                  inputProps={{ readOnly: true }}
+                  variant="outlined"
+                />
+              </div>
+              <div style={{ margin: "auto" }}>
+                <IconButton
+                  onClick={handleClickOpen}
+                  aria-label="statistics"
+                  style={{ transform: 'scale(1.5)' }} // Tăng kích thước nút
+                >
+                  <AssessmentIcon style={{ fontSize: 50 }} /> {/* Tăng kích thước icon */}
+                </IconButton>
+              </div>
+
+              {/* Modal */}
+              {vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
+                <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={vote._id} />
+              ) : (
+                vote?._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={vote._id} />
+              )}
+            </div>
             <div className="label">Description:</div>
             <TextField
               className="text_namevote"
@@ -208,7 +242,7 @@ export const ContentDetailPoll = ( ) => {
             <div className="label">Type of vote:</div>
             <TextField type="text" value={vote?.typeContent || ''} variant="outlined" />
           </div>
-          
+
         </div>
 
       </form>
