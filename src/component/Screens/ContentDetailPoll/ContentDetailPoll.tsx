@@ -174,7 +174,7 @@ export const ContentDetailPoll = () => {
         {
           vote?.options.map((select, index) => (
             <div key={index} className="choice-wrapper">
-              <p>Số lượng phiếu hiện tại {select.votes.length} </p>
+              {/* <p>Số lượng phiếu hiện tại {select.votes.length} </p> */}
               <TextField
                 className="text_namechoice"
                 variant="outlined"
