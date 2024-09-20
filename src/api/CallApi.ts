@@ -38,7 +38,7 @@ export const createPoll = async (data: PollCreate): Promise<PollResponse> => {
 }
 // lấy thông tin của người tạo bình chọn
 export const getInforAuthor = async (id: string): Promise<UserResponse> => {
-  const response = await axios.post(`${API_POLL}/findByIdUser`, { id });
+  const response = await axios.post(`${API_USER}/findByIdUser`, { id } );
   return response.data;
 };
 // vote

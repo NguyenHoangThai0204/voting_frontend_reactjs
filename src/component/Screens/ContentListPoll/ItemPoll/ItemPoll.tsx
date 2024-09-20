@@ -17,12 +17,17 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
     const fetchAuthor = async () => {
       try {
         const response = await getInforAuthor(item.authorId);
-        console.log('Author response:', response.data);
-        setAuthor(response.data.fullName);
+        console.log('Author response:', response);
+        if (response && response.data && response.data.fullName) {
+          setAuthor(response.data.fullName);
+        } else {
+          console.warn("fullName not found in response");
+        }
       } catch (error) {
         console.error("Error fetching author data:", error);
       }
     };
+    
     fetchAuthor();
   }, [item.authorId]);
 
