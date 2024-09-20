@@ -46,10 +46,10 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
       }
     };
 
-    if (pollId && open && animalEmojisState.length === 0) {
-      fetchVote(); // Chỉ fetch data và chọn emoji khi mở lần đầu
+    if (pollId && open) {
+      fetchVote(); // Fetch data khi mở dialog
     }
-  }, [pollId, open, animalEmojisState.length]);
+  }, [pollId, open]);
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">

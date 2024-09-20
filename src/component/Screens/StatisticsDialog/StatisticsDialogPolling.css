@@ -1,36 +1,43 @@
 .race-container {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.animal-name {
-  font-weight: bold;
-  margin-bottom: 5px;
+  align-items: center;
+  margin: 20px;
 }
 
 .track {
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  height: 40px;
-  width: 100%;
-  display: flex;
-  align-items: center; /* Đảm bảo rằng con thú nằm ở giữa theo chiều dọc */
+  flex-grow: 1;
+  height: 20px; /* Chiều cao của thanh */
+  background-color: #f0f0f0; /* Màu nền cho thanh */
+  position: relative; /* Cần thiết cho vị trí tuyệt đối của con thú */
+  border-radius: 10px; /* Để làm tròn các góc */
 }
 
 .animal {
+  position: absolute; /* Đặt con thú ở vị trí tuyệt đối */
+  bottom: 0; /* Đặt nó ở dưới cùng của thanh */
+  left: 0; /* Bắt đầu từ bên trái */
+  height: 100%; /* Chiều cao bằng với thanh */
   display: flex;
-  justify-content: flex-end; /* Đẩy emoji về phía cuối của thanh tiến độ */
-  align-items: center; /* Đảm bảo emoji nằm giữa theo chiều dọc */
-  background-color: #4caf50; /* Màu của thanh tiến độ */
-  border-radius: 5px;
-  padding-right: 10px; /* Thêm khoảng cách giữa emoji và cạnh của thanh */
-  font-size: 40px; /* Tăng kích thước của emoji */
-  height: 100%;
+  justify-content: center; /* Căn giữa con thú */
+  align-items: flex-end; /* Căn dưới cùng để con thú không bị che mất */
+  font-size: 30px; /* Kích thước của con thú */
+  transition: width 0.3s ease; /* Hiệu ứng chuyển động cho chiều rộng */
 }
 
-.vote-count {
-  margin-top: 5px;
-  font-size: 14px;
-  color: #555;
+.animal-name {
+  width: 15%;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+/* Thêm hiệu ứng màu cho phần đã qua */
+.track::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  background-color: #76c7c0; /* Màu cho phần đã qua */
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease; /* Hiệu ứng chuyển động */
+  z-index: 0; /* Đặt xuống dưới cùng */
 }
