@@ -15,9 +15,9 @@ interface StatisticsDialogProps {
 }
 
 const animalEmojis = [
-  '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', 
-  '🦁', '🐮', '🐷', '🐸', '🐵', '🐧', '🐦', '🐤', '🐣', '🐺', 
-  '🦄', '🐴', '🦓', '🐘', '🦏', '🦛', '🐪', '🐫', '🦙', '🦒', 
+  '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯',
+  '🦁', '🐮', '🐷', '🐸', '🐵', '🐧', '🐦', '🐤', '🐣', '🐺',
+  '🦄', '🐴', '🦓', '🐘', '🦏', '🦛', '🐪', '🐫', '🦙', '🦒',
   '🦘', '🦔', '🐾', '🐉', '🐲', '🐊', '🐢', '🦎', '🐍', '🐅',
   '🐆', '🦕', '🦖', '🐋', '🐳', '🐬', '🦈', '🐟', '🐠', '🐡',
   '🦐', '🦑', '🦞', '🦀', '🐙'
@@ -26,7 +26,8 @@ const animalEmojis = [
 const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handleClose, pollId }) => {
   const [poll, setPoll] = useState<Poll | null>(null);
   const [totalVotes, setTotalVotes] = useState<number>(0);
-  const [animalEmojisState, setAnimalEmojisState] = useState<string[]>([]); // Lưu emoji đã chọn
+  const [animalEmojisState, setAnimalEmojisState] = useState<string[]>([]);
+  const [remainingTime, setRemainingTime] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchVote = async () => {
@@ -36,20 +37,39 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
         const total = response.data.options.reduce((acc, option) => acc + option.votes.length, 0);
         setTotalVotes(total);
 
-        // Chỉ tạo emoji một lần khi poll được load lần đầu tiên
         const selectedEmojis = response.data.options.map(() =>
           animalEmojis[Math.floor(Math.random() * animalEmojis.length)]
         );
-        setAnimalEmojisState(selectedEmojis); // Lưu emoji vào state
+        setAnimalEmojisState(selectedEmojis);
       } catch (error) {
         console.error('Error fetching vote data:', error);
       }
     };
 
     if (pollId && open) {
-      fetchVote(); // Fetch data khi mở dialog
+      fetchVote();
     }
   }, [pollId, open]);
+
+  const getRemainingTime = (endTime: string) => {
+    const timeLeft = new Date(endTime).getTime() - new Date().getTime();
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds };
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (poll && poll.timeEnd) {
+        const { days, hours, minutes, seconds } = getRemainingTime(poll.timeEnd);
+        setRemainingTime(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [poll]);
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
@@ -64,7 +84,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
                   <div className="animal-name">{option.contentOption}</div>
                   <div className="track">
                     <div className="animal" style={{ width: `${votePercentage}%` }}>
-                      {animalEmojisState[index]} {/* Sử dụng emoji từ state */}
+                      {animalEmojisState[index]}
                     </div>
                   </div>
                   <div className="vote-count">{option.votes.length} votes</div>
@@ -76,7 +96,12 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
           <p>Loading...</p>
         )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ textAlign: "left" }}>
+          {remainingTime ? (
+            <p style={{ fontWeight: "bold" }}>Remaining time: {remainingTime}</p>
+          ) : null}
+        </div>
         <Button onClick={handleClose} color="primary">
           Close
         </Button>
