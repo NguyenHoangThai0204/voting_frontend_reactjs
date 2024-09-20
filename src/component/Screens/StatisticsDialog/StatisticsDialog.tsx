@@ -65,7 +65,8 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog fullWidth={true}   // Làm cho Dialog chiếm hết chiều ngang
+    maxWidth="md" open={open} onClose={handleClose}>
       <DialogTitle>Statistics</DialogTitle>
       <DialogContent>
         {poll ? (

@@ -2,7 +2,6 @@ import "./ContentDetailPoll.css";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { getPollById, postVote } from "../../../api/CallApi";
@@ -87,15 +86,6 @@ export const ContentDetailPoll = () => {
     setDescriptions(newDescriptions);
   }
 
-  const handleDeleteChoice = (index: number) => {
-    const newChoices = choices.filter((_, i) => i !== index);
-    const newDescriptions = descriptions.filter((_, i) => i !== index);
-    const newShowDescriptions = showDescriptions.filter((_, i) => i !== index);
-    setChoices(newChoices);
-    setDescriptions(newDescriptions);
-    setShowDescriptions(newShowDescriptions);
-  }
-
   const toggleDescriptionInput = (index: number) => {
     const newShowDescriptions = [...showDescriptions];
     newShowDescriptions[index] = !newShowDescriptions[index];
@@ -161,11 +151,13 @@ export const ContentDetailPoll = () => {
               </div>
 
               {/* Modal */}
-              {vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
-                <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={vote._id} />
-              ) : (
-                vote?._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={vote._id} />
-              )}
+              <div >
+                {vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
+                  <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={vote._id} />
+                ) : (
+                  vote?._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={vote._id} />
+                )}
+              </div>
             </div>
             <div className="label">Description:</div>
             <TextField
@@ -189,7 +181,6 @@ export const ContentDetailPoll = () => {
                 placeholder={`Choice ${index + 1}`}
                 value={select.contentOption || ''}
                 onClick={() => handleVote(select._id, select.contentOption)}
-                // inputProps={{ readOnly: true }}
                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
                 InputProps={{
                   endAdornment: (
@@ -197,22 +188,18 @@ export const ContentDetailPoll = () => {
                       <IconButton
                         edge="end"
                         aria-label="add description"
-                        onClick={() => toggleDescriptionInput(index)}
+                        onClick={(e) => {toggleDescriptionInput(index);
+                          e.stopPropagation();}
+                        }
+                        
                       >
                         <DescriptionIcon />
                       </IconButton>
-                      <IconButton
-                        edge="end"
-                        aria-label="remove choice"
-                        onClick={() => handleDeleteChoice(index)}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
+
               {
                 showDescriptions[index] && (
                   <TextField
