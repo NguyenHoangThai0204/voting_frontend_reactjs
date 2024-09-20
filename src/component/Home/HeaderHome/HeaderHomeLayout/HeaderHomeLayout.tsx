@@ -49,7 +49,7 @@ export const HeaderHomeLayout = () => {
     <div className="header_home">
       <div className="header_home_content">
         <div className="header_home_title">
-          <h1>Voting App</h1>
+          <h1>Poll Web</h1>
           <p>Chọn theo cách của bạn</p>
         </div>
         <div className="inputSearch">

@@ -34,7 +34,6 @@
     flex-direction: column;
   }
   .wrapper_form_login .header__home_icon {
-    width: 100%;
     display: flex;
     justify-content: end;
   }

@@ -87,9 +87,7 @@
     margin: auto;
   }
   .header_home .header_home_content .formLogin {
-    width: 15%;
-    position: relative;
-    top: 5px;
+    margin-left: 10px;
   }
 }
 
