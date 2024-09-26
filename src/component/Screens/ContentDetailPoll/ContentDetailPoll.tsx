@@ -6,27 +6,36 @@ import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { getPollById, postVote } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
 import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
-
-export const ContentDetailPoll = () => {
+import { useParams } from 'react-router-dom';
+// interface Params {
+//   id: string; // Hoặc có thể là number nếu bạn chuyển đổi từ string
+// }
+export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
   const [image, setImage] = useState<string | null>(null);
-  const location = useLocation();
+  // const location = useLocation();
   // Lấy ID từ state
-  const { id } = location.state as { id: string };
+  // const { id } = location.state as { id: string };
+  const { id } = useParams();
 
   const [vote, setVote] = useState<Poll | null>(null);
   useEffect(() => {
     const fetchVote = async () => {
       try {
-        const response = await getPollById(id);
-        setVote(response.data);
+        if (id) {
+          const response = await getPollById(id);
+          setVote(response.data);
+        } else {
+          console.error("ID is undefined");
+        }
+        // setVote(response.data);
 
       } catch (error) {
         console.error("Error fetching vote data:", error);

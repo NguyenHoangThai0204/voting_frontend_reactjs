@@ -6,13 +6,12 @@
   import { Vote } from "../typeObject";
   import { PollResponse } from "../typeObject";
 
-  // const API_USER = 'http://localhost:3000/api/user';
-  // const API_VOTE = 'http://localhost:3000/api/vote';
-  // const API_POLL = 'http://localhost:3000/api/poll';
-  const API_USER = 'http://13.229.71.25:3000/api/user';
-const API_VOTE = 'http://13.229.71.25:3000/api/vote';
-const API_POLL = 'http://13.229.71.25:3000/api/poll';
-
+  const API_USER = 'http://localhost:3000/api/user';
+  const API_VOTE = 'http://localhost:3000/api/vote';
+  const API_POLL = 'http://localhost:3000/api/poll';
+  // const API_USER = 'http://13.229.71.25:3000/api/user';
+  // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
+  // const API_POLL = 'http://13.229.71.25:3000/api/poll';
 
   // Hàm đăng nhập người dùng
   export const loginUser = async (data: { email: string; password: string }): Promise<UserResponse> => {

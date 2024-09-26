@@ -3,7 +3,6 @@ import { HomeLayout } from './component/Home/HomeLayout/HomeLayout';
 import PrivateRoute from './contextapi/PrivateRoute';
 import { AuthProvider } from './contextapi/AuthContext';
 import { FormLayout } from './component/LoginAndRegister/FormLayout/FormLayout';
-
 function App() {
   return (
     <AuthProvider>
@@ -17,7 +16,7 @@ function App() {
             <Route path="setting" element={<HomeLayout />} />
             <Route path="create-poll" element={<HomeLayout />} />
           </Route>
-          <Route path="detail-poll" element={<HomeLayout/>} />
+          <Route path="detail-poll/:id" element={<HomeLayout />} />
           <Route path="comment" element={<HomeLayout />} />
           <Route path="logout" element={<HomeLayout />} />
           <Route path="login" element={<FormLayout />} />

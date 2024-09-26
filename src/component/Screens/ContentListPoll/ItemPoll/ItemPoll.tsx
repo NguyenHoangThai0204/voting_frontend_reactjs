@@ -35,7 +35,8 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
 
   return (
     <div className="item">
-      <Link to="/detail-poll" state={{ id: item._id }}>
+      {/* <Link to="/detail-poll" state={{ id: item._id }}> */}
+      <Link to={`/detail-poll/${item._id}`}>
         <div className="image_container">
           <img src={img} alt="item" />
           <div className="icon_container">

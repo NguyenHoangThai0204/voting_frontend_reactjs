@@ -1,54 +1,122 @@
-// import "./ContentDetailVote.css"
-// import TextField from '@mui/material/TextField';
-// import { useLocation } from 'react-router-dom';
-// import { Vote } from "../../../typeObject";
-// import { useEffect, useState } from "react";
-// import {getVoteById} from "../../../api/userApi";
+// import { useContext, useEffect, useState } from 'react';
+// import { AuthContext } from '../../../contextapi/AuthContext';
+// import { Select, MenuItem } from '@mui/material';
+// import axios from 'axios';
+// import './ContentInformation.css';
 
-// export const ContentDetailVote = () => {
-//   const location = useLocation();
-//     // Lấy ID từ state
-//   const { id } = location.state as { id: string };
-//   const [vote, setVote] = useState<Vote>();
+// const ContentInformation = () => {
+//   const authContext = useContext(AuthContext);
+//   const user = authContext?.user;
+//   const isLogged = authContext?.isLogged;
+
+//   interface Location {
+//     code: string;
+//     name: string;
+//   }
+
+//   const [provinces, setProvinces] = useState<Location[]>([]);
+//   const [districts, setDistricts] = useState<Location[]>([]);
+//   const [wards, setWards] = useState<Location[]>([]);
+//   const [selectedProvince, setSelectedProvince] = useState('');
+//   const [selectedDistrict, setSelectedDistrict] = useState('');
+//   const [selectedWard, setSelectedWard] = useState('');
 
 //   useEffect(() => {
-//     const fetchVote = async () => {
-//       const response = await getVoteById(id);
-//       console.log('Vote response:', response);
-//       console.log('Vote data:',id);
-//       setVote(response.data);
+//     axios.get('https://provinces.open-api.vn/api/p/')
+//       .then(response => setProvinces(response.data))
+//       .catch(error => console.error('Error fetching provinces:', error));
+//   }, []);
+
+//   useEffect(() => {
+//     if (selectedProvince) {
+//       axios.get(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
+//         .then(response => {
+//           setDistricts(response.data.districts);
+//           setWards([]);
+//         })
+//         .catch(error => console.error('Error fetching districts:', error));
 //     }
-//     fetchVote();
-//   }, [id]);
+//   }, [selectedProvince]);
+
+//   useEffect(() => {
+//     if (selectedDistrict) {
+//       axios.get(`https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
+//         .then(response => setWards(response.data.wards))
+//         .catch(error => console.error('Error fetching wards:', error));
+//     }
+//   }, [selectedDistrict]);
+
+//   if (!isLogged) {
+//     return <p>Please log in to see user information.</p>;
+//   }
 
 //   return (
-//     <div className="wrapper_detail_vote">
-//       <form>
-//         <div className="header_content_form">
-//           <div className="header_content_form_right">
-//             <label htmlFor="upload_image_vote" className="upload_area">
-//               <img></img>
-//             </label>
-//           </div>
-//           <div className="header_content_form_left">
-//             <div className="label">Name vote:</div>
-//             <h1>{vote?.title}</h1>
-//             <div className="label">Description:</div>
-//             <TextField className="text_namevote" value={vote?.description || ''}  inputProps={{ readOnly: true }} multiline rows={4} variant="outlined" />
+//     <div>
+//       <h1>User Information</h1>
+//       {user ? (
+//         <div>
+//           <p><strong>ID:</strong> {user._id}</p>
+//           <p><strong>Email:</strong> {user.email}</p>
+//           <p><strong>Full Name:</strong> {user.fullName}</p>
+//           <div style={{ display: "flex", alignItems: "center" }}>
+//             <p><strong>Address:</strong></p>
+//               <p>Province:</p>
+//               <Select
+//                 value={selectedProvince}
+//                 value={user.province}
+//                 onChange={(e) => setSelectedProvince(e.target.value)}
+//                 displayEmpty
+//                 className='tenTinh'
+//                 size='medium'
+//               >
+//                 <MenuItem value="" disabled>Select a Province</MenuItem>
+//                 {provinces.map(province => (
+//                   <MenuItem key={province.code} style={{ fontSize: "1.5rem" }} value={province.code}>
+//                     {province.name}
+//                   </MenuItem>
+//                 ))}
+//               </Select>
+//               <p>District:</p>
+//               <Select
+//                 value={selectedDistrict}
+//                 onChange={(e) => setSelectedDistrict(e.target.value)}
+//                 displayEmpty
+//                 className='tenHuyen'
+//                 disabled={!selectedProvince}
+//               >
+//                 <MenuItem value="" disabled>Select a District</MenuItem>
+//                 {districts.map(district => (
+//                   <MenuItem key={district.code} style={{ fontSize: "1.5rem" }} value={district.code}>
+//                     {district.name}
+//                   </MenuItem>
+//                 ))}
+//               </Select>
+//               <p>Ward:</p>
+//               <Select
+//                 value={selectedWard}
+//                 onChange={(e) => setSelectedWard(e.target.value)}
+//                 displayEmpty
+//                 className='tenXa'
+//                 disabled={!selectedDistrict}
+//               >
+//                 <MenuItem value="" disabled>Select a Ward</MenuItem>
+//                 {wards.map(ward => (
+//                   <MenuItem key={ward.code} style={{ fontSize: "1.5rem" }} value={ward.code}>
+//                     {ward.name}
+//                   </MenuItem>
+//                 ))}
+//               </Select>
+//             <div>
+//               <p>Street:</p>
+//               {/* Add input for street here */}
+//             </div>
 //           </div>
 //         </div>
-//         <div className="content_form">
-//           <div className="label">Option:</div>
-//           <div className="content_option">
-//             {vote?.selectors.map((option, index) => (
-//               <div key={index}>
-//                 <TextField className="text_option" value={option.contentSelector} inputProps={{ readOnly: true }} variant="outlined" />
-// sdfasf
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </form>
+//       ) : (
+//         <p>No user information available.</p>
+//       )}
 //     </div>
-//   )
-// }
+//   );
+// };
+
+// export default ContentInformation;
