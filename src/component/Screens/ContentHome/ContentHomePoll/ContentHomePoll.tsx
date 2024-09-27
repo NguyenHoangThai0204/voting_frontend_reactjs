@@ -36,12 +36,10 @@ export const ContentHomeVote = () => {
     return (
         <div className="wrapper_votelayout">
             <div className="content_vote">
-                {/* Nội dung khác của bạn */}
             </div>
             <div className="list_vote">
                
                 <div className="list_item_vote">
-                    {/* Render danh sách các cuộc vote */}
                         <ListPoll vote={voting} />
                 </div>
             </div>

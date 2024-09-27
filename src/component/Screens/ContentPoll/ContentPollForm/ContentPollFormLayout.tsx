@@ -25,8 +25,13 @@ export const ContentPollFormLayout = () => {
   const [description, setDescription] = useState("")
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
 
 
+  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageUrl(event.target.value);
+    setImage(event.target.value); // Cập nhật hình ảnh với URL mới
+  };
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
   };
@@ -109,27 +114,35 @@ export const ContentPollFormLayout = () => {
       <h1>CREATE NEW VOTE</h1>
       <form>
         <div className="header_content_form">
-          <div className="header_content_form_right">
-            <label htmlFor="upload_image_vote" className="upload_area">
-              <input type="file"
-                id="upload_image_vote"
-                onChange={handleChangeImage}
-                style={{ display: "none" }}
-              />
-              {
-                image ?
-                  (
-                    <img src={image} alt="vote_image"></img>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      className="upload_button"
-                      component="span"
-                    > Upload image</Button>
-                  )
-              }
-            </label>
-          </div>
+        <div className="header_content_form_right">
+      <label htmlFor="upload_image_vote" className="upload_area">
+        <input
+          type="file"
+          id="upload_image_vote"
+          onChange={handleChangeImage}
+          style={{ display: 'none' }}
+        />
+        {image ? (
+          <img src={image} alt="vote_image" />
+        ) : (
+          <Button
+            variant="contained"
+            className="upload_button"
+            component="span"
+          >
+            Upload image
+          </Button>
+        )}
+      </label>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter image URL"
+          value={imageUrl}
+          onChange={handleUrlChange}
+        />
+      </div>
+    </div>
           <div className="header_content_form_left">
             <div className="label">Name vote:</div>
             <TextField className="text_namevote" onChange={(e) => setNameVote(e.target.value)} variant="outlined" />

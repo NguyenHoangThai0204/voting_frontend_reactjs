@@ -1,28 +1,22 @@
 import "./ContentDetailPoll.css";
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { useState, useEffect } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { getPollById, postVote } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
-// import { useLocation } from "react-router-dom";
 import { format } from 'date-fns';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
 import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
 import { useParams } from 'react-router-dom';
-// interface Params {
-//   id: string; // Hoặc có thể là number nếu bạn chuyển đổi từ string
-// }
+
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
-  const [image, setImage] = useState<string | null>(null);
-  // const location = useLocation();
-  // Lấy ID từ state
-  // const { id } = location.state as { id: string };
+
+
   const { id } = useParams();
 
   const [vote, setVote] = useState<Poll | null>(null);
@@ -76,13 +70,6 @@ export const ContentDetailPoll: React.FC = () => {
   };
 
 
-  const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-    }
-  }
   const handleChoiceChangeContent = (index: number, value: string) => {
     const newChoices = [...choices];
     newChoices[index] = value;
@@ -112,33 +99,17 @@ export const ContentDetailPoll: React.FC = () => {
   };
 
   return (
-    <div className="wrapper_voteform">
+    <div className="wrapper_detail_vote">
       <h1>DETAIL VOTE</h1>
 
       <form>
         <div className="header_content_form">
-          <div className="header_content_form_right">
-            <label htmlFor="upload_image_vote" className="upload_area">
-              <input type="file"
-                id="upload_image_vote"
-                onChange={handleChangeImage}
-                style={{ display: "none" }}
-              />
-              {
-                image ?
-                  (
-                    <img src={image} alt="vote_image"></img>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      className="upload_button"
-                      component="span"
-                    > Upload image</Button>
-                  )
-              }
-            </label>
+          <div className="header_content_detail_right">
+            <div className="avatar_poll">
+              <img src={vote?.avatar ?? undefined} alt="upload" /> 
+            </div>
           </div>
-          <div className="header_content_form_left">
+          <div className="header_content_detail_left">
             <div style={{ display: "flex" }}>
               <div style={{ width: "90%" }}>
                 <div className="label">Name vote:</div>
@@ -187,6 +158,7 @@ export const ContentDetailPoll: React.FC = () => {
               <TextField
                 className="text_namechoice"
                 variant="outlined"
+                style={{ marginBottom: "10px",width: "100%",backgroundColor: "#f5f5f5" }}
                 placeholder={`Choice ${index + 1}`}
                 value={select.contentOption || ''}
                 onClick={() => handleVote(select._id, select.contentOption)}

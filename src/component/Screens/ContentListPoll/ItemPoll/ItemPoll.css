@@ -41,6 +41,16 @@ h5, h3{
     justify-content: space-between;
     margin: 8px 0;
 }
+.footer_left{
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.footer_right{
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+}
 @media screen and (max-width:900px) {
     .item{
         margin: 0 5px 0 0;

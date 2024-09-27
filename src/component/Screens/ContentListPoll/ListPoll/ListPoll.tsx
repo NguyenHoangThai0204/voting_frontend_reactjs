@@ -45,7 +45,7 @@ export const ListPoll: React.FC<ListVotingProps> = ({ vote }) => {
     }, []);
 
     return (
-        <div style={{ display: 'block', padding: '10px' }}>
+        <div style={{ display: 'block'}}>
             <div className='wrapper_list_vote'>
                 {currentItems.map((item) => (
                     <ItemPoll key={item._id} item={item} />
