@@ -10,6 +10,7 @@ export interface User {
     gender?: string;
     province?: string;
     district?: string;
+    status?: string;
     ward?: string;
     street?: string;
     role?: string;

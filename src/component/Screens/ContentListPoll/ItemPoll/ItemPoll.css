@@ -16,6 +16,7 @@ a{
 .image_container {
     position: relative;
     display: inline-block;
+    height: 200px;
 }
 img {
     display: block;
@@ -42,19 +43,24 @@ h5, h3{
     margin: 8px 0;
 }
 .footer_left{
-    width: 50%;
+    width: 40%;
     overflow: hidden;
     white-space: nowrap;
 }
 .footer_right{
     width: 50%;
     overflow: hidden;
+    text-align: right;
     white-space: nowrap;
 }
 @media screen and (max-width:900px) {
+    .image_container {
+        height: 100px;
+        width: 150px;
+    }
     .item{
         margin: 0 5px 0 0;
         width: 48%;
-        
+        padding: 10px;
     }
 }

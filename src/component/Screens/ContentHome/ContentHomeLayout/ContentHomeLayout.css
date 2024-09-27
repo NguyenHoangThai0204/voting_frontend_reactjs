@@ -4,21 +4,12 @@
 }
 .content_right_home .slider_content_home {
   width: 99%;
-  margin: auto;
+  margin: 0 0 15px 0;
   height: 250px;
 }
 .content_right_home .slider_content_home img {
   width: 100%;
   border-radius: 20px;
-}
-.content_right_home .list_vote {
-  width: 100%;
-  height: max-content;
-  position: relative;
-  overflow-x: scroll;
-  top: 30px;
-  margin: auto;
-  padding: 5px;
 }
 
 /*# sourceMappingURL=ContentHomeLayout.css.map */

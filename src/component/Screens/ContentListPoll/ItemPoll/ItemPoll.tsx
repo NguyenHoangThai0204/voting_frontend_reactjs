@@ -38,7 +38,7 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
       {/* <Link to="/detail-poll" state={{ id: item._id }}> */}
       <Link to={`/detail-poll/${item._id}`}>
         <div className="image_container">
-          <img src={img} alt="item" />
+        <img style={{ height: "100%", width: "100%", objectFit: "cover" }} src={item.avatar || img} alt="item" />
           <div className="icon_container">
             <i className="fa-solid fa-heart"></i>
           </div>

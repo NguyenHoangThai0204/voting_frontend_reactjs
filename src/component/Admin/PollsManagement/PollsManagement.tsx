@@ -19,7 +19,9 @@ export const PollsManagement = () => {
     };
     fetchPolls();
   }, []);
-
+  const convertToVietnamTime = (isoTime: string) => {
+    return new Date(isoTime).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+  };
   return (
     <div>
         <table className="table table-striped" style={{ width: '100%'}} border={1}>
@@ -29,16 +31,20 @@ export const PollsManagement = () => {
                 <th scope="col">Poll name</th>
                 <th scope="col">Avatar</th>
                 <th scope="col">Description</th>
+                <th scope="col">Time start</th>
+                <th scope="col">Time end</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
               { polls.map((poll, index)=>(
-                <tr>
+                <tr key={poll._id}>
                   <td>{index + 1}</td>
                   <td>{poll.title}</td>
                   <td><img src={poll.avatar ?? ''} alt="avatar" style={{ width: '50px', height: '50px' }} /></td>
                   <td>{poll.description}</td>
+                  <td>{poll.timeStart ? convertToVietnamTime(poll.timeStart) : 'N/A'}</td>
+                  <td>{poll.timeEnd ? convertToVietnamTime(poll.timeEnd) : 'N/A'}</td>
                   <td style={{textAlign:"center", margin:"auto" }} > 
                     <button className="btn btn-primary" style={{marginRight:"5px"}}>Edit</button>
                     <button className="btn btn-danger" style={{marginLeft:"10px"}}>Delete</button>

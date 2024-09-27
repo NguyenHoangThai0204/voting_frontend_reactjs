@@ -4,6 +4,7 @@ import "./ContentHomeSlideAnomation.css";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import image1 from '../../../../assets/anh-dep-thien-nhien-2-1.jpg'
+import image2 from '../../../../assets/tong-hop-background-dep.jpg'
 export const ContentHomeSlideAnomation = () => {
     const settings = {
         dots: true,
@@ -22,16 +23,7 @@ export const ContentHomeSlideAnomation = () => {
               <img src={image1} alt="Image 1" />
             </div>
             <div>
-              <img src="image2.jpg" alt="Image 2" />
-            </div>
-            <div>
-              <img src="image3.jpg" alt="Image 3" />
-            </div>
-            <div>
-              <img src="image4.jpg" alt="Image 4" />
-            </div>
-            <div>
-              <img src="image5.jpg" alt="Image 5" />
+              <img src={image2} alt="Image 2" />
             </div>
           </Slider>
         </div>

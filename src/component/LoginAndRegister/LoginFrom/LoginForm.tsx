@@ -31,8 +31,12 @@ export default function LoginForm({ onSignUpClick }: { onSignUpClick: () => void
             const response = await loginUser({ email: username, password: password });
             // Kiểm tra và lấy dữ liệu người dùng từ response.data
             if (response.message === "Login success") {
-              authContext?.login(response.data); // Truyền toàn bộ dữ liệu vào context
-              navigate('/home');
+                if( response.data.status === "active" ) {
+                  authContext?.login(response.data);
+                  navigate('/home');
+                } else {
+                    alert("Your account is not active. Please check your email to active your account.");
+                    }
             } else {
               alert(response.message);
             }

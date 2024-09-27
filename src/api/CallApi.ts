@@ -53,3 +53,8 @@
     const response = await axios.get(`${API_USER}/findAllUser`);
     return response.data;
   }
+  // Đổi trạng thái của người dùng qua id
+  export const changeStatusUser = async (id: string): Promise<UserResponse> => {
+    const response = await axios.post(`${API_USER}/deletedUser`, { id });
+    return response.data;
+  }

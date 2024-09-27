@@ -17,4 +17,9 @@
     font-size: 40px;
     color: black;
   }
-  
+  @media screen and (max-width: 900px) {
+    .home_image{
+      height: 200px;
+    }
+    
+  }
