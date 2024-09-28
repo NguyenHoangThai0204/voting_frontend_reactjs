@@ -35,7 +35,7 @@ export const HeaderHomeLoggedin = () => {
         <div className="header__home_icon">
   <div>
     {user?.avatar ? (
-      <img src={user?.avatar} alt="avatar" style={{ width: "40px", height: "40px", borderRadius: "50px" }} />
+      <img src={user?.avatar} alt="avatar" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
     ) : (
       <AccountCircleIcon sx={{ fontSize: 40 }} />
     )}

@@ -5,10 +5,12 @@
   import { PollCreate } from '../typeObject';
   import { Vote } from "../typeObject";
   import { PollResponse } from "../typeObject";
+  import Cookies from 'universal-cookie';
 
   const API_USER = 'http://localhost:3000/api/user';
   const API_VOTE = 'http://localhost:3000/api/vote';
   const API_POLL = 'http://localhost:3000/api/poll';
+  const API_SSO = "http://localhost:3000/api/auth";
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
@@ -58,3 +60,29 @@
     const response = await axios.post(`${API_USER}/deletedUser`, { id });
     return response.data;
   }
+  // Hàm đăng nhập Google
+export const loginGoogle = async (token: string): Promise<UserResponse | null> => {
+  try {
+    // Gửi token đến backend
+    const response = await axios.post(`${API_SSO}/google`, { token });
+
+    // Kiểm tra nếu đăng nhập thành công
+    if (response.status === 200)  {
+      console.log("Google login success:", response.data);
+
+
+      // Lưu JWT token vào cookie 
+      const cookies = new Cookies();
+      cookies.set("token", token, { path: "/", maxAge: 3600, secure: true }); // Token tồn tại trong 1 giờ và thêm 'secure' nếu dùng HTTPS
+
+      // Trả về dữ liệu người dùng
+      return response.data;
+    } else {
+      console.error("Login failed:", response.data.message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Google login error:", error);
+    return null;
+  }
+};
