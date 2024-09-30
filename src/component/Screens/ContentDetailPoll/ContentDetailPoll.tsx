@@ -20,6 +20,7 @@ export const ContentDetailPoll: React.FC = () => {
   const { id } = useParams();
 
   const [vote, setVote] = useState<Poll | null>(null);
+
   useEffect(() => {
     const fetchVote = async () => {
       try {
@@ -45,26 +46,32 @@ export const ContentDetailPoll: React.FC = () => {
   const handleVote = async (optionId: string, content: string) => {
     try {
       const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
+      const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
 
-      if (voteEndDate && voteEndDate > new Date()) {
-        const confirmVote = confirm('Bạn chọn: ' + content);
-        if (confirmVote) {
-          const dataVote = {
-            pollId: null,
-            optionId: optionId,
-            transactionHash: null,
-            userId: null,
-            timestamp: new Date().toISOString(),
-          };
-          console.log(dataVote);
-          await postVote(dataVote);
-          alert('Thành công');
+      if ( voteStartDate && voteStartDate < new Date() ){
+        if (voteEndDate && voteEndDate > new Date() ) {
+          const confirmVote = confirm('Bạn chọn: ' + content);
+          if (confirmVote) {
+            const dataVote = {
+              pollId: null,
+              optionId: optionId,
+              transactionHash: null,
+              userId: null,
+              timestamp: new Date().toISOString(),
+            };
+            console.log(dataVote);
+            await postVote(dataVote);
+            alert('Thành công');
+          } else {
+            alert('Huỷ chọn');
+          }
         } else {
-          alert('Huỷ chọn');
+          alert('Bình chọn đã kết thúc');
         }
-      } else {
-        alert('Bình chọn đã kết thúc');
+      }else{
+        alert('Bình chọn Chưa bắt đầu');
       }
+      
     } catch (error) {
       console.error('Error: ' + error);
     }
