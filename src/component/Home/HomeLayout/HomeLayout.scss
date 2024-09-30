@@ -4,11 +4,11 @@
   position: relative;
   background-color: rgb(226, 240, 231);
 
-
   .header_home {
     width: 100%;
     position: fixed;
     z-index: 10;
+    padding: 0 20px;
     top: 0;
     border-bottom: 1px solid rgb(215, 214, 214);
     animation: headerIn 0.8s ease-in-out forwards;
@@ -19,12 +19,15 @@
     display: block;
     margin: 0 auto;
     margin-top: 70px;
+    width: 80%;
+    flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
 
     .body_home {
-      height: 100vh;
-      position: relative;
       display: flex;
-
+      flex-grow: 1; /* Nội dung chính sẽ chiếm không gian còn lại */
+      position: relative;
+      height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
+      
       .menu_left {
         width: 8%;
         animation: menuIn 0.8s ease-in-out forwards;
@@ -39,15 +42,16 @@
       .content_right {
         width: 92%;
         overflow-y: auto;
-        flex-grow: 1;
-        height: auto;
+        flex-grow: 1; /* Tự động mở rộng để chiếm không gian */
         margin-top: 5px;
+        overflow: auto;
         animation: content_right 3s ease-in-out forwards;
+        height: auto; /* Đảm bảo chiều cao phù hợp với nội dung */
 
-        // Tùy chỉnh thanh cuộn chỉ cho .content_right
+        /* Tùy chỉnh thanh cuộn chỉ cho .content_right */
         &::-webkit-scrollbar {
-          width: 6px; // Giảm kích thước thanh cuộn cho phần nội dung bên phải
-          height: 6px;
+          width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
+          height: 0;
         }
 
         &::-webkit-scrollbar-thumb {
@@ -60,14 +64,15 @@
         }
       }
     }
+  }
 
-    .footer_home {
-      width: 100%;
-      background-color: rgb(47,136,138);
-      position: relative;
-    }
+  .footer_home {
+    width: 100%;
+    background-color: rgb(47,136,138);
+    position: relative;
   }
 }
+
 
 // Keyframes cho animation
 @keyframes headerIn {
@@ -109,8 +114,7 @@
     .content_home {
       display: flex;
       flex-direction: column;
-      padding-bottom: 93px;
-
+      width: 100%;
       .body_home {
         .menu_left {
           width: 100%;
@@ -129,11 +133,13 @@
       }
     }
 
-    .footer_home {
-      width: 100%;
-      order: 3;
-      background-color: gray;
-      position: relative;
-    }
+   
+  }
+  .footer_home {
+    width: 100%;
+    order: 3;
+    background-color: gray;
+    position: relative;
+    padding-bottom: 93px;
   }
 }

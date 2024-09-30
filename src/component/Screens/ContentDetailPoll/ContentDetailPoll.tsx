@@ -39,7 +39,7 @@ export const ContentDetailPoll: React.FC = () => {
     fetchVote();
   }, [id]);
 
-  const formattedTimeCreate = vote?.timeCreate ? format(new Date(vote.timeCreate), 'dd/MM/yyyy HH:mm') : '';
+  // const formattedTimeCreate = vote?.timeCreate ? format(new Date(vote.timeCreate), 'dd/MM/yyyy HH:mm') : '';
   const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';
   const formattedTimeEnd = vote?.timeEnd ? format(new Date(vote.timeEnd), 'dd/MM/yyyy HH:mm') : '';
 
@@ -206,10 +206,10 @@ export const ContentDetailPoll: React.FC = () => {
         }
 
         <div className="form_date">
-          <div className="date">
+          {/* <div className="date">
             <div className="label">Time create:</div>
             <TextField type="text" className="labelField" value={formattedTimeCreate || ''} variant="outlined" />
-          </div>
+          </div> */}
           <div className="date">
             <div className="label">Start date:</div>
             <TextField type="text" className="labelField" value={formattedTimeStart || ''} variant="outlined" />

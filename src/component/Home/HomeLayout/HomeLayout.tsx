@@ -36,12 +36,13 @@ export const HomeLayout = () => {
                   <ContentLayout />
                 </section>
               </div>
-              <footer className="footer_home">
-                <FooterHome />
-              </footer>
+              
             </main>
           )
       }
+      <footer className="footer_home">
+                <FooterHome />
+              </footer>
 
     </div>
   );

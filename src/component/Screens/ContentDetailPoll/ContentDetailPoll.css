@@ -2,7 +2,8 @@
   display: block;
   text-align: center;
   padding: 10px;
-  width: 90vw;
+  width: 100%;
+  overflow: hidden;
 }
 .wrapper_detail_vote h1 {
   color: #41b3a2;

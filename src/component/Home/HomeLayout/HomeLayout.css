@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .home_layout {
   display: block;
   height: 100vh;
@@ -8,6 +9,7 @@
   width: 100%;
   position: fixed;
   z-index: 10;
+  padding: 0 20px;
   top: 0;
   border-bottom: 1px solid rgb(215, 214, 214);
   animation: headerIn 0.8s ease-in-out forwards;
@@ -17,11 +19,14 @@
   display: block;
   margin: 0 auto;
   margin-top: 70px;
+  width: 80%;
+  flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
 }
 .home_layout .content_home .body_home {
-  height: 100vh;
-  position: relative;
   display: flex;
+  flex-grow: 1; /* Nội dung chính sẽ chiếm không gian còn lại */
+  position: relative;
+  height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
 }
 .home_layout .content_home .body_home .menu_left {
   width: 8%;
@@ -36,14 +41,16 @@
 .home_layout .content_home .body_home .content_right {
   width: 92%;
   overflow-y: auto;
-  flex-grow: 1;
-  height: auto;
+  flex-grow: 1; /* Tự động mở rộng để chiếm không gian */
   margin-top: 5px;
+  overflow: auto;
   animation: content_right 3s ease-in-out forwards;
+  height: auto; /* Đảm bảo chiều cao phù hợp với nội dung */
+  /* Tùy chỉnh thanh cuộn chỉ cho .content_right */
 }
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
+  height: 0;
 }
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar-thumb {
   background-color: darkgrey;
@@ -52,7 +59,7 @@
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-.home_layout .content_home .footer_home {
+.home_layout .footer_home {
   width: 100%;
   background-color: rgb(47, 136, 138);
   position: relative;
@@ -92,7 +99,7 @@
   .home_layout .content_home {
     display: flex;
     flex-direction: column;
-    padding-bottom: 93px;
+    width: 100%;
   }
   .home_layout .content_home .body_home .menu_left {
     width: 100%;
@@ -107,11 +114,12 @@
     order: 1;
     flex-grow: 1;
   }
-  .home_layout .footer_home {
+  .footer_home {
     width: 100%;
     order: 3;
     background-color: gray;
     position: relative;
+    padding-bottom: 93px;
   }
 }
 
