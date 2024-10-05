@@ -1,7 +1,6 @@
 @charset "UTF-8";
 .home_layout {
   display: block;
-  height: 100vh;
   position: relative;
   background-color: rgb(226, 240, 231);
 }
@@ -9,7 +8,6 @@
   width: 100%;
   position: fixed;
   z-index: 10;
-  padding: 0 20px;
   top: 0;
   border-bottom: 1px solid rgb(215, 214, 214);
   animation: headerIn 0.8s ease-in-out forwards;
@@ -19,7 +17,7 @@
   display: block;
   margin: 0 auto;
   margin-top: 70px;
-  width: 80%;
+  width: 98%;
   flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
 }
 .home_layout .content_home .body_home {
