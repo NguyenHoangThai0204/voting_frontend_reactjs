@@ -1,13 +1,22 @@
-
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {getAllUser, changeStatusUser} from '../../../api/CallApi';
+import { getAllUser, getInforAuthor } from '../../../api/CallApi';
 import { User } from '../../../typeObject';
 import './UsersManagement.css';
 
 export const UsersManagement = () => {
-
+  // Lấy state từ location
+  const location = useLocation();
   const [users, setUsers] = useState<User[]>([]);
-  
+  const [id, setId] = useState<string>('');
+  const [userItem, setUserItem] = useState<User>();
+  // Lấy id từ state nếu tồn tại
+  useEffect(() => {
+    if (location.state && location.state.id) {
+      setId(location.state.id);
+    }
+  }, [location.state]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -20,57 +29,56 @@ export const UsersManagement = () => {
     fetchUsers();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    try {
-      const confirmDelete = confirm('Are you sure you want to delete this user?');
-      if (confirmDelete) {
-        await changeStatusUser(id);
-        alert('Delete user successfully');
-      }
-    } catch (error) {
-      console.error("Error deleting user data:", error);
+  useEffect(() => {
+    if (id) { // Nếu có id, gọi API lấy thông tin của người dùng theo id
+      const fetchUserInfo = async () => {
+        try {
+          const response = await getInforAuthor(id);
+         setUserItem(response.data);
+        } catch (error) {
+          console.error("Error fetching user info:", error);
+        }
+      };
+      fetchUserInfo();
     }
-  };
+  }, [id]); // Chỉ chạy khi id thay đổi
 
   return (
-    <div>
-        <table className="table table-striped" style={{ width: '100%'}} border={1}>
-            <thead>
-                <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Full name</th>
-                <th scope="col">Avatar</th>
-                <th scope="col">Phone number</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Email</th>
-                <th scope="col">Address</th>
-                <th scope="col">Role</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-              {users.map((user, index)=>(
-                <tr>
+    <div className="usersManagement">
+      <div className="userManaLeft">
+        <table className="table table-striped" style={{ width: '100%' }} border={1}>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Full name</th>
+              <th scope="col">Avatar</th>
+              <th scope="col">Phone number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {location.pathname.startsWith('/home/getUserByid') ? (
+              <tr>
+                <td>1</td>
+                <td>{userItem?.fullName}</td>
+                <td><img src={userItem?.avatar} alt="avatar" style={{ width: '50px', height: '50px' }} /></td>
+                <td>{userItem?.phone}</td>
+              </tr>
+            ) : (
+              users.map((user, index) => (
+                <tr key={user._id}>
                   <td>{index + 1}</td>
                   <td>{user.fullName}</td>
                   <td><img src={user.avatar} alt="avatar" style={{ width: '50px', height: '50px' }} /></td>
                   <td>{user.phone}</td>
-                  <td>{user.gender}</td>
-                  <td>{user.email}</td>
-                  <td>{user.address}</td>
-                  <td>{user.role}</td>
-                  <td>{user.status}</td>
-                  <td style={{textAlign:"center", margin:"auto" }} > 
-                    <button className="btn btn-primary" style={{marginRight:"5px"}}>Edit</button>
-                    <button className="btn btn-danger"
-                      onClick={() => handleDelete(user._id)}
-                    style={{marginLeft:"10px"}}>Delete</button>
-                  </td>
                 </tr>
-              ))}    
-            </tbody>
-        </table>    
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="userManaRight">
+        {/* Hiển thị thêm thông tin người dùng ở đây nếu cần */}
+      </div>
     </div>
-  )
-}
+  );
+};

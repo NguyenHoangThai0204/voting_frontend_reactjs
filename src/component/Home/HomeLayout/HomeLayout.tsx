@@ -25,7 +25,9 @@ export const HomeLayout = () => {
       {
         user && user.role === "admin"
           ? (
-            <ContentTabsAdmin />
+            <div className="contentTabsAdmin" style={{height:"100vh"}}>
+              <ContentTabsAdmin />  
+            </div>
           ) : (
             <main className="content_home">
               <div className="body_home">
@@ -36,13 +38,12 @@ export const HomeLayout = () => {
                   <ContentLayout />
                 </section>
               </div>
-              
             </main>
           )
       }
       <footer className="footer_home">
-                <FooterHome />
-              </footer>
+        <FooterHome />
+      </footer>
 
     </div>
   );
@@ -57,7 +58,7 @@ export const HomeLayout = () => {
   //           <ContentTabsAdmin />
   //         ) : (
   //           <ContentTabsAdmin />
-              
+
   //         )
   //     }
 

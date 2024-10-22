@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { UsersManagement } from '../UsersManagement/UsersManagement';
 import { InputSearchAdmin } from '../InputSearchAdmin/InputSearchAdmin';
-import { PollsManagement } from '../PollsManagement/PollsManagement';
+// import { PollsManagement } from '../PollsManagement/PollsManagement';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,23 +46,16 @@ export default function ContentTabsAdmin() {
     <Box sx={{ width: '90vw', position: 'relative', top: '70px', margin: 'auto' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "space-between" }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="List user" {...a11yProps(0)} sx={{ textTransform: 'none' }} />
-          <Tab label="List poll" {...a11yProps(1)} sx={{ textTransform: 'none' }} />
-          <Tab label="List comment" {...a11yProps(2)} sx={{ textTransform: 'none' }} />
+          <Tab label="List user" {...a11yProps(0)}
+           sx={{ textTransform: 'none' }} />
         </Tabs>
-        <div style={{ margin: "auto 0" }}>
+        <div style={{ margin: "10px 0" }}>
           < InputSearchAdmin />
         </div>
       </Box>
-      <div className="" style={{ overflow: "auto" }}>
+      <div style={{ overflow: "auto" }}>
         <CustomTabPanel value={value} index={0}>
           <UsersManagement />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <PollsManagement />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          item three
         </CustomTabPanel>
       </div>
     </Box>

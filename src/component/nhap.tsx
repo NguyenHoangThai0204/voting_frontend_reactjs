@@ -1,218 +1,97 @@
-// import "./ContentDetailPoll.css";
-// import TextField from '@mui/material/TextField';
-// import { useState, useEffect } from "react";
-// import { IconButton, InputAdornment } from "@mui/material";
-// import DescriptionIcon from '@mui/icons-material/Description';
-// import { getPollById, postVote } from "../../../api/CallApi";
-// import { Poll } from "../../../typeObject";
-// import { format } from 'date-fns';
-// import AssessmentIcon from '@mui/icons-material/Assessment';
-// import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
-// import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
-// import { useParams } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
+// import { getAllUser, changeStatusUser } from '../../../api/CallApi';
+// import { User } from '../../../typeObject';
+// import './UsersManagement.css';
 
-// export const ContentDetailPoll: React.FC = () => {
-//   const [choices, setChoices] = useState<string[]>([""]);
-//   const [descriptions, setDescriptions] = useState<string[]>([""]);
-//   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
+// export const UsersManagement = () => {
+//   const [users, setUsers] = useState<User[]>([]);
 
-
-//   const { id } = useParams();
-
-//   const [vote, setVote] = useState<Poll | null>(null);
 //   useEffect(() => {
-//     const fetchVote = async () => {
+//     const fetchUsers = async () => {
 //       try {
-//         if (id) {
-//           const response = await getPollById(id);
-//           setVote(response.data);
-//         } else {
-//           console.error("ID is undefined");
-//         }
-//         // setVote(response.data);
-
+//         const response = await getAllUser();
+//         setUsers(Array.isArray(response.data) ? response.data : [response.data]);
 //       } catch (error) {
-//         console.error("Error fetching vote data:", error);
+//         console.error("Error fetching users data:", error);
 //       }
 //     };
-//     fetchVote();
-//   }, [id]);
+//     fetchUsers();
+//   }, []);
 
-//   const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';
-//   const formattedTimeEnd = vote?.timeEnd ? format(new Date(vote.timeEnd), 'dd/MM/yyyy HH:mm') : '';
-
-//   const handleVote = async (optionId: string, content: string) => {
+//   const handleDelete = async (id: string) => {
 //     try {
-//       const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
-
-//       if (voteEndDate && voteEndDate > new Date()) {
-//         const confirmVote = confirm('Bạn chọn: ' + content);
-//         if (confirmVote) {
-//           const dataVote = {
-//             pollId: null,
-//             optionId: optionId,
-//             transactionHash: null,
-//             userId: null,
-//             timestamp: new Date().toISOString(),
-//           };
-//           console.log(dataVote);
-//           await postVote(dataVote);
-//           alert('Thành công');
-//         } else {
-//           alert('Huỷ chọn');
-//         }
-//       } else {
-//         alert('Bình chọn đã kết thúc');
+//       const confirmDelete = confirm('Are you sure you want to delete this user?');
+//       if (confirmDelete) {
+//         await changeStatusUser(id);
+//         alert('Delete user successfully');
+//         setUsers(users.filter(user => user._id !== id)); // Update the state to remove the deleted user
 //       }
 //     } catch (error) {
-//       console.error('Error: ' + error);
+//       console.error("Error deleting user data:", error);
 //     }
 //   };
 
-
-//   const handleChoiceChangeContent = (index: number, value: string) => {
-//     const newChoices = [...choices];
-//     newChoices[index] = value;
-//     setChoices(newChoices);
-//   }
-
-//   const handleDescriptionChangeContent = (index: number, value: string) => {
-//     const newDescriptions = [...descriptions];
-//     newDescriptions[index] = value;
-//     setDescriptions(newDescriptions);
-//   }
-
-//   const toggleDescriptionInput = (index: number) => {
-//     const newShowDescriptions = [...showDescriptions];
-//     newShowDescriptions[index] = !newShowDescriptions[index];
-//     setShowDescriptions(newShowDescriptions);
-//   }
-
-//   const [open, setOpen] = useState(false);
-
-//   const handleClickOpen = () => {
-//     setOpen(true); // Mở modal khi nhấn vào icon
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false); // Đóng modal
-//   };
-
 //   return (
-//     <div className="wrapper_voteform">
-//       <h1>DETAIL VOTE</h1>
-
-//       <form>
-//         <div className="header_content_form">
-//           <div className="header_content_detail_right">
-//             <div className="avatar_poll">
-//               <img src={vote?.avatar ?? undefined} alt="upload" /> 
-//             </div>
-//           </div>
-//           <div className="header_content_detail_left">
-//             <div style={{ display: "flex" }}>
-//               <div style={{ width: "90%" }}>
-//                 <div className="label">Name vote:</div>
-//                 <TextField
-//                   className="text_namevote"
-//                   value={vote?.title || ''}
-//                   inputProps={{ readOnly: true }}
-//                   variant="outlined"
-//                 />
-//               </div>
-//               <div style={{ margin: "auto" }}>
-//                 <IconButton
-//                   onClick={handleClickOpen}
-//                   aria-label="statistics"
-//                   style={{ transform: 'scale(1.5)' }} // Tăng kích thước nút
-//                 >
-//                   <AssessmentIcon style={{ fontSize: 50 }} /> {/* Tăng kích thước icon */}
-//                 </IconButton>
-//               </div>
-
-//               {/* Modal */}
-//               <div >
-//                 {vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
-//                   <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={vote._id} />
-//                 ) : (
-//                   vote?._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={vote._id} />
-//                 )}
-//               </div>
-//             </div>
-//             <div className="label">Description:</div>
-//             <TextField
-//               className="text_namevote"
-//               value={vote?.description || ''}
-//               multiline
-//               rows={4}
-//               inputProps={{ readOnly: true }}
-//               variant="outlined"
-//             />
-//           </div>
-//         </div>
-//         <div className="label">Choices:</div>
-//         {
-//           vote?.options.map((select, index) => (
-//             <div key={index} className="choice-wrapper">
-//               {/* <p>Số lượng phiếu hiện tại {select.votes.length} </p> */}
-//               <TextField
-//                 className="text_namechoice"
-//                 variant="outlined"
-//                 placeholder={`Choice ${index + 1}`}
-//                 value={select.contentOption || ''}
-//                 onClick={() => handleVote(select._id, select.contentOption)}
-//                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
-//                 InputProps={{
-//                   endAdornment: (
-//                     <InputAdornment position="end">
-//                       <IconButton
-//                         edge="end"
-//                         aria-label="add description"
-//                         onClick={(e) => {toggleDescriptionInput(index);
-//                           e.stopPropagation();}
-//                         }
-                        
-//                       >
-//                         <DescriptionIcon />
-//                       </IconButton>
-//                     </InputAdornment>
-//                   ),
-//                 }}
-//               />
-
-//               {
-//                 showDescriptions[index] && (
-//                   <TextField
-//                     className="text_description"
-//                     variant="outlined"
-//                     multiline
-//                     style={{ width: "100%", marginBottom: "10px" }}
-//                     value={select?.descriptionContentOption || ''}
-//                     onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
-//                   />
-//                 )
-//               }
-//             </div>
+//     <table className="table table-striped" style={{ width: '100%' }} border={1}>
+//       <thead>
+//         <tr>
+//           <th scope="col">ID</th>
+//           <th scope="col">Full name</th>
+//           <th scope="col">Avatar</th>
+//           <th scope="col">Phone number</th>
+//           <th scope="col">Gender</th>
+//           <th scope="col">Email</th>
+//           <th scope="col">Address</th>
+//           <th scope="col">Role</th>
+//           <th scope="col">Status</th>
+//           <th scope="col">Action</th>
+//         </tr>
+//       </thead>
+//       <tbody>
+//         {location.pathname.startsWith('/home/admin/') ? (
+//           <tr>
+//             <td>
+//               <p>ádsfg</p>
+//             </td>
+//           </tr>
+//         ) : (
+//           users.map((user, index) => (
+//             <tr key={user._id}>
+//               <td>{index + 1}</td>
+//               <td>{user.fullName}</td>
+//               <td><img src={user.avatar} alt="avatar" style={{ width: '50px', height: '50px' }} /></td>
+//               <td>{user.phone}</td>
+//               <td>{user.gender}</td>
+//               <td>{user.email}</td>
+//               <td>{user.address}</td>
+//               <td>{user.role}</td>
+//               <td>{user.status}</td>
+//               <td style={{ textAlign: "center", margin: "auto" }}>
+//                 <button className="btn btn-primary" style={{ marginRight: "5px" }}>Edit</button>
+//                 <button className="btn btn-danger" onClick={() => handleDelete(user._id)} style={{ marginLeft: "10px" }}>Delete</button>
+//               </td>
+//             </tr>
 //           ))
-//         }
+//         )}
+//       </tbody>
+//     </table>
+//   );
+// };
 
-//         <div className="form_date">
-//           <div className="date">
-//             <div className="label">Start date:</div>
-//             <TextField type="text" value={formattedTimeStart || ''} variant="outlined" />
-//           </div>
-//           <div className="date">
-//             <div className="label">End date:</div>
-//             <TextField type="text" value={formattedTimeEnd || ''} variant="outlined" />
-//           </div>
-//           <div className="date">
-//             <div className="label">Type of vote:</div>
-//             <TextField type="text" value={vote?.typeContent || ''} variant="outlined" />
-//           </div>
 
-//         </div>
 
-//       </form>
-//     </div>
-//   )
+
+
+
+// td{
+//     padding-left: 5px;
+// }
+
+// button{
+//     padding: 5px;
+// }
+// button:hover{
+//     background-color: yellow;
+//     color: black;
+//     border: none;
 // }

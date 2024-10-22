@@ -79,7 +79,7 @@ export const ContentPollFormLayout = () => {
 
   const handleCreateVote = async () => {
     // Kiểm tra điều kiện cho các trường bắt buộc
-    if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {  
+    if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate ) {  
       alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
       return;
     }

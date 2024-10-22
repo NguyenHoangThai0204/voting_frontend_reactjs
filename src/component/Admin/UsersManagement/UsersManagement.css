@@ -1,12 +1,13 @@
-td{
-    padding-left: 5px;
+.usersManagement {
+  display: flex;
+  justify-content: space-between;
+}
+.usersManagement .userManaLeft {
+  width: 44%;
+}
+.usersManagement .userManaRight {
+  width: 55%;
+  background-color: aqua;
 }
 
-button{
-    padding: 5px;
-}
-button:hover{
-    background-color: yellow;
-    color: black;
-    border: none;
-}
+/*# sourceMappingURL=UsersManagement.css.map */

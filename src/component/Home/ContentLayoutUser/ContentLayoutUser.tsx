@@ -4,6 +4,7 @@ import { ContentPollLayout } from "../../Screens/ContentPoll/ContentPollLayout/C
 import { ContentPollFormLayout } from "../../Screens/ContentPoll/ContentPollForm/ContentPollFormLayout";
 import ContentInformation from "../../Screens/ContentInformation/ContentInformation";
 import { ContentDetailPoll } from "../../Screens/ContentDetailPoll/ContentDetailPoll";
+import ContentTabsAdmin from "../../Admin/ContentTabsAdmin/ContentTabsAdmin";
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -13,7 +14,9 @@ export const ContentLayout = () => {
   if (location.pathname.startsWith('/detail-poll/')) {
     return <ContentDetailPoll />;
   }
-
+  if (location.pathname.startsWith('/home/admin/')) {
+    return <ContentTabsAdmin />;
+  }
   switch (location.pathname) {
     case '/home':
       return <ContentHome />;

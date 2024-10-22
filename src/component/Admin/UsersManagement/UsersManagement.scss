@@ -1,0 +1,11 @@
+.usersManagement{
+    display: flex;
+    justify-content: space-between;
+    .userManaLeft{
+        width: 44%;
+    }
+    .userManaRight{
+        width: 55%;
+        background-color: aqua;
+    }
+}
