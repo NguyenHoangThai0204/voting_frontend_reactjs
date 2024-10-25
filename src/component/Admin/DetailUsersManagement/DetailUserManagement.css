@@ -73,5 +73,9 @@
 .body_detailusermanagement .listPoll table tbody tr td {
   padding: 10px;
 }
+.body_detailusermanagement .listPoll table tbody tr:hover {
+  background-color: rgb(208, 241, 230);
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=DetailUserManagement.css.map */

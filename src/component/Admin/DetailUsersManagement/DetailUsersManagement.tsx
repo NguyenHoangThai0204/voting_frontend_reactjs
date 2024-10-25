@@ -1,9 +1,13 @@
-import React  from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DetailUserManagement.css';
 import { format } from 'date-fns';
 import { User, Poll } from '../../../typeObject';
 import { changeStatusUser, changeStatusUserActive } from '../../../api/CallApi';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 interface Props {
     userItem: User | undefined;
@@ -11,9 +15,12 @@ interface Props {
 }
 
 export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) => {
+    const [selectedPoll, setSelectedPoll] = useState<Poll | null>(null);
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
         console.log("Current pollItem:", pollItem);
-      }, [pollItem]);
+    }, [pollItem]);
 
     const formattedTimeEnd = userItem?.dateOfBirth ? format(new Date(userItem.dateOfBirth), 'dd/MM/yyyy') : '';
 
@@ -39,6 +46,16 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
         } catch (error) {
             console.error("Error activating user data:", error);
         }
+    };
+
+    const handleClickOpen = (poll: Poll) => {
+        setSelectedPoll(poll);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedPoll(null);
     };
 
     return (
@@ -129,20 +146,29 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                             </tr>
                         ) : (
                             (pollItem ?? []).map((poll, index) => (
-                                <tr key={poll?._id || index}
-                                    
-                                >
-                                    <td>{index + 1}</td>
-                                    <td>{poll._id || 'N/A'}</td>
-                                    <td>{poll?.title || 'N/A'}</td>
-                                    <td>{poll?.description || 'N/A'}</td>
+                                <tr key={poll?._id || index} onClick={() => handleClickOpen(poll)}>
+                                    <td style={{whiteSpace:"nowrap"}}>{index + 1}</td>
+                                    <td style={{whiteSpace:"nowrap"}}>{poll._id || 'N/A'}</td>
+                                    <td style={{whiteSpace:"nowrap"}}>{poll?.title || 'N/A'}</td>
+                                    <td style={{whiteSpace:"nowrap"}}>{poll?.description || 'N/A'}</td>
                                 </tr>
                             ))
                         )}
                     </tbody>
-
                 </table>
             </div>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+                <DialogTitle>Poll Details</DialogTitle>
+                <DialogContent>
+                    <p><strong>ID:</strong> {selectedPoll?._id}</p>
+                    <p><strong>Title:</strong> {selectedPoll?.title}</p>
+                    <p><strong>Description:</strong> {selectedPoll?.description}</p>
+                    {/* Add more details as needed */}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">Close</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };

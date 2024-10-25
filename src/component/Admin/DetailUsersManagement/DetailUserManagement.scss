@@ -82,6 +82,10 @@
                         padding: 10px;
                     }
                 }
+                tr:hover{
+                    background-color: rgb(208, 241, 230);
+                    cursor: pointer;
+                }
             }
         }
     }

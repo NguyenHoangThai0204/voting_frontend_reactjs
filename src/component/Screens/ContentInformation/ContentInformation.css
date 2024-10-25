@@ -14,14 +14,6 @@ p{
     padding: 0;
     margin-bottom: 1rem;
 }
-/* .tenTinh, .tenHuyen, .tenXa {
-    border: none !important;
-    outline: none;
-  }
-   */
-  /* .MuiOutlinedInput-notchedOutline {
-    border: none !important;
-  } */
 .header_content_form_right {
     width: 27%;
     padding: 15px;
@@ -35,3 +27,27 @@ p{
     object-fit: cover;
     object-position: center;
   }
+.contentinformation .infor{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    padding: 20px;
+}
+.contentinformation .infor table tbody tr{
+  margin: 10px 0;
+  display: block;
+}
+.contentinformation .infor table tbody .row span{
+  font-size: 22px;
+  font-weight: bold;
+}
+.contentinformation .infor table .button{
+  display: flex;
+  justify-content: space-around;
+}
+.contentinformation .infor table .button button{
+  font-size: 22px;
+  padding: 10px;
+}
