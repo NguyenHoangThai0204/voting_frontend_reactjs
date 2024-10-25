@@ -1,97 +1,67 @@
-// import { useState, useEffect } from 'react';
-// import { getAllUser, changeStatusUser } from '../../../api/CallApi';
-// import { User } from '../../../typeObject';
-// import './UsersManagement.css';
+// import * as React from 'react';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
+// import Box from '@mui/material/Box';
+// import { UsersManagement } from '../UsersManagement/UsersManagement';
+// import { InputSearchAdmin } from '../InputSearchAdmin/InputSearchAdmin';
+// // import { PollsManagement } from '../PollsManagement/PollsManagement';
+// import { useNavigate } from 'react-router-dom';
+// interface TabPanelProps {
+//   children?: React.ReactNode;
+//   index: number;
+//   value: number;
+// }
 
-// export const UsersManagement = () => {
-//   const [users, setUsers] = useState<User[]>([]);
+// function CustomTabPanel(props: TabPanelProps) {
+//   const { children, value, index, ...other } = props;
 
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         const response = await getAllUser();
-//         setUsers(Array.isArray(response.data) ? response.data : [response.data]);
-//       } catch (error) {
-//         console.error("Error fetching users data:", error);
-//       }
-//     };
-//     fetchUsers();
-//   }, []);
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+//     </div>
+//   );
+// }
 
-//   const handleDelete = async (id: string) => {
-//     try {
-//       const confirmDelete = confirm('Are you sure you want to delete this user?');
-//       if (confirmDelete) {
-//         await changeStatusUser(id);
-//         alert('Delete user successfully');
-//         setUsers(users.filter(user => user._id !== id)); // Update the state to remove the deleted user
-//       }
-//     } catch (error) {
-//       console.error("Error deleting user data:", error);
-//     }
+// function a11yProps(index: number) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     'aria-controls': `simple-tabpanel-${index}`,
+//   };
+// }
+
+// export default function ContentTabsAdmin() {
+//   const [value, setValue] = React.useState(0);
+//   const navigate = useNavigate();
+  
+//   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+//     setValue(newValue);
+  
+//       navigate('/home'); // Chuyển hướng về trang home
+    
 //   };
 
 //   return (
-//     <table className="table table-striped" style={{ width: '100%' }} border={1}>
-//       <thead>
-//         <tr>
-//           <th scope="col">ID</th>
-//           <th scope="col">Full name</th>
-//           <th scope="col">Avatar</th>
-//           <th scope="col">Phone number</th>
-//           <th scope="col">Gender</th>
-//           <th scope="col">Email</th>
-//           <th scope="col">Address</th>
-//           <th scope="col">Role</th>
-//           <th scope="col">Status</th>
-//           <th scope="col">Action</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {location.pathname.startsWith('/home/admin/') ? (
-//           <tr>
-//             <td>
-//               <p>ádsfg</p>
-//             </td>
-//           </tr>
-//         ) : (
-//           users.map((user, index) => (
-//             <tr key={user._id}>
-//               <td>{index + 1}</td>
-//               <td>{user.fullName}</td>
-//               <td><img src={user.avatar} alt="avatar" style={{ width: '50px', height: '50px' }} /></td>
-//               <td>{user.phone}</td>
-//               <td>{user.gender}</td>
-//               <td>{user.email}</td>
-//               <td>{user.address}</td>
-//               <td>{user.role}</td>
-//               <td>{user.status}</td>
-//               <td style={{ textAlign: "center", margin: "auto" }}>
-//                 <button className="btn btn-primary" style={{ marginRight: "5px" }}>Edit</button>
-//                 <button className="btn btn-danger" onClick={() => handleDelete(user._id)} style={{ marginLeft: "10px" }}>Delete</button>
-//               </td>
-//             </tr>
-//           ))
-//         )}
-//       </tbody>
-//     </table>
+//     <Box sx={{ width: '90vw', position: 'relative', top: '70px', margin: 'auto' }}>
+//       <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "space-between" }}>
+//         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+//           <Tab label="List user" {...a11yProps(0)}
+//            sx={{ textTransform: 'none' }} />
+//         </Tabs>
+//         <div style={{ margin: "10px 0" }}>
+//           < InputSearchAdmin />
+//         </div>
+//       </Box>
+//       <div style={{ overflow: "auto" }}>
+//         <CustomTabPanel value={value} index={0}>
+//           <UsersManagement />
+//         </CustomTabPanel>
+//       </div>
+//     </Box>
 //   );
-// };
-
-
-
-
-
-
-// td{
-//     padding-left: 5px;
-// }
-
-// button{
-//     padding: 5px;
-// }
-// button:hover{
-//     background-color: yellow;
-//     color: black;
-//     border: none;
 // }

@@ -25,6 +25,7 @@
     const response = await axios.get(`${API_POLL}/find_all_polling_user/${authorId}`);
     return response.data;
   }
+
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVotes = async (): Promise<ListVoteResponse> => {
     const response = await axios.get(`${API_POLL}/find_all_polling`);
@@ -58,6 +59,11 @@
   // Đổi trạng thái của người dùng qua id
   export const changeStatusUser = async (id: string): Promise<UserResponse> => {
     const response = await axios.post(`${API_USER}/deletedUser`, { id });
+    return response.data;
+  }
+  // Đổi trạng thái của người dùng qua id
+  export const changeStatusUserActive = async (id: string): Promise<UserResponse> => {
+    const response = await axios.post(`${API_USER}/undeleteUser`, { id });
     return response.data;
   }
   // Hàm đăng nhập Google

@@ -76,7 +76,7 @@ export const HeaderHomeLayout = () => {
                 <Link
                   onClick={handeleText}
                   key={poll._id} // Thêm key duy nhất cho mỗi phần tử
-                  to={`detail-poll/${poll._id}`} 
+                  to={`/detail-poll/${poll._id}`} 
                   state={{ id: poll._id }}
                 >
                   <div className='itemSearch'>

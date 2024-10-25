@@ -1,10 +1,7 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+
 import Box from '@mui/material/Box';
 import { UsersManagement } from '../UsersManagement/UsersManagement';
-import { InputSearchAdmin } from '../InputSearchAdmin/InputSearchAdmin';
-// import { PollsManagement } from '../PollsManagement/PollsManagement';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,33 +25,16 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+
 
 export default function ContentTabsAdmin() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
 
   return (
-    <Box sx={{ width: '90vw', position: 'relative', top: '70px', margin: 'auto' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "space-between" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="List user" {...a11yProps(0)}
-           sx={{ textTransform: 'none' }} />
-        </Tabs>
-        <div style={{ margin: "10px 0" }}>
-          < InputSearchAdmin />
-        </div>
-      </Box>
+    
+    <Box sx={{ width: '95vw', position: 'relative', top: '70px', margin: 'auto' }}>
+      <div><h1 style={{textAlign:"center"}}>Admin</h1></div>
       <div style={{ overflow: "auto" }}>
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel value={0} index={0}>
           <UsersManagement />
         </CustomTabPanel>
       </div>

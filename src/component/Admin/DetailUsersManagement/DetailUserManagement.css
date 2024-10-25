@@ -1,0 +1,77 @@
+.body_detailusermanagement {
+  border: 1px solid #d9d9d9;
+  padding: 20px;
+  overflow: scroll;
+  background-color: rgb(229, 233, 237);
+  box-shadow: 0 0 20px #aaaaaa;
+  height: 80vh;
+}
+.body_detailusermanagement h2 {
+  text-align: center;
+  margin: 15px 0;
+}
+.body_detailusermanagement .container {
+  display: flex;
+}
+.body_detailusermanagement .container .containLeft {
+  width: 25%;
+  margin: auto;
+}
+.body_detailusermanagement .container .containLeft .containLeftBottom {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+}
+.body_detailusermanagement .container .containRight {
+  width: 75%;
+  margin: auto;
+}
+.body_detailusermanagement .container .containRight table {
+  width: 100%;
+  height: 100%;
+  text-align: start;
+}
+.body_detailusermanagement .container .containRight table .row {
+  margin: 10px 0 15px 0;
+  display: table-row;
+}
+.body_detailusermanagement .container .containRight table .row .button {
+  display: flex;
+  justify-content: space-around;
+}
+.body_detailusermanagement .container .containRight table td {
+  padding: 10px;
+}
+.body_detailusermanagement .container .containRight table td span {
+  font-weight: bold;
+  font-size: 20px;
+}
+.body_detailusermanagement .container .containRight .button {
+  display: flex;
+  justify-content: space-around;
+}
+.body_detailusermanagement .container .containRight .button button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+.body_detailusermanagement .listPoll table thead {
+  background-color: #f2f2f2;
+}
+.body_detailusermanagement .listPoll table thead tr th {
+  padding: 10px;
+}
+.body_detailusermanagement .listPoll table tbody tr td {
+  padding: 10px;
+}
+
+/*# sourceMappingURL=DetailUserManagement.css.map */

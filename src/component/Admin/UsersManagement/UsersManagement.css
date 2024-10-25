@@ -1,13 +1,18 @@
 .usersManagement {
   display: flex;
   justify-content: space-between;
+  height: 100%;
 }
 .usersManagement .userManaLeft {
-  width: 44%;
+  width: 31%;
+}
+.usersManagement .userManaLeft table .trrow:hover {
+  background-color: aquamarine;
+  cursor: pointer;
 }
 .usersManagement .userManaRight {
-  width: 55%;
-  background-color: aqua;
+  width: 68%;
+  height: 80%;
 }
 
 /*# sourceMappingURL=UsersManagement.css.map */

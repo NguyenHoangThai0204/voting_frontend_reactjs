@@ -1,0 +1,88 @@
+.body_detailusermanagement {
+    border: 1px solid #d9d9d9;
+    padding: 20px;
+    overflow: scroll;
+    background-color: rgb(229, 233, 237);
+    box-shadow: 0 0 20px #aaaaaa;
+    height: 80vh;
+    h2 {
+        text-align: center;
+        margin: 15px 0;
+    }
+    .container {
+        display: flex;
+        
+        .containLeft {
+            width: 25%;
+            margin: auto;
+            .containLeftBottom {
+                width: 100%;
+                height: 85%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 30px;
+                text-align: center;
+            }
+        }
+        .containRight {
+            width: 75%;
+            margin: auto;
+            table {
+                width: 100%;
+                height: 100%;
+                text-align: start;
+                .row {
+                    margin: 10px 0 15px 0;
+                    display: table-row; // Đảm bảo rằng các hàng được hiển thị đúng cách
+                    .button{
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                }
+                td {
+                    padding: 10px; // Thêm padding để tạo khoảng cách giữa các ô
+                    span{
+                        font-weight: bold;
+                        font-size: 20px;
+                    }
+                    
+                }
+            }
+                .button{
+                    display: flex;
+                    justify-content: space-around;
+                    button{
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        color: black;
+                        font-size: 15px;
+                        font-weight: bold;
+                        background-color: aquamarine;
+                        cursor: pointer;
+                    }
+                }
+            
+        }
+    }
+    .listPoll{
+        table{
+            thead{
+                background-color: #f2f2f2;
+                tr{
+                    th{
+                        padding: 10px;
+                    }
+                }
+            }
+            tbody{
+                tr{
+                    td{
+                        padding: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

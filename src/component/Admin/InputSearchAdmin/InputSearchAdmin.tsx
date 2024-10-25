@@ -39,7 +39,7 @@ export const InputSearchAdmin = () => {
   };
 
   return (
-    <div className="inputSearch">
+    <div className="inputSearchAdmin">
       <TextField
         id="outlined-basic"
         value={searchValue}

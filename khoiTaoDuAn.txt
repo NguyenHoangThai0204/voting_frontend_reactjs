@@ -38,3 +38,5 @@ sass --watch HeaderHomeLayout.scss:HeaderHomeLayout.css
 sass --watch FormMenuSetting.scss:FormMenuSetting.css      
 sass --watch ContentVoteFormLayout.scss:ContentVoteFormLayout.css
 sass --watch ContentDetailPoll.scss:ContentDetailPoll.css 
+sass --watch UsersManagement.scss:UsersManagement.css
+sass --watch DetailUserManagement.scss:DetailUserManagement.css
