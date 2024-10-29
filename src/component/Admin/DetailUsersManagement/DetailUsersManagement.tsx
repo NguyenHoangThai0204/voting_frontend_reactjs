@@ -8,7 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
+ import { PropDetailPollAdmin } from './PropDetailPollAdmin';
 interface Props {
     userItem: User | undefined;
     pollItem: Poll[] | undefined;
@@ -147,23 +149,23 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                         ) : (
                             (pollItem ?? []).map((poll, index) => (
                                 <tr key={poll?._id || index} onClick={() => handleClickOpen(poll)}>
-                                    <td style={{whiteSpace:"nowrap"}}>{index + 1}</td>
-                                    <td style={{whiteSpace:"nowrap"}}>{poll._id || 'N/A'}</td>
-                                    <td style={{whiteSpace:"nowrap"}}>{poll?.title || 'N/A'}</td>
-                                    <td style={{whiteSpace:"nowrap"}}>{poll?.description || 'N/A'}</td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{index + 1}</td>
+                                    <td style={{ whiteSpace: "nowrap" }}>
+                                        <Link to={`/detail-poll/${poll._id}`}>{poll._id || 'N/A'}</Link>
+                                    </td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{poll?.title || 'N/A'}</td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{poll?.description || 'N/A'}</td>
                                 </tr>
                             ))
                         )}
                     </tbody>
+
                 </table>
             </div>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
                 <DialogTitle>Poll Details</DialogTitle>
                 <DialogContent>
-                    <p><strong>ID:</strong> {selectedPoll?._id}</p>
-                    <p><strong>Title:</strong> {selectedPoll?.title}</p>
-                    <p><strong>Description:</strong> {selectedPoll?.description}</p>
-                    {/* Add more details as needed */}
+                    {selectedPoll && <PropDetailPollAdmin poll={selectedPoll} />}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Close</Button>

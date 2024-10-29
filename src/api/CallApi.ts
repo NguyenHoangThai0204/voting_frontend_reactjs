@@ -7,10 +7,16 @@
   import { PollResponse } from "../typeObject";
   import Cookies from 'universal-cookie';
 
-  const API_USER = 'http://localhost:3000/api/user';
-  const API_VOTE = 'http://localhost:3000/api/vote';
-  const API_POLL = 'http://localhost:3000/api/poll';
-  const API_SSO = "http://localhost:3000/api/auth";
+
+  const API_USER = 'http://160.30.44.53:3000/api/user';
+  const API_VOTE = 'http://160.30.44.53:3000/api/vote';
+  const API_POLL = 'http://160.30.44.53:3000/api/poll';
+
+  const API_SSO = "http://160.30.44.53:3000/api/auth";
+  // const API_USER = 'http://localhost:3000/api/user';
+  // const API_VOTE = 'http://localhost:3000/api/vote';
+  // const API_POLL = 'http://localhost:3000/api/poll';
+  // const API_SSO = "http://localhost:3000/api/auth";
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
