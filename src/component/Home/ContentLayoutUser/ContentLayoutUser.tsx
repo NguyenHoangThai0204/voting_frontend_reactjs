@@ -1,3 +1,4 @@
+import React from 'react';
 import { ContentHome } from "../../Screens/ContentHome/ContentHomeLayout/ContentHomeLayout";
 import { useLocation } from 'react-router-dom';
 import { ContentPollLayout } from "../../Screens/ContentPoll/ContentPollLayout/ContentPollLayout";
