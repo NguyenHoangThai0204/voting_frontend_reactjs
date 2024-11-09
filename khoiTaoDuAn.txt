@@ -18,6 +18,8 @@ Gõ:
     npm run dev
     npm install date-fns // ngày tháng
 
+    npm install firebase @types/firebase
+
 Tạo id duy nhất tự động:
     npm install uuid
 Tự tạo css

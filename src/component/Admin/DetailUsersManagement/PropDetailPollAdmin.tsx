@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import StatisticsDialogPolling from "../../Screens/StatisticsDialog/StatisticsDialogPolling";
 import StatisticsDialog from "../../Screens/StatisticsDialog/StatisticsDialog";
+import {updateTimeEnd} from "../../../api/CallApi";
 
 interface PropDetailPollAdminProps {
   poll: Poll; // Nhận prop poll
@@ -21,6 +22,19 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
   // Định dạng thời gian bắt đầu và kết thúc
   const formattedTimeStart = poll.timeStart ? format(new Date(poll.timeStart), 'dd/MM/yyyy HH:mm') : '';
   const formattedTimeEnd = poll.timeEnd ? format(new Date(poll.timeEnd), 'dd/MM/yyyy HH:mm') : '';
+
+  const handleUpdateTimeEnd = async () => {
+    try {
+      const confirmUpdate = confirm('Are you sure you want to update time end?');
+      if (confirmUpdate) {
+        await updateTimeEnd(poll._id || '');
+        alert('Update time end successfully');
+      }
+
+    } catch (error) {
+      console.error("Error updating time end:", error);
+    }
+  }
 
   const handleChoiceChangeContent = (index: number, value: string) => {
     const newChoices = [...choices];
@@ -161,6 +175,13 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
             <TextField type="text" className="labelField" value={poll.typeContent || ''} variant="outlined" />
           </div>
         </div>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <button type="button" 
+      onClick={() => handleUpdateTimeEnd()} 
+    style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}>
+      The End
+    </button>
+  </div>
       </form>
     </div>
   )

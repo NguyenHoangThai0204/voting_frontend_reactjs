@@ -163,7 +163,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                 </table>
             </div>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
-                <DialogTitle>Poll Details</DialogTitle>
+                <DialogTitle>Poll Detail</DialogTitle>
                 <DialogContent>
                     {selectedPoll && <PropDetailPollAdmin poll={selectedPoll} />}
                 </DialogContent>
