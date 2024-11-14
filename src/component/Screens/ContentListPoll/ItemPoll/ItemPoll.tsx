@@ -1,4 +1,5 @@
 import "./ItemPoll.css";
+import React from "react";
 import img from "../../../../assets/anh-dep-thien-nhien-2-1.jpg";
 import { Link } from "react-router-dom";
 import { Poll } from "../../../../typeObject";
