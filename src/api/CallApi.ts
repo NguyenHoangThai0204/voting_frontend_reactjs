@@ -7,11 +7,16 @@
   import { PollResponse } from "../typeObject";
   import Cookies from 'universal-cookie';
 
-  const API_USER = 'http://160.30.44.53:3000/api/user';
-  const API_VOTE = 'http://160.30.44.53:3000/api/vote';
-  const API_POLL = 'http://160.30.44.53:3000/api/poll';
 
-  const API_SSO = "http://160.30.44.53:3000/api/auth";
+  // const API_USER = 'http://160.30.44.53:3000/api/user';
+  // const API_VOTE = 'http://160.30.44.53:3000/api/vote';
+  // const API_POLL = 'http://160.30.44.53:3000/api/poll';
+
+  // const API_SSO = "http://160.30.44.53:3000/api/auth";
+  const API_USER = 'http://localhost:3000/api/user';
+  const API_VOTE = 'http://localhost:3000/api/vote';
+  const API_POLL = 'http://localhost:3000/api/poll';
+  const API_SSO = "http://localhost:3000/api/auth";
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
@@ -21,6 +26,13 @@
     const response = await axios.post(`${API_USER}/login`, data);
     return response.data;
   };
+
+  // Hàm cập nhật timeend là time now
+  export const updateTimeEnd = async (id: string): Promise<UserResponse> => {
+    const response = await axios.post(`${API_POLL}/updateTimeEndPoll/${ id }`);
+    return response.data;
+  };
+
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVoteUser = async (authorId: string): Promise<ListVoteResponse> => {
     const response = await axios.get(`${API_POLL}/find_all_polling_user/${authorId}`);

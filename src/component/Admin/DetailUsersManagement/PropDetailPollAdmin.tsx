@@ -1,82 +1,40 @@
-import "./ContentDetailPoll.css";
+// import "./ContentDetailPoll.css";
 import TextField from '@mui/material/TextField';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
-import { getPollById, postVote } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { format } from 'date-fns';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
-import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
-import { useParams } from 'react-router-dom';
+import StatisticsDialogPolling from "../../Screens/StatisticsDialog/StatisticsDialogPolling";
+import StatisticsDialog from "../../Screens/StatisticsDialog/StatisticsDialog";
+import {updateTimeEnd} from "../../../api/CallApi";
 
-export const ContentDetailPoll: React.FC = () => {
-  const [choices, setChoices] = useState<string[]>([""]);
-  const [descriptions, setDescriptions] = useState<string[]>([""]);
-  const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
+interface PropDetailPollAdminProps {
+  poll: Poll; // Nhận prop poll
+}
 
+export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }) => {
+  const [choices, setChoices] = useState<string[]>(poll.options.map(() => ""));
+  const [descriptions, setDescriptions] = useState<string[]>(poll.options.map(() => ""));
+  const [showDescriptions, setShowDescriptions] = useState<boolean[]>(poll.options.map(() => false));
 
-  const { id } = useParams();
+  // Định dạng thời gian bắt đầu và kết thúc
+  const formattedTimeStart = poll.timeStart ? format(new Date(poll.timeStart), 'dd/MM/yyyy HH:mm') : '';
+  const formattedTimeEnd = poll.timeEnd ? format(new Date(poll.timeEnd), 'dd/MM/yyyy HH:mm') : '';
 
-  const [vote, setVote] = useState<Poll | null>(null);
-
-  useEffect(() => {
-    const fetchVote = async () => {
-      try {
-        if (id) {
-          const response = await getPollById(id);
-          setVote(response.data);
-        } else {
-          console.error("ID is undefined");
-        }
-        // setVote(response.data);
-
-      } catch (error) {
-        console.error("Error fetching vote data:", error);
-      }
-    };
-    fetchVote();
-  }, [id]);
-
-  // const formattedTimeCreate = vote?.timeCreate ? format(new Date(vote.timeCreate), 'dd/MM/yyyy HH:mm') : '';
-  const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';
-  const formattedTimeEnd = vote?.timeEnd ? format(new Date(vote.timeEnd), 'dd/MM/yyyy HH:mm') : '';
-
-  const handleVote = async (optionId: string, content: string) => {
+  const handleUpdateTimeEnd = async () => {
     try {
-      const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
-      const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
-
-      if ( voteStartDate && voteStartDate < new Date() ){
-        if (voteEndDate && voteEndDate > new Date() ) {
-          const confirmVote = confirm('Bạn chọn: ' + content);
-          if (confirmVote) {
-            const dataVote = {
-              pollId: null,
-              optionId: optionId,
-              transactionHash: null,
-              userId: null,
-              timestamp: new Date().toISOString(),
-            };
-            console.log(dataVote);
-            await postVote(dataVote);
-            alert('Thành công');
-          } else {
-            alert('Huỷ chọn');
-          }
-        } else {
-          alert('Bình chọn đã kết thúc');
-        }
-      }else{
-        alert('Bình chọn Chưa bắt đầu');
+      const confirmUpdate = confirm('Are you sure you want to update time end?');
+      if (confirmUpdate) {
+        await updateTimeEnd(poll._id || '');
+        alert('Update time end successfully');
       }
-      
-    } catch (error) {
-      console.error('Error: ' + error);
-    }
-  };
 
+    } catch (error) {
+      console.error("Error updating time end:", error);
+    }
+  }
 
   const handleChoiceChangeContent = (index: number, value: string) => {
     const newChoices = [...choices];
@@ -114,7 +72,7 @@ export const ContentDetailPoll: React.FC = () => {
         <div className="header_content_form">
           <div className="header_content_detail_right">
             <div className="avatar_poll">
-              <img src={vote?.avatar ?? undefined} alt="upload" /> 
+              <img src={poll.avatar ?? undefined} alt="upload" />
             </div>
           </div>
           <div className="header_content_detail_left">
@@ -123,7 +81,7 @@ export const ContentDetailPoll: React.FC = () => {
                 <div className="label">Name vote:</div>
                 <TextField
                   className="text_namevote"
-                  value={vote?.title || ''}
+                  value={poll.title || ''}
                   inputProps={{ readOnly: true }}
                   variant="outlined"
                 />
@@ -140,17 +98,17 @@ export const ContentDetailPoll: React.FC = () => {
 
               {/* Modal */}
               <div >
-                {vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
-                  <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={vote._id} />
+                {poll.timeEnd && new Date(poll.timeEnd).getTime() > new Date().getTime() ? (
+                  <StatisticsDialogPolling open={open} handleClose={handleClose} pollId={poll._id} />
                 ) : (
-                  vote?._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={vote._id} />
+                  poll._id && <StatisticsDialog open={open} handleClose={handleClose} pollId={poll._id} />
                 )}
               </div>
             </div>
             <div className="label">Description:</div>
             <TextField
               className="text_namevote"
-              value={vote?.description || ''}
+              value={poll.description || ''}
               multiline
               rows={4}
               inputProps={{ readOnly: true }}
@@ -160,16 +118,14 @@ export const ContentDetailPoll: React.FC = () => {
         </div>
         <div className="label">Choices:</div>
         {
-          vote?.options.map((select, index) => (
+          poll.options.map((select, index) => (
             <div key={index} className="choice-wrapper">
-              {/* <p>Số lượng phiếu hiện tại {select.votes.length} </p> */}
               <TextField
                 className="text_namechoice"
                 variant="outlined"
-                style={{ marginBottom: "10px",width: "100%",backgroundColor: "#f5f5f5" }}
+                style={{ marginBottom: "10px", width: "100%", backgroundColor: "#f5f5f5" }}
                 placeholder={`Choice ${index + 1}`}
                 value={select.contentOption || ''}
-                onClick={() => handleVote(select._id, select.contentOption)}
                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
                 InputProps={{
                   endAdornment: (
@@ -177,10 +133,10 @@ export const ContentDetailPoll: React.FC = () => {
                       <IconButton
                         edge="end"
                         aria-label="add description"
-                        onClick={(e) => {toggleDescriptionInput(index);
-                          e.stopPropagation();}
-                        }
-                        
+                        onClick={(e) => {
+                          toggleDescriptionInput(index);
+                          e.stopPropagation();
+                        }}
                       >
                         <DescriptionIcon />
                       </IconButton>
@@ -216,11 +172,16 @@ export const ContentDetailPoll: React.FC = () => {
           </div>
           <div className="date">
             <div className="label">Type of vote:</div>
-            <TextField type="text" className="labelField" value={vote?.typeContent || ''} variant="outlined" />
+            <TextField type="text" className="labelField" value={poll.typeContent || ''} variant="outlined" />
           </div>
-          
         </div>
-
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <button type="button" 
+      onClick={() => handleUpdateTimeEnd()} 
+    style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}>
+      The End
+    </button>
+  </div>
       </form>
     </div>
   )
