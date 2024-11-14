@@ -1,27 +1,119 @@
-.content_footer_home {
-    width: 100%;
-    display: flex;
-    flex-direction: row; /* Sắp xếp theo chiều ngang */
-    justify-content: center; /* Căn giữa theo chiều ngang */
-    align-items: center; /* Căn giữa theo chiều dọc */
-}
 .footer {
-    background-color: #333;
+  background-color: rgb(47, 136, 138);
+  width: 100%;
+  display: flex;
+  color: rgb(182, 243, 201);
+  flex-wrap: wrap ;
 }
-.ft_container{
-    width: 1200px;
-    max-width: 100%;
-    margin: 0 auto;
-    display: flex;
-    padding: 15px;
-    justify-content: space-between;
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  max-width: 98%;
+  margin: auto;
 }
-.footer {
-    color: #fff;
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: first baseline;
+  margin-left: 10px;
 }
-.ft_container a{
-    color: #fff;
+.links{
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-left: 10px;
+  margin-bottom: 40px;
 }
-.ft_container h2{
-    color: tomato;
+.links a{
+  margin-right: 50px;
+  color: rgb(182, 243, 201);
+  font-style: normal;
+}
+.links a:hover{
+  color: #d0cfcf;
+}
+.under-content{
+  max-width: 700px; /* Điều chỉnh chiều rộng tối đa theo ý bạn */
+  overflow-wrap: break-word; /* Ngắt từ dài xuống dòng */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+.footer-section h3 {
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+.footer-section {
+  flex: 1;
+  padding: 10px;
+  flex-wrap: wrap;
+  text-overflow: ellipsis;
+}
+
+.footer-logo {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  margin: 5px 0;
+  font-size: 1rem;
+  text-align: justify;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  opacity: 0.7;
+  color: aliceblue;
+}
+.footer-section.about.logo{
+  display: flex;
+  align-items: center;
+}
+.footer-section a {
+  display: block;
+  margin: 5px 0;
+  color: #a7a4a4;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  color: #a7a4a4;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  font-size: 1rem;
+  color: white;
+}
+
+.social-icons a:hover {
+  color: #a7a4a4;
+}
+
+/* Các phần CSS khác của bạn vẫn giữ nguyên */
+
+@media screen and (max-width: 900px) {
+  .footer-content {
+      flex-direction: column;
+  }
+
+  .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .links a {
+      flex: 1 1 30%; /* Đảm bảo mỗi thẻ a chiếm khoảng 30% chiều rộng */
+      margin: 10px; /* Thêm khoảng cách giữa các thẻ a */
+      text-align: center; /* Căn giữa nội dung trong thẻ a */
+  }
+
+  .under-content {
+      display: none;
+  }
 }

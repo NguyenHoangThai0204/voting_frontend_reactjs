@@ -5,6 +5,7 @@
   padding: 5px;
   background-color: rgb(226, 240, 231);
 }
+
 .header_home .header_home_content {
   display: flex;
   width: 95%;
@@ -12,35 +13,51 @@
   background-color: rgb(226, 240, 231);
   align-items: center;
   margin: auto;
-  justify-content: space-between;
 }
+
+.header_home .header_home_content img {
+  width: 90px;
+  height: 90px;
+  margin-left: 70px;
+}
+
 .header_home .header_home_content .header_home_title {
-  text-align: center;
+  margin-left: 0px;
   width: 20%;
 }
+
 .header_home .header_home_content .header_home_title h1 {
-  color: #f80909;
+  color: #043747;
 }
+
 .header_home .header_home_content .header_home_title p {
   font-size: 1.2rem;
   font-weight: 500;
   color: #000;
 }
+
 .header_home .header_home_content .inputSearch {
+  display: flex;
+  margin-left: 10px;
   width: 33%;
   height: max-content;
   background-color: white;
+  border-radius: 10px;
+  position: relative; /* Thêm thuộc tính này */
 }
+
 .header_home .header_home_content .inputSearch .search {
   width: 100%;
   background-color: white;
   height: 100%;
-  border-radius: 15px;
+  border-radius: 30px;
 }
+
 .header_home .header_home_content .search_results {
-  position: absolute;
-  width: 31%;
-  margin: auto;
+  position: absolute; /* Thay đổi từ absolute */
+  top: 100%; /* Đặt vị trí ngay dưới inputSearch */
+  left: 0;
+  width: 100%; /* Đảm bảo chiều rộng khớp với inputSearch */
   max-height: 200px;
   font-size: 20px;
   overflow-y: auto;
@@ -48,15 +65,19 @@
   border: 1px solid #ddd;
   z-index: 1000; /* Giúp hiển thị kết quả chồng lên các thành phần khác */
 }
+
 .header_home .header_home_content .search_results .itemSearch {
   padding: 10px;
   width: 100%;
+  border: 1px solid #dfdbdb;
 }
+
 .header_home .header_home_content .search_results .itemSearch:hover {
-  background-color: aqua;
+  background-color: #ccefd7;
 }
+
 .header_home .header_home_content .formLogin {
-  width: 20%;
+  width: 30%;
 }
 
 @media screen and (max-width: 900px) {
@@ -64,31 +85,46 @@
     height: 70px;
     justify-content: center;
     width: 100%;
+    display: flex;
   }
+
   .header_home .header_home_content {
     margin: 0;
     align-items: center;
   }
+
   .header_home .header_home_content .header_home_title {
-    width: 25%;
+    display: none;
   }
+
   .header_home .header_home_content .header_home_title h1 {
-    font-size: 1.2rem;
+    display: none;
   }
+
+  .header_home .header_home_content img {
+    width: 70px;
+    height: 70px;
+    margin-left: 0px;
+  }
+
   .header_home .header_home_content .header_home_title p {
     display: none;
   }
+
   .header_home .header_home_content .inputSearch {
-    width: 55%;
+    width: 60%;
     align-items: center;
+    margin-left: -5px;
+    margin-right: 9px;
   }
-  .header_home .header_home_content .inputSearch .search_results {
-    width: 50%;
-    margin: auto;
+
+  .header_home .header_home_content .search_results {
+    width: calc(100% + 90px); /* Đảm bảo chiều rộng khớp với inputSearch */
+    margin-top: 3px;
+    position: absolute;
   }
+
   .header_home .header_home_content .formLogin {
     margin-left: 10px;
   }
 }
-
-/*# sourceMappingURL=HeaderHomeLayout.css.map */

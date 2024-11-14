@@ -46,12 +46,21 @@ h5, h3{
     width: 40%;
     overflow: hidden;
     white-space: nowrap;
+    animation: moveLeft 10s linear infinite;
 }
 .footer_right{
     width: 50%;
     overflow: hidden;
     text-align: right;
     white-space: nowrap;
+}
+@keyframes moveLeft {
+    from {
+        right: -100%;
+    }
+    to {
+        right: 100%;
+    }
 }
 @media screen and (max-width:900px) {
     .image_container {

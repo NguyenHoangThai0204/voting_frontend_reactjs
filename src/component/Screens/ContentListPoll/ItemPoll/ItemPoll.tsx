@@ -47,7 +47,7 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
         <h3>{item.title}</h3>
         <h5>{item.description}</h5>
         <div className="footer_itemvote">
-          <div className="footer_left">
+          <div className="footer_left" >
             {author}
           </div>
           <div className="footer_right">

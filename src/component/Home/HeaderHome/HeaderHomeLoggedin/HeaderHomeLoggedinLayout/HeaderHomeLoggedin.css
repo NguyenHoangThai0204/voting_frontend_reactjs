@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: end;
 }
 .wrapper_form_login .header__home_name {
   margin-right: 5px;
@@ -54,5 +55,3 @@
     z-index: 1000; /* Ensure it is on top */
   }
 }
-
-/*# sourceMappingURL=HeaderHomeLoggedin.css.map */

@@ -11,6 +11,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
 import { createPoll } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 export const ContentPollFormLayout = () => {
   const { authorId } = useLocation().state as { authorId: string };
