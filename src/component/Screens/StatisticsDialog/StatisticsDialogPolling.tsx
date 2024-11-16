@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { getPollById } from '../../../api/CallApi';
 import { Poll } from '../../../typeObject';
+import io from 'socket.io-client';
 import './StatisticsDialogPolling.css';
 
 interface StatisticsDialogProps {
@@ -23,24 +24,32 @@ const animalEmojis = [
   '🦐', '🦑', '🦞', '🦀', '🐙'
 ];
 
+const socket = io("http://localhost:3000", { transports: ['websocket'] });
+// Đảm bảo rằng địa chỉ WebSocket của bạn chính xác
+
 const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handleClose, pollId }) => {
   const [poll, setPoll] = useState<Poll | null>(null);
   const [totalVotes, setTotalVotes] = useState<number>(0);
   const [animalEmojisState, setAnimalEmojisState] = useState<string[]>([]);
   const [remainingTime, setRemainingTime] = useState<string | null>(null);
 
+  const updatePollData = (data: Poll) => {
+    setPoll(data);
+    const total = data.options.reduce((acc, option) => acc + option.votes.length, 0);
+    setTotalVotes(total);
+
+    // Randomize emojis cho mỗi tùy chọn
+    const selectedEmojis = data.options.map(() =>
+      animalEmojis[Math.floor(Math.random() * animalEmojis.length)]
+    );
+    setAnimalEmojisState(selectedEmojis);
+  };
+
   useEffect(() => {
     const fetchVote = async () => {
       try {
         const response = await getPollById(pollId);
-        setPoll(response.data);
-        const total = response.data.options.reduce((acc, option) => acc + option.votes.length, 0);
-        setTotalVotes(total);
-
-        const selectedEmojis = response.data.options.map(() =>
-          animalEmojis[Math.floor(Math.random() * animalEmojis.length)]
-        );
-        setAnimalEmojisState(selectedEmojis);
+        updatePollData(response.data);
       } catch (error) {
         console.error('Error fetching vote data:', error);
       }
@@ -48,8 +57,34 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
 
     if (pollId && open) {
       fetchVote();
+      socket.on('connect', () => {
+        console.log('Connected to WebSocket server');
+      });
+      
+      socket.on('connect_error', (err) => {
+        console.log('WebSocket connection error:', err);
+      });
+      // Lắng nghe sự kiện cập nhật socket
+      socket.on('voteUpdate', (data: { pollId: string, updatedPoll: Poll }) => {
+        if (data.pollId === pollId) {
+          // Cập nhật dữ liệu cuộc thăm dò
+          updatePollData(data.updatedPoll);
+          
+          // Kiểm tra có sự thay đổi vote
+          // const totalVotesAfterUpdate = data.updatedPoll.options.reduce((acc, option) => acc + option.votes.length, 0);
+          data.updatedPoll.options.reduce((acc, option) => acc + option.votes.length, 0);
+          // if (totalVotesAfterUpdate > totalVotes) {
+          //   alert('A new vote has been cast!'); // Hiển thị thông báo khi có một lượt vote mới
+          // }
+        }
+      });
     }
-  }, [pollId, open]);
+
+    // Dọn dẹp khi đóng Dialog
+    return () => {
+      socket.off('voteUpdate');
+    };
+  }, [pollId, open, totalVotes]); // Thêm `totalVotes` vào dependency array để so sánh sự thay đổi
 
   const getRemainingTime = (endTime: string) => {
     const timeLeft = new Date(endTime).getTime() - new Date().getTime();
