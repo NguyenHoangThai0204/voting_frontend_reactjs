@@ -25,7 +25,6 @@ const animalEmojis = [
 ];
 
 const socket = io("http://localhost:3000", { transports: ['websocket'] });
-// Đảm bảo rằng địa chỉ WebSocket của bạn chính xác
 
 const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handleClose, pollId }) => {
   const [poll, setPoll] = useState<Poll | null>(null);
@@ -33,18 +32,19 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
   const [animalEmojisState, setAnimalEmojisState] = useState<string[]>([]);
   const [remainingTime, setRemainingTime] = useState<string | null>(null);
 
+  const audio = React.useMemo(() => new Audio('/assets/ThiDua-VA-4468222.mp3'), []); // Tạo âm thanh khi mở dialog
+
   const updatePollData = (data: Poll) => {
     setPoll(data);
     const total = data.options.reduce((acc, option) => acc + option.votes.length, 0);
     setTotalVotes(total);
 
-    // Randomize emojis cho mỗi tùy chọn
-    const selectedEmojis = data.options.map(() =>
-      animalEmojis[Math.floor(Math.random() * animalEmojis.length)]
+    const selectedEmojis = data.options.map((_, index) => 
+      animalEmojis[index % animalEmojis.length] 
     );
     setAnimalEmojisState(selectedEmojis);
   };
-
+  
   useEffect(() => {
     const fetchVote = async () => {
       try {
@@ -64,27 +64,21 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
       socket.on('connect_error', (err) => {
         console.log('WebSocket connection error:', err);
       });
-      // Lắng nghe sự kiện cập nhật socket
+
       socket.on('voteUpdate', (data: { pollId: string, updatedPoll: Poll }) => {
         if (data.pollId === pollId) {
-          // Cập nhật dữ liệu cuộc thăm dò
           updatePollData(data.updatedPoll);
-          
-          // Kiểm tra có sự thay đổi vote
-          // const totalVotesAfterUpdate = data.updatedPoll.options.reduce((acc, option) => acc + option.votes.length, 0);
-          data.updatedPoll.options.reduce((acc, option) => acc + option.votes.length, 0);
-          // if (totalVotesAfterUpdate > totalVotes) {
-          //   alert('A new vote has been cast!'); // Hiển thị thông báo khi có một lượt vote mới
-          // }
         }
       });
+      
+      // Play the audio when the dialog is opened
+      audio.play();
     }
 
-    // Dọn dẹp khi đóng Dialog
     return () => {
       socket.off('voteUpdate');
     };
-  }, [pollId, open, totalVotes]); // Thêm `totalVotes` vào dependency array để so sánh sự thay đổi
+  }, [pollId, open, audio]);
 
   const getRemainingTime = (endTime: string) => {
     const timeLeft = new Date(endTime).getTime() - new Date().getTime();
@@ -106,8 +100,15 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
     return () => clearInterval(interval);
   }, [poll]);
 
+  // Tắt âm thanh khi đóng dialog
+  const handleCloseDialog = () => {
+    audio.pause();
+    audio.currentTime = 0; // Đưa lại âm thanh về thời điểm ban đầu
+    handleClose();
+  };
+
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+    <Dialog open={open} onClose={handleCloseDialog} fullWidth={true} maxWidth="md">
       <DialogTitle>Live Race Statistics</DialogTitle>
       <DialogContent>
         {poll ? (
@@ -137,7 +138,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
             <p style={{ fontWeight: "bold" }}>Remaining time: {remainingTime}</p>
           ) : null}
         </div>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleCloseDialog} color="primary">
           Close
         </Button>
       </DialogActions>

@@ -24,6 +24,12 @@ Tạo id duy nhất tự động:
     npm install uuid
 Tự tạo css
     npm install sass
+Thêm âm thanh vào:
+    npm install howler
+
+Thêm socket: 
+    sever: npm install socket.io
+    client: npm install socket.io-client
 
 sass styles.scss styles.css
 
