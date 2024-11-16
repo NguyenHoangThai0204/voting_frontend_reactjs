@@ -49,7 +49,7 @@ export const HeaderHomeLayout = () => {
   return (
     <div className="header_home">
       <div className="header_home_content">
-        <img src='/src/assets/logoMT.jpg' alt='logo' />
+        <img src='/src/assets/logo-m-t.jpg' alt='logo' />
         <div className="header_home_title">
           <h1>T&M COMPANY</h1>
           <p style={{margin:0}}>Chọn theo cách của bạn</p>

@@ -7,7 +7,7 @@ export const FooterHome = () => {
         <div className="footer-section about">
           <div className="footer-section about logo">
           <img
-            src="/src/assets/logoMT.jpg"
+            src="/src/assets/logo-m-t.jpg"
             alt="T&M Logo"
             className="footer-logo"
           />
