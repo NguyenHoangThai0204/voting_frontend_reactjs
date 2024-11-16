@@ -20,7 +20,11 @@ function App() {
           <Route path="detail-poll/:id" element={<HomeLayout />} />
           <Route path="comment" element={<HomeLayout />} />
           <Route path="logout" element={<HomeLayout />} />
-          <Route path="login" element={<FormLayout />} />
+          <Route path="login" element={<FormLayout formType={'login'} onLoginClick={function (): void {
+            throw new Error('Function not implemented.');
+          } } onSignUpClick={function (): void {
+            throw new Error('Function not implemented.');
+          } } />} />
 
         </Routes>
       </BrowserRouter>

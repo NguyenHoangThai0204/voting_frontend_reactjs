@@ -79,36 +79,44 @@ export const ContentPollFormLayout = () => {
   }
 
   const handleCreateVote = async () => {
-    // Kiểm tra điều kiện cho các trường bắt buộc
-    if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate ) {  
-      alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
-      return;
-    }
-
-    const voteData = {
-      authorId: authorId,
-      title: nameVote,
-      description: description,
-      options: options.map((choice, index) => ({
-        contentOption: choice,
-        additonalContentOption: "",
-        descriptionContentOption: descriptionSelector[index],
-        votes: []
-      })),
-      avatar: image || "",
-      typeContent: typeOfVote,
-      timeStart: startDate,
-      timeEnd: endDate,
-      timeCreate: new Date().toISOString()
-    }
-    try {
-      console.log(voteData);
-      await createPoll(voteData);
-      navigate("/poll");
-    } catch (error) {
-      console.log(error);
-    }
+  if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {
+    alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
+    return;
   }
+
+  const voteData = {
+    authorId: authorId,
+    title: nameVote,
+    description: description,
+    options: options.map((choice, index) => ({
+      contentOption: choice,
+      additonalContentOption: "",
+      descriptionContentOption: descriptionSelector[index],
+      votes: []
+    })),
+    avatar: image || "",
+    typeContent: typeOfVote,
+    timeStart: startDate,
+    timeEnd: endDate,
+    timeCreate: new Date().toISOString()
+  };
+
+  // // Kiểm tra nội dung
+  // const checkResult = await checkContent(`${nameVote} ${description} ${options.join(" ")}`);
+  // if (checkResult && checkResult.includes("vi phạm")) {
+  //   alert("Nội dung của bạn có thể vi phạm chuẩn mực đạo đức hoặc chứa nội dung bạo lực. Vui lòng chỉnh sửa lại.");
+  //   return;
+  // }
+
+  try {
+    console.log(voteData);
+    await createPoll(voteData);
+    navigate("/poll");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   return (
     <div className="wrapper_voteform">

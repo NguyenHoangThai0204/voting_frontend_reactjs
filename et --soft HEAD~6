@@ -1,0 +1,303 @@
+[33mcommit 60de18ab7c8b0c0cf313fbedc26913dccfed2a28[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:55:54 2024 +0700
+
+    Remove sensitive files from cache
+
+[33mcommit c8523db9f37c80c5961d469a310e47ea7bc81f01[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:55:06 2024 +0700
+
+    done deploy
+
+[33mcommit 740447b9a9115c525399eb2e857507520546f0c4[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:50:56 2024 +0700
+
+    done deploy
+
+[33mcommit 265e3a13bdfdc30058ce2392b812837d4ffcf050[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:50:07 2024 +0700
+
+    done deploy
+
+[33mcommit b16bbf637baff126cf7c2968840345aece1962d6[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:48:24 2024 +0700
+
+    done json
+
+[33mcommit 11d18c8d729df3ee7adce273d86e9f44536b4aba[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 16 17:30:40 2024 +0700
+
+    done json
+
+[33mcommit d7d86282ab951ec433edce8b595858946628752b[m[33m ([m[1;31morigin/main[m[33m)[m
+Merge: e2a29c1 37aaa10
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Nov 14 23:11:43 2024 +0700
+
+    done
+
+[33mcommit e2a29c16c429368e978558bbad6b84fce2982893[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Nov 14 18:26:52 2024 +0700
+
+    chinh bay
+
+[33mcommit 37aaa10e09758138f5a7afd2b51f08e9d55acf67[m
+Merge: 2dd14c1 8881563
+Author: LeThiNgocMai <ngocmai1522k2@gmail.com>
+Date:   Thu Nov 14 18:24:51 2024 +0700
+
+    chinh trang chu
+
+[33mcommit 2dd14c1685c96efd162507cc69e8507830bad64b[m
+Author: LeThiNgocMai <ngocmai1522k2@gmail.com>
+Date:   Thu Nov 14 18:23:38 2024 +0700
+
+    chinh trang chu
+
+[33mcommit 8881563762ba560fb6643ff6ff42a583b61ad7e5[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 9 14:15:21 2024 +0700
+
+    done
+
+[33mcommit 0668c64c9d098255538a9709a5e107eb7c04f1e7[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Nov 9 14:09:18 2024 +0700
+
+    done
+
+[33mcommit 3eb216054353ac8c83e45357e062b6ca6f8f0f45[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Oct 29 13:15:04 2024 +0700
+
+    done
+
+[33mcommit 09559e40dcd0c5fb951cbcf99420c3ce8b2d5ef9[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Oct 25 20:44:06 2024 +0700
+
+    done
+
+[33mcommit b4ea88c46a174bfbea3446a9486b06164211458b[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Oct 25 17:33:44 2024 +0700
+
+    done
+
+[33mcommit 76bf789d0a2a5183d29380681c0115f4f98ccfad[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Oct 22 17:33:03 2024 +0700
+
+    done
+
+[33mcommit a2d545f90aa44c26f3fd078ee75940afeb76e30d[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Oct 5 10:00:28 2024 +0700
+
+    done
+
+[33mcommit 3f8f0a33bddeb39f53c357d528503174d7570909[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Sep 30 22:15:23 2024 +0700
+
+    done
+
+[33mcommit 812b4c5ff498a5627531edd2cdb2d19187cfebfb[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Sep 30 19:03:20 2024 +0700
+
+    done
+
+[33mcommit 9f0b90d49ad754f82c22c070d2dabb54f1c87764[m
+Author: LeThiNgocMai <ngocmai1522k2@gmail.com>
+Date:   Sat Sep 28 13:52:19 2024 +0700
+
+    sso google
+
+[33mcommit 3c57c384ce2e2240c11d17ff12490a6cfacff97b[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 27 17:40:29 2024 +0700
+
+    done
+
+[33mcommit bebedbaedcba05a20f02c4d5f8ade5bf5bc40a95[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 27 13:30:42 2024 +0700
+
+    done
+
+[33mcommit 8e73253cd752b85e62241b8a1e2efd376b7d9edb[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 27 12:31:31 2024 +0700
+
+    done
+
+[33mcommit bdf647c5ad5d167e394683427da6a8f0bba2640b[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Sep 26 15:54:21 2024 +0700
+
+    done
+
+[33mcommit 097895d956d61bce1e6472cfd78eb20df827092b[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sun Sep 22 10:20:57 2024 +0700
+
+    done
+
+[33mcommit 47c9b43cb44f96e5e5fe8a6079e7c440f08c3566[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 17:05:14 2024 +0700
+
+    done
+
+[33mcommit d6006cd978d37bed4cc17682afb59c96bc22d263[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 15:56:52 2024 +0700
+
+    done
+
+[33mcommit bab56a18cfe0363fe6647ab6362e76ab9c84d168[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 15:41:01 2024 +0700
+
+    done
+
+[33mcommit fc54112cda0b5ae8edfacf17ecc6b6d6a35f7582[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 15:17:51 2024 +0700
+
+    done
+
+[33mcommit 442ffba9e76aa8149638e349cc69489e8ccdb315[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 14:48:45 2024 +0700
+
+    done
+
+[33mcommit fae5bf526c70a0b96ed42f90f6660dacfb74cf36[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 14:19:45 2024 +0700
+
+    done
+
+[33mcommit 8ef9a2d6c583d4ee5dc2fb5c4047970437e6005e[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 14:18:07 2024 +0700
+
+    done
+
+[33mcommit a777d190f46d06be0c7f417a62e8119fad99af80[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 20 14:08:43 2024 +0700
+
+    done
+
+[33mcommit 4f02f88c361039b586af1383571601e73223a6d3[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Sep 19 15:06:56 2024 +0700
+
+    done thống kê kết quả, 2 loại cho kết thúc và đang diễn ra
+
+[33mcommit 9d885eba459d0aeba7edef9d1023e0ea09351634[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Sep 16 17:52:54 2024 +0700
+
+    done
+
+[33mcommit 331ff2fd9944f970d36f02ced23b7c34f3bda0c6[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 13 02:36:12 2024 +0700
+
+    done
+
+[33mcommit b0783365a2c6deddec45617b582b0148b352f580[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 13 02:11:30 2024 +0700
+
+    done
+
+[33mcommit 49869a887699341f20235dc786259fd6505f1e8b[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Sep 12 23:20:26 2024 +0700
+
+    done
+
+[33mcommit f628933422bf4189c891c0f98b3e37366f2547c4[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Sep 10 13:49:03 2024 +0700
+
+    done
+
+[33mcommit 8e8a320b08e526b6eaed767de4f210804f2d7156[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Sep 10 11:20:45 2024 +0700
+
+    done
+
+[33mcommit 01254d0938f4ee0b2a85f8f1c38b0e44feecdbe2[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Sep 7 18:41:22 2024 +0700
+
+    done
+
+[33mcommit c81433521e28645ffca5e2ac4ca07db78253a522[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Sat Sep 7 18:04:16 2024 +0700
+
+    done
+
+[33mcommit 6b3713751db60e0333e8767e3faa563fe702ea0c[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 6 21:07:16 2024 +0700
+
+    done
+
+[33mcommit b60d44815729faf29410a69eaa8a664de1d73caf[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Fri Sep 6 21:06:33 2024 +0700
+
+    done
+
+[33mcommit 6a909f075c77448e8f21667fe6925b922f8cc907[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Thu Sep 5 20:35:02 2024 +0700
+
+    done
+
+[33mcommit eecf8417649047e1d6c8ed54673640ea360ee158[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Sep 3 17:52:50 2024 +0700
+
+    done
+
+[33mcommit cb64c5640d3e6b55390ec65c0dc3d66224b9ca7d[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Sep 2 23:52:54 2024 +0700
+
+    done
+
+[33mcommit 67c20343376b57536179437350b6de772d29aad9[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Sep 2 17:08:35 2024 +0700
+
+    done load contentvote
+
+[33mcommit b04e85b0af1d757f6825b814793a9f7112b63314[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Tue Aug 27 09:56:39 2024 +0700
+
+    done
+
+[33mcommit a8b82420a29acfec990db5f390cef257f0ce43fd[m
+Author: NguyenHoangThai0204 <thaidp2002@gmail.com>
+Date:   Mon Aug 26 10:52:21 2024 +0700
+
+    done login with backend
+
+[33mcommit 8b2358de67ddfe5e5

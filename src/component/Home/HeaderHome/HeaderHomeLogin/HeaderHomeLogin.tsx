@@ -8,7 +8,7 @@ import React from "react";
 export const HeaderHomeLogin = () => {
 
   const [showForm, setShowForm] = useState(false);
-  const [formType, setFormType] = useState('');
+  const [formType, setFormType] = useState<'login' | 'signup'>('login');
 
   const handleShowForm = () => {
     setFormType('login');
