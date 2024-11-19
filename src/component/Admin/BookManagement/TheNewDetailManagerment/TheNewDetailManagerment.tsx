@@ -1,6 +1,7 @@
 import React from 'react'
 import './TheNewDetailManagerment.css';
 import { TheNew  } from '../../../../typeObject';
+import ReactHtmlParser from 'react-html-parser';
 import { format } from 'date-fns';
 import {getTheNewById} from '../../../../api/CallApi'
 interface TheNewId {
@@ -37,10 +38,10 @@ export const TheNewDetailManagerment: React.FC<TheNewId> = ({ id }) => {
             </div>
             <div className="row">
                 <div style={{width:"31%"}}>
-                 <img src={theNew?.hinhAnhBaiViet} alt="upload" />
+                    <img src={theNew?.hinhAnhBaiViet} alt="upload" />
                 </div>
                 <div style={{width:"68%"}}>
-                    <p>{theNew?.noiDungBaiViet}</p>
+                    <p>{ReactHtmlParser(theNew?.noiDungBaiViet)}</p>
                 </div>
             </div>
         </div>

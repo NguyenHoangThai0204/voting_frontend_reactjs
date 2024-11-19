@@ -4,6 +4,7 @@
   flex-direction: column; /* Đặt cấu trúc chính theo chiều dọc */
   min-height: 100vh; /* Chiều cao tối thiểu cho toàn bộ trang */
   background-color: rgb(226, 240, 231);
+  /* min-width: 900px; */
 }
 .home_layout .header_home {
   width: 100%;
@@ -23,12 +24,12 @@
   height: 100%; /* Chiều cao toàn bộ khu vực body */
 }
 .home_layout .content_home .body_home .menu_left {
-  width: 8%;
+  width: 10%;
   animation: menuIn 0.8s ease-in-out forwards;
   padding: 5px;
 }
 .home_layout .content_home .body_home .content_right {
-  width: 92%;
+  width: 90%;
   margin-top: 5px;
   overflow-y: auto;
 }

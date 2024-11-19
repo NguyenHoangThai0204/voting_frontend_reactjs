@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CommentLayout.css';
 import { ItemComent } from './ItemComment/ItemComent';
+import { TheNew } from '../../../typeObject';
+import { getAllTheNews } from '../../../api/CallApi';
 
-export const CommentLayout = () => {
-  // Danh sách các comment giả lập
-  const comments = Array.from({ length: 6 }, (_, i) => i + 1); // 25 comments
-  const itemsPerPage = 4; // Số item trên mỗi trang
+export const TheNewLayout = () => {
+  const itemsPerPage = 4; // Số lượng item trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const [listNew, setListNew] = useState<TheNew[]>([]);
 
   // Tính toán các item được hiển thị trên trang hiện tại
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentComments = comments.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = listNew.slice(indexOfFirstItem, indexOfLastItem);
 
   // Hàm chuyển trang
   const handlePageChange = (pageNumber: number) => {
@@ -19,15 +20,30 @@ export const CommentLayout = () => {
   };
 
   // Tạo các nút chuyển trang
-  const totalPages = Math.ceil(comments.length / itemsPerPage);
+  const totalPages = Math.ceil(listNew.length / itemsPerPage);
   const paginationButtons = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  // Lấy dữ liệu từ API
+  useEffect(() => {
+    const fetchTheNew = async () => {
+      try {
+        const response = await getAllTheNews();
+        setListNew(Array.isArray(response.data) ? response.data : [response.data]);
+        console.log(response.data);
+      } catch (error) {
+        console.log('Error fetching the news data', error);
+      }
+    };
+    fetchTheNew();
+  }, []);
 
   return (
     <div className="comemtlayout">
       {/* Left Layout */}
       <div className="commentLayoutLeft">
-        {currentComments.map((comment, index) => (
-          <ItemComent key={index}  />
+        {/* Hiển thị các item hiện tại */}
+        {currentItems.map((item, index) => (
+          <ItemComent key={index} theNew={item}/>
         ))}
 
         {/* Phần phân trang */}

@@ -1,5 +1,5 @@
   import axios from 'axios';
-  import { ListTheNewResponse, TheNew, UserResponse,TheNewResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
@@ -11,8 +11,8 @@
   // const API_USER = 'http://160.30.44.53:3000/api/user';
   // const API_VOTE = 'http://160.30.44.53:3000/api/vote';
   // const API_POLL = 'http://160.30.44.53:3000/api/poll';
-
   // const API_SSO = "http://160.30.44.53:3000/api/auth";
+  
   const API_USER = 'http://localhost:3000/api/user';
   const API_VOTE = 'http://localhost:3000/api/vote';
   const API_POLL = 'http://localhost:3000/api/poll';
@@ -65,7 +65,7 @@
     const response = await axios.post(`${API_POLL}/create_polling`, data );
     return response.data;
   }
-  export const createTheNew = async (data: TheNew ): Promise<TheNew> => {
+  export const createTheNew = async (data: CreateTheNew ): Promise<TheNew> => {
     const response = await axios.post(`${API_TheNew}/createTheNew`, data);
     return response.data;
   }

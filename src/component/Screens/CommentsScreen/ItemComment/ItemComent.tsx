@@ -1,37 +1,50 @@
 import React from 'react'
 import './ItemComent.css'
-export const ItemComent = () => {
+import { TheNew } from '../../../../typeObject';
+interface TheNewObj {
+  theNew: TheNew;
+}
+export const ItemComent: React.FC<TheNewObj> = ({ theNew }) => {
   return (
     <div className='itemComment'>
-        <div className="header">
-            <div className="avatar">
-                <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="avatar" />
-            </div>
-            <div className="name">
-                <p>Nguyen Van A</p>
-            </div>
+      <div className="header">
+        <div className="avatar">
+          <img src="" alt="admin" />
         </div>
-        <div className="contentItem">
-          <div className="contentLeft">
-            <div className="commentTitle">
-              <p>Tên Chủ đếf</p>
-            </div>
-            <div className="commentDescription">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A veniam nesciunt velit aliquid repellendus aliquam ex officia nostrum, nulla explicabo dolorem ullam. In facere quo ab sunt, omnis quia illo?</p>
-            </div>
-          </div>
-          <div className="contentRight">
-          <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="avatar" />
-          </div>
+        <div className="name">
+          <p>Admin</p>
         </div>
-        <div className="footer">
-          <div className="like">
-            <p>Like</p>
+      </div>
+      <div className="contentItem">
+        <div className="contentLeft">
+          <div className="commentTitle">
+            <p>{theNew.tenBaiViet}</p>
           </div>
-          <div className="dislike">
-            <p>Dislike</p>
+          <div className="commentDescription">
+            <p style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 4, // Viết camelCase thay cho -webkit-line-clamp
+              WebkitBoxOrient: "vertical", // Viết camelCase thay cho -webkit-box-orient
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}>
+              {theNew.noiDungBaiViet}
+            </p>
+
           </div>
         </div>
+        <div className="contentRight">
+          <img src={theNew.hinhAnhBaiViet} alt="avatar" />
+        </div>
+      </div>
+      <div className="footer">
+        <div className="like">
+          <p>Like</p>
+        </div>
+        <div className="dislike">
+          <p>Dislike</p>
+        </div>
+      </div>
     </div>
   )
 }

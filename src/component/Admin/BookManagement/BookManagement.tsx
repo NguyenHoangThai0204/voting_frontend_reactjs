@@ -55,6 +55,7 @@ export const BookManagement = () => {
         <table className="table table-striped" style={{ width: '100%', marginTop: "5px" }} border={1}>
           <thead>
             <tr>
+              
               <th scope="col">Tên bài viết</th>
               <th scope="col">Chủ đề</th>
               <th scope="col">Hình ảnh</th>

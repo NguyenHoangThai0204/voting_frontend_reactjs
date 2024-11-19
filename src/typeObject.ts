@@ -97,7 +97,15 @@ export interface Vote {
 export interface TheNew{
   tenBaiViet: string;
   chuDeBaiViet: string;
-  _id:string | null ;
+  _id:string | null;
+  hinhAnhBaiViet: string;
+  noiDungBaiViet: string;
+  nguoiViet: string ;
+  thoiGianViet: string| null;
+}
+export interface CreateTheNew{
+  tenBaiViet: string;
+  chuDeBaiViet: string;
   hinhAnhBaiViet: string;
   noiDungBaiViet: string;
   nguoiViet: string ;

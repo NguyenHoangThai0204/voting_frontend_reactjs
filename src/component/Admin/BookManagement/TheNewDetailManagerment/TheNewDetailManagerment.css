@@ -26,10 +26,13 @@
     width: 50%;
   }
   .body_detailthenewmanagement .row .item p{
-    font-size: 17px;
+    font-size: 20px;
   }
   .body_detailthenewmanagement img{
     width: 100%;
     height: 250px;
     border-radius: 0;
+  }
+  .body_detailthenewmanagement .row p{
+    font-size: 23px;
   }

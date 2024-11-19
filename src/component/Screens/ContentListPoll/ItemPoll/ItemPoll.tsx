@@ -1,6 +1,6 @@
 import "./ItemPoll.css";
 import React from "react";
-import img from "../../../../assets/anh-dep-thien-nhien-2-1.jpg";
+import img from "../../../../assets/vote1.jpg";
 import { Link } from "react-router-dom";
 import { Poll } from "../../../../typeObject";
 import { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
       {/* <Link to="/detail-poll" state={{ id: item._id }}> */}
       <Link to={`/detail-poll/${item._id}`}>
         <div className="image_container">
-        <img style={{ height: "100%", width: "100%", objectFit: "cover" }} src={item.avatar || img} alt="item" />
+        <img src={item.avatar || img} alt="item" />
           <div className="icon_container">
             <i className="fa-solid fa-heart"></i>
           </div>

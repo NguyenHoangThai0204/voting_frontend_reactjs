@@ -19,6 +19,7 @@ Gõ:
     npm install date-fns // ngày tháng
 
     npm install firebase @types/firebase
+npm install react-html-parser --legacy-peer-deps
 
 Tạo id duy nhất tự động:
     npm install uuid

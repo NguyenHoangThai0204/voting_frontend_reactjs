@@ -8,7 +8,7 @@
     background-color: aliceblue;
     transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
-a{
+a {
     text-decoration: none;
     color: black;
     font-weight: bold;
@@ -16,40 +16,43 @@ a{
 .image_container {
     position: relative;
     display: inline-block;
-    height: 200px;
+    aspect-ratio: 16/9; /* Đảm bảo tỷ lệ cố định cho hình ảnh */
+    width: 100%; /* Hình ảnh luôn vừa với container */
 }
 img {
     display: block;
-    width: 100%;
-    border-radius:10px;
+    height: 100%; /* Đảm bảo chiều cao của hình ảnh khớp với container */
+    width: 100%; /* Đảm bảo hình ảnh lấp đầy container */
+    border-radius: 10px;
+    object-fit: cover; /* Cắt và căn chỉnh hình ảnh nếu không đúng kích thước */
 }
 .icon_container {
     position: absolute;
     top: 10px;
     right: 10px;
 }
-h5, h3{
+h5, h3 {
     white-space: nowrap;         /* Giữ văn bản trên một dòng */
     overflow: hidden;            /* Ẩn phần văn bản tràn ra ngoài */
     text-overflow: ellipsis;     /* Hiển thị dấu ba chấm khi văn bản bị cắt */
-  }
+}
 .item:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     transform: scale(1.05);    
 }
-.footer_itemvote{
+.item .footer_itemvote {
     font-weight: normal;
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
 }
-.footer_left{
+.item .footer_left {
     width: 40%;
     overflow: hidden;
     white-space: nowrap;
     animation: moveLeft 10s linear infinite;
 }
-.footer_right{
+.item .footer_right {
     width: 50%;
     overflow: hidden;
     text-align: right;
@@ -63,14 +66,21 @@ h5, h3{
         right: 100%;
     }
 }
-@media screen and (max-width:900px) {
-    .image_container {
-        height: 100px;
-        width: 150px;
-    }
-    .item{
-        margin: 0 5px 0 0;
-        width: 48%;
+
+/* Responsive Styles */
+@media screen and (max-width: 900px) {
+    .item {
+        margin: 5px;
+        width: calc(50% - 10px); /* Giảm kích thước để vừa 2 item trên một hàng */
         padding: 10px;
+        min-width: 150px; /* Giới hạn kích thước nhỏ nhất */
+    }
+    .image_container {
+        aspect-ratio: 16/9; /* Giữ tỷ lệ cố định cho container */
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 }

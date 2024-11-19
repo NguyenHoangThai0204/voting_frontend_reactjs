@@ -5,11 +5,18 @@
 .content_right_home .slider_content_home {
   width: 99%;
   margin: 0 0 15px 0;
-  height: 250px;
+  height: 350px;
 }
 .content_right_home .slider_content_home img {
   width: 100%;
   border-radius: 20px;
 }
-
-/*# sourceMappingURL=ContentHomeLayout.css.map */
+@media screen and (max-width: 900px) {
+  .content_right_home .slider_content_home {
+    height: 150px;
+  }
+  .content_right_home .slider_content_home img {
+    width: 100%;
+    height: 150px;
+  }
+}
