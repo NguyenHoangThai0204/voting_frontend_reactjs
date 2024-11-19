@@ -4,15 +4,18 @@
     height: 100%;
   }
   .bookManagement .userManaLeft {
-    width: 50%;
+    width: 30%;
   }
   .bookManagement .userManaLeft table .trrow:hover {
     background-color: aquamarine;
     cursor: pointer;
   }
-  .bookManagement .userManaLeft table tbody th,td {
+  .bookManagement .userManaLeft table tbody th{
     padding: auto;
   }
+  .bookManagement .userManaLeft table tbody tr td {
+    padding: 2px;
+  }
   .bookManagement .userManaRight {
-    width: 50%;
+    width: 68%;
   }

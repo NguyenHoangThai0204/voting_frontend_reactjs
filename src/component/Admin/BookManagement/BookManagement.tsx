@@ -6,12 +6,14 @@ import { FormAddComment } from './FormAddComment/FormAddComment';
 import { TheNew } from '../../../typeObject';
 import AddIcon from '@mui/icons-material/Add';
 import { getAllTheNews } from '../../../api/CallApi';
+import { TheNewDetailManagerment } from './TheNewDetailManagerment/TheNewDetailManagerment';
 
 export const BookManagement = () => {
 
   const [open, setOpen] = React.useState(false);
   const [listTheNew, setListTheNew] = React.useState<TheNew[]>([])
-
+  // const [news, setNews] = React.useState<TheNew>();
+  const [id, setid] = React.useState('');
   const handleAddClick = () => {
     setOpen(true);
   }
@@ -33,7 +35,6 @@ export const BookManagement = () => {
     fetchTheNew();
   }, [])
 
-
   return (
     <div className="bookManagement">
       <div className="userManaLeft">
@@ -54,7 +55,6 @@ export const BookManagement = () => {
         <table className="table table-striped" style={{ width: '100%', marginTop: "5px" }} border={1}>
           <thead>
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Tên bài viết</th>
               <th scope="col">Chủ đề</th>
               <th scope="col">Hình ảnh</th>
@@ -63,8 +63,7 @@ export const BookManagement = () => {
           <tbody>
             {
               listTheNew.map((theNew) => (
-                <tr className='trrow'>
-                  <td style={{width:"10%"}}>1</td>
+                <tr className='trrow' onClick={()=>theNew._id && setid(theNew._id)}>
                   <td style={{width:"40%"}}>{theNew?.tenBaiViet}</td>
                   <td style={{width:"15%"}}>{theNew.chuDeBaiViet}</td>
                   <td style={{width:"15%"}}><img src={theNew?.hinhAnhBaiViet} alt="avatar" style={{ width: '60px', height: '60px' }} /></td>
@@ -75,7 +74,7 @@ export const BookManagement = () => {
         </table>
       </div>
       <div className="userManaRight">
-        {/* <DetailUsersManagement userItem={userItem} pollItem={polls}/> */}
+        <TheNewDetailManagerment id={id} />
       </div>
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="lg">
         <DialogContent>

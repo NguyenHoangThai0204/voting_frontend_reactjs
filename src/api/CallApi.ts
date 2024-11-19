@@ -1,5 +1,5 @@
   import axios from 'axios';
-  import { ListTheNewResponse, TheNew, UserResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew, UserResponse,TheNewResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
@@ -54,6 +54,10 @@
   // hàm trả về một bầu chọn dựa trên id
   export const getPollById = async (id : string): Promise<PollResponse> => {
     const response = await axios.get(`${API_POLL}/find_by_id_polling/${id}`);
+    return response.data;
+  }
+  export const getTheNewById = async ( id: string ): Promise<TheNewResponse> =>{
+    const response = await axios.get(`${API_TheNew}/findAllTheNewById/${id}`);
     return response.data;
   }
   // tạo cuộc bình chọn

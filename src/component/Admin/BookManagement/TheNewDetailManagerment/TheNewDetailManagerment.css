@@ -1,0 +1,35 @@
+
+.body_detailthenewmanagement {
+    flex: 1; /* Đảm bảo nội dung chiếm toàn bộ không gian giữa header và footer */
+    border: 1px solid #d9d9d9;
+    padding: 20px;
+    max-height: 75vh;
+     overflow-y: auto; /*Thêm thanh cuộn khi nội dung vượt quá */
+    background-color: rgb(229, 233, 237);
+    box-shadow: 0 0 20px #aaaaaa;
+  }
+  
+  .body_detailthenewmanagement h2 {
+    text-align: center;
+    margin: 15px 0;
+  }
+  .body_detailthenewmanagement .row{
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-between;
+  }
+  .body_detailthenewmanagement .row .item{
+    display: flex;
+    margin: 0;
+    padding: 5px;
+    background-color: rgb(229, 233, 237);
+    width: 50%;
+  }
+  .body_detailthenewmanagement .row .item p{
+    font-size: 17px;
+  }
+  .body_detailthenewmanagement img{
+    width: 100%;
+    height: 250px;
+    border-radius: 0;
+  }

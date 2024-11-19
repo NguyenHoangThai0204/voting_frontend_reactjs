@@ -22,7 +22,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
     </div>
   );
 }
@@ -39,7 +39,7 @@ export default function ContentTabsAdmin() {
       {/* <div>
         <h1 style={{ textAlign: "center" }}>Admin</h1>
       </div> */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
         {/* Tabs navigation */}
         <Tabs value={tabIndex} onChange={handleChange} aria-label="admin tabs">
           <Tab label="Quản lí người dùng" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
@@ -47,7 +47,7 @@ export default function ContentTabsAdmin() {
           <Tab label="Tab 3" id="simple-tab-2" aria-controls="simple-tabpanel-2" />
         </Tabs>
       </Box>
-      <div style={{ overflow: "auto" }}>
+      <div style={{ overflow: "auto", padding:0 }}>
         {/* Tab Panels */}
         <CustomTabPanel value={tabIndex} index={0}>
           <UsersManagement />
