@@ -8,17 +8,17 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
     const itemMenu = [
       {
         icon: <HomeIcon sx={{ fontSize: 18 }} />,
-        name: 'Home',
+        name: 'Trang chủ',
         link: '/home'
       },
       {
         icon: <HowToVoteIcon sx={{ fontSize: 18 }} />,
-        name: 'Poll',
+        name: 'Bình chọn',
         link: '/poll'
       },
       {
         icon: <LibraryBooksIcon sx={{ fontSize: 18 }} />,
-        name: 'Comment',
+        name: 'Bài viết',
         link: '/comment'
       }
     ];

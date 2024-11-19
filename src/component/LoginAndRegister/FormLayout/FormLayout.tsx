@@ -1,29 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // Thêm `useEffect`
 import LoginForm from '../LoginFrom/LoginForm';
 import SignUpForm from '../SignupForm/SignUpForm';
 import './FormLayout.css';
 
-// Định nghĩa kiểu dữ liệu cho props
 interface FormLayoutProps {
-  formType: 'login' | 'signup'; // Chỉ cho phép 'login' hoặc 'signup'
-  onLoginClick: () => void; // Hàm không có tham số, trả về void
+  formType: 'login' | 'signup';
+  onLoginClick: () => void;
   onSignUpClick: () => void;
 }
 
 export const FormLayout: React.FC<FormLayoutProps> = ({ formType, onLoginClick, onSignUpClick }) => {
+  const [currentImage, setCurrentImage] = useState('/assets/nen1.png'); // Ảnh ban đầu
+  const [nextImage, setNextImage] = useState('/assets/nen2.png'); // Ảnh tiếp theo
+  const [isSliding, setIsSliding] = useState(false);
+
+  // Thêm logic tự động chuyển đổi ảnh
+ useEffect(() => {
+  const interval = setInterval(() => {
+    setIsSliding(true);
+    setTimeout(() => {
+      setCurrentImage(nextImage);
+      setNextImage((prevImage) =>
+        prevImage === '/assets/nen1.png' ? '/assets/nen2.png' : '/assets/nen1.png'
+      );
+      setIsSliding(false);
+    }, 1000); // Thời gian trượt ảnh
+  }, 3000); // Đổi ảnh mỗi 3 giây
+
+  return () => clearInterval(interval); // Xoá khi unmount để tránh rò rỉ bộ nhớ
+}, [nextImage]);
+
   return (
     <div className="body">
-      <div className="wrapper">
+      <div className="wrapperFormLayout">
         {/* Phần nội dung bên phải */}
-        <div className="content_login_right">
-          <h1>Chào mừng bạn đến với cuộc biểu tình</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio nihil in. Veritatis voluptatem labore odio eveniet, maiores doloribus alias!
-          </p>
-        </div>
+        <div className={`content_login_right ${isSliding ? 'sliding' : ''}`}>
+  <img src={currentImage} alt="Background" />
+</div>
 
         {/* Phần nội dung bên trái */}
-        <div className="content_login_left">
+        <div
+  className="content_login_left"
+>
           {formType === 'signup' ? (
             <SignUpForm onLoginClick={onLoginClick} />
           ) : (

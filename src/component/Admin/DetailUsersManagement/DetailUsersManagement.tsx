@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
  import { PropDetailPollAdmin } from './PropDetailPollAdmin';
 interface Props {
@@ -136,7 +136,6 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">ID</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                         </tr>
@@ -150,9 +149,9 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                             (pollItem ?? []).map((poll, index) => (
                                 <tr key={poll?._id || index} onClick={() => handleClickOpen(poll)}>
                                     <td style={{ whiteSpace: "nowrap" }}>{index + 1}</td>
-                                    <td style={{ whiteSpace: "nowrap" }}>
+                                    {/* <td style={{ whiteSpace: "nowrap" }}>
                                         <Link to={`/detail-poll/${poll._id}`}>{poll._id || 'N/A'}</Link>
-                                    </td>
+                                    </td> */}
                                     <td style={{ whiteSpace: "nowrap" }}>{poll?.title || 'N/A'}</td>
                                     <td style={{ whiteSpace: "nowrap" }}>{poll?.description || 'N/A'}</td>
                                 </tr>

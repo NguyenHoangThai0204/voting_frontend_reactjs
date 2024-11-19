@@ -33,6 +33,7 @@ export const ContentPollFormLayout = () => {
     setImageUrl(event.target.value);
     setImage(event.target.value); // Cập nhật hình ảnh với URL mới
   };
+  
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
   };

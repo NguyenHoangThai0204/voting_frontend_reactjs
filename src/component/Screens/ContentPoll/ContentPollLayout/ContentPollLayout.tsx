@@ -55,7 +55,7 @@ export const ContentPollLayout = () => {
                 <div className="list_vote_header">
                     <h2>List of voting</h2>
                     <Link to="/create-poll" state={{ authorId: user?._id }} className="create_vote_button" >
-                        Create Poll
+                        Tạo bình chọn
                     </Link>
                 </div>
                 <div className="list_item_vote">

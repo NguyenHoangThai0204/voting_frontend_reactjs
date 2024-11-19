@@ -33,10 +33,20 @@ export interface VoteResponse {
   message: string;
   data: Vote;
   }
-  export interface PollResponse {
+export interface PollResponse {
     status: string;
     message: string;
     data: Poll;
+    }
+export interface TheNewResponse {
+      status: string;
+      message: string;
+      data: TheNew;
+    }
+    export interface ListTheNewResponse {
+      status: string;
+      message: string;
+      data: TheNew[];
     }
 export interface Poll {
     _id:string ;
@@ -84,4 +94,11 @@ export interface Vote {
   transactionHash: string | null;  
 }
 
-
+export interface TheNew{
+  tenBaiViet: string;
+  chuDeBaiViet: string;
+  hinhAnhBaiViet: string;
+  noiDungBaiViet: string;
+  nguoiViet: string ;
+  thoiGianViet: string| null;
+}

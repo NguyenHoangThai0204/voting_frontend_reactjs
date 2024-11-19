@@ -4,15 +4,31 @@
   height: 100%;
 }
 .usersManagement .userManaLeft {
-  width: 31%;
+  height: 75vh;
+  width: 38%;
+  overflow-y: auto;
+}
+.usersManagement .userManaLeft table thead {
+  position: sticky;
+  top: 54px;
+  background-color: white; 
+  z-index: 1; 
+}
+.usersManagement .userManaLeft table thead th {
+  background-color: white; 
+  z-index: 1; 
+}
+.usersManagement .userManaLeft table tbody {
+  overflow-y: auto; 
 }
 .usersManagement .userManaLeft table .trrow:hover {
   background-color: aquamarine;
   cursor: pointer;
 }
-.usersManagement .userManaRight {
-  width: 68%;
-  height: 80%;
+.usersManagement .userManaLeft table tbody td {
+  padding: 10px;
 }
-
-/*# sourceMappingURL=UsersManagement.css.map */
+.usersManagement .userManaRight {
+  width: 60%;
+  max-height: 80vh;
+}

@@ -1,22 +1,81 @@
+@charset "UTF-8";
+.home_layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo toàn bộ chiều cao màn hình */
+  background-color: rgb(226, 240, 231);
+}
+.home_layout .header_home {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  border-bottom: 1px solid rgb(215, 214, 214);
+  animation: headerIn 0.8s ease-in-out forwards;
+  opacity: 0;
+}
+.home_layout .content_home {
+  flex: 1; /* Chiếm không gian giữa header và footer */
+  margin-top: 70px; /* Trừ đi chiều cao của header */
+  display: flex;
+  flex-direction: column;
+}
+.home_layout .content_home .body_home {
+  display: flex;
+  flex-grow: 1; /* Nội dung chính chiếm không gian còn lại */
+  position: relative;
+}
+.home_layout .content_home .body_home .menu_left {
+  width: 8%;
+  animation: menuIn 0.8s ease-in-out forwards;
+  opacity: 0;
+  padding: 5px;
+  transition: opacity 0.8s ease-in-out;
+}
+.home_layout .content_home .body_home .menu_left.active {
+  opacity: 1;
+}
+.home_layout .content_home .body_home .content_right {
+  flex-grow: 1;
+  overflow-y: auto; /* Đảm bảo thanh cuộn chỉ áp dụng cho nội dung */
+  margin-top: 5px;
+}
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar {
+  width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
+  height: 0;
+}
+.home_layout .footer_home {
+  width: 100%;
+  background-color: rgb(47, 136, 138);
+  text-align: center;
+  padding: 10px 0;
+}
+
 .body_detailusermanagement {
+  flex: 1; /* Đảm bảo nội dung chiếm toàn bộ không gian giữa header và footer */
   border: 1px solid #d9d9d9;
   padding: 20px;
-  overflow: scroll;
+  max-height: 75vh;
+   overflow-y: auto; /*Thêm thanh cuộn khi nội dung vượt quá */
   background-color: rgb(229, 233, 237);
   box-shadow: 0 0 20px #aaaaaa;
-  height: 80vh;
 }
+
 .body_detailusermanagement h2 {
   text-align: center;
   margin: 15px 0;
 }
+
 .body_detailusermanagement .container {
   display: flex;
+  height: 100%; /* Đảm bảo chiều cao đầy đủ cho container */
 }
+
 .body_detailusermanagement .container .containLeft {
   width: 25%;
   margin: auto;
 }
+
 .body_detailusermanagement .container .containLeft .containLeftBottom {
   width: 100%;
   height: 85%;
@@ -26,56 +85,77 @@
   padding: 30px;
   text-align: center;
 }
+
 .body_detailusermanagement .container .containRight {
-  width: 75%;
+  flex-grow: 1; /* Chiếm phần còn lại */
   margin: auto;
 }
+
 .body_detailusermanagement .container .containRight table {
   width: 100%;
-  height: 100%;
   text-align: start;
 }
-.body_detailusermanagement .container .containRight table .row {
-  margin: 10px 0 15px 0;
-  display: table-row;
-}
-.body_detailusermanagement .container .containRight table .row .button {
-  display: flex;
-  justify-content: space-around;
-}
+
 .body_detailusermanagement .container .containRight table td {
   padding: 10px;
 }
-.body_detailusermanagement .container .containRight table td span {
-  font-weight: bold;
-  font-size: 20px;
+
+.body_detailusermanagement .listPoll table tbody {
+  overflow-y: auto;
+  height: 25vh;
 }
-.body_detailusermanagement .container .containRight .button {
-  display: flex;
-  justify-content: space-around;
+.body_detailusermanagement .listPoll table tbody td {
+  padding: 5px;
 }
-.body_detailusermanagement .container .containRight .button button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  color: black;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: aquamarine;
-  cursor: pointer;
-}
-.body_detailusermanagement .listPoll table thead {
-  background-color: #f2f2f2;
-}
-.body_detailusermanagement .listPoll table thead tr th {
-  padding: 10px;
-}
-.body_detailusermanagement .listPoll table tbody tr td {
-  padding: 10px;
-}
+
 .body_detailusermanagement .listPoll table tbody tr:hover {
   background-color: rgb(208, 241, 230);
   cursor: pointer;
 }
 
-/*# sourceMappingURL=DetailUserManagement.css.map */
+@keyframes headerIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes menuIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 900px) {
+  .home_layout .content_home {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .home_layout .content_home .body_home .menu_left {
+    width: 100%;
+    order: 2;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+  }
+  .home_layout .content_home .body_home .content_right {
+    width: 100%;
+    order: 1;
+    flex-grow: 1;
+  }
+  .footer_home {
+    width: 100%;
+    background-color: gray;
+    position: relative;
+    padding: 10px 0;
+  }
+}

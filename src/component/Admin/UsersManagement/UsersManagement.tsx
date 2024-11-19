@@ -58,18 +58,20 @@ export const UsersManagement = () => {
   return (
     <div className="usersManagement">
       <div className="userManaLeft">
-        <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", width: "50%" }}>
-            <h3>Search user: </h3>
+        <div style={{ display: "flex", backgroundColor:"white", width: "100%", justifyContent: "space-between", padding:"2px",top:0, opacity:1, position:"sticky", height:"50px", zIndex: 2}}>
+          <div style={{ display: "flex", alignItems: "center", width: "20%" }}>
+            <h3>Search: </h3>
           </div>
+
           <InputSearchAdmin />
+          
           <div>
             <MenuTwoToneIcon style={{ fontSize: "45px", color: "black" }} 
               onClick={handleMenuClick}
             />
           </div>
         </div>
-        <table className="table table-striped" style={{ width: '100%', marginTop: "5px" }} border={1}>
+        <table className="table table-striped" style={{ width: '100%' }} border={1}>
           <thead>
             <tr>
               <th scope="col">ID</th>

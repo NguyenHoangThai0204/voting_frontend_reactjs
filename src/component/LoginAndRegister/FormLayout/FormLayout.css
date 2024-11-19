@@ -4,36 +4,67 @@
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.body .wrapper {
+.body .wrapperFormLayout {
   display: flex;
   width: 55vw;
+  padding: 0;
   height: 85vh;
   margin: 15px auto;
   background: white;
   background-size: cover;
+  overflow: hidden; /* Thêm overflow hidden để ẩn phần trượt ra ngoài */
+  position: relative; /* Thêm position relative để định vị các ảnh */
 }
-.body .wrapper .content_login_right {
+.body .wrapperFormLayout .content_login_right {
   width: 50%;
-  padding: 20px;
+  position: relative;
 }
-.body .wrapper .content_login_left {
+.body .wrapperFormLayout .content_login_right img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  animation: slide 3s infinite; /* Thêm animation cho hiệu ứng trượt */
+  /* animation: slide 3s reverse; Thêm animation cho hiệu ứng trượt */
+
+}
+.body .wrapperFormLayout .content_login_right img.sliding-image {
+  left: 0;
+}
+
+@keyframes slide {
+  0% {
+    left: 100%;
+  }
+  10% {
+    left: 0;
+  }
+  90% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+
+.body .wrapperFormLayout .content_login_left {
   width: 50%;
   display: contents;
 }
 
 @media screen and (max-width: 900px) {
-  .body .wrapper {
+  .body .wrapperFormLayout {
     width: 100vw;
     height: max-content;
     display: flex;
     flex-direction: column;
   }
-  .body .wrapper .content_login_right {
+  .body .wrapperFormLayout .content_login_right {
     display: none;
   }
-  .body .wrapper .content_login_left {
+  .body .wrapperFormLayout .content_login_left {
     width: 90%;
   }
 }
-
-/*# sourceMappingURL=FormLayout.css.map */

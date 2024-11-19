@@ -1,5 +1,7 @@
 .inputSearchAdmin {
-    position: relative; /* Để làm cha chứa phần tử con dùng position absolute */
+  display: flex;
+  align-items: center;
+    /* position: relative; Để làm cha chứa phần tử con dùng position absolute */
     width: 100%;
   }
   

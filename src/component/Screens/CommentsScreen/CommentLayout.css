@@ -1,0 +1,32 @@
+.comemtlayout {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+}
+.comemtlayout .commentLayoutLeft {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.comemtlayout .commentLayoutLeft .pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.comemtlayout .commentLayoutLeft .pagination button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.comemtlayout .commentLayoutLeft .pagination button.active {
+  background-color: #07a267;
+  color: #fff;
+  border-color: #07a267;
+}
+.comemtlayout .commentLayoutRight {
+  width: 20%;
+}
+
+/*# sourceMappingURL=CommentLayout.css.map */

@@ -10,8 +10,8 @@ export const ContentHome = () => {
         <ContentHomeSlideAnomation />
       </div>
        <ContentHomeVote />
-
-     
+       <ContentHomeVote />
+       <ContentHomeVote />
     </div>
   )
 }

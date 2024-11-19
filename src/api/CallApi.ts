@@ -1,5 +1,5 @@
   import axios from 'axios';
-  import { UserResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew, UserResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
@@ -17,6 +17,8 @@
   const API_VOTE = 'http://localhost:3000/api/vote';
   const API_POLL = 'http://localhost:3000/api/poll';
   const API_SSO = "http://localhost:3000/api/auth";
+  const API_TheNew = "http://localhost:3000/api/theNew";
+
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
@@ -39,6 +41,11 @@
     return response.data;
   }
 
+  export const getAllTheNews = async () :Promise<ListTheNewResponse> =>{
+    const response = await axios.get(`${API_TheNew}/findAllTheNew`);
+    return response.data;
+  }
+
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVotes = async (): Promise<ListVoteResponse> => {
     const response = await axios.get(`${API_POLL}/find_all_polling`);
@@ -52,6 +59,10 @@
   // tạo cuộc bình chọn
   export const createPoll = async (data: PollCreate): Promise<PollResponse> => {
     const response = await axios.post(`${API_POLL}/create_polling`, data );
+    return response.data;
+  }
+  export const createTheNew = async (data: TheNew ): Promise<TheNew> => {
+    const response = await axios.post(`${API_TheNew}/createTheNew`, data);
     return response.data;
   }
   // lấy thông tin của người tạo bình chọn

@@ -1,0 +1,18 @@
+.bookManagement {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .bookManagement .userManaLeft {
+    width: 50%;
+  }
+  .bookManagement .userManaLeft table .trrow:hover {
+    background-color: aquamarine;
+    cursor: pointer;
+  }
+  .bookManagement .userManaLeft table tbody th,td {
+    padding: auto;
+  }
+  .bookManagement .userManaRight {
+    width: 50%;
+  }
