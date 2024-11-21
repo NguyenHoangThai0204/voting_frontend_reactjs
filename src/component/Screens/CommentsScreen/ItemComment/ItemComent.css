@@ -26,7 +26,7 @@
 }
 .itemComment .header .name p {
   font-weight: 500;
-  margin: 0;
+  margin: 1px 0;
   font-size: 18px;
 }
 .itemComment .contentItem {
@@ -42,6 +42,7 @@
 }
 .itemComment .contentItem .contentLeft .commentTitle p {
   font-weight: bold;
+  margin: 0;
   font-size: 23px;
 }
 .itemComment .contentItem .contentLeft .commentDescription {
@@ -50,6 +51,7 @@
 .itemComment .contentItem .contentLeft .commentDescription p {
   font-size: 18px;
   color: gray;
+  margin: 3px 0;
 }
 .itemComment .contentItem .contentRight {
   width: 30%;

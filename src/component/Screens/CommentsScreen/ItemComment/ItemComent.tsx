@@ -1,6 +1,7 @@
 import React from 'react'
 import './ItemComent.css'
 import { TheNew } from '../../../../typeObject';
+// import ReactHtmlParser from 'react-html-parser';
 interface TheNewObj {
   theNew: TheNew;
 }
@@ -26,9 +27,10 @@ export const ItemComent: React.FC<TheNewObj> = ({ theNew }) => {
               WebkitLineClamp: 4, // Viết camelCase thay cho -webkit-line-clamp
               WebkitBoxOrient: "vertical", // Viết camelCase thay cho -webkit-box-orient
               overflow: "hidden",
-              textOverflow: "ellipsis"
+              textOverflow: "ellipsis",
+              
             }}>
-              {theNew.noiDungBaiViet}
+              <p dangerouslySetInnerHTML={{ __html: theNew?.noiDungBaiViet || '' }}></p>
             </p>
 
           </div>

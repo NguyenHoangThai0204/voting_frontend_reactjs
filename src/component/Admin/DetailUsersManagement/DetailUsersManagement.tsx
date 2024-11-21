@@ -8,15 +8,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-// import { Link } from 'react-router-dom';
+import { PropDetailPollAdmin } from './PropDetailPollAdmin';
 
- import { PropDetailPollAdmin } from './PropDetailPollAdmin';
 interface Props {
     userItem: User | undefined;
     pollItem: Poll[] | undefined;
+    refreshUserList: () => void;  // Hàm callback để cập nhật lại danh sách người dùng
 }
 
-export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) => {
+export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, refreshUserList }) => {
     const [selectedPoll, setSelectedPoll] = useState<Poll | null>(null);
     const [open, setOpen] = useState(false);
 
@@ -28,10 +28,11 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
 
     const handleDelete = async (id: string) => {
         try {
-            const confirmDelete = confirm('Are you sure you want to delete this user?');
+            const confirmDelete = confirm('Bạn có muốn ngừng hoạt động của người này không?');
             if (confirmDelete) {
                 await changeStatusUser(id);
-                alert('Delete user successfully');
+                alert('Xoá thành công');
+                refreshUserList();  // Gọi lại hàm để cập nhật danh sách người dùng
             }
         } catch (error) {
             console.error("Error deleting user data:", error);
@@ -44,6 +45,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
             if (confirmActive) {
                 await changeStatusUserActive(id);
                 alert('Activate user successfully');
+                refreshUserList();  // Gọi lại hàm để cập nhật danh sách người dùng
             }
         } catch (error) {
             console.error("Error activating user data:", error);
@@ -120,12 +122,12 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                             </tr>
                         </tbody>
                     </table>
-                    <div className='button'>
-                        <button className="btn btn-primary">Edit user</button>
+                    <div className='button' style={{display:"flex", justifyContent:"end", alignContent:"center"}}>
+                        <button className="btn btn-primary" style={{padding:"10px", marginRight:"8px", border:"none", fontSize:"18px", fontWeight:500}}>Edit user</button>
                         {userItem?.status === 'active' ? (
-                            <button className="btn btn-danger" onClick={() => userItem?._id && handleDelete(userItem._id)}>Delete user</button>
+                            <button className="btn btn-danger" style={{padding:"10px", border:"none", fontSize:"18px", fontWeight:500}} onClick={() => userItem?._id && handleDelete(userItem._id)}>Delete user</button>
                         ) : (
-                            <button className="btn btn-success" onClick={() => userItem?._id && handleActive(userItem._id)}>Activate user</button>
+                            <button className="btn btn-success" style={{padding:"10px", border:"none", fontSize:"18px", fontWeight:500}} onClick={() => userItem?._id && handleActive(userItem._id)}>Activate user</button>
                         )}
                     </div>
                 </div>
@@ -149,9 +151,6 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem }) =
                             (pollItem ?? []).map((poll, index) => (
                                 <tr key={poll?._id || index} onClick={() => handleClickOpen(poll)}>
                                     <td style={{ whiteSpace: "nowrap" }}>{index + 1}</td>
-                                    {/* <td style={{ whiteSpace: "nowrap" }}>
-                                        <Link to={`/detail-poll/${poll._id}`}>{poll._id || 'N/A'}</Link>
-                                    </td> */}
                                     <td style={{ whiteSpace: "nowrap" }}>{poll?.title || 'N/A'}</td>
                                     <td style={{ whiteSpace: "nowrap" }}>{poll?.description || 'N/A'}</td>
                                 </tr>

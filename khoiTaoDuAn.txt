@@ -20,6 +20,7 @@ Gõ:
 
     npm install firebase @types/firebase
 npm install react-html-parser --legacy-peer-deps
+npm install @mui/icons-material @mui/material @emotion/react @emotion/styled
 
 Tạo id duy nhất tự động:
     npm install uuid

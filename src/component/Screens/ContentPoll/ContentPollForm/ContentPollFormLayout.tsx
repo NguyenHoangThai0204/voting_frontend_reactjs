@@ -121,7 +121,7 @@ export const ContentPollFormLayout = () => {
 
   return (
     <div className="wrapper_voteform">
-      <h1>CREATE NEW VOTE</h1>
+      <h1>TẠO BÌNH CHỌN MỚI</h1>
       <form>
         <div className="header_content_form">
         <div className="header_content_form_right">
@@ -154,20 +154,20 @@ export const ContentPollFormLayout = () => {
       </div>
     </div>
           <div className="header_content_form_left">
-            <div className="label">Name vote:</div>
+            <div className="label">Tên bình chọn:</div>
             <TextField className="text_namevote" onChange={(e) => setNameVote(e.target.value)} variant="outlined" />
-            <div className="label">Description:</div>
+            <div className="label">Miêu tả:</div>
             <TextField className="text_namevote" onChange={(e) => { setDescription(e.target.value) }} multiline rows={4} variant="outlined" />
           </div>
         </div>
-        <div className="label">Choices:</div>
+        <div className="label">Danh sách lựa chọn:</div>
         {
           options.map((choice, index) => (
             <div key={index} className="choice-wrapper">
               <TextField
                 className="text_namechoice"
                 variant="outlined"
-                placeholder={`Choice ${index + 1}`}
+                placeholder={`Lựa chọn ${index + 1}`}
                 value={choice}
                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
                 InputProps={{
@@ -197,7 +197,7 @@ export const ContentPollFormLayout = () => {
                   <TextField
                     className="text_description"
                     variant="outlined"
-                    placeholder={`Description for choice ${index + 1}`}
+                    placeholder={`Miêu tả lựa chọn ${index + 1}`}
                     multiline
                     style={{ width: "100%", marginBottom: "10px" }}
                     value={descriptionSelector[index]}
@@ -210,18 +210,19 @@ export const ContentPollFormLayout = () => {
         }
         <Button variant="contained"
           onClick={handleAddChoice}
-          color="success">Add choice</Button>
+          sx={{ textTransform: 'none' }}
+          color="success">Thêm lựa chọn</Button>
         <div className="form_date">
           <div className="date">
-            <div className="label">Start date:</div>
+            <div className="label">Ngày bắt đầu:</div>
             <TextField type="datetime-local" onChange={(e) => { setStartDate(e.target.value) }} variant="outlined" />
           </div>
           <div className="date">
-            <div className="label">End date:</div>
+            <div className="label">Ngày kết thúc:</div>
             <TextField type="datetime-local" onChange={(e) => { setEndDate(e.target.value) }} variant="outlined" />
           </div>
           <div className="date">
-            <div className="label">Type of vote:</div>
+            <div className="label">Kiểu bình chọn:</div>
             <FormControl fullWidth>
               <Select
                 labelId="demo-simple-select-label"
@@ -229,20 +230,23 @@ export const ContentPollFormLayout = () => {
                 value={typeOfVote}
                 onChange={handleChange}
               >
-                <MenuItem value={"public"}>Public</MenuItem>
-                <MenuItem value={"private"}>Private</MenuItem>
-                <MenuItem value={"privatesmc"}>Private with smartcontract</MenuItem>
+                <MenuItem value={"public"}>Công khai</MenuItem>
+                <MenuItem value={"private"}>Riêng tư</MenuItem>
+                <MenuItem value={"privatesmc"}>với smartcontract</MenuItem>
               </Select>
             </FormControl>
           </div>
         </div>
+        <div style={{display:"flex", justifyContent:"end"}}>
         <Button
           variant="contained"
           color="primary"
           onClick={handleCreateVote}
+          sx={{ textTransform: 'none', margin:"15px" }}
         >
-          Create
+          Tạo
         </Button>
+        </div>
       </form>
     </div>
   )

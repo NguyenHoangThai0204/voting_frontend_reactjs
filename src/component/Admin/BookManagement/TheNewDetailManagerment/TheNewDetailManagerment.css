@@ -4,11 +4,15 @@
     border: 1px solid #d9d9d9;
     padding: 20px;
     max-height: 75vh;
-     overflow-y: auto; /*Thêm thanh cuộn khi nội dung vượt quá */
+     /*  Thêm thanh cuộn khi nội dung vượt quá */
+     overflow-y: auto;
     background-color: rgb(229, 233, 237);
     box-shadow: 0 0 20px #aaaaaa;
   }
-  
+  /* Ẩn thanh cuộn */
+.body_detailthenewmanagement::-webkit-scrollbar {
+  display: none;
+}
   .body_detailthenewmanagement h2 {
     text-align: center;
     margin: 15px 0;
@@ -35,4 +39,16 @@
   }
   .body_detailthenewmanagement .row p{
     font-size: 23px;
+  }
+  .body_detailthenewmanagement button{
+    padding: 10px;
+    font-weight: bold;
+    font-size: 17px;
+    margin: 5px;
+    width: 80px;
+    border: none;
+  }  
+  .body_detailthenewmanagement button:hover{
+    cursor: pointer;
+    background-color: aquamarine;
   }

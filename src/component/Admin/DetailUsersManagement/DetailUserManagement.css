@@ -40,9 +40,9 @@
   overflow-y: auto; /* Đảm bảo thanh cuộn chỉ áp dụng cho nội dung */
   margin-top: 5px;
 }
+
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar {
-  width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
-  height: 0;
+  display: none;
 }
 .home_layout .footer_home {
   width: 100%;
@@ -60,7 +60,9 @@
   background-color: rgb(229, 233, 237);
   box-shadow: 0 0 20px #aaaaaa;
 }
-
+.body_detailusermanagement::-webkit-scrollbar {
+display: none;
+}
 .body_detailusermanagement h2 {
   text-align: center;
   margin: 15px 0;
@@ -95,6 +97,12 @@
   width: 100%;
   text-align: start;
 }
+.body_detailusermanagement .container .containRight .button button.btn.btn-primary:hover ,
+.body_detailusermanagement .container .containRight .button button.btn.btn-danger:hover ,
+.body_detailusermanagement .container .containRight .button button.btn.btn-success:hover{
+  cursor: pointer;
+  background-color: aquamarine;
+}
 
 .body_detailusermanagement .container .containRight table td {
   padding: 10px;
@@ -106,8 +114,12 @@
 }
 .body_detailusermanagement .listPoll table tbody td {
   padding: 5px;
+  height: 15px;
 }
+.body_detailusermanagement .listPoll table tbody tr {
 
+  height: 15px;
+}
 .body_detailusermanagement .listPoll table tbody tr:hover {
   background-color: rgb(208, 241, 230);
   cursor: pointer;

@@ -1,11 +1,10 @@
-@charset "UTF-8";
 .home_layout {
   display: flex;
   flex-direction: column; /* Đặt cấu trúc chính theo chiều dọc */
   min-height: 100vh; /* Chiều cao tối thiểu cho toàn bộ trang */
   background-color: rgb(226, 240, 231);
-  /* min-width: 900px; */
 }
+
 .home_layout .header_home {
   width: 100%;
   position: fixed;
@@ -14,28 +13,40 @@
   border-bottom: 1px solid rgb(215, 214, 214);
   animation: headerIn 0.8s ease-in-out forwards;
 }
+
 .home_layout .content_home {
   flex: 1; /* Chiếm không gian còn lại giữa header và footer */
   margin: 70px auto 0;
   width: 98%;
 }
+
 .home_layout .content_home .body_home {
   display: flex;
   height: 100%; /* Chiều cao toàn bộ khu vực body */
+  overflow: visible; /* Đảm bảo vùng sticky hoạt động đúng */
 }
+
 .home_layout .content_home .body_home .menu_left {
-  width: 10%;
-  animation: menuIn 0.8s ease-in-out forwards;
+  width: 8%;
+  position: sticky; /* Giữ menu dính khi scroll */
+  top: 70px; /* Bù chiều cao của header */
   padding: 5px;
+  height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
+  animation: menuIn 0.8s ease-in-out forwards;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
 }
+
+
 .home_layout .content_home .body_home .content_right {
   width: 90%;
   margin-top: 5px;
-  overflow-y: auto;
 }
+
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar {
-  width: 0; /* Ẩn thanh cuộn */
+  display: none;
 }
+
 .home_layout .footer_home {
   width: 100%;
   background-color: rgb(47, 136, 138);
@@ -53,6 +64,7 @@
     opacity: 1;
   }
 }
+
 @keyframes menuIn {
   from {
     transform: translateX(-100%);
@@ -63,22 +75,16 @@
     opacity: 1;
   }
 }
+
+/* Responsive */
 @media screen and (max-width: 900px) {
   .home_layout .content_home {
     flex-direction: column;
   }
-  .home_layout .content_home .body_home .menu_left {
-    width: 100%;
-    order: 2;
-    background-color: white;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-  }
+
   .home_layout .content_home .body_home .content_right {
     width: 100%;
     order: 1;
   }
-}
 
-/*# sourceMappingURL=HomeLayout.css.map */
+}

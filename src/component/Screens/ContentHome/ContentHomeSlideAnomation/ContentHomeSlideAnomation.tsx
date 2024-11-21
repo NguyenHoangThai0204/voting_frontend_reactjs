@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import image1 from '../../../../assets/vote1.jpg'
 import image2 from '../../../../assets/vote3.png'
-import image3 from '../../../../assets/vote2.jpg'
+import image3 from '../../../../assets/vote5.png'
 
 export const ContentHomeSlideAnomation = () => {
   const settings = {

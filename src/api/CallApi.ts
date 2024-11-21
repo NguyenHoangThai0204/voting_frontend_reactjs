@@ -42,7 +42,7 @@
   }
 
   export const getAllTheNews = async () :Promise<ListTheNewResponse> =>{
-    const response = await axios.get(`${API_TheNew}/findAllTheNew`);
+    const response = await axios.get(`${API_TheNew}/find_all_the_new`);
     return response.data;
   }
 
@@ -56,17 +56,30 @@
     const response = await axios.get(`${API_POLL}/find_by_id_polling/${id}`);
     return response.data;
   }
+  // tìm bài viết
   export const getTheNewById = async ( id: string ): Promise<TheNewResponse> =>{
-    const response = await axios.get(`${API_TheNew}/findAllTheNewById/${id}`);
+    const response = await axios.get(`${API_TheNew}/find_the_new_by_id/${id}`);
     return response.data;
   }
+  // xoá bài viết
+  export const deleteTheNewById = async (id: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${API_TheNew}/delete_the_new/${id}`);
+        // Nếu trạng thái là 200 (thành công), trả về `true`
+        return response.status === 200;
+    } catch (error) {
+        console.error("Error deleting the document:", error);
+        return false; // Trả về `false` nếu có lỗi
+    }
+};
+
   // tạo cuộc bình chọn
   export const createPoll = async (data: PollCreate): Promise<PollResponse> => {
     const response = await axios.post(`${API_POLL}/create_polling`, data );
     return response.data;
   }
   export const createTheNew = async (data: CreateTheNew ): Promise<TheNew> => {
-    const response = await axios.post(`${API_TheNew}/createTheNew`, data);
+    const response = await axios.post(`${API_TheNew}/create_the_new`, data);
     return response.data;
   }
   // lấy thông tin của người tạo bình chọn

@@ -20,17 +20,29 @@ export const UsersManagement = () => {
   }, [location.state]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getAllUser();
-        setUsers(Array.isArray(response.data) ? response.data : [response.data]);
-       
-      } catch (error) {
-        console.error("Error fetching users data:", error);
+  const fetchUsers = async () => {
+    try {
+      const response = await getAllUser();
+      const fetchedUsers = Array.isArray(response.data) ? response.data : [response.data];
+      setUsers(fetchedUsers);
+
+      // Thiết lập ID và thông tin của người đầu tiên trong danh sách
+      if (fetchedUsers.length > 0) {
+        const firstUser = fetchedUsers[0];
+        setId(firstUser._id);
+        setUserItem(firstUser);
+
+        // Gọi API lấy thông tin các polls của người dùng đầu tiên
+        const response2 = await getAllVoteUser(firstUser._id);
+        setPolls(Array.isArray(response2.data) ? response2.data : [response2.data]);
       }
-    };
-    fetchUsers();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching users data:", error);
+    }
+  };
+  fetchUsers();
+}, []);
+
   
   useEffect(() => {
     if (id) {
@@ -60,7 +72,7 @@ export const UsersManagement = () => {
       <div className="userManaLeft">
         <div style={{ display: "flex", backgroundColor:"white", width: "100%", justifyContent: "space-between", padding:"2px",top:0, opacity:1, position:"sticky", height:"50px", zIndex: 2}}>
           <div style={{ display: "flex", alignItems: "center", width: "20%" }}>
-            <h3>Search: </h3>
+            <h3>Tìm kiếm: </h3>
           </div>
 
           <InputSearchAdmin />
@@ -99,7 +111,9 @@ export const UsersManagement = () => {
         </table>
       </div>
       <div className="userManaRight">
-        <DetailUsersManagement userItem={userItem} pollItem={polls}/>
+        <DetailUsersManagement userItem={userItem} pollItem={polls} refreshUserList={function (): void {
+          throw new Error('Function not implemented.');
+        } }/>
       </div>
     </div>
   );
