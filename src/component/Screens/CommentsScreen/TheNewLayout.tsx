@@ -5,7 +5,7 @@ import { TheNew } from '../../../typeObject';
 import { getAllTheNews } from '../../../api/CallApi';
 
 export const TheNewLayout = () => {
-  const itemsPerPage = 2; // Số lượng item trên mỗi trang
+  const itemsPerPage = 5; // Số lượng item trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const [listNew, setListNew] = useState<TheNew[]>([]);
 

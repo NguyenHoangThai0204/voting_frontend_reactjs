@@ -1,10 +1,8 @@
 .home_layout {
-  display: flex;
-  flex-direction: column; /* Đặt cấu trúc chính theo chiều dọc */
-  min-height: 100vh; /* Chiều cao tối thiểu cho toàn bộ trang */
+  display: block;
+  position: relative;
   background-color: rgb(226, 240, 231);
 }
-
 .home_layout .header_home {
   width: 100%;
   position: fixed;
@@ -12,46 +10,56 @@
   top: 0;
   border-bottom: 1px solid rgb(215, 214, 214);
   animation: headerIn 0.8s ease-in-out forwards;
+  opacity: 0;
 }
-
 .home_layout .content_home {
-  flex: 1; /* Chiếm không gian còn lại giữa header và footer */
-  margin: 70px auto 0;
+  display: block;
+  margin: 0 auto;
+  margin: 70px 0 0 0;
   width: 98%;
+  flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
 }
-
 .home_layout .content_home .body_home {
   display: flex;
-  height: 100%; /* Chiều cao toàn bộ khu vực body */
-  overflow: visible; /* Đảm bảo vùng sticky hoạt động đúng */
+  flex-grow: 1; /* Nội dung chính sẽ chiếm không gian còn lại */
+  position: relative;
+  height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
 }
-
 .home_layout .content_home .body_home .menu_left {
   width: 8%;
-  position: sticky; /* Giữ menu dính khi scroll */
-  top: 70px; /* Bù chiều cao của header */
-  padding: 5px;
-  height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
   animation: menuIn 0.8s ease-in-out forwards;
   opacity: 0;
+  padding: 5px;
   transition: opacity 0.8s ease-in-out;
 }
-
-
+.home_layout .content_home .body_home .menu_left.active {
+  opacity: 1;
+}
 .home_layout .content_home .body_home .content_right {
-  width: 90%;
+  width: 92%;
+  overflow-y: auto;
+  flex-grow: 1; /* Tự động mở rộng để chiếm không gian */
   margin-top: 5px;
+  overflow: auto;
+  animation: content_right 3s ease-in-out forwards;
+  height: auto; /* Đảm bảo chiều cao phù hợp với nội dung */
+  /* Tùy chỉnh thanh cuộn chỉ cho .content_right */
 }
-
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar {
-  display: none;
+  width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
+  height: 0;
 }
-
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+.home_layout .content_home .body_home .content_right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 .home_layout .footer_home {
   width: 100%;
   background-color: rgb(47, 136, 138);
-  text-align: center; /* Canh giữa nội dung footer */
-  padding: 10px 0;
+  position: relative;
 }
 
 @keyframes headerIn {
@@ -64,7 +72,16 @@
     opacity: 1;
   }
 }
-
+@keyframes content_right {
+  from {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 @keyframes menuIn {
   from {
     transform: translateX(-100%);
@@ -75,16 +92,30 @@
     opacity: 1;
   }
 }
-
-/* Responsive */
 @media screen and (max-width: 900px) {
   .home_layout .content_home {
+    display: flex;
     flex-direction: column;
+    width: 100%;
   }
-
+  .home_layout .content_home .body_home .menu_left {
+    width: 100%;
+    order: 2;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+  }
   .home_layout .content_home .body_home .content_right {
     width: 100%;
     order: 1;
+    flex-grow: 1;
   }
-
+  .footer_home {
+    width: 100%;
+    order: 3;
+    background-color: gray;
+    position: relative;
+    padding-bottom: 93px;
+  }
 }

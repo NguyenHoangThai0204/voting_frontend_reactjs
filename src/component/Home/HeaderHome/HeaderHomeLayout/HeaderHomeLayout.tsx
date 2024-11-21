@@ -10,7 +10,7 @@ import { getAllVotes } from '../../../../api/CallApi';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import React from 'react';
 
-export const HeaderHomeLayout = () => {
+export const HeaderHomeLayout: React.FC = () => {
   const authContext = useContext(AuthContext);
   const [polls, setPolls] = useState<Poll[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -60,7 +60,7 @@ export const HeaderHomeLayout = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="search"
-            label="Search"
+            label="Tìm kiếm tên cuộc bình chọn"
             variant="outlined"
             size="small"
             InputProps={{
