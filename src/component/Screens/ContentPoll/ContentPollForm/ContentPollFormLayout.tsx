@@ -9,11 +9,16 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-import { createPoll } from "../../../../api/CallApi"
+import { createPrivatePoll } from "../../../../api/CallApi"
+// import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { AuthContext } from "../../../../contextapi/AuthContext";
 
 export const ContentPollFormLayout = () => {
+  const authContext = React.useContext(AuthContext);
+  const addRessWallet = authContext?.walletAddress;
+
   const { authorId } = useLocation().state as { authorId: string };
   const [options, setOptions] = useState<string[]>([""]);
   const [descriptionSelector, setDescriptionSelector] = useState<string[]>([""]);
@@ -33,7 +38,7 @@ export const ContentPollFormLayout = () => {
     setImageUrl(event.target.value);
     setImage(event.target.value); // Cập nhật hình ảnh với URL mới
   };
-  
+
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
   };
@@ -80,43 +85,54 @@ export const ContentPollFormLayout = () => {
   }
 
   const handleCreateVote = async () => {
-  if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {
-    alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
-    return;
-  }
+    if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {
+      alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
+      return;
+    }
 
-  const voteData = {
-    authorId: authorId,
-    title: nameVote,
-    description: description,
-    options: options.map((choice, index) => ({
-      contentOption: choice,
-      additonalContentOption: "",
-      descriptionContentOption: descriptionSelector[index],
-      votes: []
-    })),
-    avatar: image || "",
-    typeContent: typeOfVote,
-    timeStart: startDate,
-    timeEnd: endDate,
-    timeCreate: new Date().toISOString()
+    const voteData = {
+      authorId: authorId,
+      title: nameVote,
+      description: description,
+      options: options.map((choice, index) => ({
+        contentOption: choice,
+        additonalContentOption: "",
+        descriptionContentOption: descriptionSelector[index],
+        votes: []
+      })),
+      avatar: image || "",
+      typeContent: typeOfVote,
+      timeStart: startDate,
+      timeEnd: endDate,
+      timeCreate: new Date().toISOString()
+    };
+
+    try {
+      // console.log(voteData);
+      // console.log(addRessWallet);
+      if (voteData.typeContent === "privatesmc") {
+        alert("Chức năng này đang phát triển, vui lòng chọn kiểu công khai hoặc riêng tư");
+        if (!addRessWallet) {
+          alert("Wallet address is required for private polls.");
+          return;
+        }
+        try {
+          await createPrivatePoll({
+            title: nameVote,
+            author: addRessWallet
+          });
+          alert("Private poll created successfully.");
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+      // await createPoll(voteData);
+      navigate("/poll");
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  // // Kiểm tra nội dung
-  // const checkResult = await checkContent(`${nameVote} ${description} ${options.join(" ")}`);
-  // if (checkResult && checkResult.includes("vi phạm")) {
-  //   alert("Nội dung của bạn có thể vi phạm chuẩn mực đạo đức hoặc chứa nội dung bạo lực. Vui lòng chỉnh sửa lại.");
-  //   return;
-  // }
-
-  try {
-    console.log(voteData);
-    await createPoll(voteData);
-    navigate("/poll");
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 
   return (
@@ -124,35 +140,35 @@ export const ContentPollFormLayout = () => {
       <h1>TẠO BÌNH CHỌN MỚI</h1>
       <form>
         <div className="header_content_form">
-        <div className="header_content_form_right">
-      <label htmlFor="upload_image_vote" className="upload_area">
-        <input
-          type="file"
-          id="upload_image_vote"
-          onChange={handleChangeImage}
-          style={{ display: 'none' }}
-        />
-        {image ? (
-          <img src={image} alt="vote_image" />
-        ) : (
-          <Button
-            variant="contained"
-            className="upload_button"
-            component="span"
-          >
-            Upload image
-          </Button>
-        )}
-      </label>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter image URL"
-          value={imageUrl}
-          onChange={handleUrlChange}
-        />
-      </div>
-    </div>
+          <div className="header_content_form_right">
+            <label htmlFor="upload_image_vote" className="upload_area">
+              <input
+                type="file"
+                id="upload_image_vote"
+                onChange={handleChangeImage}
+                style={{ display: 'none' }}
+              />
+              {image ? (
+                <img src={image} alt="vote_image" />
+              ) : (
+                <Button
+                  variant="contained"
+                  className="upload_button"
+                  component="span"
+                >
+                  Upload image
+                </Button>
+              )}
+            </label>
+            <div>
+              <input
+                type="text"
+                placeholder="Enter image URL"
+                value={imageUrl}
+                onChange={handleUrlChange}
+              />
+            </div>
+          </div>
           <div className="header_content_form_left">
             <div className="label">Tên bình chọn:</div>
             <TextField className="text_namevote" onChange={(e) => setNameVote(e.target.value)} variant="outlined" />
@@ -237,15 +253,15 @@ export const ContentPollFormLayout = () => {
             </FormControl>
           </div>
         </div>
-        <div style={{display:"flex", justifyContent:"end"}}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCreateVote}
-          sx={{ textTransform: 'none', margin:"15px" }}
-        >
-          Tạo
-        </Button>
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreateVote}
+            sx={{ textTransform: 'none', margin: "15px" }}
+          >
+            Tạo
+          </Button>
         </div>
       </form>
     </div>
