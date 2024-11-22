@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './CommentLayout.css';
+import './TheNewLayout.css';
 import { ItemComent } from './ItemComment/ItemComent';
 import { TheNew } from '../../../typeObject';
 import { getAllTheNews } from '../../../api/CallApi';

@@ -51,7 +51,7 @@ export const HeaderHomeLayout: React.FC = () => {
       <div className="header_home_content">
         <img src='/src/assets/logo-m-t.jpg' alt='logo' />
         <div className="header_home_title">
-          <h1>T&M COMPANY</h1>
+          <h2>T&M COMPANY</h2>
           <p style={{margin:0}}>Chọn theo cách của bạn</p>
         </div>
         <div className="inputSearch">

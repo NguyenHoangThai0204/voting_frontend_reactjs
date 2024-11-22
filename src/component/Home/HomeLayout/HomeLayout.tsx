@@ -47,21 +47,4 @@ export const HomeLayout = () => {
 
     </div>
   );
-  // return (
-  //   <div className="home_layout">
-  //     <header className="header_home">
-  //       <HeaderHomeLayout />
-  //     </header>
-  //     {
-  //       user && user.role === "admin"
-  //         ? (
-  //           <ContentTabsAdmin />
-  //         ) : (
-  //           <ContentTabsAdmin />
-
-  //         )
-  //     }
-
-  //   </div>
-  // );
 };

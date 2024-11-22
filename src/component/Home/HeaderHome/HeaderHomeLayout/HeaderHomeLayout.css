@@ -16,8 +16,8 @@
 }
 
 .header_home .header_home_content img {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   margin-left: 70px;
 }
 
@@ -26,7 +26,7 @@
   width: 20%;
 }
 
-.header_home .header_home_content .header_home_title h1 {
+.header_home .header_home_content .header_home_title h2 {
   color: #043747;
 }
 

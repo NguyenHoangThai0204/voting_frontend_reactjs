@@ -13,7 +13,6 @@ export const FooterHome = () => {
           />
           <h2>T&M COMPANY</h2>
           </div>
-          <h3>Liên hệ</h3>
           <p>Điện thoại: +84 858 594 707</p>
           <p>Email: tmcompany@gmail.com</p>
           <p>

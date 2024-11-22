@@ -42,13 +42,13 @@ export const ContentHomeVote = () => {
 
     return (
         <div className="wrapper_votelayout">
-            <div className="content_vote"style={{margin:"30px"}}>
+            <div className="content_vote">
                 <h2 style={{margin:"5px 0 10px 0"}}>Đang diễn ra</h2>
                 <div className="list_item_vote" >
                     <ListPoll vote={voting} />
                 </div>
             </div>
-            <div className="content_vote" style={{margin:"30px"}}>
+            <div className="content_vote">
                 <h2 style={{margin:"5px 0 10px 0"}}>Đã kết thúc</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voted} />

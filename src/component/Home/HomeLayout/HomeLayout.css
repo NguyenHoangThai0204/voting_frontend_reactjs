@@ -1,6 +1,9 @@
+
 .home_layout {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  min-height: 100vh; /* Đảm bảo chiều cao tối thiểu của layout là 100% của màn hình */
   background-color: rgb(226, 240, 231);
 }
 .home_layout .header_home {
@@ -15,16 +18,18 @@
 .home_layout .content_home {
   display: block;
   margin: 0 auto;
-  margin: 70px 0 0 0;
-  width: 98%;
+  margin-top: 70px;
+  width: 99%;
   flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
 }
 .home_layout .content_home .body_home {
   display: flex;
   flex-grow: 1; /* Nội dung chính sẽ chiếm không gian còn lại */
   position: relative;
-  height: calc(100vh - 70px); /* Trừ đi chiều cao của header */
+  height: 90vh;
+   height: calc(100vh - 70px); 
 }
+
 .home_layout .content_home .body_home .menu_left {
   width: 8%;
   animation: menuIn 0.8s ease-in-out forwards;
@@ -32,19 +37,44 @@
   padding: 5px;
   transition: opacity 0.8s ease-in-out;
 }
-.home_layout .content_home .body_home .menu_left.active {
-  opacity: 1;
-}
 .home_layout .content_home .body_home .content_right {
   width: 92%;
   overflow-y: auto;
-  flex-grow: 1; /* Tự động mở rộng để chiếm không gian */
+  flex-grow: 1; 
   margin-top: 5px;
   overflow: auto;
   animation: content_right 3s ease-in-out forwards;
-  height: auto; /* Đảm bảo chiều cao phù hợp với nội dung */
-  /* Tùy chỉnh thanh cuộn chỉ cho .content_right */
+  height: auto; 
+
 }
+
+/* .home_layout .content_home .body_home .menu_left {
+  width: 8%;
+  animation: menuIn 0.8s ease-in-out forwards;
+  opacity: 0;
+  padding: 5px;
+  transition: opacity 0.8s ease-in-out;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+.home_layout .content_home .body_home .content_right {
+  width: calc(92% - 8%);
+  margin-left: 8%;
+  overflow-y: auto;
+  flex-grow: 1;
+  margin-top: 5px;
+  animation: content_right 3s ease-in-out forwards;
+  height: auto;
+} */
+
+
+.home_layout .content_home .body_home .menu_left.active {
+  opacity: 1;
+}
+
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar {
   width: 0; /* Ẩn thanh cuộn trên trình duyệt WebKit */
   height: 0;
@@ -61,7 +91,39 @@
   background-color: rgb(47, 136, 138);
   position: relative;
 }
+.criteria_section {
+  text-align: center;
+}
 
+.criteria_section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.criteria_row {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.criteria_item {
+  flex: 1 1 calc(30% - 20px); /* Đảm bảo độ rộng linh hoạt */
+  background-color: gray;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+.criteria_title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.criteria_description {
+  font-size: 16px;
+}
 @keyframes headerIn {
   from {
     transform: translateY(-100%);
@@ -98,7 +160,7 @@
     flex-direction: column;
     width: 100%;
   }
-  .home_layout .content_home .body_home .menu_left {
+  /* .home_layout .content_home .body_home .menu_left {
     width: 100%;
     order: 2;
     background-color: white;
@@ -106,10 +168,20 @@
     bottom: 0;
     z-index: 10;
   }
+
   .home_layout .content_home .body_home .content_right {
     width: 100%;
     order: 1;
     flex-grow: 1;
+  } */
+  .home_layout .content_home .body_home .menu_left {
+    display: none;
+  }
+  .home_layout .content_home .body_home .content_right {
+    width: 100%;
+    order: 1;
+    margin-left: 0;
+    margin-bottom: 70px; /* Để không bị che bởi menu */
   }
   .footer_home {
     width: 100%;
@@ -117,5 +189,6 @@
     background-color: gray;
     position: relative;
     padding-bottom: 93px;
+    margin-bottom: 80px;
   }
 }

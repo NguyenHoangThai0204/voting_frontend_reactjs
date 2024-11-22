@@ -1,5 +1,15 @@
 .wrapper_contenthomevote {
   padding: 20px;
 }
+.wrapper_contenthomevote .content_vote{
+  margin: 15px;
+}
 
-/*# sourceMappingURL=ContentHomePoll.css.map */
+@media screen and (max-width: 900px) {
+  .wrapper_contenthomevote {
+    padding: 8px;
+  }
+  .wrapper_contenthomevote .content_vote{
+    margin: 5px;
+  }
+}

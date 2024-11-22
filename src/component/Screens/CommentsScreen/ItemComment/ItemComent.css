@@ -72,4 +72,18 @@
   margin-right: 35px;
 }
 
-/*# sourceMappingURL=ItemComent.css.map */
+
+@media screen and (max-width: 900px) {
+  .itemComment .contentItem .contentLeft .commentTitle p {
+    font-size: 20px;
+  }
+  .itemComment .contentItem .contentLeft .commentDescription p {
+    font-size: 15px;
+  }
+  .itemComment .contentItem .contentRight {
+    width: 30%;
+  }
+  .itemComment .contentItem .contentRight img {
+    height: 100px;
+  }
+}
