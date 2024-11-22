@@ -3,19 +3,22 @@ import TextField from '@mui/material/TextField';
 import { useState, useEffect } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
-import { getPollById, postVote } from "../../../api/CallApi";
+import { getPollById, voteSm, postVote, changeState } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { format } from 'date-fns';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
 import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
 import { useParams } from 'react-router-dom';
+import { AuthContext } from "../../../contextapi/AuthContext";
+import React from "react";
 
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
-
+  const authContext = React.useContext(AuthContext);
+  const addRessWallet = authContext?.walletAddress;
 
   const { id } = useParams();
 
@@ -39,19 +42,33 @@ export const ContentDetailPoll: React.FC = () => {
     fetchVote();
   }, [id]);
 
-  // const formattedTimeCreate = vote?.timeCreate ? format(new Date(vote.timeCreate), 'dd/MM/yyyy HH:mm') : '';
+
   const formattedTimeStart = vote?.timeStart ? format(new Date(vote.timeStart), 'dd/MM/yyyy HH:mm') : '';
   const formattedTimeEnd = vote?.timeEnd ? format(new Date(vote.timeEnd), 'dd/MM/yyyy HH:mm') : '';
 
-  const handleVote = async (optionId: string, content: string) => {
+  const handleVote = async (optionId: string, content: string, optionsId: number) => {
     try {
       const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
       const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
 
-      if ( voteStartDate && voteStartDate < new Date() ){
-        if (voteEndDate && voteEndDate > new Date() ) {
+      if (voteStartDate && voteStartDate < new Date()) {
+        if (voteEndDate && voteEndDate > new Date()) {
           const confirmVote = confirm('Bạn chọn: ' + content);
           if (confirmVote) {
+            if (vote?.typeContent === "privatesmc") {
+
+              if (vote?.pollIdSm) {
+                if (addRessWallet) {
+                  await changeState({ pollIdSm: Number(vote.pollIdSm), newState: 1, author: addRessWallet });
+                } else {
+                  console.error("Wallet address is null or undefined");
+                }
+              } else {
+                console.error("pollIdSm is null");
+              }
+
+              await voteSm({ pollIdSm: vote.pollIdSm || '', optionId: optionsId, author: addRessWallet || '' });
+            }
             const dataVote = {
               pollId: null,
               optionId: optionId,
@@ -68,10 +85,10 @@ export const ContentDetailPoll: React.FC = () => {
         } else {
           alert('Bình chọn đã kết thúc');
         }
-      }else{
+      } else {
         alert('Bình chọn Chưa bắt đầu');
       }
-      
+
     } catch (error) {
       console.error('Error: ' + error);
     }
@@ -114,7 +131,7 @@ export const ContentDetailPoll: React.FC = () => {
         <div className="header_content_form">
           <div className="header_content_detail_right">
             <div className="avatar_poll">
-              <img src={vote?.avatar ?? undefined} alt="upload" /> 
+              <img src={vote?.avatar ?? undefined} alt="upload" />
             </div>
           </div>
           <div className="header_content_detail_left">
@@ -166,10 +183,10 @@ export const ContentDetailPoll: React.FC = () => {
               <TextField
                 className="text_namechoice"
                 variant="outlined"
-                style={{ marginBottom: "10px",width: "100%",backgroundColor: "#f5f5f5" }}
+                style={{ marginBottom: "10px", width: "100%", backgroundColor: "#f5f5f5" }}
                 placeholder={`Choice ${index + 1}`}
                 value={select.contentOption || ''}
-                onClick={() => handleVote(select._id, select.contentOption)}
+                onClick={() => handleVote(select._id, select.contentOption, index + 1)}
                 onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
                 InputProps={{
                   endAdornment: (
@@ -177,10 +194,12 @@ export const ContentDetailPoll: React.FC = () => {
                       <IconButton
                         edge="end"
                         aria-label="add description"
-                        onClick={(e) => {toggleDescriptionInput(index);
-                          e.stopPropagation();}
+                        onClick={(e) => {
+                          toggleDescriptionInput(index);
+                          e.stopPropagation();
                         }
-                        
+                        }
+
                       >
                         <DescriptionIcon />
                       </IconButton>
@@ -218,7 +237,7 @@ export const ContentDetailPoll: React.FC = () => {
             <div className="label">Type of vote:</div>
             <TextField type="text" className="labelField" value={vote?.typeContent || ''} variant="outlined" />
           </div>
-          
+
         </div>
 
       </form>

@@ -59,6 +59,7 @@ export interface Poll {
     timeEnd: string| null;
     options: Option[];
     typeContent: string;
+    pollIdSm: string | null;
 }
 
 export interface Option {
@@ -78,6 +79,7 @@ export interface PollCreate {
   timeEnd: string| null;
   options: OptionCreate[];
   typeContent: string;
+  pollIdSm: string | null;
 }
 
 export interface OptionCreate {

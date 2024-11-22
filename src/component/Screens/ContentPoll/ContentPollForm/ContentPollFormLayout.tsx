@@ -9,8 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-import { createPrivatePoll } from "../../../../api/CallApi"
-// import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
+// import { createPrivatePoll } from "../../../../api/CallApi"
+import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
@@ -90,7 +90,23 @@ export const ContentPollFormLayout = () => {
       return;
     }
 
-    const voteData = {
+    const voteData: {
+      authorId: string;
+      title: string;
+      description: string;
+      options: {
+        contentOption: string;
+        additonalContentOption: string;
+        descriptionContentOption: string;
+        votes: never[];
+      }[];
+      avatar: string;
+      typeContent: string;
+      timeStart: string;
+      timeEnd: string;
+      timeCreate: string;
+      pollIdSm: string | null;
+    } = {
       authorId: authorId,
       title: nameVote,
       description: description,
@@ -104,7 +120,8 @@ export const ContentPollFormLayout = () => {
       typeContent: typeOfVote,
       timeStart: startDate,
       timeEnd: endDate,
-      timeCreate: new Date().toISOString()
+      timeCreate: new Date().toISOString(),
+      pollIdSm: null
     };
 
     try {
@@ -117,18 +134,25 @@ export const ContentPollFormLayout = () => {
           return;
         }
         try {
-          await createPrivatePoll({
+          const reponse = await createPrivatePoll({
             title: nameVote,
-            author: addRessWallet
+            author: addRessWallet,
+            options: options.map((choice) => ({
+              contentOption: choice
+            })),
           });
           alert("Private poll created successfully.");
+          if (reponse) {
+            voteData.pollIdSm = reponse || null;
+          }
+          await createPoll(voteData);
+          navigate("/poll");
         }
         catch (error) {
           console.log(error);
         }
       }
-      // await createPoll(voteData);
-      navigate("/poll");
+      
     } catch (error) {
       console.log(error);
     }

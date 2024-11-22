@@ -1,4 +1,3 @@
-
   import axios from 'axios';
   import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
@@ -29,21 +28,90 @@
     const response = await axios.post(`${API_USER}/login`, data);
     return response.data;
   };
-// Hàm tạo poll
-  export const createPrivatePoll = async (data: { title: string; author: string }): Promise<boolean> => {
+
+  export const voteSm = async ({ pollIdSm, optionId, author }: { pollIdSm: string, optionId: number, author: string }): Promise<boolean> => {
     try {
-      const response = await axios.post(`${API_PRIVATE}/createPoll`, data);
-      return response.status === 200;
+        // Sử dụng pollIdSm trong URL thay vì id
+        const response = await axios.post(`${API_PRIVATE}/vote/${pollIdSm}`, { optionId, author });
+        // Nếu trạng thái là 200 (thành công), trả về `true`
+        return response.status === 200;
     } catch (error) {
-     console.error("Error deleting the document:", error);
-      return false; // Trả về `false` nếu có lỗi
+        console.error("Error changing state:", error);
+        return false; // Trả về `false` nếu có lỗi
     }
   };
+// Hàm tạo poll
+export const createPrivatePoll = async (data: { 
+  title: string; 
+  author: string; 
+  options: { 
+    contentOption: string; 
+  }[]; 
+}): Promise<string | null> => {  // Trả về kiểu string hoặc null
+  try {
+    // Gửi request tạo poll
+    const response = await axios.post(`${API_PRIVATE}/createPoll`, data);
+    const pollId = response?.data?.transaction?.events?.PollCreated?.returnValues?.pollId;
+
+    if (!pollId) {
+      console.error("Poll ID not found in the response.");
+      return null;  // Trả về null nếu không tìm thấy pollId
+    }
+
+    // Kiểm tra nếu tạo poll thành công
+    if (response.status === 200) {
+      // Thêm từng option vào poll
+      for (const option of data.options) {
+        const resOption = await axios.post(`${API_PRIVATE}/addOption`, { 
+          pollId, 
+          name: option.contentOption,
+          author: data.author
+        });
+
+        if (resOption.status !== 200) {
+          console.error("Error adding option:", option, resOption.data);
+          return null;  // Dừng và trả về null nếu có lỗi khi thêm option
+        }
+      }
+      return pollId;  // Trả về pollId nếu tạo poll và thêm option thành công
+    } else {
+      console.error("Failed to create poll or invalid response structure.");
+      return null;  // Trả về null nếu tạo poll không thành công
+    }
+  } catch (error) {
+    console.error("Error during poll creation:", error);
+    return null;  // Trả về null nếu có lỗi xảy ra
+  }
+};
+// đổi trang thái của sm
+export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: number, newState: number, author: string }): Promise<boolean> => {
+  try {
+      // Sử dụng pollIdSm trong URL thay vì id
+      const response = await axios.post(`${API_PRIVATE}/poll/${pollIdSm}/change-state`, { newState, author });
+      // Nếu trạng thái là 200 (thành công), trả về `true`
+      return response.status === 200;
+  } catch (error) {
+      console.error("Error changing state:", error);
+      return false; // Trả về `false` nếu có lỗi
+  }
+};
+
+  // export const votePrivatePoll = async (data: { title: string; author: string }): Promise<boolean> => {
+  //   try {
+  //     const response = await axios.post(`${API_PRIVATE}/createPoll`, data);
+  //     return response.status === 200;
+  //   } catch (error) {
+  //    console.error("Error deleting the document:", error);
+  //     return false; // Trả về `false` nếu có lỗi
+  //   }
+  // };
   // Hàm cập nhật timeend là time now
   export const updateTimeEnd = async (id: string): Promise<UserResponse> => {
     const response = await axios.post(`${API_POLL}/updateTimeEndPoll/${ id }`);
     return response.data;
   };
+
+
 
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVoteUser = async (authorId: string): Promise<ListVoteResponse> => {
