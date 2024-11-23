@@ -91,39 +91,7 @@
   background-color: rgb(47, 136, 138);
   position: relative;
 }
-.criteria_section {
-  text-align: center;
-}
 
-.criteria_section h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.criteria_row {
-  display: flex;
-  justify-content: space-around;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.criteria_item {
-  flex: 1 1 calc(30% - 20px); /* Đảm bảo độ rộng linh hoạt */
-  background-color: gray;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-}
-.criteria_title {
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.criteria_description {
-  font-size: 16px;
-}
 @keyframes headerIn {
   from {
     transform: translateY(-100%);

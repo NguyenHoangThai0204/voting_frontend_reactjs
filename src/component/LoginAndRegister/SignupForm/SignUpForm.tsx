@@ -70,7 +70,9 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             Swal.fire({
                 icon: "success",
                 title: "OTP sent",
-                text: "OTP đã được gửi đến số điện thoại của bạn.",
+                text: "OTP đã được gửi đến số điện thoại của bạn.",showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
                 showClass: {
                     popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
                   },

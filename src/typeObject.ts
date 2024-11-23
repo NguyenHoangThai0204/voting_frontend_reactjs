@@ -56,7 +56,7 @@ export interface Poll {
     description: string;
     timeCreate: string;
     timeStart: string | null;
-    timeEnd: string| null;
+    timeEnd: string;
     options: Option[];
     typeContent: string;
     pollIdSm: string | null;

@@ -65,6 +65,9 @@ export const ContentDetailPoll: React.FC = () => {
           icon: "error",
           title: "Oops...",
           text: "Không tìm thấy cuộc bình chọn!",
+          showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
           showClass: {
             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
           },
@@ -84,7 +87,9 @@ export const ContentDetailPoll: React.FC = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Bình chọn chưa bắt đầu.",
+          text: "Bình chọn chưa bắt đầu.",showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
           showClass: {
             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
           },
@@ -100,7 +105,9 @@ export const ContentDetailPoll: React.FC = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Bình chọn đã kết thúc.",
+          text: "Bình chọn đã kết thúc.",showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
           showClass: {
             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
           },
@@ -118,7 +125,9 @@ export const ContentDetailPoll: React.FC = () => {
         Swal.fire({
           icon: "info",
           title: "Thông tin",
-          text: "Hủy bỏ bình chọn.",
+          text: "Hủy bỏ bình chọn.",showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
           showClass: {
             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
           },
@@ -137,7 +146,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Vui lòng kết nối ví.",
+            text: "Vui lòng kết nối ví.",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -154,7 +165,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Lỗi trong quá trình bình chọn, dữ liệu pollIdSm là null.",
+            text: "Lỗi trong quá trình bình chọn, dữ liệu pollIdSm là null.",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -179,7 +192,9 @@ export const ContentDetailPoll: React.FC = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "Địa chỉ ví không hợp lệ.",
+              text: "Địa chỉ ví không hợp lệ.",showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
               showClass: {
                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
               },
@@ -210,7 +225,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "success",
             title: "Thành công",
-            text: "Bình chọn thành công!",
+            text: "Bình chọn thành công!",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -224,7 +241,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Lỗi trong quá trình bình chọn.",
+            text: "Lỗi trong quá trình bình chọn.",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -250,7 +269,9 @@ export const ContentDetailPoll: React.FC = () => {
             Swal.fire({
               icon: "success",
               title: "Thành công",
-              text: "Bình chọn thành công!",
+              text: "Bình chọn thành công!",showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
               showClass: {
                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
               },
@@ -264,7 +285,9 @@ export const ContentDetailPoll: React.FC = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "Vui lòng đăng nhập để bình chọn.",
+              text: "Vui lòng đăng nhập để bình chọn.",showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
               showClass: {
                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
               },
@@ -280,7 +303,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Bạn đã chọn trong cuộc bình chọn này rồi.",
+            text: "Bạn đã chọn trong cuộc bình chọn này rồi.",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -304,7 +329,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "success",
             title: "Thành công",
-            text: "Bình chọn thành công!",
+            text: "Bình chọn thành công!",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -318,7 +345,9 @@ export const ContentDetailPoll: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Bạn đã chọn trong cuộc bình chọn này rồi.",
+            text: "Bạn đã chọn trong cuộc bình chọn này rồi.",showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -335,6 +364,8 @@ export const ContentDetailPoll: React.FC = () => {
         icon: "error",
         title: "Oops...",
         text: "Lỗi trong quá trình bình chọn.",
+        showConfirmButton: false,
+        timer: 1500,
         showClass: {
           popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
         },

@@ -90,6 +90,9 @@ export const ContentPollFormLayout = () => {
         icon: 'error',
         title: 'Oops...',
         text: 'Vui lòng nhập đầy đủ thông tin trước khi tạo!',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
         showClass: {
           popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
         },
@@ -143,6 +146,9 @@ export const ContentPollFormLayout = () => {
             icon: 'error',
             title: 'Oops...',
             text: 'Vui lòng kết nối ví trước khi tạo!',
+            showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
@@ -164,6 +170,9 @@ export const ContentPollFormLayout = () => {
           Swal.fire({
             icon: 'success',
             title: 'Tạo bình chọn thành công!',
+            showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
             showClass: {
               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
             },
