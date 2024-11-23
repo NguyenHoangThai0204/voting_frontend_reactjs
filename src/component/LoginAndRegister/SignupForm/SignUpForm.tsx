@@ -4,7 +4,7 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import GoogleIcon from '@mui/icons-material/Google';
 import { initializeApp } from "firebase/app";
 import { RecaptchaVerifier, signInWithPhoneNumber, getAuth, ConfirmationResult } from "firebase/auth";
-
+import Swal from "sweetalert2";
 const firebaseConfig = {
     apiKey: "AIzaSyCLXYNeeK0K-mKjwZa6MelAFQPCCjCGKzM",
     authDomain: "phonepollweb.firebaseapp.com",
@@ -67,7 +67,17 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             // Lưu confirmationResult vào window để sử dụng khi xác minh OTP
             window.confirmationResult = confirmationResult;
 
-            alert("OTP đã được gửi đến số điện thoại của bạn.");
+            Swal.fire({
+                icon: "success",
+                title: "OTP sent",
+                text: "OTP đã được gửi đến số điện thoại của bạn.",
+                showClass: {
+                    popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                  },
+                  hideClass: {
+                    popup: "", // Tắt hiệu ứng biến mất
+                  },
+            });
             setIsCodeSent(true); // Cập nhật trạng thái là đã gửi mã OTP
         } catch (error) {
             console.error("Error sending OTP:", error);

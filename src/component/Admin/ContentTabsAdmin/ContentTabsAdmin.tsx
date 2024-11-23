@@ -36,16 +36,13 @@ export default function ContentTabsAdmin() {
 
   return (
     <Box sx={{ width: '95vw', position: 'relative', top: '70px', bottom:'70px',margin: 'auto' }}>
-      {/* <div>
-        <h1 style={{ textAlign: "center" }}>Admin</h1>
-      </div> */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
-        {/* Tabs navigation */}
         <Tabs value={tabIndex} onChange={handleChange} aria-label="admin tabs">
           <Tab label="Quản lí người dùng" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
           <Tab label="Quản lí bài viết" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
           <Tab label="Tab 3" id="simple-tab-2" aria-controls="simple-tabpanel-2" />
         </Tabs>
+        
       </Box>
       <div style={{ overflow: "auto", padding:0 }}>
         {/* Tab Panels */}
