@@ -128,7 +128,7 @@ export const ContentPollFormLayout = () => {
       // console.log(voteData);
       // console.log(addRessWallet);
       if (voteData.typeContent === "privatesmc") {
-        alert("Chức năng này đang phát triển, vui lòng chọn kiểu công khai hoặc riêng tư");
+        // alert("Chức năng này đang phát triển, vui lòng chọn kiểu công khai hoặc riêng tư");
         if (!addRessWallet) {
           alert("Wallet address is required for private polls.");
           return;
@@ -152,7 +152,10 @@ export const ContentPollFormLayout = () => {
           console.log(error);
         }
       }
-      
+      else {
+        await createPoll(voteData);
+        navigate("/poll");
+      }
     } catch (error) {
       console.log(error);
     }

@@ -170,6 +170,10 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
     const response = await axios.post(`${API_VOTE}/vote`, data );
     return response.data;
   }
+  export const postVotePrivate = async (data: Vote): Promise<VoteResponse> =>{
+    const response = await axios.post(`${API_VOTE}/vote_private`, data );
+    return response.data;
+  }
   // lấy thoogn tin của tất cả người dùng
   export const getAllUser = async (): Promise<UserResponse> => {
     const response = await axios.get(`${API_USER}/findAllUser`);

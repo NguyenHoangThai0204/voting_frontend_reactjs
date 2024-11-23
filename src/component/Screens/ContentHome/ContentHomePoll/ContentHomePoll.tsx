@@ -14,6 +14,7 @@ export const ContentHomeVote = () => {
     const [voted, setVoted] = useState<Poll[]>([]);
     const [voteSm, setVoteSm] = useState<Poll[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [votePrivate, setVotePrivate] = useState<Poll[]>([]);
 
     useEffect(() => {
         const fetchVotes = async () => {
@@ -28,6 +29,9 @@ export const ContentHomeVote = () => {
                     !isNaN(Date.parse(vote.timeEnd)) && 
                     Date.parse(vote.timeEnd) >= currentTime
                 );
+                const expiredVotePrivate = votes.filter(vote =>
+                    vote.typeContent === "private" 
+                );
                 const expiredVotes = votes.filter(vote => 
                     vote.typeContent === "public" &&
                     vote.timeEnd && 
@@ -41,6 +45,7 @@ export const ContentHomeVote = () => {
                 setVoting(activeVotes);
                 setVoted(expiredVotes);
                 setVoteSm(expiredVoteSm);
+                setVotePrivate(expiredVotePrivate);
             } catch (error) {
                 console.error('Failed to fetch votes:', error);
                 setError('Có lỗi xảy ra khi tải dữ liệu phiếu bầu.');
@@ -53,9 +58,15 @@ export const ContentHomeVote = () => {
     return (
         <div className="wrapper_votelayout">
             {addRessWallet && <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Với Smartvco</h2>
+                <h2 style={{margin:"5px 0 10px 0"}}>Với Smartcontract</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voteSm} />
+                </div>
+            </div>}
+            {authContext?.user && <div className="content_vote">
+                <h2 style={{margin:"5px 0 10px 0"}}>Cuộc bình chọn riêng tư(Không phí)</h2>
+                <div className="list_item_vote">
+                    <ListPoll vote={votePrivate} />
                 </div>
             </div>}
             <div className="content_vote">
