@@ -1,11 +1,12 @@
   import axios from 'axios';
-  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse, ListVotePollidResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
   import { Vote } from "../typeObject";
   import { PollResponse } from "../typeObject";
   import Cookies from 'universal-cookie';
+
 
   // const API_USER = 'http://160.30.44.53:3000/api/user';
   // const API_VOTE = 'http://160.30.44.53:3000/api/vote';
@@ -107,7 +108,7 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
   // };
   // Hàm cập nhật timeend là time now
   export const updateTimeEnd = async (id: string): Promise<UserResponse> => {
-    const response = await axios.post(`${API_POLL}/updateTimeEndPoll/${ id }`);
+    const response = await axios.post(`${API_POLL}/update_timeEnd_poll/${ id }`);
     return response.data;
   };
 
@@ -118,7 +119,14 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
     const response = await axios.get(`${API_POLL}/find_all_polling_user/${authorId}`);
     return response.data;
   }
-
+  // get all vote by poll id
+  export const getAllVoteByPollid = async (pollId: string): Promise<ListVotePollidResponse> => {
+    const response = await axios.post(`${API_VOTE}/find_all_vote_bypollid`, {
+      pollId, // Gửi pollId trong body
+    });
+    return response.data;
+  };
+  
   export const getAllTheNews = async () :Promise<ListTheNewResponse> =>{
     const response = await axios.get(`${API_TheNew}/find_all_the_new`);
     return response.data;
@@ -151,6 +159,7 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
     }
 };
 
+
   // tạo cuộc bình chọn
   export const createPoll = async (data: PollCreate): Promise<PollResponse> => {
     const response = await axios.post(`${API_POLL}/create_polling`, data );
@@ -162,7 +171,7 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
   }
   // lấy thông tin của người tạo bình chọn
   export const getInforAuthor = async (id: string): Promise<UserResponse> => {
-    const response = await axios.post(`${API_USER}/findByIdUser`, { id } );
+    const response = await axios.post(`${API_USER}/find_by_id_user`, { id } );
     return response.data;
   };
   // vote
@@ -176,12 +185,12 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
   }
   // lấy thoogn tin của tất cả người dùng
   export const getAllUser = async (): Promise<UserResponse> => {
-    const response = await axios.get(`${API_USER}/findAllUser`);
+    const response = await axios.get(`${API_USER}/find_all_user`);
     return response.data;
   }
   // Đổi trạng thái của người dùng qua id
   export const changeStatusUser = async (id: string): Promise<UserResponse> => {
-    const response = await axios.post(`${API_USER}/deletedUser`, { id });
+    const response = await axios.post(`${API_USER}/deleted_user`, { id });
     return response.data;
   }
   // Đổi trạng thái của người dùng qua id

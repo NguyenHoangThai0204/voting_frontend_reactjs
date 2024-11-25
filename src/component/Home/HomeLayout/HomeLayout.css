@@ -1,9 +1,9 @@
-
+/* 
 .home_layout {
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 100vh; /* Đảm bảo chiều cao tối thiểu của layout là 100% của màn hình */
+  min-height: 100vh; 
   background-color: rgb(226, 240, 231);
 }
 .home_layout .header_home {
@@ -20,14 +20,61 @@
   margin: 0 auto;
   margin-top: 70px;
   width: 99%;
-  flex-grow: 1; /* Cho phép nội dung phát triển chiều cao theo nhu cầu */
+  flex-grow: 1; 
 }
 .home_layout .content_home .body_home {
   display: flex;
-  flex-grow: 1; /* Nội dung chính sẽ chiếm không gian còn lại */
+  flex-grow: 1; 
   position: relative;
   height: 90vh;
-   height: calc(100vh - 70px); 
+  height: calc(100vh - 70px); 
+}
+
+.home_layout .content_home .body_home .menu_left {
+  width: 8%;
+  animation: menuIn 0.8s ease-in-out forwards;
+  opacity: 0;
+  padding: 5px;
+  transition: opacity 0.8s ease-in-out;
+
+}
+.home_layout .content_home .body_home .content_right {
+  width: 92%;
+  margin-top: 5px;
+  overflow: auto;
+  animation: content_right 3s ease-in-out forwards;
+  height: auto;
+} */
+.home_layout {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh; /* Chiều cao tối thiểu bằng màn hình */
+  background-color: rgb(226, 240, 231);
+}
+
+.home_layout .header_home {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  border-bottom: 1px solid rgb(215, 214, 214);
+  animation: headerIn 0.8s ease-in-out forwards;
+  opacity: 0;
+}
+
+.home_layout .content_home {
+  display: block;
+  margin: 0 auto;
+  margin-top: 70px; /* Khoảng cách dưới header */
+  width: 99%;
+  flex-grow: 1;
+}
+
+.home_layout .content_home .body_home {
+  display: flex;
+  flex-grow: 1; /* Cho phép nội dung chiếm chiều cao còn lại */
+  position: relative;
 }
 
 .home_layout .content_home .body_home .menu_left {
@@ -37,39 +84,32 @@
   padding: 5px;
   transition: opacity 0.8s ease-in-out;
 }
-.home_layout .content_home .body_home .content_right {
-  width: 92%;
-  overflow-y: auto;
-  flex-grow: 1; 
-  margin-top: 5px;
-  overflow: auto;
-  animation: content_right 3s ease-in-out forwards;
-  height: auto; 
-
-}
-
 /* .home_layout .content_home .body_home .menu_left {
   width: 8%;
-  animation: menuIn 0.8s ease-in-out forwards;
-  opacity: 0;
   padding: 5px;
+  position: sticky; 
+  top: 70px; 
+
+  z-index: 9; 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: opacity 0.8s ease-in-out;
-  position: fixed;
-  top: 70px;
-  left: 0;
-  height: calc(100vh - 70px);
-  overflow-y: auto;
-}
-.home_layout .content_home .body_home .content_right {
-  width: calc(92% - 8%);
-  margin-left: 8%;
-  overflow-y: auto;
-  flex-grow: 1;
-  margin-top: 5px;
-  animation: content_right 3s ease-in-out forwards;
-  height: auto;
 } */
 
+.home_layout .content_home .body_home .menu_left.active {
+  opacity: 1;
+}
+
+.home_layout .content_home .body_home .content_right {
+  width: 92%;
+  margin-top: 5px;
+}
+
+.home_layout .footer_home {
+  width: 100%;
+  background-color: rgb(47, 136, 138);
+  position: relative;
+  padding: 10px 0; /* Thêm khoảng cách */
+}
 
 .home_layout .content_home .body_home .menu_left.active {
   opacity: 1;
@@ -85,11 +125,6 @@
 }
 .home_layout .content_home .body_home .content_right::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
-.home_layout .footer_home {
-  width: 100%;
-  background-color: rgb(47, 136, 138);
-  position: relative;
 }
 
 @keyframes headerIn {
@@ -128,7 +163,7 @@
     flex-direction: column;
     width: 100%;
   }
-  /* .home_layout .content_home .body_home .menu_left {
+  .home_layout .content_home .body_home .menu_left {
     width: 100%;
     order: 2;
     background-color: white;
@@ -141,22 +176,15 @@
     width: 100%;
     order: 1;
     flex-grow: 1;
-  } */
-  .home_layout .content_home .body_home .menu_left {
-    display: none;
   }
-  .home_layout .content_home .body_home .content_right {
-    width: 100%;
-    order: 1;
-    margin-left: 0;
-    margin-bottom: 70px; /* Để không bị che bởi menu */
-  }
+ 
   .footer_home {
     width: 100%;
     order: 3;
-    background-color: gray;
     position: relative;
-    padding-bottom: 93px;
+    padding: 0 0 93px 0;
     margin-bottom: 80px;
+    
   }
+
 }

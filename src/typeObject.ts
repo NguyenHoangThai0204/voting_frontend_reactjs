@@ -33,11 +33,16 @@ export interface VoteResponse {
   message: string;
   data: Vote;
   }
+  export interface ListVotePollidResponse {
+    status: string;
+    message: string;
+    data: Vote[];
+}
 export interface PollResponse {
     status: string;
     message: string;
     data: Poll;
-    }
+}
 export interface TheNewResponse {
       status: string;
       message: string;

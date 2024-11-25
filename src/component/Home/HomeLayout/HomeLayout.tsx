@@ -40,7 +40,7 @@ export const HomeLayout = () => {
                 </section>
               </div>
             </main>
-            <footer className="footer_home">
+            <footer className="footer_home" style={{padding:0}}>
               <FooterHome />
             </footer>
           </>

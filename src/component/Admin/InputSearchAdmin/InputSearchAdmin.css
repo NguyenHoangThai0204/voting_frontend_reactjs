@@ -49,6 +49,8 @@
     .result-item {
       padding: 10px;
       margin-bottom: 10px;
-      cursor: pointer; 
+      cursor: pointer; display: flex; align-items: center;
     }
-    
+    .result-item:hover {
+      background-color: aquamarine;
+    }
