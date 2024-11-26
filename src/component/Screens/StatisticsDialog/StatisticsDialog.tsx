@@ -148,7 +148,8 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
 
             <div>
               <p><strong>Tổng số lượt tham gia bình chọn: </strong> {totalVotes}</p>
-              <p><strong>Chiến thắng thuộc về: </strong> {winnerContent}</p>
+              <p><strong>Chiến thắng 
+              thuộc về: </strong> {winnerContent}</p>
             </div>
           </>
         ) : (
