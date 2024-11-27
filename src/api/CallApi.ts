@@ -23,6 +23,38 @@
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
 
+  // Hàm đăng ký người dùng
+  // const {
+  //   email,
+  //   password,
+  //   fullName,
+  //   role,
+  //   status,
+  //   province,
+  //   district,
+  //   ward,
+  //   street,
+  //   avatar,
+  //   phone,
+  //   dateOfBirth,
+  // } 
+  export const registerUser = async (data: {
+    email: string;
+    password: string;
+    fullName: string;
+    role: string;
+    status: string;
+    province: string;
+    district: string;
+    ward: string;
+    street: string;
+    avatar: string;
+    phone: string;
+    dateOfBirth: string;
+  }): Promise<UserResponse> => {
+    const response = await axios.post(`${API_USER}/signup`, data);
+    return response.data;
+  };
   // Hàm đăng nhập người dùng
   export const loginUser = async (data: { email: string; password: string }): Promise<UserResponse> => {
     const response = await axios.post(`${API_USER}/login`, data);
