@@ -1,4 +1,4 @@
-.usersManagement {
+/* .usersManagement {
   display: flex;
   justify-content: space-between;
   height: 100%;
@@ -31,4 +31,12 @@
 .usersManagement .userManaRight {
   width: 60%;
   max-height: 80vh;
+}
+ */
+
+
+ .usersManagement {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
 }

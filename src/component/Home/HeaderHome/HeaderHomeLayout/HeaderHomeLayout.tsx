@@ -60,8 +60,9 @@ export const HeaderHomeLayout: React.FC = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="search"
-            label="Tìm kiếm tên cuộc bình chọn"
+            label="Tìm kiếm tên"
             variant="outlined"
+            disabled={authContext?.user?.role === 'admin'}
             size="small"
             InputProps={{
               endAdornment: (

@@ -29,6 +29,7 @@ export const HomeLayout = () => {
               <ContentTabsAdmin />  
             </div>
           ) : (
+          <>
             <main className="content_home">
               <div className="body_home">
                 <aside className="menu_left">
@@ -39,12 +40,12 @@ export const HomeLayout = () => {
                 </section>
               </div>
             </main>
+            <footer className="footer_home" style={{padding:0}}>
+              <FooterHome />
+            </footer>
+          </>
           )
       }
-      <footer className="footer_home">
-        <FooterHome />
-      </footer>
-
     </div>
   );
 };

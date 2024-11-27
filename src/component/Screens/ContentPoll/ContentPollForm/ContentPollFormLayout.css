@@ -75,6 +75,18 @@
   margin-right: 10px;
 }
 
+
+.wrapper_voteform .text_description{
+  display: flex;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #41B3A2;
+}
+.wrapper_voteform .text_description .avatar-wrapper-description{
+  width: 25%;
+  height: 250px;
+  display: flex;
+}
 @media screen and (max-width: 900px) {
   .wrapper_voteform {
     width: 100%;

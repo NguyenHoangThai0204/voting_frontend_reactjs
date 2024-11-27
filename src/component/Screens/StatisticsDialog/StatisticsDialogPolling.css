@@ -41,3 +41,10 @@
   transition: width 0.3s ease; /* Hiệu ứng chuyển động */
   z-index: 0; /* Đặt xuống dưới cùng */
 }
+
+@media screen and (max-width: 600px) {
+  .animal-name {
+    width: 30%;
+  }
+  
+}

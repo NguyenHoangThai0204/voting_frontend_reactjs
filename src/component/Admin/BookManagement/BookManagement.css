@@ -1,4 +1,4 @@
-.bookManagement {
+/* .bookManagement {
     display: flex;
     justify-content: space-between;
     height: 100%;
@@ -18,4 +18,30 @@
   }
   .bookManagement .userManaRight {
     width: 68%;
+  } */
+
+
+
+
+  .bookManagement {
+    display: block;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .bookManagement .userManaLeft {
+    width: 30%;
+  }
+  .bookManagement .userManaLeft table .trrow:hover {
+    background-color: aquamarine;
+    cursor: pointer;
+  }
+  .bookManagement .userManaLeft table tbody th{
+    padding: auto;
+  }
+  .bookManagement .userManaLeft table tbody tr td {
+    padding: 2px;
+  }
+  .bookManagement .userManaRight {
+    width: 98%;
+    margin: auto;
   }

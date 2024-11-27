@@ -1,15 +1,17 @@
 .wrapper_contenthomevote {
   padding: 20px;
 }
-.wrapper_contenthomevote .content_vote{
-  margin: 15px;
+.wrapper_votelayout .content_vote{
+  margin-bottom: 15px;
 }
-
 @media screen and (max-width: 900px) {
   .wrapper_contenthomevote {
     padding: 8px;
   }
   .wrapper_contenthomevote .content_vote{
     margin: 5px;
+  }
+  .wrapper_votelayout .content_vote h2{
+    font-size: 21px;
   }
 }

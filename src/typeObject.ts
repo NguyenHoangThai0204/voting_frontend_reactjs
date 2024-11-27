@@ -33,11 +33,16 @@ export interface VoteResponse {
   message: string;
   data: Vote;
   }
+  export interface ListVotePollidResponse {
+    status: string;
+    message: string;
+    data: Vote[];
+}
 export interface PollResponse {
     status: string;
     message: string;
     data: Poll;
-    }
+}
 export interface TheNewResponse {
       status: string;
       message: string;
@@ -56,7 +61,7 @@ export interface Poll {
     description: string;
     timeCreate: string;
     timeStart: string | null;
-    timeEnd: string| null;
+    timeEnd: string;
     options: Option[];
     typeContent: string;
     pollIdSm: string | null;
@@ -67,6 +72,7 @@ export interface Option {
   contentOption: string;
   additonalContentOption: string | null;
   descriptionContentOption: string;
+  avatarContentOption: string | null;
   votes: Vote[];
 }
 export interface PollCreate {
@@ -85,6 +91,7 @@ export interface PollCreate {
 export interface OptionCreate {
 contentOption: string;
 additonalContentOption: string | null;
+avatarContentOption: string | null;
 descriptionContentOption: string;
 votes: Vote[];
 }

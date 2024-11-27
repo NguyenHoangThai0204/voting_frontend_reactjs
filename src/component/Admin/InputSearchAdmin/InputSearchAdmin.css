@@ -1,25 +1,56 @@
-.inputSearchAdmin {
+/* .inputSearchAdmin {
   display: flex;
   align-items: center;
-    /* position: relative; Để làm cha chứa phần tử con dùng position absolute */
     width: 100%;
   }
   
   .results {
-    position: absolute; /* Chồng lên các phần tử khác */
-    top: 100%; /* Đảm bảo nó xuất hiện ngay bên dưới ô tìm kiếm */
+    position: absolute; 
+    top: 100%; 
     left: 0;
     right: 0;
-    z-index: 100; /* Đảm bảo phần kết quả nằm trên các thành phần khác */
-    background-color: white; /* Để kết quả hiển thị rõ ràng */
-    border: 1px solid #ccc; /* Tùy chỉnh thêm viền cho đẹp */
-    max-height: 300px; /* Giới hạn chiều cao để không chiếm quá nhiều không gian */
-    overflow-y: auto; /* Cuộn nếu kết quả quá nhiều */
+    z-index: 100;
+    background-color: white; 
+    border: 1px solid #ccc; 
+    max-height: 300px; 
+    overflow-y: auto; 
   }
   
   .result-item {
     padding: 10px;
     margin-bottom: 10px;
-    cursor: pointer; /* Thêm hiệu ứng con trỏ để tạo cảm giác có thể chọn */
+    cursor: pointer; 
   }
-  
+   */
+
+   .inputSearchAdmin {
+    display: flex;
+    align-items: center;
+      width: 100%;
+      justify-content: end;
+      margin: 10px auto;
+    }
+    .search {
+      width: 60%; /* Bạn có thể thay đổi tỷ lệ phần trăm này để làm cho nút dài hơn */
+      
+    }
+    
+    .results {
+      position: absolute; 
+      top: 68px; 
+      z-index: 100;
+      width: 100%;
+      background-color: white; 
+      border: 1px solid #ccc; 
+      max-height: 300px; 
+      overflow-y: auto; 
+    }
+    
+    .result-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer; display: flex; align-items: center;
+    }
+    .result-item:hover {
+      background-color: aquamarine;
+    }

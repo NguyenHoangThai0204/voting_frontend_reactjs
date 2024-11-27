@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
 import { useContext } from "react";
 import { loginUser, loginGoogle } from "../../../api/CallApi";
+import Swal from "sweetalert2";
 //Google login
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import React from "react";
@@ -30,7 +31,20 @@ export default function LoginForm({
   };
   const handleLogin = async () => {
     if (!username || !password) {
-      alert("Username and Password cannot be empty");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Nhập tài khoản và mật khẩu!", showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      });
+
       return;
     }
 
@@ -42,16 +56,52 @@ export default function LoginForm({
           authContext?.login(response.data);
           navigate("/home");
         } else {
-          alert(
-            "Your account is not active. Please check your email to active your account."
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Tài khoản không còn hoạt động!", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
         }
       } else {
-        alert(response.message);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Tài khoản hoặc mật khẩu không đúng!", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("An error occurred while trying to log in.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Lỗi trong quá trình đăng nhập.", showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      });
+
     }
   };
   // Google login
@@ -60,8 +110,20 @@ export default function LoginForm({
       // Lấy idToken từ Google response
       const token = response.credential;
       if (!token) {
-        console.error("No idToken found in the response.");
-        alert("Login failed. Please try again.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
         return;
       }
       console.log("Credential token:", token);
@@ -71,11 +133,36 @@ export default function LoginForm({
         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
         navigate("/home");
       } else {
-        alert("Login failed. Please try again.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("An error occurred while trying to log in.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      });
     }
   };
   return (

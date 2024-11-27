@@ -43,6 +43,11 @@
     top: 30px;
     margin: auto;
     padding: 5px;
+  }.wrapper_votelayout .list_vote .list_vote_header h2{
+    font-size: 21px;
+  }
+  .wrapper_votelayout .list_vote h2{
+    font-size: 21px;
   }
   .wrapper_votelayout .content_list_vote .list_vote .list_item_vote {
     display: flex;

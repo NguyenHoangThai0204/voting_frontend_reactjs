@@ -18,7 +18,7 @@ import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
 import React from "react";
-
+import Swal from "sweetalert2";
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
@@ -61,7 +61,21 @@ export const ContentDetailPoll: React.FC = () => {
   ) => {
     try {
       if (!vote) {
-        alert("Dữ liệu bình chọn không tồn tại.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Không tìm thấy cuộc bình chọn!",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
         return;
       }
 
@@ -70,19 +84,58 @@ export const ContentDetailPoll: React.FC = () => {
 
       // Kiểm tra thời gian bình chọn
       if (voteStartDate && new Date() < voteStartDate) {
-        alert("Bình chọn chưa bắt đầu.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Bình chọn chưa bắt đầu.", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
         return;
       }
 
       if (voteEndDate && new Date() > voteEndDate) {
-        alert("Bình chọn đã kết thúc.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Bình chọn đã kết thúc.", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
         return;
       }
 
       // Xác nhận bình chọn
       const confirmVote = confirm("Bạn chọn: " + content);
       if (!confirmVote) {
-        alert("Bạn đã hủy chọn.");
+        Swal.fire({
+          icon: "info",
+          title: "Thông tin",
+          text: "Hủy bỏ bình chọn.", showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          },
+          hideClass: {
+            popup: "", // Tắt hiệu ứng biến mất
+          },
+        });
+
         return;
       }
 
@@ -90,14 +143,39 @@ export const ContentDetailPoll: React.FC = () => {
       if (vote.typeContent === "privatesmc") {
         // Kiểm tra ví đã kết nối
         if (!authContext?.walletAddress) {
-          alert("Vui lòng kết nối ví trước khi bình chọn.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Vui lòng kết nối ví.", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
           return;
         }
 
         // Kiểm tra `pollIdSm`
         if (!vote.pollIdSm) {
-          console.error("pollIdSm is null");
-          alert("Dữ liệu Poll không hợp lệ.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Lỗi trong quá trình bình chọn, dữ liệu pollIdSm là null.", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
           return;
         }
 
@@ -111,7 +189,20 @@ export const ContentDetailPoll: React.FC = () => {
             });
           } else {
             console.error("Wallet address is null or undefined");
-            alert("Lỗi kết nối ví.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Địa chỉ ví không hợp lệ.", showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            });
+
             return;
           }
 
@@ -131,10 +222,36 @@ export const ContentDetailPoll: React.FC = () => {
             author: addRessWallet || "",
           });
 
-          alert("Bình chọn thành công!");
+          Swal.fire({
+            icon: "success",
+            title: "Thành công",
+            text: "Bình chọn thành công!", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
         } catch (error) {
           console.error("Error voting:", error);
-          alert("Bạn đã bình chọn này rôi.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Lỗi trong quá trình bình chọn.", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
         }
       } else if (vote.typeContent === "private") {
         try {
@@ -149,16 +266,53 @@ export const ContentDetailPoll: React.FC = () => {
 
             await postVotePrivate(dataVote);
 
-            alert("Bình chọn thành công!");
+            Swal.fire({
+              icon: "success",
+              title: "Thành công",
+              text: "Bình chọn thành công!", showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            });
           }
           // Gửi dữ liệu bình chọn lên backend
           else {
-            alert("Bạn cần đăng nhập tài khoản.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Vui lòng đăng nhập để bình chọn.", showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            });
+
             return;
           }
         } catch (error) {
           console.error("Error voting:", error);
-          alert("Bạn đã bình chọn này rôi.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Bạn đã chọn trong cuộc bình chọn này rồi.", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
         }
       } else {
         // Bình chọn không sử dụng smart contract
@@ -172,15 +326,54 @@ export const ContentDetailPoll: React.FC = () => {
 
         try {
           await postVote(dataVote);
-          alert("Bình chọn thành công!");
+          Swal.fire({
+            icon: "success",
+            title: "Thành công",
+            text: "Bình chọn thành công!", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
         } catch (error) {
           console.error("Error voting:", error);
-          alert("Lỗi trong quá trình bình chọn.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Bạn đã chọn trong cuộc bình chọn này rồi.", showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          });
+
         }
       }
     } catch (error) {
       console.error("Error: " + error);
-      alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Lỗi trong quá trình bình chọn.",
+        showConfirmButton: false,
+        timer: 1500,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      });
+
     }
   };
 
@@ -248,7 +441,7 @@ export const ContentDetailPoll: React.FC = () => {
               {/* Modal */}
               <div>
                 {vote?.timeEnd &&
-                new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
+                  new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
                   <StatisticsDialogPolling
                     open={open}
                     handleClose={handleClose}
@@ -279,7 +472,6 @@ export const ContentDetailPoll: React.FC = () => {
         <div className="label">Lựa chọn:</div>
         {vote?.options.map((select, index) => (
           <div key={index} className="choice-wrapper">
-            {/* <p>Số lượng phiếu hiện tại {select.votes.length} </p> */}
             <TextField
               className="text_namechoice"
               variant="outlined"
@@ -313,19 +505,29 @@ export const ContentDetailPoll: React.FC = () => {
             />
 
             {showDescriptions[index] && (
-              <TextField
-                className="text_description"
-                variant="outlined"
-                multiline
-                style={{ width: "100%", marginBottom: "10px" }}
-                value={select?.descriptionContentOption || ""}
-                onChange={(e) =>
-                  handleDescriptionChangeContent(index, e.target.value)
-                }
-              />
-            )}
+              <div className="text_description">
+                <div className="avatar-wrapper-description">
+                  {/* Avatar */}
+                  <img
+                    src={select.avatarContentOption || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
+                    alt="avatar"
+                    className="choice-avatar"
+                  />
+                </div>
+                <TextField
+                  className="text_description_field"
+                  variant="outlined"
+                  multiline
+                  style={{ width: "100%", marginBottom: "10px" }}
+                  value={select?.descriptionContentOption || ""}
+                  onChange={(e) =>
+                    handleDescriptionChangeContent(index, e.target.value)
+                  }
+                />
+              </div>)}
           </div>
-        ))}
+        ))
+        }
 
         <div className="form_date">
           <div className="date">

@@ -14,7 +14,9 @@ import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
+import Swal from "sweetalert2";
 export const ContentPollFormLayout = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
@@ -86,7 +88,20 @@ export const ContentPollFormLayout = () => {
 
   const handleCreateVote = async () => {
     if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {
-      alert("Vui lòng nhập đầy đủ thông tin trước khi tạo phiếu bầu.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Vui lòng nhập đầy đủ thông tin trước khi tạo!',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      })
       return;
     }
 
@@ -98,6 +113,7 @@ export const ContentPollFormLayout = () => {
         contentOption: string;
         additonalContentOption: string;
         descriptionContentOption: string;
+        avatarContentOption: string;
         votes: never[];
       }[];
       avatar: string;
@@ -113,6 +129,7 @@ export const ContentPollFormLayout = () => {
       options: options.map((choice, index) => ({
         contentOption: choice,
         additonalContentOption: "",
+        avatarContentOption: avatarUrls[index] || "",
         descriptionContentOption: descriptionSelector[index],
         votes: []
       })),
@@ -128,9 +145,22 @@ export const ContentPollFormLayout = () => {
       // console.log(voteData);
       // console.log(addRessWallet);
       if (voteData.typeContent === "privatesmc") {
-        // alert("Chức năng này đang phát triển, vui lòng chọn kiểu công khai hoặc riêng tư");
         if (!addRessWallet) {
-          alert("Wallet address is required for private polls.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng kết nối ví trước khi tạo!',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          })
+
           return;
         }
         try {
@@ -141,7 +171,20 @@ export const ContentPollFormLayout = () => {
               contentOption: choice
             })),
           });
-          alert("Private poll created successfully.");
+          Swal.fire({
+            icon: 'success',
+            title: 'Tạo bình chọn thành công!',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            },
+            hideClass: {
+              popup: "", // Tắt hiệu ứng biến mất
+            },
+          })
+
           if (reponse) {
             voteData.pollIdSm = reponse || null;
           }
@@ -158,6 +201,22 @@ export const ContentPollFormLayout = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const [avatarUrls, setAvatarUrls] = useState<string[]>([]);
+
+  const handleAvatarChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Lấy file ảnh từ input
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Cập nhật URL ảnh đã chọn vào avatarUrls
+        const newAvatarUrls = [...avatarUrls];
+        newAvatarUrls[index] = reader.result as string; // Cập nhật URL ảnh cho index tương ứng
+        setAvatarUrls(newAvatarUrls); // Cập nhật trạng thái
+      };
+      reader.readAsDataURL(file); // Đọc file ảnh dưới dạng URL
     }
   };
 
@@ -230,27 +289,51 @@ export const ContentPollFormLayout = () => {
                       >
                         <CloseIcon />
                       </IconButton>
-
                     </InputAdornment>
                   )
                 }}
               />
               {
                 showDescriptions[index] && (
-                  <TextField
-                    className="text_description"
-                    variant="outlined"
-                    placeholder={`Miêu tả lựa chọn ${index + 1}`}
-                    multiline
-                    style={{ width: "100%", marginBottom: "10px" }}
-                    value={descriptionSelector[index]}
-                    onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
-                  />
+                  <div className="text_description">
+                    <div className="avatar-wrapper-description">
+                      {/* Avatar */}
+                      <img
+                        src={avatarUrls[index] || "https://via.placeholder.com/30"} // Avatar mặc định nếu chưa có
+                        alt="avatar"
+                        className="choice-avatar"
+                      />
+                      {/* Thêm nút thay đổi avatar */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleAvatarChange(index, e)}
+                        style={{ display: 'none' }}
+                        id={`avatar-upload-${index}`}
+                      />
+                      <label htmlFor={`avatar-upload-${index}`}>
+                        <IconButton component="span" aria-label="change avatar">
+                          <CameraAltIcon />
+                        </IconButton>
+                      </label>
+                    </div>
+                    <TextField
+                      className="text_description_field"
+                      variant="outlined"
+                      placeholder={`Miêu tả lựa chọn ${index + 1}`}
+                      multiline
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      value={descriptionSelector[index]}
+                      onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
+                    />
+                  </div>
                 )
               }
             </div>
           ))
         }
+
+
         <Button variant="contained"
           onClick={handleAddChoice}
           sx={{ textTransform: 'none' }}
