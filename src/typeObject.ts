@@ -72,6 +72,7 @@ export interface Option {
   contentOption: string;
   additonalContentOption: string | null;
   descriptionContentOption: string;
+  avatarContentOption: string | null;
   votes: Vote[];
 }
 export interface PollCreate {
@@ -90,6 +91,7 @@ export interface PollCreate {
 export interface OptionCreate {
 contentOption: string;
 additonalContentOption: string | null;
+avatarContentOption: string | null;
 descriptionContentOption: string;
 votes: Vote[];
 }

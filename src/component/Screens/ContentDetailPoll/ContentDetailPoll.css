@@ -69,7 +69,18 @@
   display: flex;
   align-items: center;
 }
-
+.wrapper_detail_vote .text_description{
+  display: flex;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #41B3A2;
+}
+.wrapper_detail_vote .text_description .avatar-wrapper-description{
+  width: 25%;
+  height: 250px;
+  display: flex;
+  margin: 0 10px 10px 0;
+}
 @media screen and (max-width: 900px) {
   .wrapper_detail_vote {
     width: 100%;
@@ -135,6 +146,19 @@
   .wrapper_detail_vote form .form_date .date .labelField {
     width: 60%;
   }
+  .wrapper_detail_vote .text_description{
+    display: flex;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #41B3A2;
+  }
+  .wrapper_detail_vote .text_description{
+    display: block;
+  }
+  .wrapper_detail_vote .text_description .avatar-wrapper-description{
+    width: 95%;
+    margin:auto;
+    height: 100px;
+    margin: 0 10px 10px 0;
+  }
 }
-
-/*# sourceMappingURL=ContentDetailPoll.css.map */

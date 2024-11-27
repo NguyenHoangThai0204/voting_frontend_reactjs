@@ -17,6 +17,7 @@ Gõ:
     npm i 
     npm run dev
     npm install date-fns // ngày tháng
+    npm install @emailjs/browser // tự động gửi mail
 
     npm install firebase @types/firebase
 npm install react-html-parser --legacy-peer-deps

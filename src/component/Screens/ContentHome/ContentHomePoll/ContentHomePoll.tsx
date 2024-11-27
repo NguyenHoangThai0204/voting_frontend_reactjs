@@ -64,19 +64,19 @@ export const ContentHomeVote = () => {
                 </div>
             </div>}
             {authContext?.user && <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Cuộc bình chọn riêng tư(Không phí)</h2>
+                <h2 >Cuộc bình chọn riêng tư(Không phí)</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={votePrivate} />
                 </div>
             </div>}
             <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Đang diễn ra</h2>
+                <h2 >Đang diễn ra</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voting} />
                 </div>
             </div>
             <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Đã kết thúc</h2>
+                <h2>Đã kết thúc</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voted} />
                 </div>

@@ -28,14 +28,32 @@
 .comemtlayout .commentLayoutRight {
   width: 20%;
 }
-
-@media screen and (max-width: 900px)   {
+.comemtlayout .commentLayoutRight .commentLayoutRightContent {
+  text-align: end;
+  margin: 15px 0;
+}
+.comemtlayout .commentLayoutRight .commentLayoutRightContent button {
+  margin: 15px 0;
+  padding: 15px 20px;
+  border: none;
+  font-weight: 600;
+}
+.comemtlayout .commentLayoutRight .commentLayoutRightContent button:hover {
+  background-color: aquamarine;
+  cursor: pointer;
+}
+@media screen and (max-width: 900px) {
   .comemtlayout {
-   display: block;
+    display: block;
     padding: 3px;
   }
-  .comemtlayout .commentLayoutLeft {
+  .comemtlayout .commentLayoutLeft,
+  .comemtlayout .commentLayoutRight {
     width: 98%;
+    margin: auto;
   }
-  
+  .comemtlayout .commentLayoutRight h2,
+  .comemtlayout .commentLayoutLeft h2 {
+    font-size: 21px;
+  }
 }
