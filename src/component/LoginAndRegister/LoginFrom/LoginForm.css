@@ -1,9 +1,9 @@
 form {
   background: transparent;
-  width: 20vw;
+  width: 23vw;
   margin: auto;
   padding: 20px;
-  height: 95%;
+  /* height: 95%; */
   justify-content: center;
   backdrop-filter: blur(30px);
 }
@@ -40,6 +40,9 @@ form .signup {
   display: flex;
   justify-content: center;
   align-items: baseline;
+}
+form .signup p {
+  font-size: 20px;
 }
 @media screen and (max-width: 900px) {
   form {

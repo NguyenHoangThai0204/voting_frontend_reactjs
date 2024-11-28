@@ -182,7 +182,7 @@
   .wrapper_detail_vote .text_description .avatar-wrapper-description{
     width: 95%;
     margin:auto;
-    height: 100px;
+    max-height: 200px;
     margin: 0 10px 10px 0;
   }
 }

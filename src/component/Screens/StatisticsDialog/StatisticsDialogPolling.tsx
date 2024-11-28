@@ -116,7 +116,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
 
   return (
     <Dialog open={open} onClose={handleCloseDialog} fullWidth={true} maxWidth="md">
-      <DialogTitle>Live Race Statistics</DialogTitle>
+      <DialogTitle>Thống kê cuộc đua trực tiếp</DialogTitle>
       <DialogContent>
         {poll ? (
           <div>
@@ -130,7 +130,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
                       {animalEmojisState[index]}
                     </div>
                   </div>
-                  <div className="vote-count">{option.votes.length} votes</div>
+                  <div className="vote-count">{option.votes.length} lượt</div>
                 </div>
               );
             })}
@@ -142,11 +142,11 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
       <DialogActions style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ textAlign: "left" }}>
           {remainingTime ? (
-            <p style={{ fontWeight: "bold" }}>Remaining time: {remainingTime}</p>
+            <p style={{ fontWeight: "bold" }}>Thời gian còn lại: {remainingTime}</p>
           ) : null}
         </div>
         <Button onClick={handleCloseDialog} color="primary">
-          Close
+          Đóng
         </Button>
       </DialogActions>
     </Dialog>

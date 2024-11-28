@@ -14,6 +14,7 @@ Gõ:
     npm install @mui/material @emotion/react @emotion/styled
     npm install @fontsource/roboto
     npm install react-slick slick-carousel
+    npm install react-toastify
     npm i 
     npm run dev
     npm install date-fns // ngày tháng

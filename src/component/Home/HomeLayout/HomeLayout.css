@@ -78,7 +78,7 @@
 }
 
 .home_layout .content_home .body_home .menu_left {
-  width: 8%;
+  width: 9%;
   animation: menuIn 0.8s ease-in-out forwards;
   opacity: 0;
   padding: 5px;
@@ -100,7 +100,7 @@
 }
 
 .home_layout .content_home .body_home .content_right {
-  width: 92%;
+  width: 91%;
   margin-top: 5px;
 }
 
