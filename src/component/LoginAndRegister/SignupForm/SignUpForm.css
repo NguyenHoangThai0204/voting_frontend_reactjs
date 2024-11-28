@@ -1,0 +1,10 @@
+.form_signup .additional-info  {
+    text-align: end;
+}
+.form_signup .additional-info .inputTextField {
+    margin-bottom: 10px;
+}
+.forgot{
+    display: flex;
+    justify-content: center;
+}

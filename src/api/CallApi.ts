@@ -1,5 +1,5 @@
   import axios from 'axios';
-  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse, ListVotePollidResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse, ListVotePollidResponse,UserCreate,VoteResultResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
@@ -18,8 +18,9 @@
   const API_POLL = 'http://localhost:3000/api/poll';
   const API_SSO = "http://localhost:3000/api/auth";
   const API_TheNew = "http://localhost:3000/api/theNew";
-  const API_PRIVATE = "http://localhost:3000/api/private";
   const API_UPLOAD = "http://localhost:3000/api/upload";
+  const API_PRIVATE = "http://localhost:3000/api/private"
+  const API_AI = "http://localhost:3000/api/ai";
 
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
@@ -48,38 +49,17 @@
       return null;
     }
   };
+  export const getAICheckContent = async (text: string): Promise<string> => {
+    const response = await axios.post(`${API_AI}/check_content_ai`, { text });
+    return response.data.sentiment;
+  }
+
   // Hàm đăng ký người dùng
-  // const {
-  //   email,
-  //   password,
-  //   fullName,
-  //   role,
-  //   status,
-  //   province,
-  //   district,
-  //   ward,
-  //   street,
-  //   avatar,
-  //   phone,
-  //   dateOfBirth,
-  // } 
-  export const registerUser = async (data: {
-    email: string;
-    password: string;
-    fullName: string;
-    role: string;
-    status: string;
-    province: string;
-    district: string;
-    ward: string;
-    street: string;
-    avatar: string;
-    phone: string;
-    dateOfBirth: string;
-  }): Promise<UserResponse> => {
+  export const registerUser = async (data : UserCreate ): Promise<UserResponse> => {
     const response = await axios.post(`${API_USER}/signup`, data);
     return response.data;
-  };
+  }; 
+
   // Hàm đăng nhập người dùng
   export const loginUser = async (data: { email: string; password: string }): Promise<UserResponse> => {
     const response = await axios.post(`${API_USER}/login`, data);
@@ -168,7 +148,11 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
     return response.data;
   };
 
-
+// lấy ra vote từ userid và pollid
+export const getVoteByUserIdAndPollId = async (data: {userId: string, pollId: string}): Promise<VoteResultResponse> => {
+  const response = await axios.post(`${API_VOTE}/find_vote_byuserid_pollid`, data);
+  return response.data;
+}
 
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVoteUser = async (authorId: string): Promise<ListVoteResponse> => {

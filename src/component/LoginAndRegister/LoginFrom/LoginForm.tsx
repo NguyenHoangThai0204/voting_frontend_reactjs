@@ -221,18 +221,20 @@ export default function LoginForm({
           Sign up
         </Button>
       </div>
-      <div className="forgot">
-        {/* <Button
-                    variant="outlined"
-                    startIcon={<GoogleIcon />}
-                    href="https://accounts.google.com/signin" // Thay thế bằng liên kết đăng nhập Google của bạn
-                    target="_blank" // Mở liên kết trong tab mới
-                    rel="noopener noreferrer" // Bảo mật liên kết
-                >
-                    Đăng nhập với Google
-                </Button>
-                */}
-        <GoogleLogin onSuccess={handleGoogleLogin} />
+      <div className="forgot_button" style={{display:"flex", justifyContent:"center", marginBottom:"10px"}}>
+      <GoogleLogin
+  onSuccess={handleGoogleLogin}
+  containerProps={{
+    style: {
+      marginTop: "1.5rem",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      maxWidth: "200px",
+    },
+  }}
+/>
       </div>
     </form>
   );

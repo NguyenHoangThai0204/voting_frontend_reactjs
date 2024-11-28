@@ -17,7 +17,23 @@ export interface User {
     address?: string;
     __v?: number; // Tùy chọn, nếu cần
 }
-  
+export interface UserCreate {
+  email: string;
+  password?: string; // Tùy chọn, nếu cần
+  fullName?: string;
+  avatar?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  province?: string;
+  district?: string;
+  status?: string;
+  ward?: string;
+  street?: string;
+  role?: string;
+  address?: string;
+  __v?: number; // Tùy chọn, nếu cần
+}
 export interface UserResponse {
     status: string;
     message: string;
@@ -33,6 +49,11 @@ export interface VoteResponse {
   message: string;
   data: Vote;
   }
+  export interface VoteResultResponse {
+    status: string;
+    message: string;
+    data: VoteResult;
+    }
   export interface ListVotePollidResponse {
     status: string;
     message: string;
@@ -102,7 +123,14 @@ export interface Vote {
   timestamp: string;
   transactionHash: string | null;  
 }
-
+export interface VoteResult {
+  _id: string;
+  pollId: string | null;  
+  optionId: string;  
+  userId: string | null;  
+  timestamp: string;
+  transactionHash: string | null;  
+}
 export interface TheNew{
   tenBaiViet: string;
   chuDeBaiViet: string;
