@@ -55,6 +55,29 @@
   object-fit: cover;
   object-position: center;
 }
+.wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll img {
+  max-height: 350px; /* Chiều cao tối đa */
+  max-width: 100%; /* Chiều rộng tối đa */
+  border-radius: 8px; /* Bo góc */
+  object-fit: cover; /* Giữ tỷ lệ hình ảnh */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+
+  /* Các thuộc tính nền (background) */
+  /* background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); Nền chuyển sắc */
+  background-size: cover; /* Nền bao phủ toàn bộ khung */
+  background-repeat: no-repeat; /* Không lặp lại nền */
+  background-position: center; /* Căn nền ở giữa */
+
+  padding: 10px; /* Tạo khoảng cách bên trong để làm nổi bật nền */
+  display: block; /* Để căn chỉnh ảnh dễ dàng */
+}
+
+.wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll img:hover {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); /* Đổi màu nền khi hover */
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+  transition: all 0.3s ease; /* Hiệu ứng mượt */
+}
+
 .wrapper_detail_vote form .header_content_form .choice-wrapper:hover {
   cursor: pointer;
   background-color: rgb(180, 175, 175);
