@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 // import { auth } from "./firebase";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { loginGoogle } from "../../../api/CallApi"; // Thêm API kiểm tra email
+import { confirmGmail, loginGoogle, registerUser } from "../../../api/CallApi"; // Thêm API kiểm tra email
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
-import { registerUser } from "../../../api/CallApi";
-import "./SignUpForm.css";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-declare global {
-}
+// import {
+//   RecaptchaVerifier,
+//   signInWithPhoneNumber,
+//   ConfirmationResult,
+// } from "firebase/auth";
+
+declare global {}
 
 interface SignUpFormProps {
   onLoginClick: () => void;
@@ -20,6 +25,10 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false); // Trạng thái hiện/ẩn mật khẩu
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false); // Trạng thái hiện/ẩn mật khẩu xác nhận
+
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -29,6 +38,9 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
 
   const authContext = React.useContext(AuthContext);
   const navigate = useNavigate();
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword((prev) => !prev);
 
   const validateUsername = (name: string): string => {
     if (!name) return "Tên người dùng không được để trống.";
@@ -64,8 +76,11 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
     const usernameError = validateUsername(username);
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
-    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
-   
+    const confirmPasswordError = validateConfirmPassword(
+      password,
+      confirmPassword
+    );
+
     // Cập nhật state lỗi
     setErrors({
       username: usernameError,
@@ -73,31 +88,55 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
       password: passwordError,
       confirmPassword: confirmPasswordError,
     });
-  
+
     // Nếu có lỗi, dừng lại và không thực hiện hành động tiếp theo
     if (usernameError || emailError || passwordError || confirmPasswordError) {
+      return;
+    } else {
+      // Gọi API đăng ký người dùng
+      const dataUser = {
+        email: email,
+        password: password,
+        fullName: username,
+      };
+      // Gọi API đăng ký người dùng
+      const response = await registerUser(dataUser);
+
+      // Kiểm tra phản hồi từ API đăng ký
+      if (!response) {
+        alert("Lỗi hệ thống. Vui lòng thử lại sau.");
         return;
-    }
-    else {
-        // Gọi API đăng ký người dùng
-        const dataUser ={
-            email: email,
-            password: password,
-            fullName: username,
-        }
-        const response = await registerUser(dataUser);
-        console.log("response:" + response);
-        if (!response) {
-            alert("Đăng ký thất bại. Vui lòng thử lại.");
-            return;
-        }
-        
-        alert("Đăng ký thành công!");
-        // setIsPopupOpen(false);
-        navigate("/home");
+      }
+
+      if (
+        response.status === "409"
+      ) {
+        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        return;
+      }
+
+      if (response.status === "Err") {
+        alert(`Đăng ký thất bại: ${response.message}`);
+        return;
+      }
+
+      // Nếu đăng ký thành công, gửi email xác nhận
+      const res = await confirmGmail({ userMail: email });
+
+      // Kiểm tra phản hồi từ API gửi email xác nhận
+      if (!res) {
+        alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
+        return;
+      }
+
+      // Thông báo thành công
+      alert(
+        "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản."
+      );
+      authContext?.logout(); // Đăng xuất người dùng hiện tại
+      navigate("/home"); // Điều hướng sau khi đăng ký thành công
     }
   };
-  
 
   // Google login
   const handleGoogleLogin = async (response: CredentialResponse) => {
@@ -112,6 +151,15 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
       console.log("Credential token:", token);
       const user = await loginGoogle(token);
       if (user) {
+        // thông báo đăng nhập bằng google thành công
+        const res = await confirmGmail({ userMail: user.data.email });
+        if (!res) {
+          alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
+          return;
+        }
+        alert(
+          "Đăng nhập thành công! Vui lòng kiểm tra email để xác nhận tài khoản."
+        );
         console.log("authContext" + user.data);
         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
         navigate("/home");
@@ -125,8 +173,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   };
 
   return (
-    <form
-    >
+    <form>
       <h2>Đăng Ký</h2>
       <div className="form_signup">
         <div className="additional-info">
@@ -142,7 +189,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             helperText={errors.username}
           />
           <TextField
-          className="inputTextField"
+            className="inputTextField"
             id="email"
             label="Email"
             fullWidth
@@ -153,28 +200,47 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             helperText={errors.email}
           />
           <TextField
-          className="inputTextField"
             id="password"
             label="Mật khẩu"
             fullWidth
             variant="standard"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type={showPassword ? "text" : "password"}
             error={!!errors.password}
             helperText={errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
-          className="inputTextField"
             id="confirm-password"
             label="Nhập lại mật khẩu"
             fullWidth
             variant="standard"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={toggleConfirmPasswordVisibility}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             type="button"
@@ -186,7 +252,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             ĐĂNG KÝ
           </Button>
         </div>
-        </div>
+      </div>
 
       <div className="button">
         <Button variant="text" onClick={onLoginClick}>
@@ -195,19 +261,18 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
       </div>
 
       <div className="forgot">
-      <GoogleLogin
-  onSuccess={handleGoogleLogin}
-  containerProps={{
-    style: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      maxWidth: "200px",
-    },
-  }}
-/>
-
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          containerProps={{
+            style: {
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "200px",
+            },
+          }}
+        />
       </div>
     </form>
   );

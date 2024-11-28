@@ -25,24 +25,25 @@
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
-  export const uploadImage = async (file: File): Promise<string | null> => {
-    const formData = new FormData();
-    formData.append("file", file);  // Thêm file vào FormData
-  
+
+  export const confirmGmail = async (data: { userMail: string }): Promise<boolean> => {
     try {
-      const response = await axios.post(`${API_UPLOAD_FILE}/uploadFile`, formData, {
+      const response = await axios.post(`${API_USER}/signUpGmail`, data);
+      return response.status === 201;
+    } catch (error) {
+      console.error("Error sending email:", error);
+      return false;
+    }
+  };
+
+  export const uploadImage = async (data: FormData): Promise<string | null> => {
+    try {
+      const response = await axios.post(`${API_UPLOAD_FILE}/uploadFile`, data, {
         headers: {
-          'Content-Type': 'multipart/form-data',  // Đặt đúng header cho file upload
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
-  
-      if (response.status === 200 && response.data.fileUrl) {
-        // Trả về đường link của ảnh
-        return response.data.fileUrl;
-      } else {
-        console.error("Upload failed", response.data);
-        return null;
-      }
+      return response.data.fileUrl;
     } catch (error) {
       console.error("Error uploading image:", error);
       return null;
