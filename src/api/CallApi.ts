@@ -26,9 +26,9 @@
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
 
-  export const confirmGmail = async (data: { email: string }): Promise<boolean> => {
+  export const confirmGmail = async (data: { userMail: string }): Promise<boolean> => {
     try {
-      const response = await axios.post(`${API_SSO}/signUpGmail`, data);
+      const response = await axios.post(`${API_USER}/signUpGmail`, data);
       return response.status === 201;
     } catch (error) {
       console.error("Error sending email:", error);
