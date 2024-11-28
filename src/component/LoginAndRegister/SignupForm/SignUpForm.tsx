@@ -6,18 +6,9 @@ import { loginGoogle } from "../../../api/CallApi"; // Thêm API kiểm tra emai
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
 import { registerUser } from "../../../api/CallApi";
-
-// import {
-//   RecaptchaVerifier,
-//   signInWithPhoneNumber,
-//   ConfirmationResult,
-// } from "firebase/auth";
+import "./SignUpForm.css";
 
 declare global {
-//   interface Window {
-//     recaptchaVerifier: RecaptchaVerifier;
-//     confirmationResult: ConfirmationResult;
-//   }
 }
 
 interface SignUpFormProps {
@@ -25,13 +16,6 @@ interface SignUpFormProps {
 }
 
 export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
-//   const [phone, setPhone] = useState<string>("+84");
-//   const [otp, setOtp] = useState<string>("");
-//   const [isOtpSent] = useState<boolean>(true);
-//   const [confirmationResult, setConfirmationResult] =
-//     useState<ConfirmationResult | null>(null);
-
-//   const [ setIsPopupOpen] = useState<boolean>(false); // Trạng thái mở popup
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -46,66 +30,8 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   const authContext = React.useContext(AuthContext);
   const navigate = useNavigate();
 
-//   const setUpRecaptcha = () => {
-//     window.recaptchaVerifier = new RecaptchaVerifier(
-//       auth,
-//       "recaptcha-container",
-//       {
-//         size: "invisible",
-//         callback: (response: string) => {
-//           console.log("reCAPTCHA solved:", response);
-//         },
-//         "expired-callback": () => {
-//           console.error("reCAPTCHA expired. Please try again.");
-//         },
-//         defaultCountry: "VN",
-//       }
-//     );
-//   };
-
-//   const handleSendOtp = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!phone.startsWith("+84") || phone.length < 11) {
-//       alert(
-//         "Vui lòng nhập số điện thoại đúng định dạng quốc tế (VD: +84123456789)."
-//       );
-//       return;
-//     }
-
-//     setUpRecaptcha();
-//     const appVerifier = window.recaptchaVerifier;
-
-//     try {
-//       const result = await signInWithPhoneNumber(auth, phone, appVerifier);
-//       setConfirmationResult(result);
-//       window.confirmationResult = result;
-//       setIsOtpSent(true);
-//     } catch (error) {
-//       alert(`Không thể gửi OTP. Chi tiết: ${(error as Error).message}`);
-//     }
-//   };
-
-//   const handleVerifyOtp = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (confirmationResult && otp) {
-//       try {
-//         await confirmationResult.confirm(otp);
-//         alert("Xác minh thành công!");
-//         setIsPopupOpen(true); // Hiện popup sau khi xác thực thành công
-//       } catch (error) {
-//         alert("OTP không chính xác hoặc đã hết hạn.");
-//         console.error("Error verifying OTP:", error);
-//       }
-//     } else {
-//       alert("Vui lòng nhập mã OTP hợp lệ.");
-//     }
-//   };
-
   const validateUsername = (name: string): string => {
     if (!name) return "Tên người dùng không được để trống.";
-    const regex = /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯàáâãèéêìíòóôõùúăđĩũơư ]+$/;
-    if (!regex.test(name))
-      return "Tên người dùng phải bắt đầu bằng chữ in hoa.";
     return "";
   };
 
@@ -139,7 +65,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
     const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
-  
+   
     // Cập nhật state lỗi
     setErrors({
       username: usernameError,
@@ -154,7 +80,12 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
     }
     else {
         // Gọi API đăng ký người dùng
-        const response = await registerUser({ email, password, fullName: username, role: "user", status: "active", province: "", district: "", ward: "", street: "", avatar: "", phone: "", dateOfBirth: "" });
+        const dataUser ={
+            email: email,
+            password: password,
+            fullName: username,
+        }
+        const response = await registerUser(dataUser);
         console.log("response:" + response);
         if (!response) {
             alert("Đăng ký thất bại. Vui lòng thử lại.");
@@ -197,23 +128,21 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
     <form
     >
       <h2>Đăng Ký</h2>
-      <div className="form_login">
-        
-
-      {/* Các trường bổ sung thông tin người dùng */}
-      
+      <div className="form_signup">
         <div className="additional-info">
           <TextField
             id="username"
             label="Tên đầy đủ"
             fullWidth
             variant="standard"
+            className="inputTextField"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
             helperText={errors.username}
           />
           <TextField
+          className="inputTextField"
             id="email"
             label="Email"
             fullWidth
@@ -224,6 +153,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             helperText={errors.email}
           />
           <TextField
+          className="inputTextField"
             id="password"
             label="Mật khẩu"
             fullWidth
@@ -235,6 +165,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             helperText={errors.password}
           />
           <TextField
+          className="inputTextField"
             id="confirm-password"
             label="Nhập lại mật khẩu"
             fullWidth
@@ -264,7 +195,19 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
       </div>
 
       <div className="forgot">
-        <GoogleLogin onSuccess={handleGoogleLogin} />
+      <GoogleLogin
+  onSuccess={handleGoogleLogin}
+  containerProps={{
+    style: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      maxWidth: "200px",
+    },
+  }}
+/>
+
       </div>
     </form>
   );

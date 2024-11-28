@@ -8,12 +8,12 @@
   display: flex;
   width: 55vw;
   padding: 0;
-  height: 85vh;
-  margin: 15px auto;
+  height: 70vh;
+  margin: auto;
   background: white;
   background-size: cover;
-  overflow: hidden; /* Thêm overflow hidden để ẩn phần trượt ra ngoài */
-  position: relative; /* Thêm position relative để định vị các ảnh */
+  overflow: hidden;
+  position: relative; 
 }
 .body .wrapperFormLayout .content_login_right {
   width: 50%;
@@ -26,8 +26,7 @@
   position: absolute;
   top: 0;
   left: 100%;
-  animation: slide 3s infinite; /* Thêm animation cho hiệu ứng trượt */
-  /* animation: slide 3s reverse; Thêm animation cho hiệu ứng trượt */
+  animation: slide 3s infinite; 
 
 }
 .body .wrapperFormLayout .content_login_right img.sliding-image {
@@ -56,7 +55,7 @@
 
 @media screen and (max-width: 900px) {
   .body .wrapperFormLayout {
-    width: 100vw;
+    width: 90vw;
     height: max-content;
     display: flex;
     flex-direction: column;

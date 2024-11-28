@@ -10,11 +10,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
 // import { createPrivatePoll } from "../../../../api/CallApi"
-import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
+import { createPoll, createPrivatePoll, getAICheckContent } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Swal from "sweetalert2";
 export const ContentPollFormLayout = () => {
@@ -85,8 +86,11 @@ export const ContentPollFormLayout = () => {
     newShowDescriptions[index] = !newShowDescriptions[index];
     setShowDescriptions(newShowDescriptions);
   }
+  //
+  const [loading, setLoading] = useState(false);
 
   const handleCreateVote = async () => {
+    setLoading(true); // Bắt đầu quá trình tải
     if (!authorId || !nameVote || !description || options.length === 0 || !typeOfVote || !startDate || !endDate) {
       Swal.fire({
         icon: 'error',
@@ -102,8 +106,97 @@ export const ContentPollFormLayout = () => {
           popup: "", // Tắt hiệu ứng biến mất
         },
       })
+      setLoading(false);
       return;
     }
+    const checkNameVote = await getAICheckContent(nameVote);
+    if (checkNameVote === "NEGATIVE") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Tên bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+
+      })
+      setLoading(false);
+      return;
+    }
+    const checkDescription = await getAICheckContent(description);
+    if (checkDescription === "NEGATIVE") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Miêu tả bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+
+      })
+      setLoading(false);
+      return;
+    }
+
+    const checkOptions = await Promise.all(options.map(async (option) => {
+      return await getAICheckContent(option);
+    }
+    ));
+    if (checkOptions.includes("NEGATIVE")) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Các lựa chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+
+      })
+      setLoading(false);
+      return;
+    }
+
+    // const checkDescriptionSelector = await Promise.all(descriptionSelector.map(async (description) => {
+    //   return await getAICheckContent(description);
+    // }));
+
+    // if (checkDescriptionSelector.includes("NEGATIVE")) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Miêu tả lựa chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //     timerProgressBar: true,
+    //     showClass: {
+    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+    //     },
+    //     hideClass: {
+    //       popup: "", // Tắt hiệu ứng biến mất
+    //     },
+
+    //   })
+    //   return;
+    // }
+
 
     const voteData: {
       authorId: string;
@@ -142,8 +235,6 @@ export const ContentPollFormLayout = () => {
     };
 
     try {
-      // console.log(voteData);
-      // console.log(addRessWallet);
       if (voteData.typeContent === "privatesmc") {
         if (!addRessWallet) {
           Swal.fire({
@@ -160,7 +251,7 @@ export const ContentPollFormLayout = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           })
-
+          setLoading(false);
           return;
         }
         try {
@@ -202,6 +293,7 @@ export const ContentPollFormLayout = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false); // Khi kết thúc quá trình
   };
 
   const [avatarUrls, setAvatarUrls] = useState<string[]>([]);
@@ -222,7 +314,17 @@ export const ContentPollFormLayout = () => {
 
 
   return (
-    <div className="wrapper_voteform">
+    <div className={`wrapper_voteform ${loading ? "loading-active" : ""}`}>
+      {loading ? (
+        <div className="loading-container">
+          <CircularProgress />
+          <p>Đang tải...</p>
+        </div>
+      ) : (
+        <div className="form-container">
+
+        </div>
+      )}
       <h1>TẠO BÌNH CHỌN MỚI</h1>
       <form>
         <div className="header_content_form">
@@ -375,5 +477,6 @@ export const ContentPollFormLayout = () => {
         </div>
       </form>
     </div>
+
   )
 }

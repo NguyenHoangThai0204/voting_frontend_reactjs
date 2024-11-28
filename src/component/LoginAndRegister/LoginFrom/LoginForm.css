@@ -1,8 +1,8 @@
 form {
   background: transparent;
-  width: 25vw;
+  width: 20vw;
   margin: auto;
-  padding: 50px;
+  padding: 20px;
   height: 95%;
   justify-content: center;
   backdrop-filter: blur(30px);
@@ -41,10 +41,9 @@ form .signup {
   justify-content: center;
   align-items: baseline;
 }
-
 @media screen and (max-width: 900px) {
   form {
-    width: 90%;
+    width: 80%;
     padding: 20px;
   }
   form h1 {

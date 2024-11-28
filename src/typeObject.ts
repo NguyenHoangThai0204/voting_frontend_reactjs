@@ -17,7 +17,23 @@ export interface User {
     address?: string;
     __v?: number; // Tùy chọn, nếu cần
 }
-  
+export interface UserCreate {
+  email: string;
+  password?: string; // Tùy chọn, nếu cần
+  fullName?: string;
+  avatar?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  province?: string;
+  district?: string;
+  status?: string;
+  ward?: string;
+  street?: string;
+  role?: string;
+  address?: string;
+  __v?: number; // Tùy chọn, nếu cần
+}
 export interface UserResponse {
     status: string;
     message: string;

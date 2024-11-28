@@ -190,7 +190,7 @@ export const InputSearchAdmin = ({ currentTab }: { currentTab: number }) => {
       
       {/* Hiển thị kết quả tìm kiếm nếu showResults là true */}
       {showResults && results.length > 0 && (
-  <Paper className="results" sx={{ width: '600px' }} ref={resultsRef}>
+  <Paper className="results" sx={{ width: '500px' }} ref={resultsRef}>
     {results.map((user) => (
       <div className="result-item" key={user._id}>
         {/* Kiểm tra thuộc tính avatar hoặc hinhAnhBaiViet */}

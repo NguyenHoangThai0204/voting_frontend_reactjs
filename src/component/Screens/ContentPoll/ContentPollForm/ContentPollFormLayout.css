@@ -1,9 +1,45 @@
+
 .wrapper_voteform {
+  position: relative; /* Để sử dụng cho loading-container */
   display: block;
   text-align: center;
   padding: 10px;
   width: 100%;
 }
+
+.loading-container {
+  position: fixed; /* Giữ loading ở giữa màn hình */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999; /* Hiển thị phía trên tất cả các phần tử khác */
+  background-color: rgba(255, 255, 255, 0.9); /* Làm nền mờ */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Làm mờ toàn bộ trang và ngăn chặn tương tác khi loading */
+.wrapper_voteform.loading-active {
+  pointer-events: none; /* Ngăn chặn thao tác */
+  opacity: 0.5; /* Làm mờ trang */
+}
+
+
+.form-container {
+  opacity: 0.5; /* Làm mờ form khi đang tải */
+  pointer-events: none; /* Vô hiệu hóa tương tác khi loading */
+  filter: blur(2px); /* Làm mờ thêm nếu cần */
+  transition: opacity 0.3s ease, filter 0.3s ease; /* Hiệu ứng mờ dần */
+}
+
 .wrapper_voteform h1 {
   color: #41B3A2;
   font-weight: bold;
@@ -87,6 +123,7 @@
   height: 250px;
   display: flex;
 }
+
 @media screen and (max-width: 900px) {
   .wrapper_voteform {
     width: 100%;
@@ -145,5 +182,3 @@
     margin-right: 10px;
   }
 }
-
-/*# sourceMappingURL=ContentPollFormLayout.css.map */
