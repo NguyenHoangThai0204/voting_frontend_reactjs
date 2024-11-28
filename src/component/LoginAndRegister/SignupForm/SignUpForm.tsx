@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 // import { auth } from "./firebase";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { loginGoogle } from "../../../api/CallApi"; // Thêm API kiểm tra email
+import { confirmGmail, loginGoogle, registerUser } from "../../../api/CallApi"; // Thêm API kiểm tra email
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
-import { registerUser } from "../../../api/CallApi";
+
+
 
 // import {
 //   RecaptchaVerifier,
@@ -36,6 +37,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -160,8 +162,17 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             alert("Đăng ký thất bại. Vui lòng thử lại.");
             return;
         }
-        
-        alert("Đăng ký thành công!");
+        if (response.message === "email is already defined.") {
+            alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+            return;
+        }
+        //thông báo qua email đăng ký thành công
+        const res = await confirmGmail({ email });
+        if (!res) {
+            alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
+            return;
+        }
+        alert("Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
         // setIsPopupOpen(false);
         navigate("/home");
     }
@@ -181,6 +192,13 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
       console.log("Credential token:", token);
       const user = await loginGoogle(token);
       if (user) {
+        // thông báo đăng nhập bằng google thành công
+        const res = await confirmGmail({ email: user.data.email });
+        if (!res) {
+          alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
+          return;
+        }
+        alert("Đăng nhập thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
         console.log("authContext" + user.data);
         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
         navigate("/home");

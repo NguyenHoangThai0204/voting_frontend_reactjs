@@ -18,12 +18,36 @@
   const API_POLL = 'http://localhost:3000/api/poll';
   const API_SSO = "http://localhost:3000/api/auth";
   const API_TheNew = "http://localhost:3000/api/theNew";
-  const API_PRIVATE = "http://localhost:3000/api/private"
+  const API_PRIVATE = "http://localhost:3000/api/private";
+  const API_UPLOAD = "http://localhost:3000/api/upload";
 
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
 
+  export const confirmGmail = async (data: { email: string }): Promise<boolean> => {
+    try {
+      const response = await axios.post(`${API_SSO}/signUpGmail`, data);
+      return response.status === 201;
+    } catch (error) {
+      console.error("Error sending email:", error);
+      return false;
+    }
+  };
+
+  export const uploadImage = async (data: FormData): Promise<string | null> => {
+    try {
+      const response = await axios.post(`${API_UPLOAD}/uploadFile`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data.fileUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
+  };
   // Hàm đăng ký người dùng
   // const {
   //   email,
