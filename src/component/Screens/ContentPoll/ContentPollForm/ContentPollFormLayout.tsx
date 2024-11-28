@@ -9,8 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-// import { createPrivatePoll } from "../../../../api/CallApi"
-import { createPoll, createPrivatePoll, getAICheckContent } from "../../../../api/CallApi"
+import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
+// import { createPoll, createPrivatePoll, getAICheckContent } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
@@ -109,70 +109,81 @@ export const ContentPollFormLayout = () => {
       setLoading(false);
       return;
     }
-    const checkNameVote = await getAICheckContent(nameVote);
-    if (checkNameVote === "NEGATIVE") {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Tên bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        showClass: {
-          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-        },
-        hideClass: {
-          popup: "", // Tắt hiệu ứng biến mất
-        },
 
-      })
-      setLoading(false);
-      return;
-    }
-    const checkDescription = await getAICheckContent(description);
-    if (checkDescription === "NEGATIVE") {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Miêu tả bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        showClass: {
-          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-        },
-        hideClass: {
-          popup: "", // Tắt hiệu ứng biến mất
-        },
 
-      })
-      setLoading(false);
-      return;
-    }
+    // const checkNameVote = await getAICheckContent(nameVote);
+    // if (checkNameVote === "NEGATIVE") {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Tên bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //     timerProgressBar: true,
+    //     showClass: {
+    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+    //     },
+    //     hideClass: {
+    //       popup: "", // Tắt hiệu ứng biến mất
+    //     },
 
-    const checkOptions = await Promise.all(options.map(async (option) => {
-      return await getAICheckContent(option);
-    }
-    ));
-    if (checkOptions.includes("NEGATIVE")) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Các lựa chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        showClass: {
-          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-        },
-        hideClass: {
-          popup: "", // Tắt hiệu ứng biến mất
-        },
+    //   })
+    //   setLoading(false);
+    //   return;
+    // }
+    // const checkDescription = await getAICheckContent(description);
+    // if (checkDescription === "NEGATIVE") {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Miêu tả bình chọn có từ không chuẩn mực đạo đức! Vui lòng nhập lại!',
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //     timerProgressBar: true,
+    //     showClass: {
+    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+    //     },
+    //     hideClass: {
+    //       popup: "", // Tắt hiệu ứng biến mất
+    //     },
 
-      })
-      setLoading(false);
-      return;
-    }
+    //   })
+    //   setLoading(false);
+    //   return;
+    // }
+
+    // const checkOptions = await Promise.all(options.map(async (option, index) => {
+    //   try {
+    //     const result = await getAICheckContent(option);
+    //     return { result, index, option }; // Trả về đối tượng chứa kết quả, vị trí và nội dung
+    //   } catch (error) {
+    //     console.error(`Error at option ${index}:`, option, error);
+    //     return { result: "ERROR", index, option }; // Nếu có lỗi trong quá trình gọi getAICheckContent
+    //   }
+    // }));
+    
+    // // Kiểm tra nếu có bất kỳ lựa chọn nào có "NEGATIVE"
+    // const negativeOption = checkOptions.find(item => item.result === "NEGATIVE");
+    
+    // if (negativeOption) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: `Lựa chọn ở vị trí ${negativeOption.index + 1} không chuẩn mực đạo đức! Nội dung: "${negativeOption.option}"`,
+    //     showConfirmButton: false,
+    //     timer: 2500,
+    //     timerProgressBar: true,
+    //     showClass: {
+    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+    //     },
+    //     hideClass: {
+    //       popup: "", // Tắt hiệu ứng biến mất
+    //     },
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
+    
 
     // const checkDescriptionSelector = await Promise.all(descriptionSelector.map(async (description) => {
     //   return await getAICheckContent(description);

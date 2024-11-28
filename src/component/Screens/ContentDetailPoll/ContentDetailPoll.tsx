@@ -9,6 +9,7 @@ import {
   postVote,
   changeState,
   postVotePrivate,
+  getVoteByUserIdAndPollId
 } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { format } from "date-fns";
@@ -19,33 +20,65 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
 import React from "react";
 import Swal from "sweetalert2";
+import io from "socket.io-client";
+
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
-
   const { id } = useParams();
 
   const [vote, setVote] = useState<Poll | null>(null);
+  const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchVote = async () => {
-      try {
-        if (id) {
-          const response = await getPollById(id);
-          setVote(response.data);
-        } else {
-          console.error("ID is undefined");
+  const fetchVote = async () => {
+    try {
+      if (id) {
+        // Lấy dữ liệu cuộc bình chọn từ server theo ID
+        const response = await getPollById(id);
+        setVote(response.data); // Cập nhật vote
+
+        // Kiểm tra user đã đăng nhập và lấy thông tin vote
+        if (authContext?.user?._id) {
+          const responseVote = await getVoteByUserIdAndPollId({
+            pollId: id,
+            userId: authContext?.user?._id,
+          });
+          if (responseVote.data) {
+            setVotedOptionId(responseVote.data.optionId); // Cập nhật thông tin optionId nếu user đã vote
+          }
         }
-        // setVote(response.data);
-      } catch (error) {
-        console.error("Error fetching vote data:", error);
+      } else {
+        console.error("ID is undefined");
       }
+    } catch (error) {
+      console.error("Error fetching vote data:", error);
+    }
+  };
+
+  // Tạo kết nối với server WebSocket
+  useEffect(() => {
+    // Thiết lập kết nối WebSocket
+    const socket = io("http://localhost:3000", { transports: ["websocket"] });
+
+    // Lắng nghe sự kiện "voteUpdate" từ server
+    socket.on("voteUpdate", () => {
+      fetchVote();  // Cập nhật pollIdSocket từ server
+    });
+
+    // Gọi hàm fetchVote để lấy dữ liệu khi component mount hoặc khi id thay đổi
+    if (!vote) {
+      fetchVote();
+    }
+
+    // Clean up khi component unmount
+    return () => {
+      socket.disconnect();  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
-    fetchVote();
-  }, [id]);
+  }); 
+
 
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
@@ -179,7 +212,7 @@ export const ContentDetailPoll: React.FC = () => {
           return;
         }
 
-        // Thực hiện bình chọn trên smart contract
+        // Thực hiện bình chọn trên smart contract 
         try {
           if (addRessWallet) {
             await changeState({
@@ -263,9 +296,7 @@ export const ContentDetailPoll: React.FC = () => {
               userId: authContext?.user?._id ?? null,
               timestamp: new Date().toISOString(),
             };
-
             await postVotePrivate(dataVote);
-
             Swal.fire({
               icon: "success",
               title: "Thành công",
@@ -325,6 +356,7 @@ export const ContentDetailPoll: React.FC = () => {
         };
 
         try {
+
           await postVote(dataVote);
           Swal.fire({
             icon: "success",
@@ -478,7 +510,8 @@ export const ContentDetailPoll: React.FC = () => {
               style={{
                 marginBottom: "10px",
                 width: "100%",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: select._id === votedOptionId ? "#44fd24" : "#f5f5f5", // Màu nền đỏ nếu id trùng
+                border: select._id === votedOptionId ? "2px solid #44fd24" : "none", // Đường viền đỏ nếu id trùng
               }}
               placeholder={`Choice ${index + 1}`}
               value={select.contentOption || ""}
@@ -503,6 +536,7 @@ export const ContentDetailPoll: React.FC = () => {
                 ),
               }}
             />
+
 
             {showDescriptions[index] && (
               <div className="text_description">

@@ -1,5 +1,5 @@
   import axios from 'axios';
-  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse, ListVotePollidResponse,UserCreate } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
+  import { ListTheNewResponse, TheNew,CreateTheNew, UserResponse,TheNewResponse, ListVotePollidResponse,UserCreate,VoteResultResponse } from '../typeObject'; // Nhập các định nghĩa từ tệp chung
   import { ListVoteResponse } from '../typeObject';
   import { VoteResponse } from '../typeObject';
   import { PollCreate } from '../typeObject';
@@ -124,7 +124,11 @@ export const changeState = async ({ pollIdSm, newState, author }: { pollIdSm: nu
     return response.data;
   };
 
-
+// lấy ra vote từ userid và pollid
+export const getVoteByUserIdAndPollId = async (data: {userId: string, pollId: string}): Promise<VoteResultResponse> => {
+  const response = await axios.post(`${API_VOTE}/find_vote_byuserid_pollid`, data);
+  return response.data;
+}
 
   // Thay đổi kiểu trả về thành `Promise<{ status: string; message: string; data: Vote[] }>`
   export const getAllVoteUser = async (authorId: string): Promise<ListVoteResponse> => {
