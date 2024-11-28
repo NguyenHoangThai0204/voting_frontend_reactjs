@@ -20,11 +20,34 @@
   const API_TheNew = "http://localhost:3000/api/theNew";
   const API_PRIVATE = "http://localhost:3000/api/private"
   const API_AI = "http://localhost:3000/api/ai";
+  const API_UPLOAD_FILE = "http://localhost:3000/api/upload";
 
   // const API_USER = 'http://13.229.71.25:3000/api/user';
   // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
   // const API_POLL = 'http://13.229.71.25:3000/api/poll';
-
+  export const uploadImage = async (file: File): Promise<string | null> => {
+    const formData = new FormData();
+    formData.append("file", file);  // Thêm file vào FormData
+  
+    try {
+      const response = await axios.post(`${API_UPLOAD_FILE}/uploadFile`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',  // Đặt đúng header cho file upload
+        }
+      });
+  
+      if (response.status === 200 && response.data.fileUrl) {
+        // Trả về đường link của ảnh
+        return response.data.fileUrl;
+      } else {
+        console.error("Upload failed", response.data);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
+  };
   export const getAICheckContent = async (text: string): Promise<string> => {
     const response = await axios.post(`${API_AI}/check_content_ai`, { text });
     return response.data.sentiment;
