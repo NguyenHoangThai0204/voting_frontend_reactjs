@@ -28,18 +28,24 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
         console.error("Error fetching author data:", error);
       }
     };
-    
+
     fetchAuthor();
   }, [item.authorId]);
 
+  // Tính thời gian đã qua kể từ khi tạo bình chọn
   const timeSinceCreation = formatDistanceToNow(new Date(item.timeCreate), { addSuffix: true });
+
+  // Kiểm tra xem bình chọn có kết thúc chưa
+  const isPollEnded = new Date(item.timeEnd) < new Date();
+
+  // Nếu đã kết thúc, hiển thị "The end"
+  const displayTime = isPollEnded ? "The end" : timeSinceCreation;
 
   return (
     <div className="item">
-      {/* <Link to="/detail-poll" state={{ id: item._id }}> */}
       <Link to={`/detail-poll/${item._id}`}>
         <div className="image_container">
-        <img src={item.avatar || img} alt="item" />
+          <img src={item.avatar || img} alt="item" />
           <div className="icon_container">
             <i className="fa-solid fa-heart"></i>
           </div>
@@ -47,11 +53,11 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
         <h3>{item.title}</h3>
         <h5>{item.description}</h5>
         <div className="footer_itemvote">
-          <div className="footer_left" >
+          <div className="footer_left">
             {author}
           </div>
           <div className="footer_right">
-            {timeSinceCreation}
+            {displayTime}
           </div>
         </div>
       </Link>

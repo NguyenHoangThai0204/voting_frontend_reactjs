@@ -19,7 +19,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
       {
         icon: <LibraryBooksIcon sx={{ fontSize: 18 }} />,
         name: 'Bài viết',
-        link: '/comment'
+        link: '/thenew'
       }
     ];
     return (

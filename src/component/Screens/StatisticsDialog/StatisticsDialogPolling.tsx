@@ -54,31 +54,38 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
         console.error('Error fetching vote data:', error);
       }
     };
-
+  
     if (pollId && open) {
       fetchVote();
+  
       socket.on('connect', () => {
         console.log('Connected to WebSocket server');
       });
-      
+  
       socket.on('connect_error', (err) => {
         console.log('WebSocket connection error:', err);
       });
-
+  
       socket.on('voteUpdate', (data: { pollId: string, updatedPoll: Poll }) => {
         if (data.pollId === pollId) {
           updatePollData(data.updatedPoll);
         }
       });
-      
+  
       // Play the audio when the dialog is opened
       audio.play();
     }
-
+  
     return () => {
+      // Cleanup listeners and disconnect socket
       socket.off('voteUpdate');
+      if (socket.connected) {
+        socket.disconnect(); // Ensure the WebSocket connection is properly closed
+        console.log('WebSocket disconnected');
+      }
     };
   }, [pollId, open, audio]);
+  
 
   const getRemainingTime = (endTime: string) => {
     const timeLeft = new Date(endTime).getTime() - new Date().getTime();
@@ -109,7 +116,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
 
   return (
     <Dialog open={open} onClose={handleCloseDialog} fullWidth={true} maxWidth="md">
-      <DialogTitle>Live Race Statistics</DialogTitle>
+      <DialogTitle>Thống kê cuộc đua trực tiếp</DialogTitle>
       <DialogContent>
         {poll ? (
           <div>
@@ -123,7 +130,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
                       {animalEmojisState[index]}
                     </div>
                   </div>
-                  <div className="vote-count">{option.votes.length} votes</div>
+                  <div className="vote-count">{option.votes.length} lượt</div>
                 </div>
               );
             })}
@@ -135,11 +142,11 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
       <DialogActions style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ textAlign: "left" }}>
           {remainingTime ? (
-            <p style={{ fontWeight: "bold" }}>Remaining time: {remainingTime}</p>
+            <p style={{ fontWeight: "bold" }}>Thời gian còn lại: {remainingTime}</p>
           ) : null}
         </div>
         <Button onClick={handleCloseDialog} color="primary">
-          Close
+          Đóng
         </Button>
       </DialogActions>
     </Dialog>

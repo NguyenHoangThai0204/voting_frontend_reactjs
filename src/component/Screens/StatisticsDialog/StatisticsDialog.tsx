@@ -111,7 +111,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
         {poll ? (
           <>
             <div>
-              <p><strong>Tiêu đề:</strong> {poll.title}</p>
+              <p><strong>Tên cuộc bình chọn:</strong> {poll.title}</p>
               <p><strong>Mô tả:</strong> {poll.description}</p>
               <p><strong>Thời gian tạo:</strong> {formatDateTime(poll.timeCreate)}</p>
               <p><strong>Thời gian bắt đầu:</strong> {poll.timeStart ? formatDateTime(poll.timeStart) : "N/A"}</p>

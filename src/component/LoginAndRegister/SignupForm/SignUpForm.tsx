@@ -256,7 +256,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
 
       <div className="button">
         <Button variant="text" onClick={onLoginClick}>
-          Login
+          Đăng nhập
         </Button>
       </div>
 

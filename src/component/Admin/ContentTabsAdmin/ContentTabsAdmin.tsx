@@ -113,7 +113,6 @@ export default function ContentTabsAdmin() {
         sx={{width:'50%'}}>
           <Tab label="Quản lí người dùng" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
           <Tab label="Quản lí bài viết" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
-          <Tab label="Tab 3" id="simple-tab-2" aria-controls="simple-tabpanel-2" />
         </Tabs>
         <div style={{width:'50%',}}><InputSearchAdmin currentTab={tabIndex} /></div>
       </Box>
@@ -124,10 +123,6 @@ export default function ContentTabsAdmin() {
         <CustomTabPanel value={tabIndex} index={1}>
           <BookManagement />
         </CustomTabPanel>
-        {/* <CustomTabPanel value={tabIndex} index={2}>
-          <h2>Content for Tab 3</h2>
-          <p>This is the content for the third tab.</p>
-        </CustomTabPanel> */}
       </div>
     </Box>
   );

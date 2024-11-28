@@ -167,11 +167,11 @@ export default function LoginForm({
   };
   return (
     <form action="login">
-      <h2>Login</h2>
+      <h2>Đăng nhập</h2>
       <div className="form_login">
         <TextField
           id="username"
-          label="Username"
+          label="Nhập gmail"
           variant="standard"
           size="small"
           autoComplete="username"
@@ -187,7 +187,7 @@ export default function LoginForm({
         <br />
         <TextField
           id="password"
-          label="Password"
+          label="Nhập mật khẩu"
           type={showPassword ? "text" : "password"}
           variant="standard"
           size="small"
@@ -206,19 +206,19 @@ export default function LoginForm({
       </div>
 
       <div className="forgot">
-        <a href="/forget_password">Forgot Password?</a>
+        <a href="/forget_password">Quên mật khẩu</a>
       </div>
 
       <div className="button">
         <Button variant="contained" color="primary" onClick={handleLogin}>
-          Login
+          Đăng nhập
         </Button>
       </div>
 
       <div className="signup">
-        <p>Don't have an account? </p>
+        <p>Đăng kí ngây nhé? </p>
         <Button variant="text" onClick={onSignUpClick}>
-          Sign up
+          Đăng kí
         </Button>
       </div>
       <div className="forgot_button" style={{display:"flex", justifyContent:"center", marginBottom:"10px"}}>

@@ -26,12 +26,12 @@ export const ContentLayout = () => {
       return <ContentHome />;
     case '/poll':
       return <ContentPollLayout />;
-    case '/comment':
+    case '/thenew':
       return <TheNewLayout />;
     case '/personal-page':
       return <ContentInformation />;
-    case '/setting':
-      return <p>Setting</p>;
+    // case '/setting':
+    //   return <p>Setting</p>;
     case '/create-poll':
       return <ContentPollFormLayout />;
     default:

@@ -28,7 +28,11 @@
   width: 15%;
   font-size: 18px;
   margin: 5px 0;
+  white-space: nowrap;        /* Giữ văn bản trên một dòng */
+  overflow: hidden;          /* Ẩn phần văn bản vượt quá chiều rộng */
+  text-overflow: ellipsis;   /* Hiển thị dấu ba chấm khi văn bản bị cắt */
 }
+
 
 /* Thêm hiệu ứng màu cho phần đã qua */
 .track::before {

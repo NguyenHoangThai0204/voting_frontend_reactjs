@@ -58,13 +58,13 @@ export const ContentHomeVote = () => {
     return (
         <div className="wrapper_votelayout">
             {addRessWallet && <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Với Smartcontract</h2>
+                <h2 style={{margin:"5px 0 10px 0"}}>Cuộc bình chọn nâng cao</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voteSm} />
                 </div>
             </div>}
             {authContext?.user && <div className="content_vote">
-                <h2 >Cuộc bình chọn riêng tư(Không phí)</h2>
+                <h2 >Cuộc bình chọn riêng tư</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={votePrivate} />
                 </div>

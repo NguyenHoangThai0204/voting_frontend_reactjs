@@ -4,6 +4,7 @@ import "./ListStype.css"; // Sửa tên file CSS nếu cần
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Poll } from '../../../../typeObject';
+import { AuthContext } from '../../../../contextapi/AuthContext';
 
 interface ListVotingProps {
   vote: Poll[];
@@ -13,16 +14,20 @@ export const ListPoll: React.FC<ListVotingProps> = ({ vote }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(4); // Giới hạn số mục trên mỗi trang
 
+    const authContext = React.useContext(AuthContext);
+
     // Tính toán mục hiện tại dựa trên trang hiện tại
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = vote.slice(indexOfFirstItem, indexOfLastItem);
 
     const handleClick = (direction: string) => {
-        if (direction === 'next' && indexOfLastItem < vote.length) {
-            setCurrentPage((prev) => prev + 1);
-        } else if (direction === 'prev' && indexOfFirstItem > 0) {
-            setCurrentPage((prev) => prev - 1);
+        if (authContext?.user) { // Kiểm tra nếu người dùng đã đăng nhập
+            if (direction === 'next' && indexOfLastItem < vote.length) {
+                setCurrentPage((prev) => prev + 1);
+            } else if (direction === 'prev' && indexOfFirstItem > 0) {
+                setCurrentPage((prev) => prev - 1);
+            }
         }
     };
 
@@ -45,7 +50,7 @@ export const ListPoll: React.FC<ListVotingProps> = ({ vote }) => {
     }, []);
 
     return (
-        <div style={{ display: 'block'}}>
+        <div style={{ display: 'block' }}>
             <div className='wrapper_list_vote'>
                 {currentItems.map((item) => (
                     <ItemPoll key={item._id} item={item} />

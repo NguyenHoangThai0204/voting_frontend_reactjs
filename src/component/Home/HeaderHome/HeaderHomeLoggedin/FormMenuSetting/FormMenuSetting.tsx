@@ -3,7 +3,7 @@ import "./FormMenuSetting.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../../../contextapi/AuthContext";
 import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
+// import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import Swal from "sweetalert2";
@@ -41,7 +41,7 @@ export function FormMenuSetting() {
   }, [authContext]);
 
   const handleListMenuSetting = async (index: number) => {
-    if (index === 3) { // Log out
+    if (index === 2) { // Log out
       authContext?.logout(); // Gọi hàm logout từ AuthContext
       localStorage.setItem("walletAddress", ""); // Xóa ví khỏi localStorage bằng cách lưu chuỗi rỗng
       authContext?.setWalletAddress(""); // Xóa ví khỏi AuthContext
@@ -84,11 +84,11 @@ export function FormMenuSetting() {
       name: authContext?.walletAddress ? `Connected: ${authContext.walletAddress}` : "Connect wallet", // Sử dụng walletAddress ở đây
       link: "#"
     },
-    {
-      icon: <SettingsIcon sx={{ fontSize: 18 }} />,
-      name: "Setting",
-      link: "/setting"
-    },
+    // {
+    //   icon: <SettingsIcon sx={{ fontSize: 18 }} />,
+    //   name: "Setting",
+    //   link: "/setting"
+    // },
     {
       icon: <LogoutIcon sx={{ fontSize: 18 }} />,
       name: "Log out",
