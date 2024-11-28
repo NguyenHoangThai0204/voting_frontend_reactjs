@@ -5,6 +5,9 @@ import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { confirmGmail, loginGoogle, registerUser } from "../../../api/CallApi"; // Thêm API kiểm tra email
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 
 
@@ -26,7 +29,9 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  
+  const [showPassword, setShowPassword] = useState<boolean>(false); // Trạng thái hiện/ẩn mật khẩu
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); // Trạng thái hiện/ẩn mật khẩu xác nhận
+ 
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -36,6 +41,9 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
 
   const authContext = React.useContext(AuthContext);
   const navigate = useNavigate();
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword((prev) => !prev);
 
   const validateUsername = (name: string): string => {
     if (!name) return "Tên người dùng không được để trống.";
@@ -175,29 +183,48 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             error={!!errors.email}
             helperText={errors.email}
           />
-          <TextField
-          className="inputTextField"
+           <TextField
             id="password"
             label="Mật khẩu"
             fullWidth
             variant="standard"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type={showPassword ? "text" : "password"}
             error={!!errors.password}
             helperText={errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
-          className="inputTextField"
             id="confirm-password"
             label="Nhập lại mật khẩu"
             fullWidth
             variant="standard"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={toggleConfirmPasswordVisibility}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             type="button"
