@@ -14,7 +14,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 //   ConfirmationResult,
 // } from "firebase/auth";
 
-declare global {}
+declare global { }
 
 interface SignUpFormProps {
   onLoginClick: () => void;
@@ -183,6 +183,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
             fullWidth
             variant="standard"
             className="inputTextField"
+            style={{ marginBottom: "8px" }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
@@ -191,7 +192,7 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
           <TextField
             className="inputTextField"
             id="email"
-            label="Email"
+            label="Email" style={{ marginBottom: "8px" }}
             fullWidth
             variant="standard"
             value={email}
@@ -201,7 +202,8 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
           />
           <TextField
             id="password"
-            label="Mật khẩu"
+            label="Mật khẩu" style={{ marginBottom: "8px" }}
+            className="inputTextField"
             fullWidth
             variant="standard"
             value={password}
@@ -221,7 +223,8 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
           />
           <TextField
             id="confirm-password"
-            label="Nhập lại mật khẩu"
+            label="Nhập lại mật khẩu" style={{ marginBottom: "8px" }}
+            className="inputTextField"
             fullWidth
             variant="standard"
             value={confirmPassword}

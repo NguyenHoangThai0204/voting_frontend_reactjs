@@ -112,10 +112,10 @@
   }
 
   .header_home .header_home_content .inputSearch {
-    width: 60%;
+    width: 70%;
     align-items: center;
-    margin-left: -5px;
-    margin-right: 9px;
+    margin-left: 1px;
+    margin-right: 1px;
   }
 
   .header_home .header_home_content .search_results {
@@ -126,5 +126,6 @@
 
   .header_home .header_home_content .formLogin {
     margin-left: 10px;
+    width: 20%;
   }
 }

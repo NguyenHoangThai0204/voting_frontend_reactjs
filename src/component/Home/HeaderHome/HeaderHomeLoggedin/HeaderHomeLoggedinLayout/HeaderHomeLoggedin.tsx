@@ -35,14 +35,12 @@ export const HeaderHomeLoggedin = () => {
           {user?.fullName}
         </div>
         <div className="header__home_icon">
-  <div>
-    {user?.avatar ? (
-      <img src={user?.avatar} alt="avatar" style={{ width: "50px", height: "50px", borderRadius: "50%" , marginLeft:"15px"}} />
-    ) : (
-      <AccountCircleIcon sx={{ fontSize: 40 }} />
-    )}
-  </div>
-</div>
+          {user?.avatar ? (
+            <img src={user?.avatar} />
+          ) : (
+            <AccountCircleIcon sx={{ fontSize: 40 }} />
+          )}
+        </div>
 
         {showMenu && (
           <div className="overlay">

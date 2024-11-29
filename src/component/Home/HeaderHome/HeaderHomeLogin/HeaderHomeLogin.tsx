@@ -31,7 +31,7 @@ export const HeaderHomeLogin = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper_formlogin">
       <div>
         <Button className="but_signup" variant="contained" color="success" size="medium" onClick={handleShowFormSignup}>
           Đăng ký
@@ -39,15 +39,12 @@ export const HeaderHomeLogin = () => {
       </div>
       <div>
         <Button className="but_login" variant="contained" color="success" size="medium" onClick={handleShowForm}>
-          Đăng nhập
+          
         </Button>
       </div>
       {showForm && (
-        <div className="overlay" onClick={handleOverlayClick}> {/* Khi click vào overlay, đóng form */}
-          <div className="form" onClick={handleFormClick}> {/* Ngừng sự kiện click lan rộng */}
-            {/* <div className="close">
-              <CancelIcon onClick={() => setShowForm(false)} style={{ color: 'red', cursor: 'pointer' }} />
-            </div> */}
+        <div className="overlay" onClick={handleOverlayClick}> 
+          <div className="form" onClick={handleFormClick}> 
             <FormLayout 
               formType={formType} 
               onLoginClick={handleShowForm} 

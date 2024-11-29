@@ -1,311 +1,674 @@
-// import React, { useState } from "react";
-// import { TextField, Button } from "@mui/material";
-// import { auth } from "./firebase";
-// import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-// import { loginGoogle } from "../../../api/CallApi"; // Thêm API kiểm tra email
-// import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../../contextapi/AuthContext";
-
+// import "./ContentDetailPoll.css";
+// import TextField from "@mui/material/TextField";
+// import { useState, useEffect } from "react";
+// import { IconButton, InputAdornment } from "@mui/material";
+// import DescriptionIcon from "@mui/icons-material/Description";
 // import {
-//   RecaptchaVerifier,
-//   signInWithPhoneNumber,
-//   ConfirmationResult,
-// } from "firebase/auth";
+//   getPollById,
+//   voteSm,
+//   postVote,
+//   changeState,
+//   postVotePrivate,
+//   getVoteByUserIdAndPollId,
+//   updateTimeEnd,
+//   deletePoll
+// } from "../../../api/CallApi";
+// import { Poll } from "../../../typeObject";
+// import { format } from "date-fns";
+// import AssessmentIcon from "@mui/icons-material/Assessment";
+// import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
+// import StatisticsDialog from "../StatisticsDialog/StatisticsDialog";
+// import { useParams } from "react-router-dom";
+// import { AuthContext } from "../../../contextapi/AuthContext";
+// import React from "react";
+// import Swal from "sweetalert2";
+// import io from "socket.io-client";
+// import { useNavigate } from 'react-router-dom';
 
-// declare global {
-//   interface Window {
-//     recaptchaVerifier: RecaptchaVerifier;
-//     confirmationResult: ConfirmationResult;
-//   }
-// }
 
-// interface SignUpFormProps {
-//   onLoginClick: () => void;
-// }
-
-// export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
-//   const [phone, setPhone] = useState<string>("+84");
-//   const [otp, setOtp] = useState<string>("");
-//   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
-//   const [confirmationResult, setConfirmationResult] =
-//     useState<ConfirmationResult | null>(null);
-
-//   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // Trạng thái mở popup
-//   const [username, setUsername] = useState<string>("");
-//   const [email, setEmail] = useState<string>("");
-//   const [password, setPassword] = useState<string>("");
-//   const [confirmPassword, setConfirmPassword] = useState<string>("");
-//   const [errors, setErrors] = useState({
-//     username: "",
-//     email: "",
-//     password: "",
-//     confirmPassword: "",
-//   });
-
+// export const ContentDetailPoll: React.FC = () => {
+//   const [choices, setChoices] = useState<string[]>([""]);
+//   const [descriptions, setDescriptions] = useState<string[]>([""]);
+//   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
 //   const authContext = React.useContext(AuthContext);
+//   const addRessWallet = authContext?.walletAddress;
+//   const { id } = useParams();
 //   const navigate = useNavigate();
+//   const [vote, setVote] = useState<Poll | null>(null);
+//   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
 
-//   const setUpRecaptcha = () => {
-//     window.recaptchaVerifier = new RecaptchaVerifier(
-//       auth,
-//       "recaptcha-container",
-//       {
-//         size: "invisible",
-//         callback: (response: string) => {
-//           console.log("reCAPTCHA solved:", response);
-//         },
-//         "expired-callback": () => {
-//           console.error("reCAPTCHA expired. Please try again.");
-//         },
-//         defaultCountry: "VN",
-//       }
-//     );
-//   };
-
-//   const handleSendOtp = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!phone.startsWith("+84") || phone.length < 11) {
-//       alert(
-//         "Vui lòng nhập số điện thoại đúng định dạng quốc tế (VD: +84123456789)."
-//       );
-//       return;
-//     }
-
-//     setUpRecaptcha();
-//     const appVerifier = window.recaptchaVerifier;
-
+//   const fetchVote = async () => {
 //     try {
-//       const result = await signInWithPhoneNumber(auth, phone, appVerifier);
-//       setConfirmationResult(result);
-//       window.confirmationResult = result;
-//       setIsOtpSent(true);
-//     } catch (error) {
-//       alert(`Không thể gửi OTP. Chi tiết: ${(error as Error).message}`);
-//     }
-//   };
-
-//   const handleVerifyOtp = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (confirmationResult && otp) {
-//       try {
-//         await confirmationResult.confirm(otp);
-//         alert("Xác minh thành công!");
-//         setIsPopupOpen(true); // Hiện popup sau khi xác thực thành công
-//       } catch (error) {
-//         alert("OTP không chính xác hoặc đã hết hạn.");
-//         console.error("Error verifying OTP:", error);
-//       }
-//     } else {
-//       alert("Vui lòng nhập mã OTP hợp lệ.");
-//     }
-//   };
-
-//   const validateUsername = (name: string): string => {
-//     if (!name) return "Tên người dùng không được để trống.";
-//     const regex = /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯàáâãèéêìíòóôõùúăđĩũơư ]+$/;
-//     if (!regex.test(name))
-//       return "Tên người dùng phải bắt đầu bằng chữ in hoa.";
-//     return "";
-//   };
-
-//   const validateEmail = (email: string): string => {
-//     if (!email) return "Email không được để trống.";
-//     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!regex.test(email)) return "Email không hợp lệ.";
-//     return "";
-//   };
-
-//   const validatePassword = (password: string): string => {
-//     if (!password) return "Mật khẩu không được để trống.";
-//     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-//     if (!regex.test(password))
-//       return "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ và số.";
-//     return "";
-//   };
-
-//   const validateConfirmPassword = (
-//     password: string,
-//     confirmPassword: string
-//   ): string => {
-//     if (!confirmPassword) return "Mật khẩu xác nhận không được để trống.";
-//     if (password !== confirmPassword) return "Mật khẩu xác nhận không khớp.";
-//     return "";
-//   };
-//   const handlePopupSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault(); // Ngăn form gửi đi và tải lại trang
-//     // Kiểm tra lỗi cho từng trường
-//     const usernameError = validateUsername(username);
-//     const emailError = validateEmail(email);
-//     const passwordError = validatePassword(password);
-//     const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
+//       if (id) {
+//         console.log("Fetching vote data for poll ID:", id);
+//         const response = await getPollById(id);
   
-//     // Cập nhật state lỗi
-//     setErrors({
-//       username: usernameError,
-//       email: emailError,
-//       password: passwordError,
-//       confirmPassword: confirmPasswordError,
-//     });
+//         if (!response.data) {
+//           console.warn("Poll not found! Redirecting to '/'...");
+//           navigate('/thenew'); // Chuyển hướng nếu poll không tồn tại
+//           return;
+//         }
   
-//     // Nếu có lỗi, dừng lại và không thực hiện hành động tiếp theo
-//     if (usernameError || emailError || passwordError || confirmPasswordError) {
-//         return;
-//     }
-//     else {
-//         alert("Đăng ký thành công!");
-//         setIsPopupOpen(false);
-//         navigate("/home");
-//     }
-//   };
+//         console.log("Poll data fetched:", response.data);
+//         setVote(response.data);
   
-
-//   // Google login
-//   const handleGoogleLogin = async (response: CredentialResponse) => {
-//     try {
-//       // Lấy idToken từ Google response
-//       const token = response.credential;
-//       if (!token) {
-//         console.error("No idToken found in the response.");
-//         alert("Login failed. Please try again.");
-//         return;
-//       }
-//       console.log("Credential token:", token);
-//       const user = await loginGoogle(token);
-//       if (user) {
-//         console.log("authContext" + user.data);
-//         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
-//         navigate("/home");
+//         // Tiếp tục xử lý khi poll tồn tại
+//         if (authContext?.user?._id) {
+//           console.log("Fetching user's vote for poll ID:", id);
+//           const responseVote = await getVoteByUserIdAndPollId({
+//             pollId: id,
+//             userId: authContext?.user?._id,
+//           });
+//           console.log("User's vote data fetched:", responseVote.data);
+//           if (responseVote.data) {
+//             setVotedOptionId(responseVote.data.optionId);
+//           }
+//         }
 //       } else {
-//         alert("Login failed. Please try again.");
+//         console.error("Poll ID is undefined");
 //       }
 //     } catch (error) {
-//       console.error("Login error:", error);
-//       alert("An error occurred while trying to log in.");
+//       console.error("Error fetching vote data:", error);
+//     }
+//   };
+  
+
+//   // Tạo kết nối với server WebSocket
+//   useEffect(() => {
+//     // Thiết lập kết nối WebSocket
+//     const socket = io("http://localhost:3000", { transports: ["websocket"] });
+
+//     // Lắng nghe sự kiện "voteUpdate" từ server
+//     socket.on("voteUpdate", (updatedVote) => {
+//       if (!updatedVote) {
+//         navigate("/poll"); // Ví dụ: chuyển hướng về trang chủ nếu cuộc bình chọn không còn
+//       } else {
+//         fetchVote();
+//       }
+//     });
+
+//     // Gọi hàm fetchVote để lấy dữ liệu khi component mount hoặc khi id thay đổi
+//     if (!vote) {
+//       fetchVote();
+//     }
+
+//     // Clean up khi component unmount
+//     return () => {
+//       socket.disconnect();  // Đảm bảo đóng kết nối socket khi component bị unmount
+//     };
+//   } , [id, vote, navigate]);
+//   const formattedTimeStart = vote?.timeStart
+//     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
+//     : "";
+//   const formattedTimeEnd = vote?.timeEnd
+//     ? format(new Date(vote.timeEnd), "dd/MM/yyyy HH:mm")
+//     : "";
+
+//   const handleVote = async (
+//     optionId: string,
+//     content: string,
+//     optionsId: number
+//   ) => {
+//     try {
+//       if (!vote) {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Không tìm thấy cuộc bình chọn!",
+//           showConfirmButton: false,
+//           timer: 1500,
+//           timerProgressBar: true,
+//           showClass: {
+//             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//           },
+//           hideClass: {
+//             popup: "", // Tắt hiệu ứng biến mất
+//           },
+//         });
+
+//         return;
+//       }
+
+//       const voteEndDate = vote.timeEnd ? new Date(vote.timeEnd) : null;
+//       const voteStartDate = vote.timeStart ? new Date(vote.timeStart) : null;
+
+//       // Kiểm tra thời gian bình chọn
+//       if (voteStartDate && new Date() < voteStartDate) {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Bình chọn chưa bắt đầu.", showConfirmButton: false,
+//           timer: 1500,
+//           timerProgressBar: true,
+//           showClass: {
+//             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//           },
+//           hideClass: {
+//             popup: "", // Tắt hiệu ứng biến mất
+//           },
+//         });
+
+//         return;
+//       }
+
+//       if (voteEndDate && new Date() > voteEndDate) {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Bình chọn đã kết thúc.", showConfirmButton: false,
+//           timer: 1500,
+//           timerProgressBar: true,
+//           showClass: {
+//             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//           },
+//           hideClass: {
+//             popup: "", // Tắt hiệu ứng biến mất
+//           },
+//         });
+
+//         return;
+//       }
+
+//       // Xác nhận bình chọn
+//       const confirmVote = confirm("Bạn chọn: " + content);
+//       if (!confirmVote) {
+//         Swal.fire({
+//           icon: "info",
+//           title: "Thông tin",
+//           text: "Hủy bỏ bình chọn.", showConfirmButton: false,
+//           timer: 1500,
+//           timerProgressBar: true,
+//           showClass: {
+//             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//           },
+//           hideClass: {
+//             popup: "", // Tắt hiệu ứng biến mất
+//           },
+//         });
+
+//         return;
+//       }
+
+//       // Xử lý bình chọn
+//       if (vote.typeContent === "privatesmc") {
+//         // Kiểm tra ví đã kết nối
+//         if (!authContext?.walletAddress) {
+//           Swal.fire({
+//             icon: "error",
+//             title: "Oops...",
+//             text: "Vui lòng kết nối ví.", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//           return;
+//         }
+
+//         // Kiểm tra `pollIdSm`
+//         if (!vote.pollIdSm) {
+//           Swal.fire({
+//             icon: "error",
+//             title: "Oops...",
+//             text: "Lỗi trong quá trình bình chọn, dữ liệu pollIdSm là null.", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//           return;
+//         }
+
+//         // Thực hiện bình chọn trên smart contract 
+//         try {
+//           if (addRessWallet) {
+//             await changeState({
+//               pollIdSm: Number(vote.pollIdSm),
+//               newState: 1,
+//               author: addRessWallet,
+//             });
+//           } else {
+//             console.error("Wallet address is null or undefined");
+//             Swal.fire({
+//               icon: "error",
+//               title: "Oops...",
+//               text: "Địa chỉ ví không hợp lệ.", showConfirmButton: false,
+//               timer: 1500,
+//               timerProgressBar: true,
+//               showClass: {
+//                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//               },
+//               hideClass: {
+//                 popup: "", // Tắt hiệu ứng biến mất
+//               },
+//             });
+
+//             return;
+//           }
+
+//           // Gửi dữ liệu bình chọn lên backend
+//           const dataVote = {
+//             pollId: vote._id,
+//             optionId: optionId,
+//             transactionHash: null,
+//             userId: authContext?.user?._id ?? null,
+//             timestamp: new Date().toISOString(),
+//           };
+
+//           await postVotePrivate(dataVote);
+//           await voteSm({
+//             pollIdSm: vote.pollIdSm || "",
+//             optionId: optionsId,
+//             author: addRessWallet || "",
+//           });
+
+//           Swal.fire({
+//             icon: "success",
+//             title: "Thành công",
+//             text: "Bình chọn thành công!", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//         } catch (error) {
+//           console.error("Error voting:", error);
+//           Swal.fire({
+//             icon: "error",
+//             title: "Oops...",
+//             text: "Lỗi trong quá trình bình chọn.", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//         }
+//       } else if (vote.typeContent === "private") {
+//         try {
+//           if (authContext?.user) {
+//             const dataVote = {
+//               pollId: vote._id,
+//               optionId: optionId,
+//               transactionHash: null,
+//               userId: authContext?.user?._id ?? null,
+//               timestamp: new Date().toISOString(),
+//             };
+//             await postVotePrivate(dataVote);
+//             Swal.fire({
+//               icon: "success",
+//               title: "Thành công",
+//               text: "Bình chọn thành công!", showConfirmButton: false,
+//               timer: 1500,
+//               timerProgressBar: true,
+//               showClass: {
+//                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//               },
+//               hideClass: {
+//                 popup: "", // Tắt hiệu ứng biến mất
+//               },
+//             });
+//           }
+//           // Gửi dữ liệu bình chọn lên backend
+//           else {
+//             Swal.fire({
+//               icon: "error",
+//               title: "Oops...",
+//               text: "Vui lòng đăng nhập để bình chọn.", showConfirmButton: false,
+//               timer: 1500,
+//               timerProgressBar: true,
+//               showClass: {
+//                 popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//               },
+//               hideClass: {
+//                 popup: "", // Tắt hiệu ứng biến mất
+//               },
+//             });
+
+//             return;
+//           }
+//         } catch (error) {
+//           console.error("Error voting:", error);
+//           Swal.fire({
+//             icon: "error",
+//             title: "Oops...",
+//             text: "Bạn đã chọn trong cuộc bình chọn này rồi.", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+//         }
+//       } else {
+//         // Bình chọn không sử dụng smart contract
+//         const dataVote = {
+//           pollId: vote._id,
+//           optionId: optionId,
+//           transactionHash: null,
+//           userId: authContext?.user?._id || null,
+//           timestamp: new Date().toISOString(),
+//         };
+
+//         try {
+
+//           await postVote(dataVote);
+//           Swal.fire({
+//             icon: "success",
+//             title: "Thành công",
+//             text: "Bình chọn thành công!", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//         } catch (error) {
+//           console.error("Error voting:", error);
+//           Swal.fire({
+//             icon: "error",
+//             title: "Oops...",
+//             text: "Bạn đã chọn trong cuộc bình chọn này rồi.", showConfirmButton: false,
+//             timer: 1500,
+//             timerProgressBar: true,
+//             showClass: {
+//               popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//             },
+//             hideClass: {
+//               popup: "", // Tắt hiệu ứng biến mất
+//             },
+//           });
+
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Error: " + error);
+//       Swal.fire({
+//         icon: "error",
+//         title: "Oops...",
+//         text: "Lỗi trong quá trình bình chọn.",
+//         showConfirmButton: false,
+//         timer: 1500,
+//         showClass: {
+//           popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//         },
+//         hideClass: {
+//           popup: "", // Tắt hiệu ứng biến mất
+//         },
+//       });
+
 //     }
 //   };
 
+//   const handleChoiceChangeContent = (index: number, value: string) => {
+//     const newChoices = [...choices];
+//     newChoices[index] = value;
+//     setChoices(newChoices);
+//   };
+
+//   const handleDescriptionChangeContent = (index: number, value: string) => {
+//     const newDescriptions = [...descriptions];
+//     newDescriptions[index] = value;
+//     setDescriptions(newDescriptions);
+//   };
+
+//   const toggleDescriptionInput = (index: number) => {
+//     const newShowDescriptions = [...showDescriptions];
+//     newShowDescriptions[index] = !newShowDescriptions[index];
+//     setShowDescriptions(newShowDescriptions);
+//   };
+
+//   const [open, setOpen] = useState(false);
+
+//   const handleClickOpen = () => {
+//     setOpen(true); // Mở modal khi nhấn vào icon
+//   };
+
+//   const handleClose = () => {
+//     setOpen(false); // Đóng modal
+//   };
+//   const handleDelete = async (id: string) => {
+//     await deletePoll(id);
+//     navigate("poll");
+//     Swal.fire({
+//       icon: "success",
+//       title: "Thành công",
+//       text: "Cuộc bình chọn đã được xóa thành công!",
+//       showConfirmButton: false,
+//       timer: 1500,
+//       timerProgressBar: true,
+//       showClass: {
+//         popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//       },
+//       hideClass: {
+//         popup: "", // Tắt hiệu ứng biến mất
+//       },
+//     })
+//   };
+  
+  
+//   const handleEndPoll = async (id: string) => {
+//     await updateTimeEnd(id);
+//     navigate("thenew");
+//     Swal.fire({
+//       icon: "success",
+//       title: "Thành công",
+//       text: "Kết thúc cuộc bình chọn thành công!",
+//       showConfirmButton: false,
+//       timer: 1500,
+//       timerProgressBar: true,
+//       showClass: {
+//         popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+//       },
+//       hideClass: {
+//         popup: "", // Tắt hiệu ứng biến mất
+//       },
+//     })
+//     // Sau khi kết thúc thành công, chuyển hướng về trang /poll
+   
+//   };
 //   return (
-//     <form
-//     >
-//       <h2>Đăng Ký</h2>
-//       <div className="form_login">
-//         {!isOtpSent ? (
-//           <>
-//             {/* Nhập số điện thoại */}
-//             <TextField
-//               id="phone"
-//               label="Số điện thoại"
-//               variant="standard"
-//               size="small"
-//               value={phone}
-//               onChange={(e) => {
-//                 let input = e.target.value;
-//                 if (!input.startsWith("+84")) input = "+84";
-//                 if (input.length <= 12) setPhone(input);
-//               }}
-//               inputProps={{ maxLength: 12 }}
-//             />
-//             <div id="recaptcha-container"></div>
-//             <br />
-//             <Button variant="contained" color="primary" type="button" onClick={handleSendOtp}>
-//               Gửi OTP
-//             </Button>
-//           </>
-//         ) : (
-//           <>
-//             {/* Nhập OTP - chỉ hiển thị khi isPopupOpen = false */}
-//             {!isPopupOpen && (
-//               <>
+//     <div className="wrapper_detail_vote">
+//       <h1>Chi tiết cuộc bình chọn</h1>
+
+//       <form>
+//         <div className="header_content_form">
+//           <div className="header_content_detail_right">
+//             <div className="avatar_poll">
+//               <img src={vote?.avatar ?? undefined} alt="upload" />
+//             </div>
+//           </div>
+//           <div className="header_content_detail_left">
+//             <div style={{ display: "flex" }}>
+//               <div style={{ width: "90%" }}>
+//                 <div className="label">Tên cuộc bình chọn:</div>
 //                 <TextField
-//                   id="otp"
-//                   label="Nhập mã OTP"
-//                   variant="standard"
-//                   size="small"
-//                   value={otp}
-//                   onChange={(e) => setOtp(e.target.value)}
+//                   className="text_namevote"
+//                   value={vote?.title || ""}
+//                   inputProps={{ readOnly: true }}
+//                   variant="outlined"
 //                 />
-//                 <br />
-//                 <Button
-//                   variant="contained"
-//                   color="primary"
-//                   type="button"
-//                   onClick={handleVerifyOtp} // Xác minh OTP trước khi mở các trường bổ sung
+//               </div>
+//               <div style={{ margin: "auto" }}>
+//                 <IconButton
+//                   onClick={handleClickOpen}
+//                   aria-label="statistics"
+//                   style={{ transform: "scale(1.5)" }} // Tăng kích thước nút
 //                 >
-//                   Xác minh OTP
-//                 </Button>
-//               </>
-//             )}
-//           </>
-//         )}
-//       </div>
+//                   <AssessmentIcon style={{ fontSize: 50 }} />{" "}
+//                   {/* Tăng kích thước icon */}
+//                 </IconButton>
+//               </div>
 
-//       {/* Các trường bổ sung thông tin người dùng */}
-//       {isPopupOpen && (
-//         <div className="additional-info">
-//           <h3>Thông tin bổ sung</h3>
-//           <TextField
-//             id="username"
-//             label="Tên người dùng"
-//             fullWidth
-//             variant="standard"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
-//             error={!!errors.username}
-//             helperText={errors.username}
-//           />
-//           <TextField
-//             id="email"
-//             label="Email"
-//             fullWidth
-//             variant="standard"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             error={!!errors.email}
-//             helperText={errors.email}
-//           />
-//           <TextField
-//             id="password"
-//             label="Mật khẩu"
-//             fullWidth
-//             variant="standard"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             type="password"
-//             error={!!errors.password}
-//             helperText={errors.password}
-//           />
-//           <TextField
-//             id="confirm-password"
-//             label="Xác nhận mật khẩu"
-//             fullWidth
-//             variant="standard"
-//             value={confirmPassword}
-//             onChange={(e) => setConfirmPassword(e.target.value)}
-//             type="password"
-//             error={!!errors.confirmPassword}
-//             helperText={errors.confirmPassword}
-//           />
-//           <Button
-//             type="button"
-//             variant="contained"
-//             color="primary"
-//             style={{ marginTop: "1rem" }}
-//             onClick={handlePopupSubmit}
-//           >
-//             ĐĂNG KÝ
-//           </Button>
+//               {/* Modal */}
+//               <div>
+//                 {vote?.timeEnd &&
+//                   new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
+//                   <StatisticsDialogPolling
+//                     open={open}
+//                     handleClose={handleClose}
+//                     pollId={vote._id}
+//                   />
+//                 ) : (
+//                   vote?._id && (
+//                     <StatisticsDialog
+//                       open={open}
+//                       handleClose={handleClose}
+//                       pollId={vote._id}
+//                     />
+//                   )
+//                 )}
+//               </div>
+//             </div>
+//             <div className="label">Miêu tả:</div>
+//             <TextField
+//               className="text_namevote"
+//               value={vote?.description || ""}
+//               multiline
+//               rows={4}
+//               inputProps={{ readOnly: true }}
+//               variant="outlined"
+//             />
+//           </div>
 //         </div>
-//       )}
+//         <div className="label">Lựa chọn:</div>
+//         {vote?.options.map((select, index) => (
+//           <div key={index} className="choice-wrapper">
+//             <TextField
+//               className="text_namechoice"
+//               variant="outlined"
+//               style={{
+//                 marginBottom: "10px",
+//                 width: "100%",
+//                 backgroundColor: select._id === votedOptionId ? "#44fd24" : "#f5f5f5", // Màu nền đỏ nếu id trùng
+//                 border: select._id === votedOptionId ? "2px solid #44fd24" : "none", // Đường viền đỏ nếu id trùng
+//               }}
+//               placeholder={`Choice ${index + 1}`}
+//               value={select.contentOption || ""}
+//               onClick={() =>
+//                 handleVote(select._id, select.contentOption, index + 1)
+//               }
+//               onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
+//               InputProps={{
+//                 endAdornment: (
+//                   <InputAdornment position="end">
+//                     <IconButton
+//                       edge="end"
+//                       aria-label="add description"
+//                       onClick={(e) => {
+//                         toggleDescriptionInput(index);
+//                         e.stopPropagation();
+//                       }}
+//                     >
+//                       <DescriptionIcon />
+//                     </IconButton>
+//                   </InputAdornment>
+//                 ),
+//               }}
+//             />
 
-//       <div className="button">
-//         <Button variant="text" onClick={onLoginClick}>
-//           Login
-//         </Button>
-//       </div>
 
-//       <div className="forgot">
-//         <GoogleLogin onSuccess={handleGoogleLogin} />
-//       </div>
-//     </form>
+//             {showDescriptions[index] && (
+//               <div className="text_description">
+//                 <div className="avatar-wrapper-description">
+//                   {/* Avatar */}
+//                   <img
+//                     src={select.avatarContentOption || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
+//                     alt="avatar"
+//                     className="choice-avatar"
+//                   />
+//                 </div>
+//                 <TextField
+//                   className="text_description_field"
+//                   variant="outlined"
+//                   multiline
+//                   style={{ width: "100%", marginBottom: "10px" }}
+//                   value={select?.descriptionContentOption || ""}
+//                   onChange={(e) =>
+//                     handleDescriptionChangeContent(index, e.target.value)
+//                   }
+//                 />
+//               </div>)}
+//           </div>
+//         ))
+//         }
+
+//         <div className="form_date">
+//           <div className="date">
+//             <div className="label">Ngày bắt đầu:</div>
+//             <TextField
+//               type="text"
+//               className="labelField"
+//               value={formattedTimeStart || ""}
+//               variant="outlined"
+//             />
+//           </div>
+//           <div className="date">
+//             <div className="label">Ngày kết thúc:</div>
+//             <TextField
+//               type="text"
+//               className="labelField"
+//               value={formattedTimeEnd || ""}
+//               variant="outlined"
+//             />
+//           </div>
+//           <div className="date">
+//             <div className="label">Kiểu bình chọn:</div>
+//             <TextField
+//               type="text"
+//               className="labelField"
+//               value={vote?.typeContent === "public" ? "Công khai" : vote?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}
+//               variant="outlined"
+//             />
+//           </div>
+//           <div className="button_end">
+//             {authContext?.user?._id === vote?.authorId && vote?.timeEnd && (
+//               // Kiểm tra xem thời gian kết thúc đã qua chưa
+//               new Date(vote?.timeEnd).getTime() < Date.now() ? (
+//                 <button
+//                   onClick={() => handleDelete(vote?._id)}
+//                 >
+//                   Xoá Poll
+//                 </button>
+//               ) : (
+//                 // Nếu chưa hết thời gian, hiển thị nút Kết thúc
+//                 <button
+//                   onClick={() => handleEndPoll(vote?._id)}
+//                 >
+//                   Kết thúc
+//                 </button>
+//               )
+//             )}
+
+//           </div>
+//         </div>
+//       </form>
+//     </div>
 //   );
-// }
+// };

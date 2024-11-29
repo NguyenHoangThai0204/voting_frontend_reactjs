@@ -53,6 +53,18 @@
     const response = await axios.post(`${API_AI}/check_content_ai`, { text });
     return response.data.sentiment;
   }
+// xoá poll 
+export const deletePoll = async (id: string): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_POLL}/delete_poll`, { id });
+    console.log("API response:", response.status); // In mã trạng thái API ra console
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error deleting the document:", error);
+    return false;
+  }
+};
+
 
   // Hàm đăng ký người dùng
   export const registerUser = async (data : UserCreate ): Promise<UserResponse> => {

@@ -8,11 +8,9 @@ import React from "react";
 
 export const ContentHomeVote = () => {
     const authContext = React.useContext(AuthContext);
-    const addRessWallet = authContext?.walletAddress;
 
     const [voting, setVoting] = useState<Poll[]>([]);
     const [voted, setVoted] = useState<Poll[]>([]);
-    const [voteSm, setVoteSm] = useState<Poll[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [votePrivate, setVotePrivate] = useState<Poll[]>([]);
 
@@ -38,13 +36,9 @@ export const ContentHomeVote = () => {
                     !isNaN(Date.parse(vote.timeEnd)) && 
                     Date.parse(vote.timeEnd) < currentTime
                 );
-                const expiredVoteSm = votes.filter(vote => 
-                    vote.typeContent === "privatesmc"
-                );
-
+            
                 setVoting(activeVotes);
                 setVoted(expiredVotes);
-                setVoteSm(expiredVoteSm);
                 setVotePrivate(expiredVotePrivate);
             } catch (error) {
                 console.error('Failed to fetch votes:', error);
@@ -57,12 +51,6 @@ export const ContentHomeVote = () => {
 
     return (
         <div className="wrapper_votelayout">
-            {addRessWallet && <div className="content_vote">
-                <h2 style={{margin:"5px 0 10px 0"}}>Cuộc bình chọn nâng cao</h2>
-                <div className="list_item_vote">
-                    <ListPoll vote={voteSm} />
-                </div>
-            </div>}
             {authContext?.user && <div className="content_vote">
                 <h2 >Cuộc bình chọn riêng tư</h2>
                 <div className="list_item_vote">

@@ -14,6 +14,7 @@ export const ContentPollLayout = () => {
     // Khai báo state với kiểu dữ liệu cụ thể
     const [voting, setVoting] = useState<Poll[]>([]);
     const [voted, setVoted] = useState<Poll[]>([]); 
+    const [voteSM, setVoteSM] = useState<Poll[]>([]); 
     const [canCreatePoll, setCanCreatePoll] = useState<boolean>(true); // Kiểm tra xem có thể tạo bình chọn hay không
     const [errorMessage, setErrorMessage] = useState<string>(''); // State để lưu thông báo lỗi
 
@@ -28,16 +29,34 @@ export const ContentPollLayout = () => {
                     // Lấy trực tiếp mảng `Vote[]` từ `response.data`
                     const votes: Poll[] = Array.isArray(response.data) ? response.data : [];
 
+                    console.log('Votes:', votes); // Log ra tất cả các cuộc bình chọn để kiểm tra dữ liệu
+
                     // Lọc các cuộc bình chọn chưa kết thúc và đã kết thúc
-                    const currentVoting = votes.filter(vote =>
-                        vote.timeEnd && new Date(vote.timeEnd)?.getTime() > new Date().getTime()
-                    );
-                    const votedVotes = votes.filter(vote =>
-                        vote.timeEnd && new Date(vote.timeEnd)?.getTime() <= new Date().getTime()
-                    );
+                    const currentVoting = votes.filter(vote => {
+                        const parsedTimeEnd = new Date(vote.timeEnd);
+                        console.log('TimeEnd:', vote.timeEnd, 'Parsed TimeEnd:', parsedTimeEnd); // Log giá trị `timeEnd`
+                        return vote.typeContent && vote.typeContent !== "privatesmc" && 
+                            !isNaN(parsedTimeEnd.getTime()) && parsedTimeEnd.getTime() > new Date().getTime();
+                    });
+
+                    const votedVotes = votes.filter(vote => {
+                        const parsedTimeEnd = new Date(vote.timeEnd);
+                        console.log('TimeEnd:', vote.timeEnd, 'Parsed TimeEnd:', parsedTimeEnd); // Log giá trị `timeEnd`
+                        return vote.typeContent && vote.typeContent !== "privatesmc" &&
+                            !isNaN(parsedTimeEnd.getTime()) && parsedTimeEnd.getTime() <= new Date().getTime();
+                    });
+
+                    const votedVoteSm = votes.filter(vote => {
+                        return vote.typeContent && vote.typeContent === "privatesmc";
+                    });
+
+                    console.log('Filtered Voting:', currentVoting); // Log mảng `currentVoting` sau khi lọc
+                    console.log('Filtered Voted:', votedVotes); // Log mảng `votedVotes` sau khi lọc
+                    console.log('Filtered VoteSM:', votedVoteSm); // Log mảng `votedVoteSm` sau khi lọc
 
                     setVoting(currentVoting);
                     setVoted(votedVotes);
+                    setVoteSM(votedVoteSm);
 
                     // Kiểm tra số lượng cuộc bình chọn trong tháng này, chỉ kiểm tra nếu không có walletAddress
                     if (!walletAddress) {
@@ -108,8 +127,14 @@ export const ContentPollLayout = () => {
                     <ListPoll vote={voting} />
                 </div>
             </div>
+            {walletAddress && <div className="list_vote">
+                <h2>Danh sách bình chọn nâng cao với smartcontract:</h2>
+                <div className="list_item_vote">
+                    <ListPoll vote={voteSM} />
+                </div>
+            </div>}
             <div className="list_vote">
-                <h2>Danh sách bình đã kết thúc:</h2>
+                <h2>Danh sách bình chọn đã kết thúc:</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voted} />
                 </div>

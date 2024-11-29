@@ -57,7 +57,9 @@ export const ContentPollFormLayout = () => {
       const file = event.target.files[0];
       
       // Gọi hàm uploadImage để upload file
-      const uploadedImageUrl = await uploadImage(file);
+      const formData = new FormData();
+      formData.append('file', file);
+      const uploadedImageUrl = await uploadImage(formData);
       
       if (uploadedImageUrl) {
         setImage(uploadedImageUrl);  // Cập nhật với đường link ảnh đã upload
@@ -336,7 +338,9 @@ export const ContentPollFormLayout = () => {
   
     try {
       // Gọi hàm uploadImage để upload file và lấy URL ảnh đã upload
-      const uploadedImageUrl = await uploadImage(file);
+      const formData = new FormData();
+      formData.append('file', file);
+      const uploadedImageUrl = await uploadImage(formData);
   
       if (uploadedImageUrl) {
         // Cập nhật URL ảnh đã upload vào avatarUrls
