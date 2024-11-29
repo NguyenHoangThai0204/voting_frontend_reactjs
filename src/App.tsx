@@ -26,7 +26,8 @@ function App() {
             throw new Error('Function not implemented.');
           } } onCloseForm={function (): void {
             throw new Error('Function not implemented.');
-          } } />} />
+          } } 
+           />} />
 
         </Routes>
       </BrowserRouter>

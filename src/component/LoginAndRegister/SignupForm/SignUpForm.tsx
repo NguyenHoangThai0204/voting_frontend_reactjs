@@ -56,9 +56,9 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
 
   const validatePassword = (password: string): string => {
     if (!password) return "Mật khẩu không được để trống.";
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!regex.test(password))
-      return "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ và số.";
+      return "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ, số và ký tự đặc biệt.";
     return "";
   };
 
@@ -72,71 +72,64 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
   };
   const handlePopupSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Ngăn form gửi đi và tải lại trang
-    // Kiểm tra lỗi cho từng trường
-    const usernameError = validateUsername(username);
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
-    const confirmPasswordError = validateConfirmPassword(
-      password,
-      confirmPassword
-    );
-
-    // Cập nhật state lỗi
-    setErrors({
-      username: usernameError,
-      email: emailError,
-      password: passwordError,
-      confirmPassword: confirmPasswordError,
-    });
-
-    // Nếu có lỗi, dừng lại và không thực hiện hành động tiếp theo
-    if (usernameError || emailError || passwordError || confirmPasswordError) {
-      return;
-    } else {
+    try {
+      // Kiểm tra lỗi cho từng trường
+      const usernameError = validateUsername(username);
+      const emailError = validateEmail(email);
+      const passwordError = validatePassword(password);
+      const confirmPasswordError = validateConfirmPassword(
+        password,
+        confirmPassword
+      );
+  
+      // Cập nhật state lỗi
+      setErrors({
+        username: usernameError,
+        email: emailError,
+        password: passwordError,
+        confirmPassword: confirmPasswordError,
+      });
+  
+      // Nếu có lỗi, dừng lại và không thực hiện hành động tiếp theo
+      if (usernameError || emailError || passwordError || confirmPasswordError) {
+        return;
+      }
+  
       // Gọi API đăng ký người dùng
       const dataUser = {
         email: email,
         password: password,
         fullName: username,
       };
-      // Gọi API đăng ký người dùng
+  
       const response = await registerUser(dataUser);
-
-      // Kiểm tra phản hồi từ API đăng ký
-      if (!response) {
-        alert("Lỗi hệ thống. Vui lòng thử lại sau.");
-        return;
-      }
-
-      if (
-        response.status === "409"
-      ) {
-        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
-        return;
-      }
-
-      if (response.status === "Err") {
-        alert(`Đăng ký thất bại: ${response.message}`);
-        return;
-      }
-
+      console.log("response", response);
+  
+      // Thông báo thành công
+      if(response.status === 200){
+      alert(
+        "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản."
+      );
       // Nếu đăng ký thành công, gửi email xác nhận
       const res = await confirmGmail({ userMail: email });
-
+  
       // Kiểm tra phản hồi từ API gửi email xác nhận
       if (!res) {
         alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
         return;
       }
-
-      // Thông báo thành công
-      alert(
-        "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản."
-      );
       authContext?.logout(); // Đăng xuất người dùng hiện tại
       navigate("/home"); // Điều hướng sau khi đăng ký thành công
     }
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("An unknown error occurred.");
+      }
+    }
   };
+  
 
   // Google login
   const handleGoogleLogin = async (response: CredentialResponse) => {

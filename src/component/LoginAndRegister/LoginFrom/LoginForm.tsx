@@ -12,12 +12,13 @@ import { loginUser, loginGoogle } from "../../../api/CallApi";
 import Swal from "sweetalert2";
 //Google login
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import React from "react";
 
 export default function LoginForm({
   onSignUpClick,
+  onForgotPasswordClick,
 }: {
   onSignUpClick: () => void;
+  onForgotPasswordClick: () => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -34,7 +35,8 @@ export default function LoginForm({
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Nhập tài khoản và mật khẩu!", showConfirmButton: false,
+        text: "Nhập tài khoản và mật khẩu!",
+        showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
         showClass: {
@@ -59,7 +61,8 @@ export default function LoginForm({
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Tài khoản không còn hoạt động!", showConfirmButton: false,
+            text: "Tài khoản không còn hoạt động!",
+            showConfirmButton: false,
             timer: 1500,
             timerProgressBar: true,
             showClass: {
@@ -69,13 +72,13 @@ export default function LoginForm({
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
-
         }
       } else {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Tài khoản hoặc mật khẩu không đúng!", showConfirmButton: false,
+          text: "Tài khoản hoặc mật khẩu không đúng!",
+          showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
           showClass: {
@@ -91,7 +94,8 @@ export default function LoginForm({
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Lỗi trong quá trình đăng nhập.", showConfirmButton: false,
+        text: "Lỗi trong quá trình đăng nhập.",
+        showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
         showClass: {
@@ -101,7 +105,6 @@ export default function LoginForm({
           popup: "", // Tắt hiệu ứng biến mất
         },
       });
-
     }
   };
   // Google login
@@ -113,7 +116,8 @@ export default function LoginForm({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+          text: "Đăng nhập bị lỗi.",
+          showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
           showClass: {
@@ -136,7 +140,8 @@ export default function LoginForm({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+          text: "Đăng nhập bị lỗi.",
+          showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
           showClass: {
@@ -146,14 +151,14 @@ export default function LoginForm({
             popup: "", // Tắt hiệu ứng biến mất
           },
         });
-
       }
     } catch (error) {
       console.error("Login error:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Đăng nhập bị lỗi.", showConfirmButton: false,
+        text: "Đăng nhập bị lỗi.",
+        showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
         showClass: {
@@ -206,7 +211,16 @@ export default function LoginForm({
       </div>
 
       <div className="forgot">
-        <a href="/forget_password">Quên mật khẩu</a>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            onForgotPasswordClick();
+          }}
+          style={{ textDecoration: "none", color: "blue", cursor: "pointer" }}
+        >
+          Quên mật khẩu?
+        </a>
       </div>
 
       <div className="button">
@@ -216,25 +230,32 @@ export default function LoginForm({
       </div>
 
       <div className="signup">
-        <p>Đăng kí ngây nhé? </p>
+        <p>Đăng kí ngay nhé? </p>
         <Button variant="text" onClick={onSignUpClick}>
           Đăng kí
         </Button>
       </div>
-      <div className="forgot_button" style={{display:"flex", justifyContent:"center", marginBottom:"10px"}}>
-      <GoogleLogin
-  onSuccess={handleGoogleLogin}
-  containerProps={{
-    style: {
-      marginTop: "1.5rem",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      maxWidth: "200px",
-    },
-  }}
-/>
+      <div
+        className="forgot_button"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "10px",
+        }}
+      >
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          containerProps={{
+            style: {
+              marginTop: "1.5rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "200px",
+            },
+          }}
+        />
       </div>
     </form>
   );
