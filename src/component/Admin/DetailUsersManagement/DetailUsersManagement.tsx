@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DetailUserManagement.css';
 import { User, Poll } from '../../../typeObject';
-import { changeStatusUser, changeStatusUserActive , deletePoll} from '../../../api/CallApi';
+import { changeStatusUser, changeStatusUserActive, deletePoll } from '../../../api/CallApi';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -191,23 +191,43 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                         ) : (
                             (pollItem ?? []).map((poll, index) => (
                                 <tr key={poll?._id || index} onClick={() => handleClickOpen(poll)}>
-                                    <td style={{ whiteSpace: "nowrap" }}>{index + 1}</td>
-                                    <td style={{ whiteSpace: "nowrap" }}>{poll?.title || 'N/A'}</td>
                                     <td style={{
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        maxWidth: "200px"
+                                        textOverflow: "ellipsis"
+                                    }}>{index + 1}</td>
+                                    <td style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
+                                    }}>
+                                        {poll?.title || 'N/A'}</td>
+                                        <td style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
                                     }}>
                                         {poll?.description || 'N/A'}
                                     </td>
-                                    <td style={{ whiteSpace: "nowrap" }}>
+                                    <td style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
+                                    }}>
                                         {poll?.timeStart ? format(new Date(poll.timeStart), 'dd/MM/yyyy HH:mm:ss') : 'N/A'}
                                     </td>
-                                    <td style={{ whiteSpace: "nowrap" }}>
+                                    <td style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
+                                    }}>
                                         {poll?.timeEnd ? format(new Date(poll.timeEnd), 'dd/MM/yyyy HH:mm:ss') : 'N/A'}
                                     </td>
-                                    <td style={{ whiteSpace: "nowrap" }}>
+                                    <td style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
+                                    }}>
                                         {poll?.timeEnd ?
                                             // Kiểm tra nếu thời gian kết thúc đã qua
                                             new Date(poll.timeEnd) < new Date() ?

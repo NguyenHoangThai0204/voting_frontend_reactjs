@@ -8,6 +8,7 @@ import {
   ListVotePollidResponse,
   UserCreate,
   VoteResultResponse,
+  ListReultsResponse,
 } from "../typeObject"; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from "../typeObject";
 import { VoteResponse } from "../typeObject";
@@ -33,6 +34,12 @@ const API_AI = "http://localhost:3000/api/ai";
 // const API_USER = 'http://13.229.71.25:3000/api/user';
 // const API_VOTE = 'http://13.229.71.25:3000/api/vote';
 // const API_POLL = 'http://13.229.71.25:3000/api/poll';
+
+// lấy thông tin cuộc bình chọn qua blockchain
+export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReultsResponse> => {
+  const response = await axios.get(`${API_PRIVATE}/getPollResult/${pollId}`);
+  return response.data;
+}
 
 // Hàm cập nhật tài khoản người dùng
 export const updateUser = async (data: UserCreate): Promise<UserResponse> => {

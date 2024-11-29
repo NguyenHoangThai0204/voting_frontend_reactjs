@@ -133,14 +133,16 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
 
   return (
     <div className="forgot-password-form">
-      <h2>Quên mật khẩu</h2>
+     
       {step === "email" && (
         <form
+        
           onSubmit={(e) => {
             e.preventDefault();
             handleSendOTP();
           }}
         >
+         <h2>Quên mật khẩu</h2>
           <div className="form-group">
             <label htmlFor="email">Nhập email của bạn:</label>
             <input

@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { getPollById, getAllVoteByPollid, getInforAuthor } from '../../../api/CallApi';
-import { Poll, Vote } from '../../../typeObject';
+import { getPollById, getAllVoteByPollid, getInforAuthor, getPollResultsBlockChain } from '../../../api/CallApi';
+import { Poll, Vote, ListReultsResponse } from '../../../typeObject';
 
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -23,7 +23,8 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   const [votes, setVotes] = useState<Vote[]>([]);
   const [showVotes, setShowVotes] = useState(false);  // State để kiểm soát hiển thị chi tiết vote
   const [usernames, setUsernames] = useState<Map<string, string>>(new Map()); // State để lưu username theo userId
-
+  const [results, setResults] = useState<ListReultsResponse | null>(null);
+    
   useEffect(() => {
     const fetchVote = async () => {
       try {
@@ -31,9 +32,14 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
         setPoll(pollResponse.data);
         const voteResponse = await getAllVoteByPollid(pollId);
         setVotes(voteResponse.data);
-
-        // Fetch username for each vote.userId
-        const usernameMap = new Map<string, string>(); // Map để lưu tên người dùng
+  
+        if (poll?.typeContent === "privatesmc") {
+          if (poll.pollIdSm) {
+            setResults(await getPollResultsBlockChain(poll.pollIdSm));
+          }
+        }
+  
+        const usernameMap = new Map<string, string>(); 
         for (const vote of voteResponse.data) {
           if (vote.userId && !usernameMap.has(vote.userId)) {
             const userResponse = await getInforAuthor(vote.userId);
@@ -42,18 +48,22 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
             }
           }
         }
-        setUsernames(usernameMap); // Cập nhật state với các username
+        setUsernames(usernameMap);
       } catch (error) {
         console.error("Error fetching vote data:", error);
       }
     };
-
+  
     if (pollId && open) {
       fetchVote();
     }
-  }, [pollId, open]);
+  }); // Mảng phụ thuộc thêm vào pollId và open
+  
 
-  const totalVotes = poll?.options?.reduce((sum, option) => sum + option.votes.length, 0) || 0;
+  // Tính tổng số phiếu bầu từ results hoặc từ votes nếu results rỗng
+  const totalVotes = results && results.results.length > 0
+    ? results.results.reduce((sum, result) => sum + result.voteCount, 0)
+    : votes.length; // Nếu results là rỗng, sử dụng số phiếu trong votes
 
   // Tìm người chiến thắng
   const winner = poll?.options?.reduce((max, option) =>
@@ -73,14 +83,36 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
     datasets: [
       {
         label: 'Số lượng phiếu bầu',
-        data: poll?.options?.map(option => option.votes.length) || [],
+        data: results && results.results.length > 0 
+          ? poll?.options?.map((option, index) => {
+              // Sử dụng index để truy xuất voteCount từ results.results
+              const result = results?.results[index];
+              return result ? result.voteCount : 0;
+            }) || []
+          : poll?.options?.map(option => option.votes.length) || [], // Nếu không có results thì dùng option.votes.length
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
     ],
   };
-
+  
+  // const data = {
+  //   labels: poll?.options?.map(option => option.contentOption) || [],
+  //   datasets: [
+  //     {
+  //       label: 'Số lượng phiếu bầu',
+  //       data: poll?.options?.map((option, index) => {
+  //         // Sử dụng index để truy xuất voteCount từ results.results
+  //         const result = results?.results[index];
+  //         return result ? result.voteCount : 0;
+  //       }) || [],
+  //       backgroundColor: 'rgba(75, 192, 192, 0.6)',
+  //       borderColor: 'rgba(75, 192, 192, 1)',
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
   const options = {
     responsive: true,
     plugins: {
@@ -118,13 +150,6 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
                 <p><strong>Thời gian bắt đầu:</strong> {poll.timeStart ? formatDateTime(poll.timeStart) : "N/A"}</p>
                 <p><strong>Thời gian kết thúc:</strong> {formatDateTime(poll.timeEnd)}</p>
               </div>
-              {/* <div>
-                <img
-                  src={poll.avatar || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
-                  alt="avatar"
-                  className="choice-avatar"
-                />
-              </div> */}
             </div>
 
             {/* Nút để hiển thị/ẩn các phiếu bầu */}
@@ -157,8 +182,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
 
             <div>
               <p><strong>Tổng số lượt tham gia bình chọn: </strong> {totalVotes}</p>
-              <p><strong>Chiến thắng
-                thuộc về: </strong> {winnerContent}</p>
+              <p><strong>Chiến thắng thuộc về: </strong> {winnerContent}</p>
             </div>
           </>
         ) : (

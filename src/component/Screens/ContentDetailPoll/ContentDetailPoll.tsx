@@ -40,16 +40,16 @@ export const ContentDetailPoll: React.FC = () => {
       if (id) {
         console.log("Fetching vote data for poll ID:", id);
         const response = await getPollById(id);
-  
+
         if (!response.data) {
           console.warn("Poll not found! Redirecting to '/'...");
           navigate('/thenew'); // Chuyển hướng nếu poll không tồn tại
           return;
         }
-  
+
         console.log("Poll data fetched:", response.data);
         setVote(response.data);
-  
+
         // Tiếp tục xử lý khi poll tồn tại
         if (authContext?.user?._id) {
           console.log("Fetching user's vote for poll ID:", id);
@@ -69,7 +69,7 @@ export const ContentDetailPoll: React.FC = () => {
       console.error("Error fetching vote data:", error);
     }
   };
-  
+
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
@@ -94,7 +94,7 @@ export const ContentDetailPoll: React.FC = () => {
     return () => {
       socket.disconnect();  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
-  } , [id, vote, navigate]);
+  });
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";
@@ -189,58 +189,82 @@ export const ContentDetailPoll: React.FC = () => {
 
       // Xử lý bình chọn
       if (vote.typeContent === "privatesmc") {
-        // Kiểm tra ví đã kết nối
-        if (!authContext?.walletAddress) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Vui lòng kết nối ví.", showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            showClass: {
-              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-            },
-            hideClass: {
-              popup: "", // Tắt hiệu ứng biến mất
-            },
-          });
-
-          return;
-        }
-
-        // Kiểm tra `pollIdSm`
-        if (!vote.pollIdSm) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Lỗi trong quá trình bình chọn, dữ liệu pollIdSm là null.", showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            showClass: {
-              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-            },
-            hideClass: {
-              popup: "", // Tắt hiệu ứng biến mất
-            },
-          });
-
-          return;
-        }
-
-        // Thực hiện bình chọn trên smart contract 
         try {
-          if (addRessWallet) {
-            await changeState({
-              pollIdSm: Number(vote.pollIdSm),
-              newState: 1,
-              author: addRessWallet,
-            });
-          } else {
-            console.error("Wallet address is null or undefined");
+          if (authContext?.user) {
+            if (authContext?.walletAddress) {
+              await changeState({
+                pollIdSm: Number(vote.pollIdSm),
+                newState: 1,
+                author: addRessWallet || "",
+              });
+              const check = await voteSm({
+                pollIdSm: vote.pollIdSm || "",
+                optionId: optionsId,
+                author: addRessWallet || "",
+              });
+              if (check) {
+                const dataVote = {
+                  pollId: vote._id,
+                  optionId: optionId,
+                  transactionHash: null,
+                  userId: authContext?.user?._id ?? null,
+                  timestamp: new Date().toISOString(),
+                };
+                await postVotePrivate(dataVote);
+                Swal.fire({
+                  icon: "success",
+                  title: "Thành công",
+                  text: "Bình chọn thành công!", showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  showClass: {
+                    popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                  },
+                  hideClass: {
+                    popup: "", // Tắt hiệu ứng biến mất
+                  },
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Tài khoản vì này đã vote.", showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  showClass: {
+                    popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                  },
+                  hideClass: {
+                    popup: "", // Tắt hiệu ứng biến mất
+                  },
+                });
+                return;
+              }
+            }
+            else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Lỗi không lấy PollId của smartcontract.", showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                showClass: {
+                  popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                },
+                hideClass: {
+                  popup: "", // Tắt hiệu ứng biến mất
+                },
+              });
+
+              return;
+            }
+          }
+          // Gửi dữ liệu bình chọn lên backend
+          else {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "Địa chỉ ví không hợp lệ.", showConfirmButton: false,
+              text: "Vui lòng đăng nhập để bình chọn.", showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
               showClass: {
@@ -253,43 +277,12 @@ export const ContentDetailPoll: React.FC = () => {
 
             return;
           }
-
-          // Gửi dữ liệu bình chọn lên backend
-          const dataVote = {
-            pollId: vote._id,
-            optionId: optionId,
-            transactionHash: null,
-            userId: authContext?.user?._id ?? null,
-            timestamp: new Date().toISOString(),
-          };
-
-          await postVotePrivate(dataVote);
-          await voteSm({
-            pollIdSm: vote.pollIdSm || "",
-            optionId: optionsId,
-            author: addRessWallet || "",
-          });
-
-          Swal.fire({
-            icon: "success",
-            title: "Thành công",
-            text: "Bình chọn thành công!", showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            showClass: {
-              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-            },
-            hideClass: {
-              popup: "", // Tắt hiệu ứng biến mất
-            },
-          });
-
         } catch (error) {
           console.error("Error voting:", error);
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Lỗi trong quá trình bình chọn.", showConfirmButton: false,
+            text: "Bạn đã chọn trong cuộc bình chọn này rồi.", showConfirmButton: false,
             timer: 1500,
             timerProgressBar: true,
             showClass: {
@@ -299,7 +292,7 @@ export const ContentDetailPoll: React.FC = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
-
+          return;
         }
       } else if (vote.typeContent === "private") {
         try {
@@ -451,7 +444,7 @@ export const ContentDetailPoll: React.FC = () => {
   const handleClose = () => {
     setOpen(false); // Đóng modal
   };
- 
+
   return (
     <div className="wrapper_detail_vote">
       <h1>Chi tiết cuộc bình chọn</h1>
@@ -606,7 +599,7 @@ export const ContentDetailPoll: React.FC = () => {
               variant="outlined"
             />
           </div>
-          
+
         </div>
       </form>
     </div>

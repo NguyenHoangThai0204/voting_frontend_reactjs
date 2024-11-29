@@ -10,6 +10,7 @@ import { AuthContext } from "../../../contextapi/AuthContext";
 import { useContext } from "react";
 import { loginUser, loginGoogle } from "../../../api/CallApi";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 //Google login
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
@@ -26,7 +27,7 @@ export default function LoginForm({
 
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -56,7 +57,8 @@ export default function LoginForm({
       if (response.message === "Login success") {
         if (response.data.status === "active") {
           authContext?.login(response.data);
-          navigate("/home");
+          const redirectTo = location.state?.from || "/"; // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
+          navigate(redirectTo, { replace: true });
         } else {
           Swal.fire({
             icon: "error",
@@ -135,7 +137,9 @@ export default function LoginForm({
       if (user) {
         console.log("authContext" + user.data);
         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
-        navigate("/home");
+       // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo, { replace: true });
       } else {
         Swal.fire({
           icon: "error",

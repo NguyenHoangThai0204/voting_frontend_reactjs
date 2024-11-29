@@ -292,25 +292,41 @@ export const ContentPollFormLayout = () => {
               contentOption: choice
             })),
           });
-          Swal.fire({
-            icon: 'success',
-            title: 'Tạo bình chọn thành công!',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            showClass: {
-              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-            },
-            hideClass: {
-              popup: "", // Tắt hiệu ứng biến mất
-            },
-          })
-
           if (reponse) {
-            voteData.pollIdSm = reponse || null;
+            Swal.fire({
+              icon: 'success',
+              title: 'Tạo bình chọn thành công!',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            })
+  
+            if (reponse) {
+              voteData.pollIdSm = reponse || null;
+            }
+            await createPoll(voteData);
+            navigate("/poll");
+          }else{
+            Swal.fire({
+              icon: 'success',
+              title: 'Không nhận được poll id!',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            });
           }
-          await createPoll(voteData);
-          navigate("/poll");
         }
         catch (error) {
           console.log(error);

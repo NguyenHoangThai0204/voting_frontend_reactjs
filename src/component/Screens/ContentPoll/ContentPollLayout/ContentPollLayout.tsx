@@ -122,23 +122,23 @@ export const ContentPollLayout = () => {
                         Tạo bình chọn
                     </Link>
                 </div>
-                <div className="list_item_vote">
+                { voting.length > 0 && <div className="list_item_vote">
                     {/* Render danh sách các cuộc vote */}
                     <ListPoll vote={voting} />
-                </div>
+                </div>}
             </div>
-            {walletAddress && <div className="list_vote">
+            {walletAddress && voteSM.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn nâng cao với smartcontract:</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voteSM} />
                 </div>
             </div>}
-            <div className="list_vote">
+            {voted.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn đã kết thúc:</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voted} />
                 </div>
-            </div>
+            </div>}
         </div>
     );
 };

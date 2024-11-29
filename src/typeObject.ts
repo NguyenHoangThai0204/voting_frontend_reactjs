@@ -149,3 +149,14 @@ export interface CreateTheNew{
   thoiGianViet: string| null;
 }
 
+
+
+export interface ListReultsResponse {
+  optionId: number;
+  results: results[];
+}
+
+export interface results{
+  optionId: number;
+  voteCount: number;
+}
