@@ -89,6 +89,7 @@
   background-size: cover;
   object-fit: cover;
   object-position: center;
+  max-height: 300px;
 }
 .wrapper_voteform form .label {
   width: 100%;

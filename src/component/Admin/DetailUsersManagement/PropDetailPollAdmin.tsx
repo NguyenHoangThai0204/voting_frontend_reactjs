@@ -66,7 +66,7 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
 
   return (
     <div className="wrapper_detail_vote">
-      <h1>DETAIL VOTE</h1>
+      <h1>Chi tiết cuộc bình chọn</h1>
 
       <form>
         <div className="header_content_form">
@@ -78,7 +78,7 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
           <div className="header_content_detail_left">
             <div style={{ display: "flex" }}>
               <div style={{ width: "90%" }}>
-                <div className="label">Name vote:</div>
+                <div className="label">Tên cuộc bình chọn:</div>
                 <TextField
                   className="text_namevote"
                   value={poll.title || ''}
@@ -105,7 +105,7 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
                 )}
               </div>
             </div>
-            <div className="label">Description:</div>
+            <div className="label">Miêu tả cuộc bình chọn:</div>
             <TextField
               className="text_namevote"
               value={poll.description || ''}
@@ -116,7 +116,7 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
             />
           </div>
         </div>
-        <div className="label">Choices:</div>
+        <div className="label">Lựa chọn:</div>
         {
           poll.options.map((select, index) => (
             <div key={index} className="choice-wrapper">
@@ -145,33 +145,42 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
                 }}
               />
 
-              {
-                showDescriptions[index] && (
-                  <TextField
-                    className="text_description"
-                    variant="outlined"
-                    multiline
-                    style={{ width: "100%", marginBottom: "10px" }}
-                    value={select?.descriptionContentOption || ''}
-                    onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
+{showDescriptions[index] && (
+              <div className="text_description">
+                <div className="avatar-wrapper-description">
+                  {/* Avatar */}
+                  <img
+                    src={select.avatarContentOption || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
+                    alt="avatar"
+                    className="choice-avatar"
                   />
-                )
-              }
-            </div>
-          ))
+                </div>
+                <TextField
+                  className="text_description_field"
+                  variant="outlined"
+                  multiline
+                  style={{ width: "100%", marginBottom: "10px" }}
+                  value={select?.descriptionContentOption || ""}
+                  onChange={(e) =>
+                    handleDescriptionChangeContent(index, e.target.value)
+                  }
+                />
+              </div>)}
+          </div>
+        ))
         }
 
         <div className="form_date">
           <div className="date">
-            <div className="label">Start date:</div>
+            <div className="label">Ngày bắt đầu:</div>
             <TextField type="text" className="labelField" value={formattedTimeStart || ''} variant="outlined" />
           </div>
           <div className="date">
-            <div className="label">End date:</div>
+            <div className="label">Ngày kết thúc:</div>
             <TextField type="text" className="labelField" value={formattedTimeEnd || ''} variant="outlined" />
           </div>
           <div className="date">
-            <div className="label">Type of vote:</div>
+            <div className="label">Loại bình chọn:</div>
             <TextField type="text" className="labelField" value={poll.typeContent || ''} variant="outlined" />
           </div>
         </div>

@@ -21,6 +21,8 @@ import { AuthContext } from "../../../contextapi/AuthContext";
 import React from "react";
 import Swal from "sweetalert2";
 import io from "socket.io-client";
+import { useNavigate } from 'react-router-dom';
+
 
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
@@ -29,34 +31,45 @@ export const ContentDetailPoll: React.FC = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [vote, setVote] = useState<Poll | null>(null);
   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
 
   const fetchVote = async () => {
     try {
       if (id) {
-        // Lấy dữ liệu cuộc bình chọn từ server theo ID
+        console.log("Fetching vote data for poll ID:", id);
         const response = await getPollById(id);
-        setVote(response.data); // Cập nhật vote
-
-        // Kiểm tra user đã đăng nhập và lấy thông tin vote
+  
+        if (!response.data) {
+          console.warn("Poll not found! Redirecting to '/'...");
+          navigate('/thenew'); // Chuyển hướng nếu poll không tồn tại
+          return;
+        }
+  
+        console.log("Poll data fetched:", response.data);
+        setVote(response.data);
+  
+        // Tiếp tục xử lý khi poll tồn tại
         if (authContext?.user?._id) {
+          console.log("Fetching user's vote for poll ID:", id);
           const responseVote = await getVoteByUserIdAndPollId({
             pollId: id,
             userId: authContext?.user?._id,
           });
+          console.log("User's vote data fetched:", responseVote.data);
           if (responseVote.data) {
-            setVotedOptionId(responseVote.data.optionId); // Cập nhật thông tin optionId nếu user đã vote
+            setVotedOptionId(responseVote.data.optionId);
           }
         }
       } else {
-        console.error("ID is undefined");
+        console.error("Poll ID is undefined");
       }
     } catch (error) {
       console.error("Error fetching vote data:", error);
     }
   };
+  
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
@@ -64,8 +77,12 @@ export const ContentDetailPoll: React.FC = () => {
     const socket = io("http://localhost:3000", { transports: ["websocket"] });
 
     // Lắng nghe sự kiện "voteUpdate" từ server
-    socket.on("voteUpdate", () => {
-      fetchVote();  // Cập nhật pollIdSocket từ server
+    socket.on("voteUpdate", (updatedVote) => {
+      if (!updatedVote) {
+        navigate("/poll"); // Ví dụ: chuyển hướng về trang chủ nếu cuộc bình chọn không còn
+      } else {
+        fetchVote();
+      }
     });
 
     // Gọi hàm fetchVote để lấy dữ liệu khi component mount hoặc khi id thay đổi
@@ -77,9 +94,7 @@ export const ContentDetailPoll: React.FC = () => {
     return () => {
       socket.disconnect();  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
-  }); 
-
-
+  } , [id, vote, navigate]);
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";
@@ -436,7 +451,7 @@ export const ContentDetailPoll: React.FC = () => {
   const handleClose = () => {
     setOpen(false); // Đóng modal
   };
-
+ 
   return (
     <div className="wrapper_detail_vote">
       <h1>Chi tiết cuộc bình chọn</h1>
@@ -587,10 +602,11 @@ export const ContentDetailPoll: React.FC = () => {
             <TextField
               type="text"
               className="labelField"
-              value={vote?.typeContent || ""}
+              value={vote?.typeContent === "public" ? "Công khai" : vote?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}
               variant="outlined"
             />
           </div>
+          
         </div>
       </form>
     </div>

@@ -55,6 +55,8 @@ form .signup p {
   form .form_login #standard-basic {
     font-size: 15px;
   }
+  form .signup p {
+    font-size: 15px;
+  }
 }
 
-/*# sourceMappingURL=LoginForm.css.map */

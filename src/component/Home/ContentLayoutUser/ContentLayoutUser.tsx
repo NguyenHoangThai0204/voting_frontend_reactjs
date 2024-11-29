@@ -10,7 +10,6 @@ import { TheNewLayout } from '../../Screens/CommentsScreen/TheNewLayout';
 
 export const ContentLayout = () => {
   const location = useLocation();
-  // const params = useParams<{ id: string }>();
 
   // Kiểm tra và xử lý tham số
   if (location.pathname.startsWith('/detail-poll/')) {

@@ -54,7 +54,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   }, [pollId, open]);
 
   const totalVotes = poll?.options?.reduce((sum, option) => sum + option.votes.length, 0) || 0;
-  
+
   // Tìm người chiến thắng
   const winner = poll?.options?.reduce((max, option) =>
     option.votes.length > (max.votes.length) ? option : max, poll?.options?.[0] || { votes: [] });
@@ -110,12 +110,21 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
       <DialogContent>
         {poll ? (
           <>
-            <div>
-              <p><strong>Tên cuộc bình chọn:</strong> {poll.title}</p>
-              <p><strong>Mô tả:</strong> {poll.description}</p>
-              <p><strong>Thời gian tạo:</strong> {formatDateTime(poll.timeCreate)}</p>
-              <p><strong>Thời gian bắt đầu:</strong> {poll.timeStart ? formatDateTime(poll.timeStart) : "N/A"}</p>
-              <p><strong>Thời gian kết thúc:</strong> {formatDateTime(poll.timeEnd)}</p>
+            <div style={{display:"flex"}}>
+              <div>
+                <p><strong>Tên cuộc bình chọn:</strong> {poll.title}</p>
+                <p><strong>Mô tả:</strong> {poll.description}</p>
+                <p><strong>Thời gian tạo:</strong> {formatDateTime(poll.timeCreate)}</p>
+                <p><strong>Thời gian bắt đầu:</strong> {poll.timeStart ? formatDateTime(poll.timeStart) : "N/A"}</p>
+                <p><strong>Thời gian kết thúc:</strong> {formatDateTime(poll.timeEnd)}</p>
+              </div>
+              {/* <div>
+                <img
+                  src={poll.avatar || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
+                  alt="avatar"
+                  className="choice-avatar"
+                />
+              </div> */}
             </div>
 
             {/* Nút để hiển thị/ẩn các phiếu bầu */}
@@ -129,7 +138,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
                   const selectedOption = poll?.options?.find(option => option._id === vote.optionId);
                   const username = vote.userId ? usernames.get(vote.userId) : null; // Lấy username từ Map
                   return (
-                    <div key={index} style={{ margin: "10px 0", borderBottom:"1px solid black"}}>
+                    <div key={index} style={{ margin: "10px 0", borderBottom: "1px solid black" }}>
                       <div style={{ display: "flex" }}>
                         <p><strong>Lượt thứ:</strong> {index + 1}</p>
                         <p><strong>Người bình chọn:</strong> {username || "N/A"}</p> {/* Hiển thị username */}
@@ -148,8 +157,8 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
 
             <div>
               <p><strong>Tổng số lượt tham gia bình chọn: </strong> {totalVotes}</p>
-              <p><strong>Chiến thắng 
-              thuộc về: </strong> {winnerContent}</p>
+              <p><strong>Chiến thắng
+                thuộc về: </strong> {winnerContent}</p>
             </div>
           </>
         ) : (

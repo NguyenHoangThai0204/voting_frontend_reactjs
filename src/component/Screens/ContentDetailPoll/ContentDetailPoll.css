@@ -92,6 +92,17 @@
   display: flex;
   align-items: center;
 }
+.wrapper_detail_vote form .form_date .button_end button{
+
+    background-color: #f44336;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+
+}
 .wrapper_detail_vote .text_description{
   display: flex;
   padding: 15px;
@@ -162,6 +173,7 @@
   .wrapper_detail_vote form .form_date .date {
     width: 100%;
     margin: 15px;
+    
   }
   .wrapper_detail_vote form .form_date .date .label {
     width: 30%;
@@ -185,4 +197,10 @@
     max-height: 200px;
     margin: 0 10px 10px 0;
   }
+  .wrapper_detail_vote form .form_date .button_end{
+
+    width: 100%;
+    text-align: end;
+    
+    }
 }
