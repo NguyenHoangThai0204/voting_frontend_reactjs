@@ -9,8 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-import { createPoll, createPrivatePoll } from "../../../../api/CallApi"
-// import { createPoll, createPrivatePoll, getAICheckContent } from "../../../../api/CallApi"
+import { createPoll, createPrivatePoll, uploadImage } from "../../../../api/CallApi"
+// import { createPoll, createPrivatePoll, getAICheckContent,uploadImage } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
@@ -38,22 +38,39 @@ export const ContentPollFormLayout = () => {
 
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(event.target.value);
-    setImage(event.target.value); // Cập nhật hình ảnh với URL mới
+    const newImageUrl = event.target.value;
+    setImageUrl(newImageUrl);
+    setImage(newImageUrl);  // Cập nhật hình ảnh với URL mới
+  
+    // Kiểm tra xem URL có hợp lệ hay không (bạn có thể thêm logic kiểm tra URL ở đây)
+    if (newImageUrl) {
+      console.log('Đường dẫn ảnh đã được nhập:', newImageUrl);
+    } else {
+      console.error('URL không hợp lệ!');
+    }
+  };
+  
+
+  // Hàm xử lý khi người dùng chọn ảnh từ input file
+  const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      
+      // Gọi hàm uploadImage để upload file
+      const uploadedImageUrl = await uploadImage(file);
+      
+      if (uploadedImageUrl) {
+        setImage(uploadedImageUrl);  // Cập nhật với đường link ảnh đã upload
+        setImageUrl(uploadedImageUrl); // Cập nhật URL ảnh
+      } else {
+        console.error('Upload ảnh không thành công');
+      }
+    }
   };
 
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
   };
-
-  const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-    }
-  }
-
   const handleAddChoice = () => {
     setOptions([...options, ""]);
     setDescriptionSelector([...descriptionSelector, ""]);
@@ -233,7 +250,7 @@ export const ContentPollFormLayout = () => {
       options: options.map((choice, index) => ({
         contentOption: choice,
         additonalContentOption: "",
-        avatarContentOption: avatarUrls[index] || "",
+        avatarContentOption: avatarItemUrls[index] || "",
         descriptionContentOption: descriptionSelector[index],
         votes: []
       })),
@@ -307,21 +324,34 @@ export const ContentPollFormLayout = () => {
     setLoading(false); // Khi kết thúc quá trình
   };
 
-  const [avatarUrls, setAvatarUrls] = useState<string[]>([]);
+  const [avatarItemUrls, setAvatarItemUrls] = useState<string[]>([]);
 
-  const handleAvatarChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarItem = async (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Lấy file ảnh từ input
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Cập nhật URL ảnh đã chọn vào avatarUrls
-        const newAvatarUrls = [...avatarUrls];
-        newAvatarUrls[index] = reader.result as string; // Cập nhật URL ảnh cho index tương ứng
-        setAvatarUrls(newAvatarUrls); // Cập nhật trạng thái
-      };
-      reader.readAsDataURL(file); // Đọc file ảnh dưới dạng URL
+  
+    if (!file) {
+      console.error('Không có tệp được chọn!');
+      return;
+    }
+  
+    try {
+      // Gọi hàm uploadImage để upload file và lấy URL ảnh đã upload
+      const uploadedImageUrl = await uploadImage(file);
+  
+      if (uploadedImageUrl) {
+        // Cập nhật URL ảnh đã upload vào avatarUrls
+        const newAvatarUrls = [...avatarItemUrls];
+        newAvatarUrls[index] = uploadedImageUrl; // Cập nhật URL ảnh cho index tương ứng
+        setAvatarItemUrls(newAvatarUrls); // Cập nhật trạng thái
+        console.log(`Avatar cho index ${index} đã được cập nhật thành công với URL: ${uploadedImageUrl}`);
+      } else {
+        console.error('Upload ảnh không thành công');
+      }
+    } catch (error) {
+      console.error('Lỗi khi upload ảnh:', error);
     }
   };
+  
 
 
   return (
@@ -412,7 +442,7 @@ export const ContentPollFormLayout = () => {
                     <div className="avatar-wrapper-description">
                       {/* Avatar */}
                       <img
-                        src={avatarUrls[index] || "https://via.placeholder.com/30"} // Avatar mặc định nếu chưa có
+                        src={avatarItemUrls[index] || "https://via.placeholder.com/30"} // Avatar mặc định nếu chưa có
                         alt="avatar"
                         className="choice-avatar"
                       />
@@ -420,7 +450,7 @@ export const ContentPollFormLayout = () => {
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => handleAvatarChange(index, e)}
+                        onChange={(e) => handleAvatarItem(index, e)}
                         style={{ display: 'none' }}
                         id={`avatar-upload-${index}`}
                       />

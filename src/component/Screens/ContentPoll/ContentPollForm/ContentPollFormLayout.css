@@ -162,6 +162,7 @@
     margin: auto;
     background-size: cover;
     object-fit: cover;
+    max-height: 300px;
     object-position: center;
   }
   .wrapper_voteform form .label {
@@ -180,5 +181,20 @@
   .wrapper_voteform form .form_date .date {
     width: 100%;
     margin-right: 10px;
+  }
+  .wrapper_voteform .text_description{
+    display: flex;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #41B3A2;
+  }
+  .wrapper_voteform .text_description{
+    display: block;
+  }
+  .wrapper_voteform .text_description .avatar-wrapper-description{
+    width: 95%;
+    margin:auto;
+    max-height: 200px;
+    margin: 0 10px 10px 0;
   }
 }

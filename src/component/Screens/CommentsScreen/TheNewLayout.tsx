@@ -6,7 +6,9 @@ import { getAllTheNews, getTheNewById } from '../../../api/CallApi';
 import { Dialog, DialogContent, CircularProgress } from '@mui/material';
 // import { Dialog, DialogTitle, DialogContent, CircularProgress } from '@mui/material';
 import './TheNewPage.css';
+
 import emailjs from '@emailjs/browser';
+
 export const TheNewLayout = () => {
   const itemsPerPage = 5; // Số lượng item trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
