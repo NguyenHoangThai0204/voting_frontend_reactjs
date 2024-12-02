@@ -17,21 +17,21 @@ export const ContentHome = () => {
         </h2>
         <div className="criteria_row">
           <div className="criteria_item">
-            <p className="criteria_title">UY TÍN</p>
+            <p className="criteria_title">Nhanh chống, dễ dàng</p>
             <p className="criteria_description">
-              Nơi Bán Linh Kiện Đẹp Đảm Bảo Uy Tín Với Hơn 10 Năm Kinh Nghiệm.
+            Tạo trong vài phút, dùng ngây không cần đăng nhập.
             </p>
           </div>
           <div className="criteria_item">
-            <p className="criteria_title">CHẤT LƯỢNG</p>
+            <p className="criteria_title">An toàn và bảo mật</p>
             <p className="criteria_description">
-              Các sản phẩm được kiểm tra tiêu chuẩn chất lượng khi được nhập về kho.
+            Sử dụng công nghệ bảo mật hiện đại.
             </p>
           </div>
           <div className="criteria_item">
-            <p className="criteria_title">NHIỆT THÀNH</p>
+            <p className="criteria_title">Thống kê kết quả</p>
             <p className="criteria_description">
-              Đội ngũ nhân viên hỗ trợ nhiệt tình khi xảy ra các vấn đề liên quan.
+            Cung cấp kết quả chi tiết, dễ hiểu về các cuộc bình chọn.
             </p>
           </div>
         </div>
