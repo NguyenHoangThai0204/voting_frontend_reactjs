@@ -308,7 +308,14 @@ export const getAllVoteByPollid = async (
   });
   return response.data;
 };
-
+export const getAllVoteByUserid = async (
+  userId: string
+): Promise<ListVotePollidResponse> => {
+  const response = await axios.post(`${API_VOTE}/find_all_vote_byuserid`, {
+    userId, // Gửi pollId trong body
+  });
+  return response.data;
+};
 export const getAllTheNews = async (): Promise<ListTheNewResponse> => {
   const response = await axios.get(`${API_TheNew}/find_all_the_new`);
   return response.data;

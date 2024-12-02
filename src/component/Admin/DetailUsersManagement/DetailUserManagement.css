@@ -173,6 +173,38 @@ display: none;
 } */
 
 
+.loading-container {
+  position: fixed; /* Giữ loading ở giữa màn hình */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999; /* Hiển thị phía trên tất cả các phần tử khác */
+  background-color: rgba(255, 255, 255, 0.9); /* Làm nền mờ */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Làm mờ toàn bộ trang và ngăn chặn tương tác khi loading */
+.body_detailusermanagement.loading-active {
+  pointer-events: none; /* Ngăn chặn thao tác */
+  opacity: 0.5; /* Làm mờ trang */
+}
+
+
+.form-container {
+  opacity: 0.5; /* Làm mờ form khi đang tải */
+  pointer-events: none; /* Vô hiệu hóa tương tác khi loading */
+  filter: blur(2px); /* Làm mờ thêm nếu cần */
+  transition: opacity 0.3s ease, filter 0.3s ease; /* Hiệu ứng mờ dần */
+}
 .body_detailusermanagement {
   flex: 1; /* Đảm bảo nội dung chiếm toàn bộ không gian giữa header và footer */
   border: 1px solid #d9d9d9;
@@ -215,7 +247,14 @@ display: none;
   flex-grow: 1; /* Chiếm phần còn lại */
   margin: auto;
 }
-
+.body_detailusermanagement .container .containRight table tbody .row td label{
+  font-weight: 300;
+  font-size: 20px;
+}
+.body_detailusermanagement .container .containRight table tbody .row td span{
+  font-weight: 600;
+  font-size: 20px;
+}
 .body_detailusermanagement .listPoll table {
   width: 100%;
   table-layout: fixed; /* Đảm bảo các cột có chiều rộng đồng đều */

@@ -66,7 +66,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
         console.log('WebSocket connection error:', err);
       });
   
-      socket.on('voteUpdate', (data: { pollId: string, updatedPoll: Poll }) => {
+      socket.on('voteUpdateSL', (data: { pollId: string, updatedPoll: Poll }) => {
         if (data.pollId === pollId) {
           updatePollData(data.updatedPoll);
         }
@@ -78,11 +78,7 @@ const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handle
   
     return () => {
       // Cleanup listeners and disconnect socket
-      socket.off('voteUpdate');
-      if (socket.connected) {
-        socket.disconnect(); // Ensure the WebSocket connection is properly closed
-        console.log('WebSocket disconnected');
-      }
+      socket.off('voteUpdateSL');
     };
   }, [pollId, open, audio]);
   

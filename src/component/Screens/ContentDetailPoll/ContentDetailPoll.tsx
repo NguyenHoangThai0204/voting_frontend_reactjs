@@ -40,24 +40,17 @@ export const ContentDetailPoll: React.FC = () => {
       if (id) {
         console.log("Fetching vote data for poll ID:", id);
         const response = await getPollById(id);
-
-        if (!response.data) {
-          console.warn("Poll not found! Redirecting to '/'...");
-          navigate('/thenew'); // Chuyển hướng nếu poll không tồn tại
-          return;
-        }
-
-        console.log("Poll data fetched:", response.data);
+        console.log("Vote data fetched:", response.data);
         setVote(response.data);
 
-        // Tiếp tục xử lý khi poll tồn tại
         if (authContext?.user?._id) {
-          console.log("Fetching user's vote for poll ID:", id);
+          
           const responseVote = await getVoteByUserIdAndPollId({
             pollId: id,
             userId: authContext?.user?._id,
           });
-          console.log("User's vote data fetched:", responseVote.data);
+          
+          
           if (responseVote.data) {
             setVotedOptionId(responseVote.data.optionId);
           }
@@ -77,7 +70,7 @@ export const ContentDetailPoll: React.FC = () => {
     const socket = io("http://localhost:3000", { transports: ["websocket"] });
 
     // Lắng nghe sự kiện "voteUpdate" từ server
-    socket.on("voteUpdate", (updatedVote) => {
+    socket.on("voteUpdateSL", (updatedVote) => {
       if (!updatedVote) {
         navigate("/poll"); // Ví dụ: chuyển hướng về trang chủ nếu cuộc bình chọn không còn
       } else {
@@ -92,7 +85,7 @@ export const ContentDetailPoll: React.FC = () => {
 
     // Clean up khi component unmount
     return () => {
-      socket.disconnect();  // Đảm bảo đóng kết nối socket khi component bị unmount
+      socket.off("voteUpdateSL")  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
   });
   const formattedTimeStart = vote?.timeStart
@@ -206,7 +199,7 @@ export const ContentDetailPoll: React.FC = () => {
                 const dataVote = {
                   pollId: vote._id,
                   optionId: optionId,
-                  transactionHash: null,
+                  transactionHash: Number(vote.pollIdSm),
                   userId: authContext?.user?._id ?? null,
                   timestamp: new Date().toISOString(),
                 };
@@ -300,7 +293,7 @@ export const ContentDetailPoll: React.FC = () => {
             const dataVote = {
               pollId: vote._id,
               optionId: optionId,
-              transactionHash: null,
+              transactionHash: 0,
               userId: authContext?.user?._id ?? null,
               timestamp: new Date().toISOString(),
             };
@@ -358,13 +351,13 @@ export const ContentDetailPoll: React.FC = () => {
         const dataVote = {
           pollId: vote._id,
           optionId: optionId,
-          transactionHash: null,
+          transactionHash: 0,  // Gán chuỗi rỗng
           userId: authContext?.user?._id || null,
           timestamp: new Date().toISOString(),
         };
+        
 
         try {
-
           await postVote(dataVote);
           Swal.fire({
             icon: "success",

@@ -3,7 +3,9 @@ import { ListPoll } from "../../ContentListPoll/ListPoll/ListPoll";
 import './ContentPollLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
-import { getAllVoteUser } from '../../../../api/CallApi';
+// import { getAllVoteUser, getAllVoteByUserid, getPollById } from '../../../../api/CallApi';
+import { getAllVoteUser} from '../../../../api/CallApi';
+
 import { Poll } from '../../../../typeObject';
 import Swal from 'sweetalert2';  // Import SweetAlert2
 
@@ -12,11 +14,16 @@ export const ContentPollLayout = () => {
     const { user, walletAddress } = authContext!; // Lấy thêm walletAddress từ AuthContext
 
     // Khai báo state với kiểu dữ liệu cụ thể
-    const [voting, setVoting] = useState<Poll[]>([]);
-    const [voted, setVoted] = useState<Poll[]>([]); 
-    const [voteSM, setVoteSM] = useState<Poll[]>([]); 
+    const [polling, setPolling] = useState<Poll[]>([]);
+    const [polled, setPolled] = useState<Poll[]>([]);
+    const [pollSM, setPollSM] = useState<Poll[]>([]);
+    //eslint-disable-next-line
+    const [pollPollJoined, setPollPollJoined] = useState<Poll[]>([]);
     const [canCreatePoll, setCanCreatePoll] = useState<boolean>(true); // Kiểm tra xem có thể tạo bình chọn hay không
     const [errorMessage, setErrorMessage] = useState<string>(''); // State để lưu thông báo lỗi
+
+    //eslint-disable-next-line
+    const [listPollid, setListPollid] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchVotes = async () => {
@@ -28,20 +35,15 @@ export const ContentPollLayout = () => {
 
                     // Lấy trực tiếp mảng `Vote[]` từ `response.data`
                     const votes: Poll[] = Array.isArray(response.data) ? response.data : [];
-
-                    console.log('Votes:', votes); // Log ra tất cả các cuộc bình chọn để kiểm tra dữ liệu
-
                     // Lọc các cuộc bình chọn chưa kết thúc và đã kết thúc
                     const currentVoting = votes.filter(vote => {
                         const parsedTimeEnd = new Date(vote.timeEnd);
-                        console.log('TimeEnd:', vote.timeEnd, 'Parsed TimeEnd:', parsedTimeEnd); // Log giá trị `timeEnd`
-                        return vote.typeContent && vote.typeContent !== "privatesmc" && 
+                        return vote.typeContent && vote.typeContent !== "privatesmc" &&
                             !isNaN(parsedTimeEnd.getTime()) && parsedTimeEnd.getTime() > new Date().getTime();
                     });
 
                     const votedVotes = votes.filter(vote => {
                         const parsedTimeEnd = new Date(vote.timeEnd);
-                        console.log('TimeEnd:', vote.timeEnd, 'Parsed TimeEnd:', parsedTimeEnd); // Log giá trị `timeEnd`
                         return vote.typeContent && vote.typeContent !== "privatesmc" &&
                             !isNaN(parsedTimeEnd.getTime()) && parsedTimeEnd.getTime() <= new Date().getTime();
                     });
@@ -49,14 +51,9 @@ export const ContentPollLayout = () => {
                     const votedVoteSm = votes.filter(vote => {
                         return vote.typeContent && vote.typeContent === "privatesmc";
                     });
-
-                    console.log('Filtered Voting:', currentVoting); // Log mảng `currentVoting` sau khi lọc
-                    console.log('Filtered Voted:', votedVotes); // Log mảng `votedVotes` sau khi lọc
-                    console.log('Filtered VoteSM:', votedVoteSm); // Log mảng `votedVoteSm` sau khi lọc
-
-                    setVoting(currentVoting);
-                    setVoted(votedVotes);
-                    setVoteSM(votedVoteSm);
+                    setPolling(currentVoting);
+                    setPolled(votedVotes);
+                    setPollSM(votedVoteSm);
 
                     // Kiểm tra số lượng cuộc bình chọn trong tháng này, chỉ kiểm tra nếu không có walletAddress
                     if (!walletAddress) {
@@ -79,7 +76,23 @@ export const ContentPollLayout = () => {
                         setCanCreatePoll(true);
                         setErrorMessage('');
                     }
+                    // const response1 = await getAllVoteByUserid(user._id.toString());
+                    // // Lấy các pollId hợp lệ từ response1.data, lọc null và chắc chắn chỉ còn các chuỗi
+                    // const pollIds = Array.isArray(response1.data)
+                    //     ? response1.data
+                    //         .map(vote => vote.pollId)
+                    //         // .filter(id => typeof  id !== '') // Lọc null và các chuỗi rỗng
+                    //     : [];
 
+                    // // Đảm bảo kiểu dữ liệu là string[] khi gán cho setListPollid
+                    // setListPollid(pollIds as string[]);  // Ép kiểu thành string[]
+
+                    // console.log("list poll joined", listPollid);
+
+                    // listPollid.forEach(async (pollId) => {
+                    //     setPollPollJoined([...pollPollJoined, (await getPollById(pollId)).data]);
+                    // });
+                    // console.log("poll joined", pollPollJoined);
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);
                 }
@@ -87,13 +100,13 @@ export const ContentPollLayout = () => {
         };
 
         fetchVotes();
-    }, [user, walletAddress]); // Thêm walletAddress vào dependency để theo dõi sự thay đổi
+    }); // Thêm walletAddress vào dependency để theo dõi sự thay đổi
 
     // Hàm xử lý khi người dùng click vào nút "Tạo bình chọn"
     const handleCreatePollClick = (event: React.MouseEvent) => {
         if (!canCreatePoll) {
             event.preventDefault(); // Ngừng hành động mặc định nếu không thể tạo bình chọn
-            
+
             // Hiển thị thông báo lỗi bằng SweetAlert2
             Swal.fire({
                 icon: 'error',
@@ -110,33 +123,38 @@ export const ContentPollLayout = () => {
                 {/* Nội dung khác của bạn */}
             </div>
             <div className="list_vote">
-                <div className="list_vote_header">
-                    <h2>Danh sách bình chọn đang diễn ra:</h2>
-                    {/* Nếu có thể tạo bình chọn thì hiển thị nút, nếu không thì vô hiệu hóa */}
-                    <Link 
-                        to="/create-poll" 
-                        state={{ authorId: user?._id }} 
-                        className="create_vote_button" 
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                    <Link
+                        to="/create-poll"
+                        state={{ authorId: user?._id }}
+                        className="create_vote_button"
                         onClick={handleCreatePollClick} // Gọi hàm xử lý khi click
                     >
                         Tạo bình chọn
                     </Link>
                 </div>
-                { voting.length > 0 && <div className="list_item_vote">
-                    {/* Render danh sách các cuộc vote */}
-                    <ListPoll vote={voting} />
+
+                {polling.length > 0 && <div className="list_item_vote">
+                    <h2>Danh sách bình chọn đang diễn ra:</h2>
+                    <ListPoll vote={polling} />
                 </div>}
             </div>
-            {walletAddress && voteSM.length > 0 && <div className="list_vote">
+            {walletAddress && pollSM.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn nâng cao với smartcontract:</h2>
                 <div className="list_item_vote">
-                    <ListPoll vote={voteSM} />
+                    <ListPoll vote={pollSM} />
                 </div>
             </div>}
-            {voted.length > 0 && <div className="list_vote">
+            {/* {pollPollJoined.length > 0 && <div className="list_vote">
+                <h2>Danh sách bình chọn đã tham gia:</h2>
+                <div className="list_item_vote">
+                    <ListPoll vote={pollPollJoined} />
+                </div>
+            </div>} */}
+            {polled.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn đã kết thúc:</h2>
                 <div className="list_item_vote">
-                    <ListPoll vote={voted} />
+                    <ListPoll vote={polled} />
                 </div>
             </div>}
         </div>

@@ -117,19 +117,20 @@ descriptionContentOption: string;
 votes: Vote[];
 }
 export interface Vote {
-  pollId: string | null;  
-  optionId: string;  
-  userId: string | null;  
+  pollId: string | null;
+  optionId: string;
+  userId: string | null;
   timestamp: string;
-  transactionHash: string | null;  
+  transactionHash: number;
 }
+
 export interface VoteResult {
   _id: string;
   pollId: string | null;  
   optionId: string;  
   userId: string | null;  
   timestamp: string;
-  transactionHash: string | null;  
+  transactionHash: number; 
 }
 export interface TheNew{
   tenBaiViet: string;
