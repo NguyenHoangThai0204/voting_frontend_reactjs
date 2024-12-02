@@ -9,7 +9,7 @@ import { Poll } from '../../../../typeObject';
 import { getAllVotes } from '../../../../api/CallApi';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import React from 'react';
-import imgicon from 'src/assets/logo-m-t.jpg';
+import imgicon from '../../../../assets/logo-m-t.jpg';
 
 export const HeaderHomeLayout: React.FC = () => {
   const authContext = useContext(AuthContext);
