@@ -6,13 +6,15 @@ import { Poll } from "../../../../typeObject";
 import { useEffect, useState } from "react";
 import { getInforAuthor } from "../../../../api/CallApi";
 import { formatDistanceToNow } from 'date-fns';
-
+import { AuthContext } from "../../../../contextapi/AuthContext";
 interface ItemPollProps {
   item: Poll;
 }
-
+import { useLocation } from "react-router-dom";
 export const ItemPoll = ({ item }: ItemPollProps) => {
   const [author, setAuthor] = useState<string | undefined>('');
+  const authContext = React.useContext(AuthContext);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchAuthor = async () => {
@@ -54,7 +56,14 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
         <h5>{item.description}</h5>
         <div className="footer_itemvote">
           <div className="footer_left">
-            {author}
+            {
+              authContext?.user && location.pathname.startsWith('/poll') ? (
+               <> {item?.typeContent === "public" ? "Công khai" : item?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}</>
+              ) : (
+                
+                <>{author}</>
+              )
+            }
           </div>
           <div className="footer_right">
             {displayTime}

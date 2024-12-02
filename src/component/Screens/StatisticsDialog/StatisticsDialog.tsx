@@ -24,26 +24,34 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   const [showVotes, setShowVotes] = useState(false);  // State để kiểm soát hiển thị chi tiết vote
   const [usernames, setUsernames] = useState<Map<string, string>>(new Map()); // State để lưu username theo userId
   const [results, setResults] = useState<ListReultsResponse | null>(null);
-    
+
   useEffect(() => {
+    if (!pollId || !open) return; // Kiểm tra nếu không có pollId hoặc dialog không mở thì không làm gì
+
     const fetchVote = async () => {
       try {
-        const pollResponse = await getPollById(pollId);
-        setPoll(pollResponse.data);
-        const voteResponse = await getAllVoteByPollid(pollId);
-        setVotes(voteResponse.data);
-  
-        if (poll?.typeContent === "privatesmc") {
-          if (poll.pollIdSm) {
-            setResults(await getPollResultsBlockChain(poll.pollIdSm));
+        // Chỉ gọi API nếu poll chưa được tải
+        if (!poll) {
+          const pollResponse = await getPollById(pollId);
+          setPoll(pollResponse.data);
+
+          // Nếu là loại "privatesmc", gọi API blockchain để lấy kết quả
+          if (pollResponse.data.typeContent === "privatesmc" && pollResponse.data.pollIdSm) {
+            const resultsResponse = await getPollResultsBlockChain(pollResponse.data.pollIdSm);
+            setResults(resultsResponse);
           }
         }
-  
-        const usernameMap = new Map<string, string>(); 
+
+        // Lấy dữ liệu votes
+        const voteResponse = await getAllVoteByPollid(pollId);
+        setVotes(voteResponse.data);
+
+        // Xây dựng map userId -> username
+        const usernameMap = new Map<string, string>();
         for (const vote of voteResponse.data) {
           if (vote.userId && !usernameMap.has(vote.userId)) {
             const userResponse = await getInforAuthor(vote.userId);
-            if (userResponse.data && userResponse.data.fullName) {
+            if (userResponse.data?.fullName) {
               usernameMap.set(vote.userId, userResponse.data.fullName);
             }
           }
@@ -53,12 +61,10 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
         console.error("Error fetching vote data:", error);
       }
     };
-  
-    if (pollId && open) {
-      fetchVote();
-    }
-  }); // Mảng phụ thuộc thêm vào pollId và open
-  
+
+    fetchVote();
+  }, [pollId, open]); // useEffect chỉ kích hoạt khi pollId hoặc open thay đổi
+  // Cập nhật lại khi pollId hoặc open thay đổi và poll chưa được tải
 
   // Tính tổng số phiếu bầu từ results hoặc từ votes nếu results rỗng
   const totalVotes = results && results.results.length > 0
@@ -83,12 +89,11 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
     datasets: [
       {
         label: 'Số lượng phiếu bầu',
-        data: results && results.results.length > 0 
+        data: results && results.results.length > 0
           ? poll?.options?.map((option, index) => {
-              // Sử dụng index để truy xuất voteCount từ results.results
-              const result = results?.results[index];
-              return result ? result.voteCount : 0;
-            }) || []
+            const result = results?.results[index];
+            return result ? result.voteCount : 0;
+          }) || []
           : poll?.options?.map(option => option.votes.length) || [], // Nếu không có results thì dùng option.votes.length
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -96,23 +101,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
       },
     ],
   };
-  
-  // const data = {
-  //   labels: poll?.options?.map(option => option.contentOption) || [],
-  //   datasets: [
-  //     {
-  //       label: 'Số lượng phiếu bầu',
-  //       data: poll?.options?.map((option, index) => {
-  //         // Sử dụng index để truy xuất voteCount từ results.results
-  //         const result = results?.results[index];
-  //         return result ? result.voteCount : 0;
-  //       }) || [],
-  //       backgroundColor: 'rgba(75, 192, 192, 0.6)',
-  //       borderColor: 'rgba(75, 192, 192, 1)',
-  //       borderWidth: 1,
-  //     },
-  //   ],
-  // };
+
   const options = {
     responsive: true,
     plugins: {
@@ -142,7 +131,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
       <DialogContent>
         {poll ? (
           <>
-            <div style={{display:"flex"}}>
+            <div style={{ display: "flex" }}>
               <div>
                 <p><strong>Tên cuộc bình chọn:</strong> {poll.title}</p>
                 <p><strong>Mô tả:</strong> {poll.description}</p>
@@ -153,10 +142,13 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
             </div>
 
             {/* Nút để hiển thị/ẩn các phiếu bầu */}
-            <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
+            {(poll.typeContent !== "privatesmc") && <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
               {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
             </Button>
-
+            }
+            {/* <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
+              {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
+            </Button> */}
             {showVotes && (
               <div>
                 {votes.length > 0 ? votes.map((vote, index) => {

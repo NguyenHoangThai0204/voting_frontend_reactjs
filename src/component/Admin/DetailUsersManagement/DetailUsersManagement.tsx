@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { format, formatDistanceToNow } from 'date-fns';
 import StatisticsDialog from "../../Screens/StatisticsDialog/StatisticsDialog";
 
+
 interface Props {
     userItem: User | undefined;
     pollItem: Poll[] | undefined;
@@ -66,6 +67,8 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             console.error("Error activating user data:", error);
         }
     };
+
+
 
     const handleClose = () => {
         setOpen(false);
@@ -202,7 +205,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                         textOverflow: "ellipsis"
                                     }}>
                                         {poll?.title || 'N/A'}</td>
-                                        <td style={{
+                                    <td style={{
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis"

@@ -9,6 +9,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import StatisticsDialogPolling from "../../Screens/StatisticsDialog/StatisticsDialogPolling";
 import StatisticsDialog from "../../Screens/StatisticsDialog/StatisticsDialog";
 import {updateTimeEnd} from "../../../api/CallApi";
+import Swal from "sweetalert2";
 
 interface PropDetailPollAdminProps {
   poll: Poll; // Nhận prop poll
@@ -28,7 +29,12 @@ export const PropDetailPollAdmin: React.FC<PropDetailPollAdminProps> = ({ poll }
       const confirmUpdate = confirm('Are you sure you want to update time end?');
       if (confirmUpdate) {
         await updateTimeEnd(poll._id || '');
-        alert('Update time end successfully');
+        Swal.fire({
+          icon: 'success',
+          title: 'Kết thúc cuộc bình chọn thành công!',
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
 
     } catch (error) {

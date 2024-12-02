@@ -8,12 +8,13 @@ import React from "react";
 
 export const ContentHomeVote = () => {
     const authContext = React.useContext(AuthContext);
-    const { walletAddress } = authContext!;
+    // const { walletAddress } = authContext!;
 
     const [voting, setVoting] = useState<Poll[]>([]);
     const [voted, setVoted] = useState<Poll[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [votePrivate, setVotePrivate] = useState<Poll[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [votePrivatSm, setVotePrivateSm] = useState<Poll[]>([]);
 
     useEffect(() => {
@@ -57,7 +58,7 @@ export const ContentHomeVote = () => {
 
     return (
         <div className="wrapper_votelayout">
-            {
+            {/* {
                 walletAddress && votePrivatSm.length > 0 && <div className="content_vote">
                     <h2 >Cuộc bình chọn nâng cao</h2>
                     <div className="list_item_vote">
@@ -65,7 +66,7 @@ export const ContentHomeVote = () => {
                     </div>
                 </div>
 
-            }
+            } */}
             {authContext?.user && votePrivate.length > 0 && <div className="content_vote">
                 <h2 >Cuộc bình chọn riêng tư</h2>
                 <div className="list_item_vote">

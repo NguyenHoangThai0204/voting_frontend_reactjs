@@ -27,10 +27,12 @@ export default function LoginForm({
 
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // Lấy thông tin từ location để trả về trang trước đó
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleLogin = async () => {
     if (!username || !password) {
       Swal.fire({
@@ -57,7 +59,7 @@ export default function LoginForm({
       if (response.message === "Login success") {
         if (response.data.status === "active") {
           authContext?.login(response.data);
-          const redirectTo = location.state?.from || "/"; // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
+          const redirectTo = location.state?.from ; // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
           navigate(redirectTo, { replace: true });
         } else {
           Swal.fire({
@@ -109,6 +111,7 @@ export default function LoginForm({
       });
     }
   };
+
   // Google login
   const handleGoogleLogin = async (response: CredentialResponse) => {
     try {
@@ -137,9 +140,9 @@ export default function LoginForm({
       if (user) {
         console.log("authContext" + user.data);
         authContext?.login(user.data); // Truyền toàn bộ dữ liệu người dùng vào context
-       // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
-      const redirectTo = location.state?.from || "/";
-      navigate(redirectTo, { replace: true });
+        // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
+        const redirectTo = location.state?.from ;
+        navigate(redirectTo, { replace: true });
       } else {
         Swal.fire({
           icon: "error",
@@ -174,6 +177,7 @@ export default function LoginForm({
       });
     }
   };
+
   return (
     <form action="login">
       <h2>Đăng nhập</h2>
