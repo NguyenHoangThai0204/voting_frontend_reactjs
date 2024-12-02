@@ -1,5 +1,6 @@
 import "./FooterHome.css";
 import React from "react";
+import imgicon from "../../../assets/logo-m-t.jpg";
 export const FooterHome = () => {
   return (
     <footer className="footer">
@@ -7,7 +8,7 @@ export const FooterHome = () => {
         <div className="footer-section about">
           <div className="footer-section about logo">
           <img
-            src="/src/assets/logo-m-t.jpg"
+            src={imgicon}
             alt="T&M Logo"
             className="footer-logo"
           />
