@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   ListTheNewResponse,
   TheNew,
+  UserUpdate,
   CreateTheNew,
   UserResponse,
   TheNewResponse,
@@ -42,9 +43,11 @@ export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReu
 }
 
 // Hàm cập nhật tài khoản người dùng
-export const updateUser = async (data: UserCreate): Promise<UserResponse> => {
-  const response = await axios.post(`${API_USER}/update_user`, data);
-  return response.data;
+export const updateUser = async (data: UserUpdate): Promise<UserResponse> => {
+
+    const response = await axios.put(`${API_USER}/update_user`, data); // Sử dụng PUT
+    return response.data; // Trả về dữ liệu từ backend
+  
 };
 // Hàm reset mật khẩu
 export const resetPassword = async (data: UserCreate): Promise<boolean> => {

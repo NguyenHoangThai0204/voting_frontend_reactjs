@@ -9,7 +9,8 @@ import {
   postVote,
   changeState,
   postVotePrivate,
-  getVoteByUserIdAndPollId
+  getVoteByUserIdAndPollId,
+  updateTimeEnd
 } from "../../../api/CallApi";
 import { Poll } from "../../../typeObject";
 import { format } from "date-fns";
@@ -44,13 +45,13 @@ export const ContentDetailPoll: React.FC = () => {
         setVote(response.data);
 
         if (authContext?.user?._id) {
-          
+
           const responseVote = await getVoteByUserIdAndPollId({
             pollId: id,
             userId: authContext?.user?._id,
           });
-          
-          
+
+
           if (responseVote.data) {
             setVotedOptionId(responseVote.data.optionId);
           }
@@ -355,7 +356,7 @@ export const ContentDetailPoll: React.FC = () => {
           userId: authContext?.user?._id || null,
           timestamp: new Date().toISOString(),
         };
-        
+
 
         try {
           await postVote(dataVote);
@@ -592,6 +593,53 @@ export const ContentDetailPoll: React.FC = () => {
               variant="outlined"
             />
           </div>
+
+          {
+            authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
+              <div className="date">
+                <button 
+                  
+                  className="btn_end_vote"
+                  onClick={async () => {
+                    try {
+                      if (vote) {
+                        await updateTimeEnd(vote._id);
+                        Swal.fire({
+                          icon: "success",
+                          title: "Thành công",
+                          text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
+                          timer: 1500,
+                          timerProgressBar: true,
+                          showClass: {
+                            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                          },
+                          hideClass: {
+                            popup: "", // Tắt hiệu ứng biến mất
+                          },
+                        });
+                      }
+                    } catch (error) {
+                      console.error("Error ending vote:", error);
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Lỗi trong quá trình kết thúc bình chọn.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        showClass: {
+                          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                        },
+                        hideClass: {
+                          popup: "", // Tắt hiệu ứng biến mất
+                        },
+                      });
+                    }
+                  }
+                  }
+                >
+                  Kết thú
+                </button></div>)
+          }
 
         </div>
       </form>

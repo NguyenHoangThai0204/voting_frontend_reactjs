@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DetailUserManagement.css';
 import { User, Poll } from '../../../typeObject';
-import { changeStatusUser, changeStatusUserActive, deletePoll } from '../../../api/CallApi';
+import { changeStatusUser, changeStatusUserActive, deletePoll, updateUser,uploadImage } from '../../../api/CallApi';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -44,7 +44,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await changeStatusUser(id); // Gọi hàm thay đổi trạng thái người dùng
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Ngừng hoạt động người dùng thành công',
@@ -58,11 +58,11 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                             popup: "", // Tắt hiệu ứng biến mất
                         },
                     });
-            
+
                     refreshUserList(); // Gọi lại hàm để cập nhật danh sách người dùng
                 }
             });
-            
+
         } catch (error) {
             console.error("Error deleting user data:", error);
         }
@@ -84,7 +84,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await changeStatusUserActive(id); // Gọi hàm thay đổi trạng thái người dùng
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Cập nhật trạng thái người dùng thành công',
@@ -98,11 +98,11 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                             popup: "", // Tắt hiệu ứng biến mất
                         },
                     });
-            
+
                     refreshUserList(); // Gọi lại hàm để cập nhật danh sách người dùng
                 }
             });
-            
+
         } catch (error) {
             console.error("Error activating user data:", error);
         }
@@ -145,7 +145,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await deletePoll(pollId); // Gọi hàm xóa bình chọn
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Deleted!',
@@ -154,16 +154,94 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                         timer: 1500,
                         timerProgressBar: true,
                     });
-            
+
                     refreshUserList(); // Cập nhật danh sách người dùng
                 }
             });
-            
+
         } catch (error) {
             console.error("Error deleting poll data:", error);
         }
         setLoading(false);
     };
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+    const handleEditOpen = () => {
+        setIsEditDialogOpen(true);
+    };
+
+    const handleEditClose = () => {
+        setIsEditDialogOpen(false);
+    };
+    const handleEditSubmit = async (userId: string) => {
+        try {
+            // Lấy giá trị từ các trường nhập liệu
+            const fullName = (document.getElementById('fullName') as HTMLInputElement).value;
+            const email = (document.getElementById('email') as HTMLInputElement).value;
+            const phone = (document.getElementById('phone') as HTMLInputElement).value;
+            const address = (document.getElementById('address') as HTMLInputElement).value;
+    
+            // Kiểm tra dữ liệu đầu vào (nếu cần)
+            if (!fullName || !email || !phone || !address) {
+                Swal.fire('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
+                return;
+            }
+    
+            // Tách địa chỉ thành các phần
+            const addressParts = address.split(',').map((item) => item.trim());
+            if (addressParts.length !== 3) {
+                Swal.fire('Lỗi', 'Địa chỉ không hợp lệ. Vui lòng nhập theo định dạng: Đường, Phường, Tỉnh!', 'error');
+                return;
+            }
+            const [street, ward, province] = addressParts;
+    
+            // Chuẩn bị đối tượng gửi API
+            const updatedUser = {
+                _id: userId,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                street: street,
+                ward: ward,
+                province: province,
+                avatar: avatar || undefined,
+            };
+    
+            console.log('Data chuẩn bị gửi:', updatedUser);
+    
+            // Gửi API cập nhật
+            await updateUser(updatedUser);
+    
+            // Thông báo thành công
+            Swal.fire('Thành công', 'Cập nhật thông tin người dùng thành công!', 'success');
+    
+            // Làm mới danh sách người dùng
+            refreshUserList();
+    
+            // Đóng dialog
+            handleEditClose();
+        } catch (error) {
+            console.error('Lỗi khi cập nhật thông tin người dùng:', error);
+            Swal.fire('Thất bại', 'Cập nhật thông tin không thành công!', 'error');
+        }
+    };
+    const [avatar, setAvatar] = useState<string | null>(null);
+    const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+          const file = event.target.files[0];
+          
+          // Gọi hàm uploadImage để upload file
+          const formData = new FormData();
+          formData.append('file', file);
+          const uploadedImageUrl = await uploadImage(formData);
+          
+          if (uploadedImageUrl) {
+                setAvatar(uploadedImageUrl);
+          } else {
+            console.error('Upload ảnh không thành công');
+          }
+        }
+      };
 
     return (
         <>
@@ -178,7 +256,118 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
 
                     </div>
                 )}
-            {/* <div className="body_detailusermanagement"> */}
+                {/* <div className="body_detailusermanagement"> */}
+                <Dialog
+  open={isEditDialogOpen}
+  onClose={handleEditClose}
+  maxWidth="sm"
+  fullWidth
+  style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}
+>
+  <DialogContent>
+    <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
+      Sửa Thông Tin Người Dùng
+    </h3>
+    <form id="editUserForm">
+      <div className="form-group" style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Họ và Tên</label>
+        <input
+          type="text"
+          className="form-control"
+          defaultValue={userItem?.fullName}
+          id="fullName"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '1rem',
+          }}
+        />
+      </div>
+      <div className="form-group" style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Email</label>
+        <input
+          type="email"
+          className="form-control"
+          defaultValue={userItem?.email}
+          id="email"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '1rem',
+          }}
+        />
+      </div>
+      <div className="form-group" style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Số điện thoại</label>
+        <input
+          type="text"
+          className="form-control"
+          defaultValue={userItem?.phone}
+          id="phone"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '1rem',
+          }}
+        />
+      </div>
+      <div className="form-group" style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Địa chỉ</label>
+        <input
+          type="text"
+          className="form-control"
+          defaultValue={`${userItem?.street}, ${userItem?.ward}, ${userItem?.province}`}
+          id="address"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '1rem',
+          }}
+        />
+      </div>
+      {/* Thêm trường ảnh đại diện */}
+      <div className="form-group" style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Ảnh Đại Diện</label>
+        <input
+          type="file"
+          className="form-control"
+          id="avatar"
+          accept="image/*"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '1rem',
+          }}
+          onChange={handleChangeImage}
+        />
+      </div>
+    </form>
+  </DialogContent>
+  <DialogActions style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+    <Button onClick={handleEditClose} color="secondary" style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}>
+      Hủy
+    </Button>
+    <Button
+      onClick={() => handleEditSubmit(userItem?._id || '')}
+      color="primary"
+      style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}
+    >
+      Lưu
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
                 <h2>THÔNG TIN NGƯỜI DÙNG</h2>
                 <div className="container">
                     <div className="containLeft">
@@ -238,9 +427,15 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                             </tbody>
                         </table>
                         <div className='button' style={{ display: "flex", justifyContent: "end", alignContent: "center" }}>
-                            <button className="btn btn-primary" style={{ padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500 }}>Edit user</button>
+                            <button
+                                className="btn btn-primary"
+                                style={{ padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500 }}
+                                onClick={handleEditOpen}
+                            >
+                                Sửa
+                            </button>
                             {userItem?.status === 'active' ? (
-                                <button className="btn btn-danger" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleDelete(userItem._id)}>Delete user</button>
+                                <button className="btn btn-danger" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleDelete(userItem._id)}>Xoá</button>
                             ) : (
                                 <button className="btn btn-success" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleActive(userItem._id)}>Activate user</button>
                             )}

@@ -31,7 +31,7 @@ export const ContentHome = () => {
           <div className="criteria_item">
             <p className="criteria_title">Thống kê kết quả</p>
             <p className="criteria_description">
-            Cung cấp kết quả chi tiết, dễ hiểu về các cuộc bình chọn.
+            Cung cấp kết quả chi tiết, dễ nhìn và dễ hiểu.
             </p>
           </div>
         </div>

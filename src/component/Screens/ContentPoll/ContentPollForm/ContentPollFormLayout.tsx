@@ -521,7 +521,7 @@ export const ContentPollFormLayout = () => {
               >
                 <MenuItem value={"public"}>Công khai</MenuItem>
                 <MenuItem value={"private"}>Riêng tư</MenuItem>
-                <MenuItem value={"privatesmc"}>với smartcontract</MenuItem>
+                <MenuItem value={"privatesmc"}>Nâng cao</MenuItem>
               </Select>
             </FormControl>
           </div>

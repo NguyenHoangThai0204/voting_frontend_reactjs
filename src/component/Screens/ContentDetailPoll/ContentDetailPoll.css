@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
 }
-.wrapper_detail_vote form .form_date .button_end button{
+.wrapper_detail_vote form .form_date .btn_end_vote{
 
     background-color: #f44336;
     color: white;

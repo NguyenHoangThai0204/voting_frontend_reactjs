@@ -103,7 +103,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import AddIcon from '@mui/icons-material/Add';
 import './BookManagement.css';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
@@ -145,7 +144,7 @@ export const BookManagement = () => {
       }
     };
     fetchTheNew();
-  }, [  ]); // Chạy một lần khi component mount
+  }); // Chạy một lần khi component mount
 
   // Gọi API để lấy thông tin chi tiết bài viết khi `id` thay đổi
   useEffect(() => {
@@ -176,14 +175,14 @@ export const BookManagement = () => {
   return (
     <div className="bookManagement">
       <div className="userManaLeft">
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-          <div>
+        <div style={{ display: 'flex', width: '100%', justifyContent: 'start', alignItems:'center' }}>
+        
+          <h3>Tạo bài viết mới: </h3>
             <AddIcon
-              style={{ fontSize: '45px', color: 'black', marginRight: '2px' }}
+              style={{ fontSize: '45px', color: 'black', marginLeft: '5px' }}
               onClick={handleAddClick}
             />
-            <MenuTwoToneIcon style={{ fontSize: '45px', color: 'black' }} />
-          </div>
+          
         </div>
       </div>
       <div className="userManaRight">

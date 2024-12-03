@@ -88,8 +88,17 @@ export const UsersManagement = () => {
         prevUser && prevUser._id === data.id ? { ...prevUser, status: data.status } : prevUser
       );
 
+    }); 
+    socket.on("user-updated", (user) => {
+      console.log("User updated:", user);
+  
+      setUserItem((prevUser) =>
+        prevUser && prevUser._id === user._id ? { ...prevUser, ...user } : prevUser
+      );
+  
+      // Làm mới danh sách người dùng
+      refreshUserList();
     });
-
     socket.on("deletePoll", async (data) => {
       console.log("Received deletePoll event:", data);
   
@@ -110,6 +119,7 @@ export const UsersManagement = () => {
       socket.off("updatePolling");
       socket.off("user-status-changed");
       socket.off("deletePoll");
+      socket.off("user-updated");
     };
   });
 
