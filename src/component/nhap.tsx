@@ -1548,3 +1548,74 @@
 
 //   )
 // }
+
+
+// try {
+//     // Thực hiện song song hai hàm
+//     const [voteSmResult] = await Promise.all([
+//       voteSm({
+//         pollIdSm: vote.pollIdSm || "",
+//         optionId: optionsId,
+//         author: addRessWallet || "",
+//       }),
+//       postVotePrivate({
+//         pollId: vote._id,
+//         optionId: optionId,
+//         transactionHash: Number(vote.pollIdSm),
+//         userId: authContext?.user?._id ?? null,
+//         timestamp: new Date().toISOString(),
+//       }),
+//     ]);
+  
+//     // Kiểm tra kết quả từ voteSm
+//     if (!voteSmResult) {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Oops...",
+//         text: "Tài khoản ví này đã vote.",
+//         showConfirmButton: false,
+//         timer: 1500,
+//         timerProgressBar: true,
+//         showClass: {
+//           popup: "swal2-no-animation",
+//         },
+//         hideClass: {
+//           popup: "",
+//         },
+//       });
+//       return;
+//     }
+  
+//     // Nếu cả hai hàm thành công
+//     Swal.fire({
+//       icon: "success",
+//       title: "Thành công",
+//       text: "Bình chọn thành công!",
+//       showConfirmButton: false,
+//       timer: 1500,
+//       timerProgressBar: true,
+//       showClass: {
+//         popup: "swal2-no-animation",
+//       },
+//       hideClass: {
+//         popup: "",
+//       },
+//     });
+//   } catch (error) {
+//     // Xử lý lỗi nếu một trong hai hàm thất bại
+//     console.error("Error during voting process:", error);
+//     Swal.fire({
+//       icon: "error",
+//       title: "Oops...",
+//       text: "Đã xảy ra lỗi trong quá trình bình chọn.",
+//       showConfirmButton: false,
+//       timer: 1500,
+//       timerProgressBar: true,
+//       showClass: {
+//         popup: "swal2-no-animation",
+//       },
+//       hideClass: {
+//         popup: "",
+//       },
+//     });
+//   }

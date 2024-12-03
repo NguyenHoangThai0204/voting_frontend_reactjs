@@ -27,15 +27,23 @@ import Cookies from "universal-cookie";
 // const API_PRIVATE = "http://localhost:3000/api/private";
 // const API_AI = "http://localhost:3000/api/ai";
 
-const API_USER = "http://13.215.186.132:3000/api/user";
-const API_VOTE = "http://13.215.186.132:3000/api/vote";
-const API_POLL = "http://13.215.186.132:3000/api/poll";
-const API_SSO = "http://13.215.186.132:3000/api/auth";
-const API_TheNew = "http://13.215.186.132:3000/api/theNew";
-const API_UPLOAD = "http://13.215.186.132:3000/api/upload";
-const API_PRIVATE = "http://13.215.186.132:3000/api/private";
-const API_AI = "http://13.215.186.132:3000/api/ai";
+// const API_USER = "http://13.215.186.132:3000/api/user";
+// const API_VOTE = "http://13.215.186.132:3000/api/vote";
+// const API_POLL = "http://13.215.186.132:3000/api/poll";
+// const API_SSO = "http://13.215.186.132:3000/api/auth";
+// const API_TheNew = "http://13.215.186.132:3000/api/theNew";
+// const API_UPLOAD = "http://13.215.186.132:3000/api/upload";
+// const API_PRIVATE = "http://13.215.186.132:3000/api/private";
+// const API_AI = "http://13.215.186.132:3000/api/ai";
 
+const API_USER = "https://api.pollweb.io.vn/api/user";
+const API_VOTE = "https://api.pollweb.io.vn/api/vote";
+const API_POLL = "https://api.pollweb.io.vn/api/poll";
+const API_SSO = "https://api.pollweb.io.vn/api/auth";
+const API_TheNew = "https://api.pollweb.io.vn/api/theNew";
+const API_UPLOAD = "https://api.pollweb.io.vn/api/upload";
+const API_PRIVATE = "https://api.pollweb.io.vn/api/private";
+const API_AI = "https://api.pollweb.io.vn/api/ai";
 // lấy thông tin cuộc bình chọn qua blockchain
 export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReultsResponse> => {
   const response = await axios.get(`${API_PRIVATE}/getPollResult/${pollId}`);
@@ -184,28 +192,7 @@ export const loginUser = async (data: {
   return response.data;
 };
 
-export const voteSm = async ({
-  pollIdSm,
-  optionId,
-  author,
-}: {
-  pollIdSm: string;
-  optionId: number;
-  author: string;
-}): Promise<boolean> => {
-  try {
-    // Sử dụng pollIdSm trong URL thay vì id
-    const response = await axios.post(`${API_PRIVATE}/vote/${pollIdSm}`, {
-      optionId,
-      author,
-    });
-    // Nếu trạng thái là 200 (thành công), trả về `true`
-    return response.status === 200;
-  } catch (error) {
-    console.error("Error changing state:", error);
-    return false; // Trả về `false` nếu có lỗi
-  }
-};
+
 // Hàm tạo poll
 export const createPrivatePoll = async (data: {
   title: string;
@@ -379,6 +366,29 @@ export const postVote = async (data: Vote): Promise<VoteResponse> => {
   const response = await axios.post(`${API_VOTE}/vote`, data);
   return response.data;
 };
+export const voteSm = async ({
+  pollIdSm,
+  optionId,
+  author,
+}: {
+  pollIdSm: string;
+  optionId: number;
+  author: string;
+}): Promise<boolean> => {
+  try {
+    // Sử dụng pollIdSm trong URL thay vì id
+    const response = await axios.post(`${API_PRIVATE}/vote/${pollIdSm}`, {
+      optionId,
+      author,
+    });
+    // Nếu trạng thái là 200 (thành công), trả về `true`
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error changing state:", error);
+    return false; // Trả về `false` nếu có lỗi
+  }
+};
+
 export const postVotePrivate = async (data: Vote): Promise<VoteResponse> => {
   const response = await axios.post(`${API_VOTE}/vote_private`, data);
   return response.data;

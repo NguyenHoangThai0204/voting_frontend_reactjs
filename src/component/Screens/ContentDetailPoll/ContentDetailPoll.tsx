@@ -6,13 +6,15 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import {
   getPollById,
   voteSm,
+  // voteAndPostPrivate,
   postVote,
   changeState,
   postVotePrivate,
   getVoteByUserIdAndPollId,
-  updateTimeEnd
+  updateTimeEnd,
+  getInforAuthor
 } from "../../../api/CallApi";
-import { Poll } from "../../../typeObject";
+import { Poll, Vote } from "../../../typeObject";
 import { format } from "date-fns";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import StatisticsDialogPolling from "../StatisticsDialog/StatisticsDialogPolling";
@@ -27,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
+  const [nameAuthor, setNameAuthor] = useState<string[]>([""]);
   const [descriptions, setDescriptions] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
   const authContext = React.useContext(AuthContext);
@@ -35,6 +38,7 @@ export const ContentDetailPoll: React.FC = () => {
   const navigate = useNavigate();
   const [vote, setVote] = useState<Poll | null>(null);
   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
+  const [voteSMLength, setVoteSMLength] = useState<Vote[]>([]);
 
   const fetchVote = async () => {
     try {
@@ -43,6 +47,8 @@ export const ContentDetailPoll: React.FC = () => {
         const response = await getPollById(id);
         console.log("Vote data fetched:", response.data);
         setVote(response.data);
+        const authorName = (await getInforAuthor(response.data.authorId)).data.fullName;
+        setNameAuthor(authorName ? [authorName] : [""]);
 
         if (authContext?.user?._id) {
 
@@ -51,6 +57,7 @@ export const ContentDetailPoll: React.FC = () => {
             userId: authContext?.user?._id,
           });
 
+          setVoteSMLength(responseVote.data as unknown as Vote[]);
 
           if (responseVote.data) {
             setVotedOptionId(responseVote.data.optionId);
@@ -68,7 +75,9 @@ export const ContentDetailPoll: React.FC = () => {
   // Tạo kết nối với server WebSocket
   useEffect(() => {
     // Thiết lập kết nối WebSocket
-    const socket = io("http://localhost:3000", { transports: ["websocket"] });
+    // const socket = io("http://localhost:3000", { transports: ["websocket"] });
+    const socket = io("http://13.215.186.132:3000", { transports: ["websocket"] });
+
 
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
@@ -186,43 +195,142 @@ export const ContentDetailPoll: React.FC = () => {
         try {
           if (authContext?.user) {
             if (authContext?.walletAddress) {
-              await changeState({
-                pollIdSm: Number(vote.pollIdSm),
-                newState: 1,
-                author: addRessWallet || "",
-              });
-              const check = await voteSm({
-                pollIdSm: vote.pollIdSm || "",
-                optionId: optionsId,
-                author: addRessWallet || "",
-              });
-              if (check) {
-                const dataVote = {
-                  pollId: vote._id,
-                  optionId: optionId,
-                  transactionHash: Number(vote.pollIdSm),
-                  userId: authContext?.user?._id ?? null,
-                  timestamp: new Date().toISOString(),
-                };
-                await postVotePrivate(dataVote);
-                Swal.fire({
-                  icon: "success",
-                  title: "Thành công",
-                  text: "Bình chọn thành công!", showConfirmButton: false,
-                  timer: 1500,
-                  timerProgressBar: true,
-                  showClass: {
-                    popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                  },
-                  hideClass: {
-                    popup: "", // Tắt hiệu ứng biến mất
-                  },
-                });
-              } else {
+              try {
+                if (voteSMLength.length === 0) {
+                  await changeState({
+                    pollIdSm: Number(vote.pollIdSm),
+                    newState: 1,
+                    author: addRessWallet || "",
+                  });
+                }
+                // try {
+                  
+                //   const result = await voteAndPostPrivate({
+                //     pollIdSm: vote.pollIdSm || "",
+                //     optionId: optionsId,
+                //     author: addRessWallet || "",
+                //     voteData: {
+                //       pollId: vote._id,
+                //       optionId: Number(optionId),
+                //       transactionHash: Number(vote.pollIdSm),
+                //       userId: authContext?.user?._id ?? null,
+                //       timestamp: new Date().toISOString(),
+                //     },
+                //   });
+                  
+                //   if (result.success) {
+                //     Swal.fire({
+                //       icon: "success",
+                //       title: "Thành công",
+                //       text: "Bình chọn thành công!",
+                //       showConfirmButton: false,
+                //       timer: 1500,
+                //       timerProgressBar: true,
+                //       showClass: { popup: "swal2-no-animation" },
+                //       hideClass: { popup: "" },
+                //     });
+                //   } else {
+                //     Swal.fire({
+                //       icon: "error",
+                //       title: "Oops...",
+                //       text: result.error || "Đã xảy ra lỗi trong quá trình bình chọn.",
+                //       showConfirmButton: false,
+                //       timer: 1500,
+                //       timerProgressBar: true,
+                //       showClass: { popup: "swal2-no-animation" },
+                //       hideClass: { popup: "" },
+                //     });
+                //     return;
+                //   }
+                  
+                // } catch {
+                //   Swal.fire({
+                //     icon: "error",
+                //     title: "Oops...",
+                //     text: "Đã xảy ra lỗi trong quá trình bình chọn.",
+                //     showConfirmButton: false,
+                //     timer: 1500,
+                //     timerProgressBar: true,
+                //     showClass: { popup: "swal2-no-animation" },
+                //     hideClass: { popup: "" },
+                //   });
+                // }
+
+                try {
+                  // Thực hiện song song hai hàm
+                  const [voteSmResult] = await Promise.all([
+                    voteSm({
+                      pollIdSm: vote.pollIdSm || "",
+                      optionId: optionsId,
+                      author: addRessWallet || "",
+                    }),
+                    postVotePrivate({
+                      pollId: vote._id,
+                      optionId: optionId,
+                      transactionHash: Number(vote.pollIdSm),
+                      userId: authContext?.user?._id ?? null,
+                      timestamp: new Date().toISOString(),
+                    }),
+                  ]);
+                
+                  // Kiểm tra kết quả từ voteSm
+                  if (!voteSmResult) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Tài khoản ví này đã vote.",
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                      showClass: {
+                        popup: "swal2-no-animation",
+                      },
+                      hideClass: {
+                        popup: "",
+                      },
+                    });
+                    return;
+                  }
+                
+                  // Nếu cả hai hàm thành công
+                  Swal.fire({
+                    icon: "success",
+                    title: "Thành công",
+                    text: "Bình chọn thành công!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showClass: {
+                      popup: "swal2-no-animation",
+                    },
+                    hideClass: {
+                      popup: "",
+                    },
+                  });
+                } catch (error) {
+                  // Xử lý lỗi nếu một trong hai hàm thất bại
+                  console.error("Error during voting process:", error);
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Đã xảy ra lỗi trong quá trình bình chọn.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showClass: {
+                      popup: "swal2-no-animation",
+                    },
+                    hideClass: {
+                      popup: "",
+                    },
+                  });
+                }
+                
+              } catch {
                 Swal.fire({
                   icon: "error",
                   title: "Oops...",
-                  text: "Tài khoản vì này đã vote.", showConfirmButton: false,
+                  text: "Tài khoản ví này đã vote.", showConfirmButton: false,
                   timer: 1500,
                   timerProgressBar: true,
                   showClass: {
@@ -239,7 +347,7 @@ export const ContentDetailPoll: React.FC = () => {
               Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Lỗi không lấy PollId của smartcontract.", showConfirmButton: false,
+                text: "Chưa kết nối ví.", showConfirmButton: false,
                 timer: 1500,
                 timerProgressBar: true,
                 showClass: {
@@ -268,7 +376,6 @@ export const ContentDetailPoll: React.FC = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             });
-
             return;
           }
         } catch (error) {
@@ -347,6 +454,7 @@ export const ContentDetailPoll: React.FC = () => {
             },
           });
         }
+        return;
       } else {
         // Bình chọn không sử dụng smart contract
         const dataVote = {
@@ -356,7 +464,6 @@ export const ContentDetailPoll: React.FC = () => {
           userId: authContext?.user?._id || null,
           timestamp: new Date().toISOString(),
         };
-
 
         try {
           await postVote(dataVote);
@@ -461,6 +568,7 @@ export const ContentDetailPoll: React.FC = () => {
                   variant="outlined"
                 />
               </div>
+
               <div style={{ margin: "auto" }}>
                 <IconButton
                   onClick={handleClickOpen}
@@ -498,6 +606,15 @@ export const ContentDetailPoll: React.FC = () => {
               value={vote?.description || ""}
               multiline
               rows={4}
+              inputProps={{ readOnly: true }}
+              variant="outlined"
+            />
+            <div className="label">Tác giả:</div>
+            <TextField
+              className="text_namevote"
+              value={nameAuthor || ""}
+              multiline
+              rows={1}
               inputProps={{ readOnly: true }}
               variant="outlined"
             />
@@ -597,8 +714,8 @@ export const ContentDetailPoll: React.FC = () => {
           {
             authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
               <div className="date">
-                <button 
-                  
+                <button
+
                   className="btn_end_vote"
                   onClick={async () => {
                     try {

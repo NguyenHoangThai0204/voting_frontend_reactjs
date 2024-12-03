@@ -142,13 +142,13 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
             </div>
 
             {/* Nút để hiển thị/ẩn các phiếu bầu */}
-            {(poll.typeContent !== "privatesmc") && <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
+            {/* {(poll.typeContent !== "privatesmc") && <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
               {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
             </Button>
-            }
-            {/* <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
+            } */}
+            <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
               {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
-            </Button> */}
+            </Button>
             {showVotes && (
               <div>
                 {votes.length > 0 ? votes.map((vote, index) => {
@@ -162,7 +162,9 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
                       </div>
                       <div style={{ display: "flex" }}>
                         <p><strong>Thời gian bình chọn:</strong> {formatDateTime(vote.timestamp)}</p>
-                        <p><strong>Lựa chọn:</strong> {selectedOption ? selectedOption.contentOption : "null"}</p>
+                        {(poll.typeContent !== "privatesmc") && <p><strong>Lựa chọn:</strong> {selectedOption ? selectedOption.contentOption : "null"}</p>
+            }
+                        
                       </div>
                     </div>
                   );

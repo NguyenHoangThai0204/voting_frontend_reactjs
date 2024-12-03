@@ -1,3 +1,11 @@
+
+Các file chứa socket
+StatisticsDialogPolling
+ContentDetailPoll
+UsersManagement
+
+
+
 Dùng:
     + TypeScript:Nó có thể tự sữa lỗi khi biên dịch mà không cần chạy chương tình.
     + UI dùng Material ui

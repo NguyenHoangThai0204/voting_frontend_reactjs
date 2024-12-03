@@ -7,7 +7,9 @@ import { DetailUsersManagement } from "../DetailUsersManagement/DetailUsersManag
 import io from "socket.io-client";
 
 // Kết nối Socket.IO đến server
-const socket = io("http://localhost:3000", { transports: ["websocket"] });
+// const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io("http://13.215.186.132:3000", { transports: ["websocket"] });
+
 
 export const UsersManagement = () => {
   const location = useLocation();
