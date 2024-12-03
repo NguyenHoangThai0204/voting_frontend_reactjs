@@ -24,7 +24,7 @@ const animalEmojis = [
   '🦐', '🦑', '🦞', '🦀', '🐙'
 ];
 
-const socket = io("http://13.215.186.132:3000", { transports: ['websocket'] });
+const socket = io("https://api.pollweb.io.vn", { transports: ['websocket'] });
 
 const StatisticsDialogPolling: React.FC<StatisticsDialogProps> = ({ open, handleClose, pollId }) => {
   const [poll, setPoll] = useState<Poll | null>(null);

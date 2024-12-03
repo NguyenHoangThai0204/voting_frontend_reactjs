@@ -76,7 +76,7 @@ export const ContentDetailPoll: React.FC = () => {
   useEffect(() => {
     // Thiết lập kết nối WebSocket
     // const socket = io("http://localhost:3000", { transports: ["websocket"] });
-    const socket = io("http://13.215.186.132:3000", { transports: ["websocket"] });
+    const socket = io("https://api.pollweb.io.vn", { transports: ["websocket"] });
 
 
     // Lắng nghe sự kiện "voteUpdate" từ server
