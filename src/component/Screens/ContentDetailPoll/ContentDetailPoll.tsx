@@ -74,8 +74,6 @@ export const ContentDetailPoll: React.FC = () => {
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
-    // Thiết lập kết nối WebSocket
-    // const socket = io("http://localhost:3000", { transports: ["websocket"] });
     const socket = io("https://api.pollweb.io.vn", { transports: ["websocket"] });
 
 
@@ -715,7 +713,6 @@ export const ContentDetailPoll: React.FC = () => {
             authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
               <div className="date">
                 <button
-
                   className="btn_end_vote"
                   onClick={async () => {
                     try {
@@ -735,6 +732,7 @@ export const ContentDetailPoll: React.FC = () => {
                           },
                         });
                       }
+                      navigate("/", { replace: true }); 
                     } catch (error) {
                       console.error("Error ending vote:", error);
                       Swal.fire({

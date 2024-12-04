@@ -18,6 +18,7 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Swal from "sweetalert2";
+import { formatISO } from "date-fns";
 export const ContentPollFormLayout = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
@@ -227,6 +228,21 @@ export const ContentPollFormLayout = () => {
     //   return;
     // }
 
+  
+    if (new Date(startDate) >= new Date(endDate)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setLoading(false);
+      return;
+    }
+  
+    const formattedStartDate = formatISO(new Date(startDate));
+    const formattedEndDate = formatISO(new Date(endDate));
 
     const voteData: {
       authorId: string;
@@ -258,8 +274,8 @@ export const ContentPollFormLayout = () => {
       })),
       avatar: image || "",
       typeContent: typeOfVote,
-      timeStart: startDate,
-      timeEnd: endDate,
+      timeStart: formattedStartDate,
+      timeEnd: formattedEndDate,
       timeCreate: new Date().toISOString(),
       pollIdSm: null
     };

@@ -421,7 +421,9 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                     </td>
                                     <td>
                                         <label>Trạng thái: </label>
-                                        <span>{userItem?.status}</span>
+                                        <span>{
+                                            userItem?.status === 'active' ? 'Hoạt động' : 'Ngừng hoạt động'
+                                            }</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -432,12 +434,12 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                 style={{ padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500 }}
                                 onClick={handleEditOpen}
                             >
-                                Sửa
+                                Sửa thông tin
                             </button>
                             {userItem?.status === 'active' ? (
-                                <button className="btn btn-danger" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleDelete(userItem._id)}>Xoá</button>
+                                <button className="btn btn-danger" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleDelete(userItem._id)}>Dừng hoạt động</button>
                             ) : (
-                                <button className="btn btn-success" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleActive(userItem._id)}>Activate user</button>
+                                <button className="btn btn-success" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleActive(userItem._id)}>Cho hoạt động</button>
                             )}
                         </div>
                     </div>
@@ -452,7 +454,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                 <th scope="col">Miêu tả</th>
                                 <th scope="col">Bắt đầu</th>
                                 <th scope="col">Kết thúc</th>
-                                <th scope="col">Thời gian hoạt động</th>
+                                <th scope="col">Hoạt động</th>
                                 <th scope="col">Loại</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
@@ -505,7 +507,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                             {poll?.timeEnd ?
                                                 // Kiểm tra nếu thời gian kết thúc đã qua
                                                 new Date(poll.timeEnd) < new Date() ?
-                                                    'The end' : // Nếu thời gian kết thúc đã qua
+                                                    'Kết thúc' : // Nếu thời gian kết thúc đã qua
                                                     formatDistanceToNow(new Date(poll.timeEnd), { addSuffix: true }) // Nếu chưa hết thời gian
                                                 : 'N/A' // Nếu không có timeEnd
                                             }
@@ -521,7 +523,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                                     e.stopPropagation();
                                                     handleDeletePoll(poll._id);
                                                 }}
-                                            >Xoá</button>
+                                            >Xoá bình chọn</button>
                                         </td>
                                     </tr>
                                 ))
