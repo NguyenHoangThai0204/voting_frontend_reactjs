@@ -76,23 +76,8 @@ export const ContentPollLayout = () => {
                         setCanCreatePoll(true);
                         setErrorMessage('');
                     }
-                    // const response1 = await getAllVoteByUserid(user._id.toString());
-                    // // Lấy các pollId hợp lệ từ response1.data, lọc null và chắc chắn chỉ còn các chuỗi
-                    // const pollIds = Array.isArray(response1.data)
-                    //     ? response1.data
-                    //         .map(vote => vote.pollId)
-                    //         // .filter(id => typeof  id !== '') // Lọc null và các chuỗi rỗng
-                    //     : [];
-
-                    // // Đảm bảo kiểu dữ liệu là string[] khi gán cho setListPollid
-                    // setListPollid(pollIds as string[]);  // Ép kiểu thành string[]
-
-                    // console.log("list poll joined", listPollid);
-
-                    // listPollid.forEach(async (pollId) => {
-                    //     setPollPollJoined([...pollPollJoined, (await getPollById(pollId)).data]);
-                    // });
-                    // console.log("poll joined", pollPollJoined);
+                    
+                    
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);
                 }
@@ -145,12 +130,6 @@ export const ContentPollLayout = () => {
                     <ListPoll vote={pollSM} />
                 </div>
             </div>}
-            {/* {pollPollJoined.length > 0 && <div className="list_vote">
-                <h2>Danh sách bình chọn đã tham gia:</h2>
-                <div className="list_item_vote">
-                    <ListPoll vote={pollPollJoined} />
-                </div>
-            </div>} */}
             {polled.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn đã kết thúc:</h2>
                 <div className="list_item_vote">

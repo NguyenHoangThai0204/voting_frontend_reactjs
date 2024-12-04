@@ -453,13 +453,14 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                 <th scope="col">Bắt đầu</th>
                                 <th scope="col">Kết thúc</th>
                                 <th scope="col">Thời gian hoạt động</th>
+                                <th scope="col">Loại</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             {(pollItem ?? []).length === 0 ? (
                                 <tr>
-                                    <td colSpan={7}>No data</td>
+                                    <td colSpan={8}>No data</td>
                                 </tr>
                             ) : (
                                 (pollItem ?? []).map((poll, index) => (
@@ -508,6 +509,9 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                                     formatDistanceToNow(new Date(poll.timeEnd), { addSuffix: true }) // Nếu chưa hết thời gian
                                                 : 'N/A' // Nếu không có timeEnd
                                             }
+                                        </td>
+                                        <td>
+                                            {poll.typeContent}
                                         </td>
                                         <td>
                                             <button
