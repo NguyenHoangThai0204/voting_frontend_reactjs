@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { HomeLayout } from './component/Home/HomeLayout/HomeLayout';
 import PrivateRoute from './contextapi/PrivateRoute';
 import { AuthProvider } from './contextapi/AuthContext';
 import { FormLayout } from './component/LoginAndRegister/FormLayout/FormLayout';
+
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<HomeLayout />} />
           <Route element={<PrivateRoute />}>
@@ -22,15 +23,13 @@ function App() {
           <Route path="logout" element={<HomeLayout />} />
           <Route path="login" element={<FormLayout formType={'login'} onLoginClick={function (): void {
             throw new Error('Function not implemented.');
-          } } onSignUpClick={function (): void {
+          }} onSignUpClick={function (): void {
             throw new Error('Function not implemented.');
-          } } onCloseForm={function (): void {
+          }} onCloseForm={function (): void {
             throw new Error('Function not implemented.');
-          } } 
-           />} />
-
+          }} />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   );
 }
