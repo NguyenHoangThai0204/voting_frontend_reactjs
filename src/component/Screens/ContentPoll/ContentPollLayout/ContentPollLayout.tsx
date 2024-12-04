@@ -139,7 +139,7 @@ export const ContentPollLayout = () => {
                     <ListPoll vote={polling} />
                 </div>}
             </div>
-            {walletAddress && pollSM.length > 0 && <div className="list_vote">
+            {pollSM.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn nâng cao với smartcontract:</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={pollSM} />
