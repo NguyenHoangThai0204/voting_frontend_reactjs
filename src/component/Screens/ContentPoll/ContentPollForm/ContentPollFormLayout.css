@@ -179,7 +179,7 @@
     display: block;
     margin-top: 15px;
   }
-  .wrapper_voteform form .form_date TextField{
+  .wrapper_voteform form .form_date .textField{
     width: 100%;
   }
   .wrapper_voteform form .form_date .date {

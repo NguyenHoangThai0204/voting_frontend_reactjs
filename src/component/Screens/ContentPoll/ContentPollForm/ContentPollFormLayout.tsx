@@ -521,11 +521,11 @@ export const ContentPollFormLayout = () => {
         <div className="form_date">
           <div className="date">
             <div className="label">Ngày bắt đầu:</div>
-            <TextField type="datetime-local" onChange={(e) => { setStartDate(e.target.value) }} variant="outlined" />
+            <TextField className="textField" type="datetime-local" onChange={(e) => { setStartDate(e.target.value) }} variant="outlined" />
           </div>
           <div className="date">
             <div className="label">Ngày kết thúc:</div>
-            <TextField type="datetime-local" onChange={(e) => { setEndDate(e.target.value) }} variant="outlined" />
+            <TextField className="textField" type="datetime-local" onChange={(e) => { setEndDate(e.target.value) }} variant="outlined" />
           </div>
           <div className="date">
             <div className="label">Kiểu bình chọn:</div>
