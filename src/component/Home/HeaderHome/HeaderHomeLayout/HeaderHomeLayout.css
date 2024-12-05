@@ -119,7 +119,7 @@
   }
 
   .header_home .header_home_content .search_results {
-    width: calc(100% + 90px); /* Đảm bảo chiều rộng khớp với inputSearch */
+    /* width: calc(100% + 90px); Đảm bảo chiều rộng khớp với inputSearch */
     margin-top: 3px;
     position: absolute;
   }
