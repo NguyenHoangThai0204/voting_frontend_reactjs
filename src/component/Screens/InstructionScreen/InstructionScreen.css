@@ -30,7 +30,10 @@
   .container_instrcction .button-toggle:hover {
     background: #0056b3;
   }
-  
+  .container_instrcction  .content-list p {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
   .container_instrcction  .content-list ul {
     margin: 10px 0;
     padding-left: 20px;
@@ -59,7 +62,11 @@
     .container_instrcction h1 {
         font-size: 24px;
     }
+    .container_instrcction .section-header  {
+        display: block;
+    }
     .container_instrcction .section-header h2 {
+
         font-size: 20px;
     }
     .container_instrcction .button-toggle {
