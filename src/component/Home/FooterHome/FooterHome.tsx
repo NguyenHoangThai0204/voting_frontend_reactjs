@@ -23,10 +23,10 @@ export const FooterHome = () => {
         </div>
         <div className="content">
           <div className="links">
-            <a href="/">TRANG CHỦ</a>
-            <a href="/binh-chon">BÌNH CHỌN</a>
-            <a href="/danh-gia">ĐÁNH GIÁ</a>
-            <a href="/gioi-thieu">GIỚI THIỆU</a>
+            <a href="/#">TRANG CHỦ</a>
+            <a href="/#">BÌNH CHỌN</a>
+            <a href="/#">ĐÁNH GIÁ</a>
+            <a href="/#">GIỚI THIỆU</a>
           </div>
           <div className="under-content">
             <div className="footer-section about-us">

@@ -1,0 +1,24 @@
+@media screen and (max-width: 900px) {
+  .statisticsDialog {
+    width: 100% !important;
+    font-size: 20px !important; /* Đảm bảo tất cả các phần tử con nhận font-size */
+    line-height: 1.5 !important; /* Tùy chỉnh thêm nếu cần */
+  }
+
+  .chitiet {
+    display: block !important;
+    margin: 10px 0 !important;
+    padding: 10px !important;
+    border-bottom: 1px solid black !important;
+  }
+
+  .chitiet div {
+    display: block !important;
+    margin-bottom: 5px !important;
+  }
+
+  .chitiet p {
+    font-size: 19px !important; /* Đảm bảo tất cả các phần tử con nhận font-size */
+    margin: 5px 0 !important;
+  }
+}

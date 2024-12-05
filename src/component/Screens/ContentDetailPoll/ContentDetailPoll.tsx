@@ -591,6 +591,7 @@ export const ContentDetailPoll: React.FC = () => {
                   vote?._id && (
                     <StatisticsDialog
                       open={open}
+                      
                       handleClose={handleClose}
                       pollId={vote._id}
                     />

@@ -33,9 +33,7 @@ const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
 const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
 const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
 const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
-
 // const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
-
 const API_AI = "https://api-1.pollweb.io.vn/api/ai";
 
 // lấy thông tin cuộc bình chọn qua blockchain

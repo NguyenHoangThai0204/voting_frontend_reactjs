@@ -8,6 +8,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { getPollById, getAllVoteByPollid, getInforAuthor, getPollResultsBlockChain } from '../../../api/CallApi';
 import { Poll, Vote, ListReultsResponse } from '../../../typeObject';
+import './StatisticsDialog.css';
 
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -63,7 +64,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
     };
 
     fetchVote();
-  }, [pollId, open]); // useEffect chỉ kích hoạt khi pollId hoặc open thay đổi
+  }); // useEffect chỉ kích hoạt khi pollId hoặc open thay đổi
   // Cập nhật lại khi pollId hoặc open thay đổi và poll chưa được tải
 
   // Tính tổng số phiếu bầu từ results hoặc từ votes nếu results rỗng
@@ -126,11 +127,18 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   };
 
   return (
-    <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
+<Dialog
+  PaperProps={{
+    className: "statisticsDialog",
+  }}
+  open={open}
+  onClose={handleClose}
+>
+
       <DialogTitle>Thống kê kết quả bình chọn</DialogTitle>
       <DialogContent>
         {poll ? (
-          <>
+          <div  >
             <div style={{ display: "flex" }}>
               <div>
                 <p><strong>Tên cuộc bình chọn:</strong> {poll.title}</p>
@@ -140,12 +148,6 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
                 <p><strong>Thời gian kết thúc:</strong> {formatDateTime(poll.timeEnd)}</p>
               </div>
             </div>
-
-            {/* Nút để hiển thị/ẩn các phiếu bầu */}
-            {/* {(poll.typeContent !== "privatesmc") && <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
-              {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
-            </Button>
-            } */}
             <Button onClick={() => setShowVotes(!showVotes)} variant="contained">
               {showVotes ? "Ẩn chi tiết" : "Xem chi tiết"}
             </Button>
@@ -155,7 +157,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
                   const selectedOption = poll?.options?.find(option => option._id === vote.optionId);
                   const username = vote.userId ? usernames.get(vote.userId) : null; // Lấy username từ Map
                   return (
-                    <div key={index} style={{ margin: "10px 0", borderBottom: "1px solid black" }}>
+                    <div key={index} className='chitiet' style={{ margin: "10px 0", borderBottom: "1px solid black" }}>
                       <div style={{ display: "flex" }}>
                         <p><strong>Lượt thứ:</strong> {index + 1}</p>
                         <p><strong>Người bình chọn:</strong> {username || "N/A"}</p> {/* Hiển thị username */}
@@ -178,7 +180,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
               <p><strong>Tổng số lượt tham gia bình chọn: </strong> {totalVotes}</p>
               <p><strong>Chiến thắng thuộc về: </strong> {winnerContent}</p>
             </div>
-          </>
+          </div>
         ) : (
           <p>Loading...</p>
         )}
@@ -189,6 +191,7 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
         </Button>
       </DialogActions>
     </Dialog>
+
   );
 };
 
