@@ -213,6 +213,7 @@ export const ContentDetailPoll: React.FC = () => {
                       transactionHash: 0,
                       userId: authContext?.user?._id ?? null,
                       timestamp: new Date().toISOString(),
+                      addRessWallet: addRessWallet || "",
                     });
 
                     try {
@@ -261,7 +262,7 @@ export const ContentDetailPoll: React.FC = () => {
                     Swal.fire({
                       icon: "error",
                       title: "Oops...",
-                      text: "Tài khoản đã vote rồi.",
+                      text: "Tài khoản ví đã vote rồi.",
                       showConfirmButton: false,
                       timer: 1500,
                       timerProgressBar: true,
@@ -372,6 +373,7 @@ export const ContentDetailPoll: React.FC = () => {
               transactionHash: 0,
               userId: authContext?.user?._id ?? null,
               timestamp: new Date().toISOString(),
+              addRessWallet: null,
             };
             await postVotePrivate(dataVote);
             Swal.fire({
@@ -431,6 +433,7 @@ export const ContentDetailPoll: React.FC = () => {
           transactionHash: 0,  // Gán chuỗi rỗng
           userId: authContext?.user?._id || null,
           timestamp: new Date().toISOString(),
+          addRessWallet: null,
         };
 
         try {

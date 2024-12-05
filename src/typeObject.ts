@@ -133,6 +133,7 @@ export interface Vote {
   userId: string | null;
   timestamp: string;
   transactionHash: number;
+  addRessWallet: string | null;
 }
 
 export interface VoteResult {

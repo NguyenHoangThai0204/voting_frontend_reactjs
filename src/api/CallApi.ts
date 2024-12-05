@@ -20,7 +20,7 @@ import { PollResponse } from "../typeObject";
 import Cookies from "universal-cookie";
 
 // const API_USER = "http://localhost:3000/api/user";
-// const API_VOTE = "http://localhost:3000/api/vote";
+const API_VOTE = "http://localhost:3000/api/vote";
 // const API_POLL = "http://localhost:3000/api/poll";
 // const API_SSO = "http://localhost:3000/api/auth";
 // const API_TheNew = "http://localhost:3000/api/theNew";
@@ -29,7 +29,7 @@ const API_PRIVATE = "http://localhost:3000/api/private";
 // const API_AI = "http://localhost:3000/api/ai";
 
 const API_USER = "https://api-1.pollweb.io.vn/api/user";
-const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
+// const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
 const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
 const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
 const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
