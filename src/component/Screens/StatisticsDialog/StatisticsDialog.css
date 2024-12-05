@@ -5,7 +5,10 @@
     line-height: 1.5 !important; /* Tùy chỉnh thêm nếu cần */
     font-weight: 400 !important; /* Tùy chỉnh thêm nếu cần */
   }
-
+  .statisticsDialog p {
+    
+    font-weight: 200 !important; /* Tùy chỉnh thêm nếu cần */
+  }
   .chitiet {
     display: block !important;
     margin: 10px 0 !important;
