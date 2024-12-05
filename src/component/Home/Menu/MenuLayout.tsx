@@ -37,7 +37,9 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
                 <div className="icon">
                   {item.icon}
                 </div>
-                {item.name}
+                <div className="name">
+                  {item.name}
+                </div>  
               </div>
             </Link>
           ))}

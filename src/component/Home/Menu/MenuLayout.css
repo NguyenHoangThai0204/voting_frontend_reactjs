@@ -2,7 +2,6 @@
   display: flex;
   width: 100%;
   padding: auto;
-  /* min-width: 500px; */
 }
 .wrapper_menu a {
   text-decoration: none;
@@ -19,7 +18,7 @@
   width: 100%;
   transition: background-color 0.3s ease, font-size 0.3s ease;
 }
-.wrapper_menu .icon_menu:hover {
+.wrapper_menu a:hover {
   cursor: pointer;
   background-color: #f1f1f1;
   border-radius: 15px;
@@ -50,10 +49,12 @@
   }
   .wrapper_menu .menu .icon_menu {
     display: inline-block;
-    margin: 10px;
+    /* margin: 10px; */
     width: 100%;
+    padding: 0;
     font-size: 15px;
     font-weight: 500;
+
   }
   .wrapper_menu .menu .icon_menu .icon_menu.menuClick {
     background-color: #f1eeee;
