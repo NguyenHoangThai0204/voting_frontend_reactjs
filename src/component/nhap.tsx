@@ -1619,3 +1619,57 @@
 //       },
 //     });
 //   }
+
+
+                // try {
+                  
+                //   const result = await voteAndPostPrivate({
+                //     pollIdSm: vote.pollIdSm || "",
+                //     optionId: optionsId,
+                //     author: addRessWallet || "",
+                //     voteData: {
+                //       pollId: vote._id,
+                //       optionId: Number(optionId),
+                //       transactionHash: Number(vote.pollIdSm),
+                //       userId: authContext?.user?._id ?? null,
+                //       timestamp: new Date().toISOString(),
+                //     },
+                //   });
+                  
+                //   if (result.success) {
+                //     Swal.fire({
+                //       icon: "success",
+                //       title: "Thành công",
+                //       text: "Bình chọn thành công!",
+                //       showConfirmButton: false,
+                //       timer: 1500,
+                //       timerProgressBar: true,
+                //       showClass: { popup: "swal2-no-animation" },
+                //       hideClass: { popup: "" },
+                //     });
+                //   } else {
+                //     Swal.fire({
+                //       icon: "error",
+                //       title: "Oops...",
+                //       text: result.error || "Đã xảy ra lỗi trong quá trình bình chọn.",
+                //       showConfirmButton: false,
+                //       timer: 1500,
+                //       timerProgressBar: true,
+                //       showClass: { popup: "swal2-no-animation" },
+                //       hideClass: { popup: "" },
+                //     });
+                //     return;
+                //   }
+                  
+                // } catch {
+                //   Swal.fire({
+                //     icon: "error",
+                //     title: "Oops...",
+                //     text: "Đã xảy ra lỗi trong quá trình bình chọn.",
+                //     showConfirmButton: false,
+                //     timer: 1500,
+                //     timerProgressBar: true,
+                //     showClass: { popup: "swal2-no-animation" },
+                //     hideClass: { popup: "" },
+                //   });
+                // }

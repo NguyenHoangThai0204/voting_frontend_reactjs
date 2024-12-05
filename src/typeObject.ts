@@ -172,3 +172,7 @@ export interface results{
   optionId: number;
   voteCount: number;
 }
+export interface ResultCheckVoteSm {
+  message: string;
+  result: boolean;
+}

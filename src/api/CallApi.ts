@@ -10,6 +10,7 @@ import {
   UserCreate,
   VoteResultResponse,
   ListReultsResponse,
+  ResultCheckVoteSm,
 } from "../typeObject"; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from "../typeObject";
 import { VoteResponse } from "../typeObject";
@@ -35,6 +36,16 @@ const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
 const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
 // const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 const API_AI = "https://api-1.pollweb.io.vn/api/ai";
+
+// kiểm tra xem ví có vote chưa
+export const checkVoteAddress = async (data: {
+  pollId: number;
+  voter: string;
+}): Promise<ResultCheckVoteSm> => {
+  console.log("data checkVoteAddress:", data);
+  const response = await axios.get(`${API_PRIVATE}/checkVoted`,  { data });
+  return response.data;
+};
 
 // lấy thông tin cuộc bình chọn qua blockchain
 export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReultsResponse> => {
@@ -363,7 +374,7 @@ export const voteSm = async ({
   optionId,
   author,
 }: {
-  pollIdSm: string;
+  pollIdSm: number;
   optionId: number;
   author: string;
 }): Promise<boolean> => {
