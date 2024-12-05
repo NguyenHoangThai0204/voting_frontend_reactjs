@@ -3,6 +3,7 @@
     width: 100% !important;
     font-size: 20px !important; /* Đảm bảo tất cả các phần tử con nhận font-size */
     line-height: 1.5 !important; /* Tùy chỉnh thêm nếu cần */
+    font-weight: 400 !important; /* Tùy chỉnh thêm nếu cần */
   }
 
   .chitiet {
