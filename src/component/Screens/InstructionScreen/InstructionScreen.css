@@ -53,7 +53,7 @@
   }
   .container_instrcction .container_instrcction_right .video-container {
     display: flex;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .container_instrcction .container_instrcction_right .video-container iframe {
