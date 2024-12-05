@@ -131,6 +131,8 @@ const StatisticsDialog: React.FC<StatisticsDialogProps> = ({ open, handleClose, 
   PaperProps={{
     className: "statisticsDialog",
   }}
+  fullWidth={true}
+  maxWidth="lg"
   open={open}
   onClose={handleClose}
 >
