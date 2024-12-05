@@ -7,6 +7,7 @@ import ContentInformation from "../../Screens/ContentInformation/ContentInformat
 import { ContentDetailPoll } from "../../Screens/ContentDetailPoll/ContentDetailPoll";
 import ContentTabsAdmin from "../../Admin/ContentTabsAdmin/ContentTabsAdmin";
 import { TheNewLayout } from '../../Screens/CommentsScreen/TheNewLayout';
+import { InstructionScreen } from '../../Screens/InstructionScreen/InstructionScreen';
 
 export const ContentLayout = () => {
   const location = useLocation();
@@ -29,8 +30,8 @@ export const ContentLayout = () => {
       return <TheNewLayout />;
     case '/personal-page':
       return <ContentInformation />;
-    // case '/setting':
-    //   return <p>Setting</p>;
+    case '/instruction':
+      return <InstructionScreen />;
     case '/create-poll':
       return <ContentPollFormLayout />;
     default:

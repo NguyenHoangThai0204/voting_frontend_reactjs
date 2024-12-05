@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import './MenuLayout.css';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
   export function MenuLayout() {
 
     const itemMenu = [
@@ -15,6 +16,11 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
         icon: <HowToVoteIcon sx={{ fontSize: 18 }} />,
         name: 'Bình chọn',
         link: '/poll'
+      },
+      {
+        icon: <MenuBookIcon sx={{ fontSize: 18 }} />,
+        name: 'Hướng dẫn',
+        link: '/instruction'
       },
       {
         icon: <LibraryBooksIcon sx={{ fontSize: 18 }} />,

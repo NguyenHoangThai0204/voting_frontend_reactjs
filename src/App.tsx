@@ -20,6 +20,7 @@ function App() {
           </Route>
           <Route path="detail-poll/:id" element={<HomeLayout />} />
           <Route path="thenew" element={<HomeLayout />} />
+          <Route path="instruction" element={<HomeLayout />} />
           <Route path="logout" element={<HomeLayout />} />
           <Route path="login" element={<FormLayout formType={'login'} onLoginClick={function (): void {
             throw new Error('Function not implemented.');
