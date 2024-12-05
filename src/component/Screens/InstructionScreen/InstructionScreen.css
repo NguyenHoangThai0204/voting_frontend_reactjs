@@ -3,21 +3,29 @@
     font-family: Arial, sans-serif;
     line-height: 1.5;
     font-size: 20px;
+    display: flex;
   }
   .container_instrcction h1{
     font-weight: 700;
   }
-  .container_instrcction  .section-header {
+  .container_instrcction  .container_instrcction_left  {
+    width: 50%;
+  }
+  
+  .container_instrcction .container_instrcction_right {
+    width: 50%;
+  }
+  .container_instrcction  .container_instrcction_left .section-header {
     display: flex;
     align-items: center;
   }
   
-  .container_instrcction  .section-header h2 {
+  .container_instrcction .container_instrcction_left .section-header h2 {
     margin: 0;
     font-weight: 548;
   }
   
-  .container_instrcction  .button-toggle {
+  .container_instrcction .container_instrcction_left .button-toggle {
     margin-left: 10px;
     padding: 5px 10px;
     cursor: pointer;
@@ -27,61 +35,72 @@
     border-radius: 5px;
   }
   
-  .container_instrcction .button-toggle:hover {
+  .container_instrcction .container_instrcction_left .button-toggle:hover {
     background: #0056b3;
   }
-  .container_instrcction  .content-list p {
+  .container_instrcction .container_instrcction_left .content-list p {
     margin: 10px 0;
     padding-left: 20px;
   }
-  .container_instrcction  .content-list ul {
+  .container_instrcction .container_instrcction_left .content-list ul {
     margin: 10px 0;
     padding-left: 20px;
   }
   
-  .container_instrcction .content-list ol {
+  .container_instrcction .container_instrcction_left .content-list ol {
     margin: 10px 0;
     padding-left: 20px;
   }
-  .container_instrcction .video-container {
+  .container_instrcction .container_instrcction_right .video-container {
     display: flex;
     margin-top: 20px;
 }
 
-.container_instrcction .video-container iframe {
+.container_instrcction .container_instrcction_right .video-container iframe {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+    width: 550px;
+    margin: auto;
+    height:250px;
 }
 
 @media screen and (max-width: 900px) {
     .container_instrcction {
         padding: 10px;
         font-size: 18px;
+        display: block;
+    }
+    .container_instrcction  .container_instrcction_left  {
+      width: 100%;
+    }
+    
+    .container_instrcction .container_instrcction_right {
+      width: 100%;
     }
     .container_instrcction h1 {
         font-size: 24px;
     }
-    .container_instrcction .section-header  {
+    .container_instrcction .container_instrcction_left .section-header  {
         display: block;
     }
-    .container_instrcction .section-header h2 {
+    .container_instrcction .container_instrcction_left  .section-header h2 {
 
         font-size: 20px;
     }
-    .container_instrcction .button-toggle {
+    .container_instrcction .container_instrcction_left  .button-toggle {
         padding: 5px 8px;
     }
-    .container_instrcction .content-list ul {
+    .container_instrcction .container_instrcction_left  .content-list ul {
         margin: 5px 0;
     }
-    .container_instrcction .content-list ol {
+    .container_instrcction .container_instrcction_left .content-list ol {
         margin: 5px 0;
     }
-    .container_instrcction .video-container {
+    .container_instrcction .container_instrcction_right .video-container {
         margin-top: 10px;
     }
-    .container_instrcction .video-container iframe {
+    .container_instrcction .container_instrcction_right .video-container iframe {
         border-radius: 5px;
     }   
     
