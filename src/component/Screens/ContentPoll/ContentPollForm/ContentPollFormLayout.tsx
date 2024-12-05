@@ -517,6 +517,7 @@ export const ContentPollFormLayout = () => {
           onClick={handleAddChoice}
           sx={{ textTransform: 'none' }}
           color="success">Thêm lựa chọn</Button>
+        
         <div className="form_date">
           <div className="date">
             <div className="label">Ngày bắt đầu:</div>

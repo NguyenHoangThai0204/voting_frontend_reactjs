@@ -179,6 +179,9 @@
     display: block;
     margin-top: 15px;
   }
+  .wrapper_voteform form .form_date TextField{
+    width: 100%;
+  }
   .wrapper_voteform form .form_date .date {
     width: 100%;
     margin-right: 10px;
