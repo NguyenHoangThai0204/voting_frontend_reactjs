@@ -50,3 +50,32 @@
     height: auto;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 900px) {
+    .container_instrcction {
+        padding: 10px;
+        font-size: 18px;
+    }
+    .container_instrcction h1 {
+        font-size: 24px;
+    }
+    .container_instrcction .section-header h2 {
+        font-size: 20px;
+    }
+    .container_instrcction .button-toggle {
+        padding: 5px 8px;
+    }
+    .container_instrcction .content-list ul {
+        margin: 5px 0;
+    }
+    .container_instrcction .content-list ol {
+        margin: 5px 0;
+    }
+    .container_instrcction .video-container {
+        margin-top: 10px;
+    }
+    .container_instrcction .video-container iframe {
+        border-radius: 5px;
+    }   
+    
+}
