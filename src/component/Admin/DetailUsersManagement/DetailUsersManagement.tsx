@@ -225,6 +225,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             Swal.fire('Thất bại', 'Cập nhật thông tin không thành công!', 'error');
         }
     };
+
     const [avatar, setAvatar] = useState<string | null>(null);
     const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -365,7 +366,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
       Lưu
     </Button>
   </DialogActions>
-</Dialog>
+                </Dialog>
 
 
                 <h2>THÔNG TIN NGƯỜI DÙNG</h2>

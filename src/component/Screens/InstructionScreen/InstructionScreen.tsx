@@ -123,7 +123,7 @@ export const InstructionScreen = () => {
                 {/* Loại Poll 3 */}
                 <section>
                     <div className="section-header">
-                        <h2>3. Advanced Poll (Bình chọn ẩn danh)</h2>
+                        <h2>3. Advanced Poll (Bình chọn nâng cao)</h2>
                         <button
                             onClick={() => toggleSection("anonymousPoll")}
                             className="button-toggle"

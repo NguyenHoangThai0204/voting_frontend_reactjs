@@ -2,19 +2,16 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../../contextapi/AuthContext';
 import './ContentInformation.css';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Swal from "sweetalert2";
+import { updateUser, uploadImage } from '../../../api/CallApi';
 
 const ContenInformation = () => {
   const authContext = useContext(AuthContext);
-  const [image, setImage] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    address: '',
-    role: '',
-    status: ''
-  });
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   if (!authContext) {
     return <p>Loading...</p>;
@@ -26,47 +23,190 @@ const ContenInformation = () => {
     return <p>Please log in to see user information.</p>;
   }
 
-  const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+
+      // Gọi hàm uploadImage để upload file
+      const formData = new FormData();
+      formData.append('file', file);
+      const uploadedImageUrl = await uploadImage(formData);
+
+      if (uploadedImageUrl) {
+        setAvatar(uploadedImageUrl);
+      } else {
+        console.error('Upload ảnh không thành công');
+      }
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setUserInfo({
-      fullName: user?.fullName || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
-      address: `${user?.street}, ${user?.ward}, ${user?.province}`,
-      role: user?.role || '',
-      status: user?.status || ''
-    });
-  };
-  const handleCancelClick = () => {
+  const handleEditClose = () => {
     setIsEditing(false);
-    setUserInfo({
-      fullName: user?.fullName || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
-      address: `${user?.street}, ${user?.ward}, ${user?.province}`,
-      role: user?.role || '',
-      status: user?.status || ''
-    });
   };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserInfo(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const handleEditSubmit = async (userId: string) => {
+    try {
+      // Lấy giá trị từ các trường nhập liệu
+      const fullName = (document.getElementById('fullName') as HTMLInputElement).value;
+      const email = (document.getElementById('email') as HTMLInputElement).value;
+      const phone = (document.getElementById('phone') as HTMLInputElement).value;
+      const address = (document.getElementById('address') as HTMLInputElement).value;
+
+      // Kiểm tra dữ liệu đầu vào (nếu cần)
+      if (!fullName || !email || !phone || !address) {
+        Swal.fire('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
+        return;
+      }
+
+      // Tách địa chỉ thành các phần
+      const addressParts = address.split(',').map((item) => item.trim());
+      if (addressParts.length !== 3) {
+        Swal.fire('Lỗi', 'Địa chỉ không hợp lệ. Vui lòng nhập theo định dạng: Đường, Phường, Tỉnh!', 'error');
+        return;
+      }
+      const [street, ward, province] = addressParts;
+
+      // Chuẩn bị đối tượng gửi API
+      const updatedUser = {
+        _id: userId,
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        street: street,
+        ward: ward,
+        province: province,
+        avatar: avatar || undefined,
+      };
+
+      console.log('Data chuẩn bị gửi:', updatedUser);
+
+      // Gửi API cập nhật
+      await updateUser(updatedUser);
+
+      // Thông báo thành công
+      Swal.fire('Thành công', 'Cập nhật thông tin người dùng thành công!', 'success');
+
+      // Đóng dialog
+      handleEditClose();
+    } catch (error) {
+      console.error('Lỗi khi cập nhật thông tin người dùng:', error);
+      Swal.fire('Thất bại', 'Cập nhật thông tin không thành công!', 'error');
+    }
   };
 
   return (
     <div>
-      <h1>User Information</h1>
+      {isEditing &&
+        <Dialog
+          open={isEditing}
+          maxWidth="lg"
+          fullWidth
+          style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}
+        >
+          <DialogContent>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
+              Sửa Thông Tin
+            </h3>
+            <form id="editUserForm_infor" style={{margin:0, width:'100%', padding:'5px'}}>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Họ và Tên</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={user?.fullName}
+                  id="fullName"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '1rem',
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  defaultValue={user?.email}
+                  id="email"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '1rem',
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Số điện thoại</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={user?.phone}
+                  id="phone"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '1rem',
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Địa chỉ</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  defaultValue={`${user?.street}, ${user?.ward}, ${user?.province}`}
+                  id="address"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '1rem',
+                  }}
+                />
+              </div>
+              {/* Thêm trường ảnh đại diện */}
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Ảnh Đại Diện</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="avatar"
+                  accept="image/*"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '1rem',
+                  }}
+                  onChange={handleChangeImage}
+                />
+              </div>
+            </form>
+          </DialogContent>
+          <DialogActions style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+            <Button onClick={handleEditClose} color="secondary" style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}>
+              Hủy
+            </Button>
+            <Button
+              onClick={() => handleEditSubmit(user?._id || '')}
+              color="primary"
+              style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}
+            >
+              Lưu
+            </Button>
+          </DialogActions>
+        </Dialog>}
+      
+      <h1 style={{marginTop: '20px', textAlign: 'center', fontSize: '2rem', fontWeight: 'bold'
+      }}> Thông tin người dùng</h1>
       {user ? (
         <div className='contentinformation'>
           <div className="header_content_form_right">
@@ -77,7 +217,7 @@ const ContenInformation = () => {
                 style={{ display: "none" }}
               />
               {
-                user?.avatar || image ?
+                user?.avatar || avatar ?
                   (
                     <img src={user?.avatar} alt="avatar" className="avatar" />
                   ) : (
@@ -95,19 +235,17 @@ const ContenInformation = () => {
               <tbody>
                 <tr className="row">
                   <td>
-                    <label>UserId: </label>
+                    <label>Mã người dùng: </label>
                     <span>{user ? user._id : 'N/A'}</span>
                   </td>
                 </tr>
                 <tr className="row">
                   <td>
-                    <label>Full name: </label>
+                    <label>Họ và tên: </label>
                     {isEditing ? (
                       <input
                         type="text"
                         name="fullName"
-                        value={userInfo.fullName}
-                        onChange={handleInputChange}
                       />
                     ) : (
                       <span>{user?.fullName}</span>
@@ -121,8 +259,6 @@ const ContenInformation = () => {
                       <input
                         type="text"
                         name="email"
-                        value={userInfo.email}
-                        onChange={handleInputChange}
                       />
                     ) : (
                       <span>{user?.email}</span>
@@ -131,13 +267,11 @@ const ContenInformation = () => {
                 </tr>
                 <tr className="row">
                   <td>
-                    <label>Phone number: </label>
+                    <label>Số điện thoại: </label>
                     {isEditing ? (
                       <input
                         type="text"
                         name="phone"
-                        value={userInfo.phone}
-                        onChange={handleInputChange}
                       />
                     ) : (
                       <span>{user?.phone}</span>
@@ -146,13 +280,11 @@ const ContenInformation = () => {
                 </tr>
                 <tr className="row">
                   <td>
-                    <label>Address: </label>
+                    <label>Địa chỉ: </label>
                     {isEditing ? (
                       <input
                         type="text"
                         name="address"
-                        value={userInfo.address}
-                        onChange={handleInputChange}
                       />
                     ) : (
                       <span>{`${user?.street}, ${user?.ward}, ${user?.province}`}</span>
@@ -166,8 +298,6 @@ const ContenInformation = () => {
                       <input
                         type="text"
                         name="role"
-                        value={userInfo.role}
-                        onChange={handleInputChange}
                       />
                     ) : (
                       <span>{user?.role}</span>
@@ -176,36 +306,26 @@ const ContenInformation = () => {
                 </tr>
                 <tr className="row">
                   <td>
-                    <label>Status: </label>
+                    <label>Trạng thái: </label>
                     {isEditing ? (
                       <input
                         type="text"
                         name="status"
-                        value={userInfo.status}
-                        onChange={handleInputChange}
                       />
                     ) : (
-                      <span>{user?.status}</span>
+                      <span>{user?.status === 'active' ? "Đang hoạt động" : "Đã bị khoá"}</span>
                     )}
                   </td>
                 </tr>
               </tbody>
               <div className='button'>
-                {isEditing ? (
-                  <>
-                    <button className="btn btn-primary" onClick={handleEditClick}>Accept</button>
-                    <button className="btn btn-secondary" onClick={handleCancelClick}>Close</button>
-                  </>
-                ) : (
-                  <>
-                    <button className="btn btn-primary" onClick={handleEditClick}>Edit user</button>
-                    {user?.status === 'active' ? (
-                      <button className="btn btn-danger">Block user</button>
-                    ) : (
-                      <button className="btn btn-success">Unblock user</button>
-                    )}
-                  </>
-                )}
+                <>
+                  <button className="btn btn-primary"
+                    onClick={() => setIsEditing(true)}
+                  >Sửa thông tin</button>
+
+                </>
+
               </div>
             </table>
           </div>

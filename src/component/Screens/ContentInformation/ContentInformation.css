@@ -1,53 +1,88 @@
-
 .contentinformation{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
 }
 p{
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #000;
-    margin: 0 10px;
-    padding: 0;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #000;
+  margin: 0 10px;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.contentinformation .header_content_form_right .avatar{
+  max-height: 300px;
+  max-width:  300px;
 }
 .header_content_form_right {
-    width: 27%;
-    padding: 15px;
-    margin: auto 10px;
-    background-color: #41b3a2;
-  }
+  width: 27%;
+  padding: 15px;
+  margin: auto 10px;
+  background-color: #41b3a2;
+}
 .header_content_form_right img {
-    background-repeat: no-repeat;
-    margin: auto;
-    background-size: cover;
-    object-fit: cover;
-    object-position: center;
-  }
+  background-repeat: no-repeat;
+  margin: auto;
+  background-size: cover;
+  object-fit: cover;
+  object-position: center;
+}
 .contentinformation .infor{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    font-size: 20px;
-    padding: 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  padding: 20px;
 }
 .contentinformation .infor table tbody tr{
-  margin: 10px 0;
-  display: block;
+margin: 10px 0;
+display: block;
 }
 .contentinformation .infor table tbody .row span{
-  font-size: 22px;
-  font-weight: bold;
+font-size: 22px;
+font-weight: bold;
 }
 .contentinformation .infor table .button{
-  display: flex;
-  justify-content: space-around;
+display: flex;
+justify-content: space-around;
 }
 .contentinformation .infor table .button button{
-  font-size: 22px;
-  padding: 10px;
+font-size: 22px;
+padding: 10px;
+}
+
+@media screen and (max-width: 768px){
+  .contentinformation{
+    flex-direction: column;
+  }
+  .header_content_form_right {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .contentinformation .header_content_form_right .avatar{
+    max-height: 200px;
+    max-width:  200px;
+  }
+  .contentinformation .infor{
+    width: 100%;
+    padding: 10px;
+  }
+  .contentinformation .infor table .button{
+    display: flex;
+    justify-content: space-around;
+  }
+  .contentinformation .infor table .button button{
+    font-size: 18px;
+    padding: 10px;
+  }
+  p{
+    font-size: 1.2rem;
+  }
+  .contentinformation form{
+    margin: 0;
+  }
 }
