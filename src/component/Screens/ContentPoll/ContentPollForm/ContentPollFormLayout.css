@@ -124,7 +124,9 @@
   height: 250px;
   display: flex;
 }
-
+.wrapper_voteform .text_description .text_description_field{
+  width: 70%;
+}
 @media screen and (max-width: 900px) {
   .wrapper_voteform {
     width: 100%;
@@ -196,9 +198,12 @@
     display: block;
   }
   .wrapper_voteform .text_description .avatar-wrapper-description{
-    width: 95%;
+    width: 90%;
     margin:auto;
     max-height: 200px;
     margin: 0 10px 10px 0;
+  }
+  .wrapper_voteform .text_description .text_description_field{
+    width: 100%;
   }
 }

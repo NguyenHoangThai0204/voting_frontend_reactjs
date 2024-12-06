@@ -482,7 +482,6 @@ export const ContentPollFormLayout = () => {
                         alt="avatar"
                         className="choice-avatar"
                       />
-                      {/* Thêm nút thay đổi avatar */}
                       <input
                         type="file"
                         accept="image/*"
@@ -501,7 +500,7 @@ export const ContentPollFormLayout = () => {
                       variant="outlined"
                       placeholder={`Miêu tả lựa chọn ${index + 1}`}
                       multiline
-                      style={{ width: "100%", marginBottom: "10px" }}
+                      // style={{ width: "100%", marginBottom: "10px" }}
                       value={descriptionSelector[index]}
                       onChange={(e) => handleDescriptionChangeContent(index, e.target.value)}
                     />

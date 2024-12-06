@@ -1,5 +1,11 @@
+.container_instrcction_title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0;
+}
 .container_instrcction {
-    padding: 20px;
+    padding: 10px;
     font-family: Arial, sans-serif;
     line-height: 1.5;
     font-size: 20px;
@@ -66,8 +72,12 @@
 }
 
 @media screen and (max-width: 900px) {
+  .container_instrcction_title{
+    font-size: 23px;
+    margin-top: 5px;
+}
     .container_instrcction {
-        padding: 10px;
+        padding: 5px;
         font-size: 18px;
         display: block;
     }
@@ -79,7 +89,7 @@
       width: 100%;
     }
     .container_instrcction h1 {
-        font-size: 20px;
+        font-size: 21px;
     }
     .container_instrcction .container_instrcction_left .section-header  {
         display: block;
