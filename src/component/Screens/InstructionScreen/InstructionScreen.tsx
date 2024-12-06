@@ -170,6 +170,7 @@ export const InstructionScreen = () => {
                     </p>
                     <ul style={{padding:'5px'}}>
                         <li>Nếu tài khoản thường thì mỗi tháng chỉ tạo tối đa 2 cuộc bình chọn công khai hoặc riêng tư.</li>
+                        <li>Nếu tài khoản có kết nối ví thì có thể tạo nhiều cuộc bình chọn.</li>
                     </ul>
 
                 </div>

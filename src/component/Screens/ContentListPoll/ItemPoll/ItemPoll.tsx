@@ -10,6 +10,7 @@ import { AuthContext } from "../../../../contextapi/AuthContext";
 interface ItemPollProps {
   item: Poll;
 }
+import { vi } from "date-fns/locale";
 import { useLocation } from "react-router-dom";
 export const ItemPoll = ({ item }: ItemPollProps) => {
   const [author, setAuthor] = useState<string | undefined>('');
@@ -35,13 +36,13 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
   }, [item.authorId]);
 
   // Tính thời gian đã qua kể từ khi tạo bình chọn
-  const timeSinceCreation = formatDistanceToNow(new Date(item.timeCreate), { addSuffix: true });
+  const timeSinceCreation = formatDistanceToNow(new Date(item.timeCreate), { addSuffix: true, locale: vi });
 
   // Kiểm tra xem bình chọn có kết thúc chưa
   const isPollEnded = new Date(item.timeEnd) < new Date();
 
   // Nếu đã kết thúc, hiển thị "The end"
-  const displayTime = isPollEnded ? "The end" : timeSinceCreation;
+  const displayTime = isPollEnded ? "Kết thúc" : timeSinceCreation;
 
   return (
     <div className="item">
@@ -55,7 +56,7 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
         <h3>{item.title}</h3>
         <h5>{item.description}</h5>
         <div className="footer_itemvote">
-          <div className="footer_left">
+          <div className="footer_left marquee">
             {
               authContext?.user && location.pathname.startsWith('/poll') ? (
                <> {item?.typeContent === "public" ? "Công khai" : item?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}</>
