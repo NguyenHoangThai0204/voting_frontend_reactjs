@@ -5,19 +5,25 @@ import { FormMenuSetting } from '../FormMenuSetting/FormMenuSetting';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../../contextapi/AuthContext';
 import React from 'react';
+import { useEffect } from 'react';
 
 export const HeaderHomeLoggedin = () => {
   const authContext = useContext(AuthContext);
   const user = authContext?.user;
   const [showMenu, setShowMenu] = useState(false);
+  const [isOnline, setIsOnline] = useState(true); // Trạng thái online mặc định là true
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Hàm xử lý khi hover vào phần tử
+  // Hàm xử lý trạng thái online (giả sử từ API hoặc context)
+  useEffect(() => {
+    // Giả sử lấy trạng thái online từ server hoặc context
+    setIsOnline(true); // Hoặc logic thực tế của bạn
+  }, []);
+
   const handleMouseEnter = () => {
     setShowMenu(true);
   };
 
-  // Hàm xử lý khi rời khỏi phần tử
   const handleMouseLeave = () => {
     setShowMenu(false);
   };
@@ -29,17 +35,15 @@ export const HeaderHomeLoggedin = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         ref={menuRef}
-
       >
-        <div className="header__home_name" >
-          {user?.fullName}
-        </div>
+        <div className="header__home_name">{user?.fullName}</div>
         <div className="header__home_icon">
           {user?.avatar ? (
-            <img src={user?.avatar} />
+            <img src={user?.avatar} alt="User Avatar" />
           ) : (
             <AccountCircleIcon sx={{ fontSize: 40 }} />
           )}
+          {isOnline && <span className="status-indicator"></span>} {/* Chỉ hiển thị khi online */}
         </div>
 
         {showMenu && (

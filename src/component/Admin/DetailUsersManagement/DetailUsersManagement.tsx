@@ -28,7 +28,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
     }, [pollItem]);
 
     const formattedTimeEnd = userItem?.dateOfBirth ? format(new Date(userItem.dateOfBirth), 'dd/MM/yyyy') : '';
-
+    const formattedTimeCreateSignup = userItem?.timeCreateSignup ? format(new Date(userItem?.timeCreateSignup), 'dd/MM/yyyy') : '';
     const handleDelete = async (id: string) => {
         setLoading(true);
         try {
@@ -427,9 +427,16 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                             }</span>
                                     </td>
                                 </tr>
+                                <tr className="row">
+                                    <td>
+                                        <label>Ngày đăng kí tài khoản: </label>
+                                        <span>{formattedTimeCreateSignup}</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div className='button' style={{ display: "flex", justifyContent: "end", alignContent: "center" }}>
+                        
                             <button
                                 className="btn btn-primary"
                                 style={{ padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500 }}

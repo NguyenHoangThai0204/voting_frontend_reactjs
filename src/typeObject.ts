@@ -15,6 +15,7 @@ export interface User {
     street?: string;
     role?: string;
     address?: string;
+    timeCreateSignup: string;
     __v?: number; // Tùy chọn, nếu cần
 }
 export interface UserCreate {

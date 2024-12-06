@@ -54,3 +54,9 @@
     .result-item:hover {
       background-color: aquamarine;
     }
+    .disabled-icon {
+      color: gray; /* Màu sắc hiển thị trạng thái vô hiệu */
+      pointer-events: none; /* Vô hiệu hóa sự kiện click */
+      cursor: not-allowed;
+    }
+    
