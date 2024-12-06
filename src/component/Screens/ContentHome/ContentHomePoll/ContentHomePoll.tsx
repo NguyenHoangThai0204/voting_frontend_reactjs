@@ -74,13 +74,13 @@ export const ContentHomeVote = () => {
                 </div>
             </div>}
             {voting.length > 0 && <div className="content_vote">
-                <h2 >Đang diễn ra</h2>
+                <h2 style={{marginBottom:'5px'}}>Các cuộc bình chọn công khai đang diễn ra</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voting} />
                 </div>
             </div>}
             {voted.length > 0 && <div className="content_vote">
-                <h2 >Đã kết thúc</h2>
+                <h2 style={{marginBottom:'5px'}}>Các cuộc bình chọn công khai đã kết thúc</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={voted} />
                 </div>

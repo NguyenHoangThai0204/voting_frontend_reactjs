@@ -64,7 +64,7 @@ export const ListPoll: React.FC<ListVotingProps> = ({ vote }) => {
                 >
                     <ArrowBackIosIcon />
                 </button>
-                <span>Page {currentPage}</span>
+                <span>Trang {currentPage}</span>
                 <button
                     onClick={() => handleClick('next')}
                     disabled={indexOfLastItem >= vote.length}

@@ -31,13 +31,20 @@ img {
     top: 10px;
     right: 10px;
 }
-h5,h3{
+h3{
     white-space: nowrap;         /* Giữ văn bản trên một dòng */
     overflow: hidden;            /* Ẩn phần văn bản tràn ra ngoài */
     text-overflow: ellipsis;     /* Hiển thị dấu ba chấm khi văn bản bị cắt */
-    margin: 5px 0;
+    margin: 6px 0;
+    font-weight: 700;
 }
-
+h4{
+    white-space: nowrap;         /* Giữ văn bản trên một dòng */
+    overflow: hidden;            /* Ẩn phần văn bản tràn ra ngoài */
+    text-overflow: ellipsis;     /* Hiển thị dấu ba chấm khi văn bản bị cắt */
+    margin: 6px 0;
+    font-weight: 450;
+}
 .item:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     transform: scale(1.05);    
@@ -47,15 +54,18 @@ h5,h3{
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
+    border-top: 0.5px solid rgb(236, 235, 235);
+    padding-top: 5px;
 }
 .item .footer_left {
     width: 40%;
     overflow: hidden;
+    font-size: 14px;
     white-space: nowrap;
 }
 .item .footer_right {
     width: 50%;
-    overflow: hidden;
+    overflow: hidden;font-size: 14px;
     text-align: right;
     white-space: nowrap;
 }

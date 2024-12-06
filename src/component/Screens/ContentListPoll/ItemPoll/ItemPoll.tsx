@@ -54,7 +54,7 @@ export const ItemPoll = ({ item }: ItemPollProps) => {
           </div>
         </div>
         <h3>{item.title}</h3>
-        <h5>{item.description}</h5>
+        <h4>{item.description}</h4>
         <div className="footer_itemvote">
           <div className="footer_left marquee">
             {
