@@ -1,7 +1,7 @@
 .container_instrcction_title{
     text-align: center;
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 600;
     margin: 0;
 }
 .container_instrcction {
@@ -13,6 +13,7 @@
   }
   .container_instrcction h1{
     font-weight: 550;
+    font-size: 28px;
   }
   .container_instrcction  .container_instrcction_left  {
     width: 50%;
@@ -28,7 +29,8 @@
   
   .container_instrcction .container_instrcction_left .section-header h2 {
     margin: 0;
-    font-weight: 548;
+    font-weight: 408;
+    font-size: 25px;
   }
   
   .container_instrcction .container_instrcction_left .button-toggle {
