@@ -48,6 +48,18 @@ export const checkVoteAddress = async (data: {
   return response.data;
 };
 
+// hàm logout 
+
+export const logout = async (id:string): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_USER}/logout`, { id });
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error logout:", error);
+    return false;
+  }
+};
+
 // lấy thông tin cuộc bình chọn qua blockchain
 export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReultsResponse> => {
   const response = await axios.get(`${API_PRIVATE}/getPollResult/${pollId}`);

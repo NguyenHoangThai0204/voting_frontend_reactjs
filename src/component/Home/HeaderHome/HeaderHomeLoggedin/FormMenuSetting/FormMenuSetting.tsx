@@ -6,6 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import Swal from "sweetalert2";
+import {logout} from "../../../../../api/CallApi";
 
 export function FormMenuSetting() {
   const authContext = useContext(AuthContext);
@@ -47,9 +48,13 @@ export function FormMenuSetting() {
 
   const handleListMenuSetting = async (index: number) => {
     if (index === 2) { // Log out
+      await logout(authContext?.user?._id || ""); // Gọi hàm logout từ CallApi
+
       authContext?.logout(); // Gọi hàm logout từ AuthContext
       localStorage.removeItem("walletAddress"); // Xóa ví khỏi localStorage
       authContext?.setWalletAddress(""); // Xóa ví khỏi AuthContext
+
+      
     }
 
     if (index === 1) { // Connect wallet
