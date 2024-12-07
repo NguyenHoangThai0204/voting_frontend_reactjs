@@ -19,21 +19,21 @@ import { Vote } from "../typeObject";
 import { PollResponse } from "../typeObject";
 import Cookies from "universal-cookie";
 
-// const API_USER = "http://localhost:3000/api/user";
-// const API_VOTE = "http://localhost:3000/api/vote";
-// const API_POLL = "http://localhost:3000/api/poll";
-// const API_SSO = "http://localhost:3000/api/auth";
-// const API_TheNew = "http://localhost:3000/api/theNew";
-// const API_UPLOAD = "http://localhost:3000/api/upload";
+const API_USER = "http://localhost:3000/api/user";
+const API_VOTE = "http://localhost:3000/api/vote";
+const API_POLL = "http://localhost:3000/api/poll";
+const API_SSO = "http://localhost:3000/api/auth";
+const API_TheNew = "http://localhost:3000/api/theNew";
+const API_UPLOAD = "http://localhost:3000/api/upload";
 const API_PRIVATE = "http://localhost:3000/api/private";
 // const API_AI = "http://localhost:3000/api/ai";
 
-const API_USER = "https://api-1.pollweb.io.vn/api/user";
-const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
-const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
-const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
-const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
-const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
+// const API_USER = "https://api-1.pollweb.io.vn/api/user";
+// const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
+// const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
+// const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
+// const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
+// const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
 const API_AI = "https://api-1.pollweb.io.vn/api/ai";
 
 // const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
@@ -46,6 +46,18 @@ export const checkVoteAddress = async (data: {
   console.log("data checkVoteAddress:", data);
   const response = await axios.get(`${API_PRIVATE}/checkVoted`,  { data });
   return response.data;
+};
+
+// hàm logout 
+
+export const logout = async (id:string): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_USER}/logout`, { id });
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error logout:", error);
+    return false;
+  }
 };
 
 // lấy thông tin cuộc bình chọn qua blockchain

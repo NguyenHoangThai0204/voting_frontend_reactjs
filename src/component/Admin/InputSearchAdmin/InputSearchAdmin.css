@@ -45,6 +45,42 @@
       max-height: 300px; 
       overflow-y: auto; 
     }
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 8px;
+     
+    }
+    
+    .status-indicator.online {
+      background-color: green; /* Trạng thái online */
+      animation: pulse 1.5s infinite;  /* Thêm hiệu ứng lan tỏa */
+    }
+    
+    .status-indicator.offline {
+      background-color: gray; /* Trạng thái offline */
+    }
+    
+    /* Hiệu ứng lan tỏa với bóng mờ */
+    @keyframes pulse {
+      0% {
+        transform: scale(1); /* Bắt đầu kích thước bình thường */
+        opacity: 1;
+        box-shadow: 0 0 5px green; /* Bóng mờ nhỏ khi kích thước bình thường */
+      }
+      50% {
+        transform: scale(1.5); /* Mở rộng ra */
+        opacity: 0.5; /* Mờ đi khi mở rộng */
+        box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5); /* Bóng mờ to và nhạt dần */
+      }
+      100% {
+        transform: scale(1); /* Quay lại kích thước ban đầu */
+        opacity: 1;
+        box-shadow: 0 0 5px green; /* Bóng mờ nhỏ khi quay lại kích thước ban đầu */
+      }
+    }
+    
     
     .result-item {
       padding: 10px;
