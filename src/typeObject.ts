@@ -165,10 +165,15 @@ export interface CreateTheNew{
 
 
 
-export interface ListReultsResponse {
-  optionId: number;
-  results: results[];
+export interface ListResultsResponse {
+  optionIds: number;
+  voteCounts: results[];
 }
+
+export interface ListResultsResponseSm {
+    optionIds: number;
+    voteCounts: number;
+  };
 
 export interface results{
   optionId: number;

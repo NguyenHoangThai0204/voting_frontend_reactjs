@@ -9,7 +9,7 @@ import {
   ListVotePollidResponse,
   UserCreate,
   VoteResultResponse,
-  ListReultsResponse,
+  ListResultsResponse,
   ResultCheckVoteSm,
 } from "../typeObject"; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from "../typeObject";
@@ -61,7 +61,7 @@ export const logout = async (id:string): Promise<boolean> => {
 };
 
 // lấy thông tin cuộc bình chọn qua blockchain
-export const getPollResultsBlockChain = async ( pollId: string): Promise<ListReultsResponse> => {
+export const getPollResultsBlockChain = async ( pollId: string): Promise<ListResultsResponse> => {
   const response = await axios.get(`${API_PRIVATE}/getPollResult/${pollId}`);
   return response.data;
 }
