@@ -6,7 +6,7 @@ import { User, TheNew } from '../../../typeObject';
 import { useNavigate } from 'react-router-dom';
 import './InputSearchAdmin.css';
 import io from "socket.io-client";
-const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 
 export const InputSearchAdmin = ({ currentTab }: { currentTab: number }) => {
   const [searchValue, setSearchValue] = useState<string>('');  // Lưu giá trị tìm kiếm
