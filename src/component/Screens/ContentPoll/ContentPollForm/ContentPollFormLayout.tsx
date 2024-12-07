@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useLocation } from "react-router-dom";
-import { createPoll, createPrivatePoll, uploadImage } from "../../../../api/CallApi"
+import { createPoll, uploadImage } from "../../../../api/CallApi"
 // import { createPoll, createPrivatePoll, getAICheckContent,uploadImage } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
 import React from "react";
@@ -19,6 +19,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Swal from "sweetalert2";
 import { formatISO } from "date-fns";
+
+// import { createPollSm } from "../../../../service/contractService";
+import { createPollWithOptions } from '../../../../service/contractService';
+
+
 export const ContentPollFormLayout = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
@@ -108,6 +113,8 @@ export const ContentPollFormLayout = () => {
   }
   //
   const [loading, setLoading] = useState(false);
+
+
 
   const handleCreateVote = async () => {
     setLoading(true); // Bắt đầu quá trình tải
@@ -301,13 +308,20 @@ export const ContentPollFormLayout = () => {
           return;
         }
         try {
-          const reponse = await createPrivatePoll({
-            title: nameVote,
-            author: addRessWallet,
-            options: options.map((choice) => ({
+          // const reponse = await createPrivatePoll({
+          //   title: nameVote,
+          //   author: addRessWallet,
+          //   options: options.map((choice) => ({
+          //     contentOption: choice
+          //   })),
+          // });
+          const reponse = await createPollWithOptions(
+            nameVote,  
+            options.map((choice) => ({
               contentOption: choice
-            })),
-          });
+            }))
+          );
+          
           if (reponse) {
             Swal.fire({
               icon: 'success',
@@ -324,7 +338,7 @@ export const ContentPollFormLayout = () => {
             })
   
             if (reponse) {
-              voteData.pollIdSm = reponse || null;
+              voteData.pollIdSm = reponse.toString();
             }
             await createPoll(voteData);
             navigate("/poll");

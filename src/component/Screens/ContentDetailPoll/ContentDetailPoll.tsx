@@ -5,9 +5,9 @@ import { IconButton, InputAdornment } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import {
   getPollById,
-  voteSm,
+  // voteSm,
   postVote,
-  changeState,
+  // changeState,
   postVotePrivate,
   getVoteByUserIdAndPollId,
   updateTimeEnd,
@@ -24,7 +24,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import io from "socket.io-client";
 import { useNavigate } from 'react-router-dom';
-
+import { voteSmartcontract, changePollState } from "../../../service/contractService";
 
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
@@ -194,11 +194,12 @@ export const ContentDetailPoll: React.FC = () => {
             if (authContext?.walletAddress) {
               try {
                 if (voteSMLength.length === 0) {
-                  await changeState({
-                    pollIdSm: Number(vote.pollIdSm),
-                    newState: 1,
-                    author: addRessWallet || "",
-                  });
+                  // await changeState({
+                  //   pollIdSm: Number(vote.pollIdSm),
+                  //   newState: 1,
+                  //   author: addRessWallet || "",
+                  // });
+                  await changePollState(Number(vote.pollIdSm), 1);
                 }
                 // const checkVote = await checkVoteAddress({
                 //   pollId: Number(vote.pollIdSm),
@@ -217,11 +218,12 @@ export const ContentDetailPoll: React.FC = () => {
                     });
 
                     try {
-                      await voteSm({
-                        pollIdSm: Number(vote.pollIdSm),
-                        optionId: optionsId,
-                        author: addRessWallet || "",
-                      });
+                      // await voteSm({
+                      //   pollIdSm: Number(vote.pollIdSm),
+                      //   optionId: optionsId,
+                      //   author: addRessWallet || "",
+                      // });
+                      await voteSmartcontract(Number(vote.pollIdSm), optionsId);
                       Swal.fire({
                         icon: "success",
                         title: "Thành công",
