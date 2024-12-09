@@ -47,7 +47,7 @@ export const ContentPollFormLayout = () => {
     const newImageUrl = event.target.value;
     setImageUrl(newImageUrl);
     setImage(newImageUrl);  // Cập nhật hình ảnh với URL mới
-  
+
     // Kiểm tra xem URL có hợp lệ hay không (bạn có thể thêm logic kiểm tra URL ở đây)
     if (newImageUrl) {
       console.log('Đường dẫn ảnh đã được nhập:', newImageUrl);
@@ -55,18 +55,18 @@ export const ContentPollFormLayout = () => {
       console.error('URL không hợp lệ!');
     }
   };
-  
+
 
   // Hàm xử lý khi người dùng chọn ảnh từ input file
   const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      
+
       // Gọi hàm uploadImage để upload file
       const formData = new FormData();
       formData.append('file', file);
       const uploadedImageUrl = await uploadImage(formData);
-      
+
       if (uploadedImageUrl) {
         setImage(uploadedImageUrl);  // Cập nhật với đường link ảnh đã upload
         setImageUrl(uploadedImageUrl); // Cập nhật URL ảnh
@@ -75,6 +75,11 @@ export const ContentPollFormLayout = () => {
       }
     }
   };
+  const handleRemoveEmail = (index: number, e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Ngăn hành động mặc định của nút
+    setEmails((prevEmails) => prevEmails.filter((_, i) => i !== index));
+  };
+
 
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
@@ -188,10 +193,10 @@ export const ContentPollFormLayout = () => {
     //     return { result: "ERROR", index, option }; // Nếu có lỗi trong quá trình gọi getAICheckContent
     //   }
     // }));
-    
+
     // // Kiểm tra nếu có bất kỳ lựa chọn nào có "NEGATIVE"
     // const negativeOption = checkOptions.find(item => item.result === "NEGATIVE");
-    
+
     // if (negativeOption) {
     //   Swal.fire({
     //     icon: 'error',
@@ -210,7 +215,7 @@ export const ContentPollFormLayout = () => {
     //   setLoading(false);
     //   return;
     // }
-    
+
 
     // const checkDescriptionSelector = await Promise.all(descriptionSelector.map(async (description) => {
     //   return await getAICheckContent(description);
@@ -235,7 +240,7 @@ export const ContentPollFormLayout = () => {
     //   return;
     // }
 
-  
+
     if (new Date(startDate) >= new Date(endDate)) {
       Swal.fire({
         icon: "error",
@@ -247,7 +252,7 @@ export const ContentPollFormLayout = () => {
       setLoading(false);
       return;
     }
-  
+
     const formattedStartDate = formatISO(new Date(startDate));
     const formattedEndDate = formatISO(new Date(endDate));
 
@@ -312,12 +317,12 @@ export const ContentPollFormLayout = () => {
         try {
 
           const reponse = await createPollWithOptions(
-            nameVote,  
+            nameVote,
             options.map((choice) => ({
               contentOption: choice
             }))
           );
-          
+
           if (reponse) {
             Swal.fire({
               icon: 'success',
@@ -332,14 +337,14 @@ export const ContentPollFormLayout = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             })
-  
+
             if (reponse) {
               voteData.pollIdSm = reponse.toString();
             }
             voteData.listEmailVote = emails;
             await createPoll(voteData);
             navigate("/poll");
-          }else{
+          } else {
             Swal.fire({
               icon: 'success',
               title: 'Không nhận được poll id!',
@@ -360,7 +365,7 @@ export const ContentPollFormLayout = () => {
         }
       }
       else {
-       
+
         await createPoll(voteData);
         navigate("/poll");
       }
@@ -374,18 +379,18 @@ export const ContentPollFormLayout = () => {
 
   const handleAvatarItem = async (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Lấy file ảnh từ input
-  
+
     if (!file) {
       console.error('Không có tệp được chọn!');
       return;
     }
-  
+
     try {
       // Gọi hàm uploadImage để upload file và lấy URL ảnh đã upload
       const formData = new FormData();
       formData.append('file', file);
       const uploadedImageUrl = await uploadImage(formData);
-  
+
       if (uploadedImageUrl) {
         // Cập nhật URL ảnh đã upload vào avatarUrls
         const newAvatarUrls = [...avatarItemUrls];
@@ -399,25 +404,31 @@ export const ContentPollFormLayout = () => {
       console.error('Lỗi khi upload ảnh:', error);
     }
   };
-  
+
 
   const [emails, setEmails] = useState<string[]>([]); // Lưu danh sách email
   const [inputValue, setInputValue] = useState<string>(""); // Lưu giá trị email hiện tại
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim() !== "") {
-      // Kiểm tra và thêm email mới vào danh sách
-      setEmails((prevEmails) => {
-        const initialEmail = authContext?.user?.email;
-        const newEmails = initialEmail ? [...prevEmails, initialEmail] : [...prevEmails];
-        
-        // Thêm email mới nếu chưa tồn tại
-        return [...new Set([...newEmails, inputValue.trim()])]; // Đảm bảo không trùng lặp email
-      });
-      setInputValue(""); // Reset giá trị input
+    if (e.key === "Enter") {
+      e.preventDefault(); // Ngăn hành động mặc định của phím Enter
+
+      if (inputValue.trim() !== "") {
+        // Kiểm tra và thêm email mới vào danh sách
+        setEmails((prevEmails) => {
+          const initialEmail = authContext?.user?.email;
+          const newEmails = initialEmail ? [...prevEmails, initialEmail] : [...prevEmails];
+
+          // Thêm email mới nếu chưa tồn tại
+          return [...new Set([...newEmails, inputValue.trim()])]; // Đảm bảo không trùng lặp email
+        });
+
+        setInputValue(""); // Reset giá trị input
+      }
     }
   };
-  
+
+
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -548,7 +559,7 @@ export const ContentPollFormLayout = () => {
           onClick={handleAddChoice}
           sx={{ textTransform: 'none' }}
           color="success">Thêm lựa chọn</Button>
-        
+
         <div className="form_date">
           <div className="date">
             <div className="label">Ngày bắt đầu:</div>
@@ -575,25 +586,54 @@ export const ContentPollFormLayout = () => {
           </div>
         </div>
         {typeOfVote === "privatesmc" && (
-        <div>
-          <div className="label">Danh sách tài khoản có email được phép vote:</div>
-          <TextField
-            className="text_namevote"
-            variant="outlined"
-            value={inputValue}
-            onChange={handleChangeEmail}
-            onKeyPress={handleKeyPress}
-            placeholder="Nhập email và nhấn Enter để thêm"
-          />
-          <div className="email-list">
-            {emails.map((email, index) => (
-              <div key={index} className="email-item">
-                {email}
-              </div>
-            ))}
+          <div>
+            <div className="label">Danh sách tài khoản có email được phép vote:</div>
+            <TextField
+              className="text_namevote"
+              variant="outlined"
+              value={inputValue}
+              onChange={handleChangeEmail}
+              fullWidth
+              onKeyPress={handleKeyPress}
+              placeholder="Nhập email và nhấn Enter để thêm"
+            />
+            <div className="email-list" style={{ margin: '5px auto' }}>
+              {emails.map((email, index) => (
+                <div
+                  key={index}
+                  className="email-item"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '5px',
+                    padding: '5px 10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    height: '50px',
+                    fontSize: '18px',
+                  }}
+                >
+                  <span>{email}</span>
+                  <button
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      color: "red",
+                      cursor: "pointer",
+                      fontSize: "20px",
+                    }}
+                    onClick={(e) => handleRemoveEmail(index, e)} // Truyền cả index và sự kiện e
+                  >
+                    x
+                  </button>
+
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
         <div style={{ display: "flex", justifyContent: "end" }}>
           <Button
             variant="contained"
