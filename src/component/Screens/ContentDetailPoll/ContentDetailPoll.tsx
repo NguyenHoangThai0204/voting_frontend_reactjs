@@ -243,6 +243,7 @@ export const ContentDetailPoll: React.FC = () => {
                           popup: "",
                         },
                       });
+                      setIsVoting(false);
                       return;
 
                     } catch {
@@ -285,25 +286,6 @@ export const ContentDetailPoll: React.FC = () => {
                     setIsVoting(false);
                     return;
                   }
-
-                  // }
-                  // else {
-                  //   Swal.fire({
-                  //     icon: "error",
-                  //     title: "Oops...",
-                  //     text: "Tài khoản đã vote rồi.",
-                  //     showConfirmButton: false,
-                  //     timer: 1500,
-                  //     timerProgressBar: true,
-                  //     showClass: {
-                  //       popup: "swal2-no-animation",
-                  //     },
-                  //     hideClass: {
-                  //       popup: "",
-                  //     },
-                  //   });
-                  //   return;
-                  // }
 
                 } catch {
                   Swal.fire({

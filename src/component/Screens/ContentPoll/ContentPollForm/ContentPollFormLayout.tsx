@@ -405,13 +405,19 @@ export const ContentPollFormLayout = () => {
   const [inputValue, setInputValue] = useState<string>(""); // Lưu giá trị email hiện tại
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setEmails(authContext?.user?.email ? [authContext?.user?.email] : []);
     if (e.key === "Enter" && inputValue.trim() !== "") {
-      // Kiểm tra và thêm email
-      setEmails((prevEmails) => [...prevEmails, inputValue.trim()]);
+      // Kiểm tra và thêm email mới vào danh sách
+      setEmails((prevEmails) => {
+        const initialEmail = authContext?.user?.email;
+        const newEmails = initialEmail ? [...prevEmails, initialEmail] : [...prevEmails];
+        
+        // Thêm email mới nếu chưa tồn tại
+        return [...new Set([...newEmails, inputValue.trim()])]; // Đảm bảo không trùng lặp email
+      });
       setInputValue(""); // Reset giá trị input
     }
   };
+  
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
