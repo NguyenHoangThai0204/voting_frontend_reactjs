@@ -98,6 +98,7 @@ export interface Poll {
     options: Option[];
     typeContent: string;
     pollIdSm: string | null;
+    listEmailVote: string[] | null;
 }
 
 export interface Option {
@@ -119,6 +120,7 @@ export interface PollCreate {
   options: OptionCreate[];
   typeContent: string;
   pollIdSm: string | null;
+  listEmailVote: string[] | null;
 }
 
 export interface OptionCreate {

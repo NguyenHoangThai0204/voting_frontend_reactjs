@@ -192,79 +192,60 @@ export const ContentDetailPoll: React.FC = () => {
         try {
           if (authContext?.user) {
             if (authContext?.walletAddress) {
-              try {
-                if (voteSMLength.length === 0) {
-                  // await changeState({
-                  //   pollIdSm: Number(vote.pollIdSm),
-                  //   newState: 1,
-                  //   author: addRessWallet || "",
-                  // });
-                  await changePollState(Number(vote.pollIdSm), 1);
-                }
-                // const checkVote = await checkVoteAddress({
-                //   pollId: Number(vote.pollIdSm),
-                //   voter: addRessWallet || "",
+             if(
+              vote.listEmailVote?.includes(authContext?.user?.email) === true
+             ){ try {
+              if (voteSMLength.length === 0) {
+                // await changeState({
+                //   pollIdSm: Number(vote.pollIdSm),
+                //   newState: 1,
+                //   author: addRessWallet || "",
                 // });
+                await changePollState(Number(vote.pollIdSm), 1);
+              }
+              // const checkVote = await checkVoteAddress({
+              //   pollId: Number(vote.pollIdSm),
+              //   voter: addRessWallet || "",
+              // });
 
-                // if (checkVote.result === false) {
+              // if (checkVote.result === false) {
+                try {
+                  await postVotePrivate({
+                    pollId: vote._id,
+                    optionId: optionId,
+                    transactionHash: 0,
+                    userId: authContext?.user?._id ?? null,
+                    timestamp: new Date().toISOString(),
+                    addRessWallet: addRessWallet || "",
+                  });
+
                   try {
-                    await postVotePrivate({
-                      pollId: vote._id,
-                      optionId: optionId,
-                      transactionHash: 0,
-                      userId: authContext?.user?._id ?? null,
-                      timestamp: new Date().toISOString(),
-                      addRessWallet: addRessWallet || "",
-                    });
-
-                    try {
-                      // await voteSm({
-                      //   pollIdSm: Number(vote.pollIdSm),
-                      //   optionId: optionsId,
-                      //   author: addRessWallet || "",
-                      // });
-                      await voteSmartcontract(Number(vote.pollIdSm), optionsId);
-                      Swal.fire({
-                        icon: "success",
-                        title: "Thành công",
-                        text: "Bình chọn thành công!", showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        showClass: {
-                          popup: "swal2-no-animation",
-                        },
-                        hideClass: {
-                          popup: "",
-                        },
-                      });
-                      return;
-
-                    } catch {
-                      Swal.fire({
-                        icon: "success",
-                        title: "Thành công",
-                        text: "Không thể lưu vào block!",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        showClass: {
-                          popup: "swal2-no-animation",
-                        },
-                        hideClass: {
-                          popup: "",
-                        },
-                      });
-                      return;
-                    }
-
-
-                  } catch (error) {
-                    // Xử lý lỗi nếu một trong hai hàm thất bại
-                    console.error("Error during voting process:", error);
+                    // await voteSm({
+                    //   pollIdSm: Number(vote.pollIdSm),
+                    //   optionId: optionsId,
+                    //   author: addRessWallet || "",
+                    // });
+                    await voteSmartcontract(Number(vote.pollIdSm), optionsId);
                     Swal.fire({
-                      icon: "error",
-                      title: "Oops...",
-                      text: "Tài khoản ví đã vote rồi.",
+                      icon: "success",
+                      title: "Thành công",
+                      text: "Bình chọn thành công!", showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                      showClass: {
+                        popup: "swal2-no-animation",
+                      },
+                      hideClass: {
+                        popup: "",
+                      },
+                    });
+                    return;
+
+                  } catch {
+                    Swal.fire({
+                      icon: "success",
+                      title: "Thành công",
+                      text: "Không thể lưu vào block!",
                       showConfirmButton: false,
                       timer: 1500,
                       timerProgressBar: true,
@@ -277,42 +258,77 @@ export const ContentDetailPoll: React.FC = () => {
                     });
                     return;
                   }
-               
-                // }
-                // else {
-                //   Swal.fire({
-                //     icon: "error",
-                //     title: "Oops...",
-                //     text: "Tài khoản đã vote rồi.",
-                //     showConfirmButton: false,
-                //     timer: 1500,
-                //     timerProgressBar: true,
-                //     showClass: {
-                //       popup: "swal2-no-animation",
-                //     },
-                //     hideClass: {
-                //       popup: "",
-                //     },
-                //   });
-                //   return;
-                // }
 
-              } catch {
-                Swal.fire({
-                  icon: "error",
-                  title: "Oops...",
-                  text: "Ví này đã vote.", showConfirmButton: false,
-                  timer: 1500,
-                  timerProgressBar: true,
-                  showClass: {
-                    popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                  },
-                  hideClass: {
-                    popup: "", // Tắt hiệu ứng biến mất
-                  },
-                });
-                return;
-              }
+
+                } catch (error) {
+                  // Xử lý lỗi nếu một trong hai hàm thất bại
+                  console.error("Error during voting process:", error);
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Tài khoản ví đã vote rồi.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showClass: {
+                      popup: "swal2-no-animation",
+                    },
+                    hideClass: {
+                      popup: "",
+                    },
+                  });
+                  return;
+                }
+             
+              // }
+              // else {
+              //   Swal.fire({
+              //     icon: "error",
+              //     title: "Oops...",
+              //     text: "Tài khoản đã vote rồi.",
+              //     showConfirmButton: false,
+              //     timer: 1500,
+              //     timerProgressBar: true,
+              //     showClass: {
+              //       popup: "swal2-no-animation",
+              //     },
+              //     hideClass: {
+              //       popup: "",
+              //     },
+              //   });
+              //   return;
+              // }
+
+            } catch {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Ví này đã vote.", showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                showClass: {
+                  popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                },
+                hideClass: {
+                  popup: "", // Tắt hiệu ứng biến mất
+                },
+              });
+              return;
+            }}else{Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Tài khoản có email không được cấp quyền.", showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              showClass: {
+                popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              },
+              hideClass: {
+                popup: "", // Tắt hiệu ứng biến mất
+              },
+            });
+
+            return;}
             }
             else {
               Swal.fire({

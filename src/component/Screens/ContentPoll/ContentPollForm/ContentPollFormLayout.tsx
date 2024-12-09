@@ -268,6 +268,7 @@ export const ContentPollFormLayout = () => {
       timeEnd: string;
       timeCreate: string;
       pollIdSm: string | null;
+      listEmailVote: string[] | null;
     } = {
       authorId: authorId,
       title: nameVote,
@@ -284,7 +285,8 @@ export const ContentPollFormLayout = () => {
       timeStart: formattedStartDate,
       timeEnd: formattedEndDate,
       timeCreate: new Date().toISOString(),
-      pollIdSm: null
+      pollIdSm: null,
+      listEmailVote: null
     };
 
     try {
@@ -308,13 +310,7 @@ export const ContentPollFormLayout = () => {
           return;
         }
         try {
-          // const reponse = await createPrivatePoll({
-          //   title: nameVote,
-          //   author: addRessWallet,
-          //   options: options.map((choice) => ({
-          //     contentOption: choice
-          //   })),
-          // });
+
           const reponse = await createPollWithOptions(
             nameVote,  
             options.map((choice) => ({
@@ -340,6 +336,7 @@ export const ContentPollFormLayout = () => {
             if (reponse) {
               voteData.pollIdSm = reponse.toString();
             }
+            voteData.listEmailVote = emails;
             await createPoll(voteData);
             navigate("/poll");
           }else{
@@ -363,6 +360,7 @@ export const ContentPollFormLayout = () => {
         }
       }
       else {
+       
         await createPoll(voteData);
         navigate("/poll");
       }
@@ -403,7 +401,20 @@ export const ContentPollFormLayout = () => {
   };
   
 
+  const [emails, setEmails] = useState<string[]>([]); // Lưu danh sách email
+  const [inputValue, setInputValue] = useState<string>(""); // Lưu giá trị email hiện tại
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      // Kiểm tra và thêm email
+      setEmails((prevEmails) => [...prevEmails, inputValue.trim()]);
+      setInputValue(""); // Reset giá trị input
+    }
+  };
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
   return (
     <div className={`wrapper_voteform ${loading ? "loading-active" : ""}`}>
       {loading ? (
@@ -556,6 +567,26 @@ export const ContentPollFormLayout = () => {
             </FormControl>
           </div>
         </div>
+        {typeOfVote === "privatesmc" && (
+        <div>
+          <div className="label">Danh sách tài khoản có email được phép vote:</div>
+          <TextField
+            className="text_namevote"
+            variant="outlined"
+            value={inputValue}
+            onChange={handleChangeEmail}
+            onKeyPress={handleKeyPress}
+            placeholder="Nhập email và nhấn Enter để thêm"
+          />
+          <div className="email-list">
+            {emails.map((email, index) => (
+              <div key={index} className="email-item">
+                {email}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
         <div style={{ display: "flex", justifyContent: "end" }}>
           <Button
             variant="contained"
