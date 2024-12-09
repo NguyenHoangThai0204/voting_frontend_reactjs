@@ -5,7 +5,7 @@ import {
   JsonRpcSigner,
   ContractRunner,
 } from "ethers";
-
+import { ListResultsResponseSm } from "../typeObject";
 
 let provider: BrowserProvider;
 let signer: JsonRpcSigner | ContractRunner | null | undefined;
@@ -185,19 +185,30 @@ export const voteSmartcontract = async (pollId: number, optionId: number): Promi
 };
 
 // Function to get poll results
-export const getPollResult = async (pollId: number): Promise<{ optionIds: number[]; voteCounts: number[] } | null> => {
-  if (!contract) return null;
-  try {
-    const result = await contract.getPollResult(pollId);
-    return {
-      optionIds: result.optionIds.map((id: string ) => Number(id)),
-      voteCounts: result.voteCounts.map((count: number) => Number(count)),
-    };
-  } catch (error) {
-    console.error("Error fetching poll results:", error);
-    return null;
-  }
-};
+export const getPollResult = async (
+    pollId: number
+  ): Promise<ListResultsResponseSm[] | null> => {
+    if (!contract) return null;
+  
+    try {
+      const result = await contract.getPollResult(pollId);
+  
+      // Kết hợp optionIds và voteCounts thành mảng các object theo interface
+      const combinedResults: ListResultsResponseSm[] = result.optionIds.map(
+        (id: string, index: number) => ({
+          optionIds: Number(id), // chuyển đổi thành số
+          voteCounts: Number(result.voteCounts[index]), // chuyển đổi thành số
+        })
+      );
+  
+      return combinedResults;
+    } catch (error) {
+      console.error("Error fetching poll results:", error);
+      return null;
+    }
+  };
+  
+  
 
 // Function to get vote count for a specific option
 export const getVoteCount = async (pollId: number, optionId: number): Promise<number | null> => {
