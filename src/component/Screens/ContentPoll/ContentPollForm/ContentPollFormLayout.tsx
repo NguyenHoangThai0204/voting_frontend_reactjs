@@ -405,6 +405,7 @@ export const ContentPollFormLayout = () => {
   const [inputValue, setInputValue] = useState<string>(""); // Lưu giá trị email hiện tại
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setEmails(authContext?.user?.email ? [authContext?.user?.email] : []);
     if (e.key === "Enter" && inputValue.trim() !== "") {
       // Kiểm tra và thêm email
       setEmails((prevEmails) => [...prevEmails, inputValue.trim()]);
