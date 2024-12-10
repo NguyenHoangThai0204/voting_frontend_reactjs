@@ -467,7 +467,7 @@ export const ContentDetailPoll: React.FC = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
-
+          setIsVoting(false);
         } catch (error) {
           console.error("Error voting:", error);
           Swal.fire({

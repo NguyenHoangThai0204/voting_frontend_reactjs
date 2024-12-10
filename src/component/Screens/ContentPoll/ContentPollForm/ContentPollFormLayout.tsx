@@ -308,7 +308,6 @@ export const ContentPollFormLayout = () => {
           return;
         }
         try {
-
           const reponse = await createPollWithOptions(
             nameVote,
             options.map((choice) => ({
