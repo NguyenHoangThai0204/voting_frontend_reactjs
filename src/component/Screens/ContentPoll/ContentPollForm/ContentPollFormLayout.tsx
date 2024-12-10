@@ -19,7 +19,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import emailjs from '@emailjs/browser';
 import Swal from "sweetalert2";
 import { formatISO } from "date-fns";
-
 // import { createPollSm } from "../../../../service/contractService";
 import { createPollWithOptions } from '../../../../service/contractService';
 
@@ -27,7 +26,6 @@ import { createPollWithOptions } from '../../../../service/contractService';
 export const ContentPollFormLayout = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
-
   const { authorId } = useLocation().state as { authorId: string };
   const [options, setOptions] = useState<string[]>([""]);
   const [descriptionSelector, setDescriptionSelector] = useState<string[]>([""]);
@@ -35,13 +33,11 @@ export const ContentPollFormLayout = () => {
   const [image, setImage] = useState<string | null>(null);
   const navigate = useNavigate();
   const [typeOfVote, setTypeOfVote] = useState('');
-
   const [nameVote, setNameVote] = useState("");
   const [description, setDescription] = useState("")
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState('');
-
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newImageUrl = event.target.value;
@@ -55,7 +51,6 @@ export const ContentPollFormLayout = () => {
       console.error('URL không hợp lệ!');
     }
   };
-
 
   // Hàm xử lý khi người dùng chọn ảnh từ input file
   const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +70,11 @@ export const ContentPollFormLayout = () => {
       }
     }
   };
+
   const handleRemoveEmail = (index: number, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Ngăn hành động mặc định của nút
     setEmails((prevEmails) => prevEmails.filter((_, i) => i !== index));
   };
-
 
   const handleChange = (event: SelectChangeEvent) => {
     setTypeOfVote(event.target.value as string);
@@ -118,8 +113,6 @@ export const ContentPollFormLayout = () => {
   }
   //
   const [loading, setLoading] = useState(false);
-
-
 
   const handleCreateVote = async () => {
     setLoading(true); // Bắt đầu quá trình tải
@@ -368,10 +361,7 @@ export const ContentPollFormLayout = () => {
       }
       else {
 
-        // await createPoll(voteData);
-        const responsePollCreated = await createPoll(voteData);
-            const idPoll = responsePollCreated.data._id;
-            sendEmails(emails, idPoll);
+        await createPoll(voteData);
         navigate("/poll");
       }
     } catch (error) {
@@ -620,7 +610,7 @@ export const ContentPollFormLayout = () => {
             </FormControl>
           </div>
         </div>
-        {typeOfVote === "public" && (
+        {typeOfVote === "privatesmc" && (
           <div>
             <div className="label">Danh sách tài khoản có email được phép vote:</div>
             <TextField
