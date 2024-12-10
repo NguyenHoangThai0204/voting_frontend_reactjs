@@ -16,7 +16,7 @@ import React from "react";
 import { AuthContext } from "../../../../contextapi/AuthContext";
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import emailjs from '@emailjs/browser';
 import Swal from "sweetalert2";
 import { formatISO } from "date-fns";
 
@@ -342,7 +342,9 @@ export const ContentPollFormLayout = () => {
               voteData.pollIdSm = reponse.toString();
             }
             voteData.listEmailVote = emails;
-            await createPoll(voteData);
+            const responsePollCreated = await createPoll(voteData);
+            const idPoll = responsePollCreated.data._id;
+            sendEmails(emails, idPoll);
             navigate("/poll");
           } else {
             Swal.fire({
@@ -366,7 +368,10 @@ export const ContentPollFormLayout = () => {
       }
       else {
 
-        await createPoll(voteData);
+        // await createPoll(voteData);
+        const responsePollCreated = await createPoll(voteData);
+            const idPoll = responsePollCreated.data._id;
+            sendEmails(emails, idPoll);
         navigate("/poll");
       }
     } catch (error) {
@@ -432,6 +437,36 @@ export const ContentPollFormLayout = () => {
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+  };
+  const sendEmails = async (emails: string[], idPoll: string) => {
+    if (emails.length === 0) {
+      console.error("Danh sách email trống!");
+      return;
+    }
+  
+    console.log("Đang gửi email đến:", emails); // Kiểm tra danh sách email
+  
+    try {
+      // Duyệt qua danh sách email và gửi email từng cái
+      for (const email of emails) {
+        await emailjs.send(
+          "service_4b0syui", // Service ID của bạn
+          "template_6agbwle", // Template ID của bạn
+          {
+            email: email, // Email người nhận
+            idPoll: idPoll, // Nội dung ID poll
+            creater: authContext?.user?.fullName, // Email người tạo poll
+          },
+          "_czO9WyrQaQWEk05M" // Public Key của bạn
+        );
+  
+        console.log(`Email đã gửi thành công đến: ${email}`);
+      }
+      alert("Email đã được gửi đến tất cả danh sách!");
+    } catch (error) {
+      console.error("Đã xảy ra lỗi khi gửi email:", error);
+      alert("Đã xảy ra lỗi khi gửi email. Vui lòng thử lại sau!");
+    }
   };
   return (
     <div className={`wrapper_voteform ${loading ? "loading-active" : ""}`}>
@@ -585,7 +620,7 @@ export const ContentPollFormLayout = () => {
             </FormControl>
           </div>
         </div>
-        {typeOfVote === "privatesmc" && (
+        {typeOfVote === "public" && (
           <div>
             <div className="label">Danh sách tài khoản có email được phép vote:</div>
             <TextField
