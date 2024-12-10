@@ -75,12 +75,12 @@ export const ContentDetailPoll: React.FC = () => {
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
-    const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
-
+    const socket = io("http://localhost:3000", { transports: ["websocket"] });
+    // const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
       if (!updatedVote) {
-        navigate("/poll"); // Ví dụ: chuyển hướng về trang chủ nếu cuộc bình chọn không còn
+        navigate("/poll"); 
       } else {
         fetchVote();
       }
@@ -165,7 +165,7 @@ export const ContentDetailPoll: React.FC = () => {
             popup: "", // Tắt hiệu ứng biến mất
           },
         });
-
+        setIsVoting(false);
         return;
       }
 
