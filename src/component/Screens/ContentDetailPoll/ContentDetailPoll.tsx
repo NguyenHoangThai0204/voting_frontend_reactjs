@@ -77,7 +77,6 @@ export const ContentDetailPoll: React.FC = () => {
   useEffect(() => {
     const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 
-
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
       if (!updatedVote) {
@@ -200,19 +199,10 @@ export const ContentDetailPoll: React.FC = () => {
               ) {
                 try {
                   if (voteSMLength.length === 0) {
-                    // await changeState({
-                    //   pollIdSm: Number(vote.pollIdSm),
-                    //   newState: 1,
-                    //   author: addRessWallet || "",
-                    // });
+
                     await changePollState(Number(vote.pollIdSm), 1);
                   }
-                  // const checkVote = await checkVoteAddress({
-                  //   pollId: Number(vote.pollIdSm),
-                  //   voter: addRessWallet || "",
-                  // });
 
-                  // if (checkVote.result === false) {
                   try {
                     await postVotePrivate({
                       pollId: vote._id,
@@ -222,13 +212,7 @@ export const ContentDetailPoll: React.FC = () => {
                       timestamp: new Date().toISOString(),
                       addRessWallet: addRessWallet || "",
                     });
-
                     try {
-                      // await voteSm({
-                      //   pollIdSm: Number(vote.pollIdSm),
-                      //   optionId: optionsId,
-                      //   author: addRessWallet || "",
-                      // });
                       await voteSmartcontract(Number(vote.pollIdSm), optionsId);
                       Swal.fire({
                         icon: "success",
