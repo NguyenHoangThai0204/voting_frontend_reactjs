@@ -26,7 +26,8 @@ import io from "socket.io-client";
 import { useNavigate } from 'react-router-dom';
 import { voteSmartcontract, changePollState } from "../../../service/contractService";
 import CircularProgress from "@mui/material/CircularProgress";
-
+// const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [nameAuthor, setNameAuthor] = useState<string[]>([""]);
@@ -75,8 +76,7 @@ export const ContentDetailPoll: React.FC = () => {
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
-    // const socket = io("http://localhost:3000", { transports: ["websocket"] });
-    const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
       if (!updatedVote) {
