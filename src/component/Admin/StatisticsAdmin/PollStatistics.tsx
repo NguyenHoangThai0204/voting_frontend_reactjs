@@ -167,8 +167,7 @@ const PollStatistics = () => {
         </div>
       </div>
 
-      <p>Số lượng người dùng đăng ký trong tháng: {currentCount}</p>
-      <p>Tổng số poll hiện tại: {allPolls.length}</p>
+      <p>Số lượng người dùng đăng ký trong tháng: <b style={{marginRight:'15px'}}>{currentCount}</b>    Tổng số poll hiện tại: <b>{allPolls.length}</b></p>
       <p>
         Tổng số cuộc bình chọn công khai trong tháng hiện tại: {pollStats.public.currentMonth},{' '}
         <b style={{fontWeight:'bold'}}>{calculateChange(pollStats.public.currentMonth, pollStats.public.lastMonth)}</b> so với tháng trước

@@ -270,7 +270,7 @@ export const ContentDetailPoll: React.FC = () => {
                     setIsVoting(false);
                     return;
                   }
-
+                  
                 } catch {
                   Swal.fire({
                     icon: "error",
