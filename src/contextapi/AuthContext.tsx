@@ -6,12 +6,16 @@ interface AuthContextType {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
+  updateUser: (userData: User) => void;
   walletAddress: string | null; // Thêm trường để lưu địa chỉ ví
   setWalletAddress: (address: string) => void; // Thêm hàm để cập nhật địa chỉ ví
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
+import io from "socket.io-client";
+import React from 'react';
 
+const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -22,6 +26,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(userData);
   };
 
+  React.useEffect(() => {
+    socket.on("user-updated", (data) => {
+          setUser(data);
+        });
+
+    return () => {
+      socket.off("user-updated");
+    }
+  }
+  , []);
 
   const logout = () => {
     setIsLogged(false);
@@ -29,8 +43,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setWalletAddress(null); // Xóa địa chỉ ví khi logout
   };
 
+  const updateUser = (userData: User) => {
+    setUser(userData);
+  }
+
   return (
-    <AuthContext.Provider value={{ isLogged, user, login, logout, walletAddress, setWalletAddress }}>
+    <AuthContext.Provider value={{ isLogged, user, login, logout, walletAddress, setWalletAddress, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

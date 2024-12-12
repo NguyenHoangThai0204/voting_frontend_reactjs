@@ -43,10 +43,10 @@ export default function LoginForm({
         timer: 1500,
         timerProgressBar: true,
         showClass: {
-          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+          popup: "swal2-no-animation", 
         },
         hideClass: {
-          popup: "", // Tắt hiệu ứng biến mất
+          popup: "", 
         },
       });
 
