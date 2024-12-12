@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DescriptionIcon from '@mui/icons-material/Description';
-import { useLocation } from "react-router-dom";
+
 import { createPoll, uploadImage } from "../../../../api/CallApi"
 // import { createPoll, createPrivatePoll, getAICheckContent,uploadImage } from "../../../../api/CallApi"
 import { useNavigate } from "react-router-dom";
@@ -22,11 +22,12 @@ import { formatISO } from "date-fns";
 // import { createPollSm } from "../../../../service/contractService";
 import { createPollWithOptions } from '../../../../service/contractService';
 
-
+// import { useLocation } from "react-router-dom";
 export const ContentPollFormLayout = () => {
   const authContext = React.useContext(AuthContext);
   const addRessWallet = authContext?.walletAddress;
-  const { authorId } = useLocation().state as { authorId: string };
+  // const { authorId } = useLocation().state as { authorId: string } ;
+  const authorId = authContext?.user?._id;
   const [options, setOptions] = useState<string[]>([""]);
   const [descriptionSelector, setDescriptionSelector] = useState<string[]>([""]);
   const [showDescriptions, setShowDescriptions] = useState<boolean[]>([false]);
