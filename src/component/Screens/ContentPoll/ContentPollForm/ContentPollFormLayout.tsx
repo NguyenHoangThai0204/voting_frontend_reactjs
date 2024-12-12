@@ -340,8 +340,8 @@ export const ContentPollFormLayout = () => {
             navigate("/poll");
           } else {
             Swal.fire({
-              icon: 'success',
-              title: 'Không nhận được poll id!',
+              icon: 'error',
+              title: 'Tài khoản không đủ hoặc đã bị khoá!',
               showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
