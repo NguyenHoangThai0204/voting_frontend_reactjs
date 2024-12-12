@@ -10,6 +10,7 @@ import {
   UserCreate,
   VoteResultResponse,
   ListResultsResponse,
+  CheckPrivateResponse,
   ResultCheckVoteSm,
 } from "../typeObject"; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from "../typeObject";
@@ -39,7 +40,11 @@ const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 
 // kiểm tra xem ví có vote chưa
 
-
+// hàm kiểm tra vote private
+export const checkVotePrivate = async (data: Vote): Promise<CheckPrivateResponse> => {
+  const response = await axios.post(`${API_VOTE}/check_vote_private`, data);
+  return response.data;
+};
 
 export const checkVoteAddress = async (data: {
   pollId: number;

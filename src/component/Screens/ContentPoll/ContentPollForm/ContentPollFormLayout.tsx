@@ -308,15 +308,15 @@ export const ContentPollFormLayout = () => {
           setLoading(false);
           return;
         }
+      
         try {
-          const reponse = await createPollWithOptions(
+          // Tạo poll với các tùy chọn
+          const response = await createPollWithOptions(
             nameVote,
-            options.map((choice) => ({
-              contentOption: choice
-            }))
+            options.map((choice) => ({ contentOption: choice }))
           );
-
-          if (reponse) {
+      
+          if (response) {
             Swal.fire({
               icon: 'success',
               title: 'Tạo bình chọn thành công!',
@@ -330,9 +330,10 @@ export const ContentPollFormLayout = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             })
-
-            if (reponse) {
-              voteData.pollIdSm = reponse.toString();
+      
+            // Tiến hành xử lý thêm thông tin vào backend sau khi poll được tạo thành công
+            if (response) {
+              voteData.pollIdSm = response.toString();
             }
             voteData.listEmailVote = emails;
             const responsePollCreated = await createPoll(voteData);
@@ -342,7 +343,7 @@ export const ContentPollFormLayout = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Tài khoản không đủ hoặc đã bị khoá!',
+              title: 'Tạo bình chọn thất bại hoặc đã bị huỷ!',
               showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
@@ -354,11 +355,20 @@ export const ContentPollFormLayout = () => {
               },
             });
           }
-        }
-        catch (error) {
+        } catch (error) {
           console.log(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Tạo bình chọn thất bại',
+            text: 'Có lỗi xảy ra trong quá trình tạo bình chọn.',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          });
         }
       }
+      
+
       else {
 
         await createPoll(voteData);

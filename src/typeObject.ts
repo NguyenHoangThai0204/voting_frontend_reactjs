@@ -185,3 +185,6 @@ export interface ResultCheckVoteSm {
   message: string;
   result: boolean;
 }
+export interface CheckPrivateResponse {
+  status: string;
+}
