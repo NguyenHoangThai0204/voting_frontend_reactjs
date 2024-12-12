@@ -4,7 +4,10 @@ import { TheNew  } from '../../../../typeObject';
 // import ReactHtmlParser from 'react-html-parser';
 import { format } from 'date-fns';
 import {getTheNewById, deleteTheNewById} from '../../../../api/CallApi'
-
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { FormUpdate } from '../FormUpdateThenew/FormUpdate';
+import io from 'socket.io-client';
+const socket = io("https://api-1.pollweb.io.vn", { transports: ['websocket'] });
 interface TheNewId {
     id: string;
     onDeleted?: (id: string) => void; // Thêm callback
@@ -12,13 +15,21 @@ interface TheNewId {
   
   export const TheNewDetailManagerment: React.FC<TheNewId> = ({ id, onDeleted }) => {
     const [theNew, setTheNew] = React.useState<TheNew>();
-  
+    const [open, setOpenUpdate] = React.useState(false);
+
+    const handleAddClick = () => setOpenUpdate(true);
+    const handleClose = () => setOpenUpdate(false);
     React.useEffect(() => {
       const fetchTheNew = async () => {
         const response = await getTheNewById(id);
         setTheNew(response.data);
       };
       fetchTheNew();
+      if(socket){
+        socket.on('updateThenew', () => {
+          fetchTheNew();
+        });
+      }
     }, [id]);
   
     const formatTime = theNew?.thoiGianViet
@@ -46,7 +57,9 @@ interface TheNewId {
           </div>
           <div style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "end" }}>
             <button onClick={handleClickDelete}>Delete</button>
-            <button>Edit</button>
+            <button
+              onClick={handleAddClick}
+            >Edit</button>
           </div>
         </div>
         <h2>{theNew?.tenBaiViet}</h2>
@@ -68,6 +81,16 @@ interface TheNewId {
             <p dangerouslySetInnerHTML={{ __html: theNew?.noiDungBaiViet || '' }}></p>
           </div>
         </div>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+        <DialogContent>
+          <FormUpdate id={id} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       </div>
     );
   };

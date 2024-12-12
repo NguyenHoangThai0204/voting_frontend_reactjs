@@ -364,6 +364,11 @@ export const deleteTheNewById = async (id: string): Promise<boolean> => {
     return false; // Trả về `false` nếu có lỗi
   }
 };
+// cập nhật bài viết
+export const updateTheNew = async (id: string, updatedData: Partial<TheNew>): Promise<TheNew> => {
+  const response = await axios.put(`${API_TheNew}/update_the_new/${id}`, updatedData);
+  return response.data;
+};
 
 // tạo cuộc bình chọn
 export const createPoll = async (data: PollCreate): Promise<PollResponse> => {
