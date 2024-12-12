@@ -16,6 +16,7 @@ import io from "socket.io-client";
 import React from 'react';
 
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<User | null>(null);
