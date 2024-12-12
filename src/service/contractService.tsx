@@ -11,7 +11,7 @@ let provider: BrowserProvider;
 let signer: JsonRpcSigner | ContractRunner | null | undefined;
 let contract: Contract;
 const CONTRACT_ADDRESS = '0xC213bbcca3dDebD9409C53204A253b61E3482945'
-
+// const CONTRACT_ADDRESS=  0xa6CfE96f68C310427dC13c13995CE6E4687BEb18
 // Function to initialize the provider, signer, and contract
 const initialize = async () => {
   if (typeof window.ethereum !== "undefined") {
@@ -119,7 +119,7 @@ export const createPollWithOptions = async (
   
     try {
       // Gửi giao dịch tạo poll
-      const tx = await contract.createPoll(title);
+      const tx = await contract.create(title, options);
       console.log(`Transaction sent: ${tx.hash}`);
   
       // Chờ giao dịch hoàn tất
@@ -129,7 +129,7 @@ export const createPollWithOptions = async (
       // Tìm sự kiện PollCreated trong log giao dịch
       const event = receipt.logs
         .map((log: { topics: ReadonlyArray<string>; data: string; }) => contract.interface.parseLog(log))
-        .find((parsedLog: { name: string; }) => parsedLog.name === "PollCreated");
+        .find((parsedLog: { name: string; }) => parsedLog.name === "created");
         
         const parsedLogs = receipt.logs.map((log: { topics: ReadonlyArray<string>; data: string; }) => {
             try {
@@ -156,7 +156,6 @@ for (const option of options) {
       console.error(`Error adding option '${option.contentOption}' to poll:`, error);
     }
   }
-  
   
         return pollId; // Trả về ID của poll sau khi thêm option
       } else {
