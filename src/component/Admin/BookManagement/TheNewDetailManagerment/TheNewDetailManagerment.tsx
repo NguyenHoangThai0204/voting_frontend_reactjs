@@ -61,7 +61,7 @@ interface TheNewId {
           <div style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "end" }}>
             <button onClick={handleClickDelete}
             style={{
-              width:"20%",
+              width:"25%",
               padding: "12px",  // Điều chỉnh padding cho phù hợp
               marginRight: "10px",  // Cách lề phải thêm chút để không bị sát nhau
               border: "none",
@@ -76,7 +76,7 @@ interface TheNewId {
             ><DeleteOutlineIcon />Xoá bài viết</button>
 
             <button
-              style={{width:"20%",
+              style={{width:"25%",
                 padding: "12px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 700, display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
                 alignItems: "center",  // Căn giữa icon và text
                 gap: "5px",
