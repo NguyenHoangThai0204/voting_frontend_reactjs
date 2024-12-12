@@ -29,14 +29,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   React.useEffect(() => {
     socket.on("user-updated", (data) => {
-          setUser(data);
+          if(user && user.role !== "admin"){
+            setUser(data);
+          }
         });
 
     return () => {
       socket.off("user-updated");
     }
-  }
-  , []);
+  });
 
   const logout = () => {
     setIsLogged(false);

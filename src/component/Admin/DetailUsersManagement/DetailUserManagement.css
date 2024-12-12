@@ -283,6 +283,10 @@ display: none;
   text-align: left;
   box-sizing: border-box;
 }
+.body_detailusermanagement .listPoll table td button:hover {
+  cursor: pointer;
+  background-color: aquamarine;
+}
 
 .body_detailusermanagement .listPoll table tbody tr {
   height: 40px; /* Chiều cao mỗi dòng */

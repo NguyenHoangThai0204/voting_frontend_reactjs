@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Swal from "sweetalert2";
 import { updateUser, uploadImage } from '../../../api/CallApi';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 
 // 
@@ -325,7 +326,14 @@ const ContenInformation = () => {
                 <>
                   <button className="btn btn-primary"
                     onClick={() => setIsEditing(true)}
-                  >Sửa thông tin</button>
+                    style={{
+                      padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500, display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
+                      alignItems: "center",  // Căn giữa icon và text
+                      gap: "5px",
+                      color: "white",
+                      backgroundColor: "#007bff"
+                  }}
+                  ><LibraryBooksIcon />Sửa thông tin</button>
 
                 </>
 

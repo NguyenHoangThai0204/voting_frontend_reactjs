@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DetailUserManagement.css';
 import { User, Poll } from '../../../typeObject';
-import { changeStatusUser, changeStatusUserActive, deletePoll, updateUser,uploadImage } from '../../../api/CallApi';
+import { changeStatusUser, changeStatusUserActive, deletePoll, updateUser, uploadImage } from '../../../api/CallApi';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,8 +10,12 @@ import { PropDetailPollAdmin } from './PropDetailPollAdmin';
 import Swal from "sweetalert2";
 import { format, formatDistanceToNow } from 'date-fns';
 import StatisticsDialog from "../../Screens/StatisticsDialog/StatisticsDialog";
-
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CircularProgress from '@mui/material/CircularProgress';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import BlockIcon from '@mui/icons-material/Block';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+
 interface Props {
     userItem: User | undefined;
     pollItem: Poll[] | undefined;
@@ -180,13 +184,13 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
             const email = (document.getElementById('email') as HTMLInputElement).value;
             const phone = (document.getElementById('phone') as HTMLInputElement).value;
             const address = (document.getElementById('address') as HTMLInputElement).value;
-    
+
             // Kiểm tra dữ liệu đầu vào (nếu cần)
             if (!fullName || !email || !phone || !address) {
                 Swal.fire('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
                 return;
             }
-    
+
             // Tách địa chỉ thành các phần
             const addressParts = address.split(',').map((item) => item.trim());
             if (addressParts.length !== 3) {
@@ -194,7 +198,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                 return;
             }
             const [street, ward, province] = addressParts;
-    
+
             // Chuẩn bị đối tượng gửi API
             const updatedUser = {
                 _id: userId,
@@ -206,18 +210,18 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                 province: province,
                 avatar: avatar || undefined,
             };
-    
+
             console.log('Data chuẩn bị gửi:', updatedUser);
-    
+
             // Gửi API cập nhật
             await updateUser(updatedUser);
-    
+
             // Thông báo thành công
             Swal.fire('Thành công', 'Cập nhật thông tin người dùng thành công!', 'success');
-    
+
             // Làm mới danh sách người dùng
             refreshUserList();
-    
+
             // Đóng dialog
             handleEditClose();
         } catch (error) {
@@ -229,20 +233,20 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
     const [avatar, setAvatar] = useState<string | null>(null);
     const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
-          const file = event.target.files[0];
-          
-          // Gọi hàm uploadImage để upload file
-          const formData = new FormData();
-          formData.append('file', file);
-          const uploadedImageUrl = await uploadImage(formData);
-          
-          if (uploadedImageUrl) {
+            const file = event.target.files[0];
+
+            // Gọi hàm uploadImage để upload file
+            const formData = new FormData();
+            formData.append('file', file);
+            const uploadedImageUrl = await uploadImage(formData);
+
+            if (uploadedImageUrl) {
                 setAvatar(uploadedImageUrl);
-          } else {
-            console.error('Upload ảnh không thành công');
-          }
+            } else {
+                console.error('Upload ảnh không thành công');
+            }
         }
-      };
+    };
 
     return (
         <>
@@ -259,115 +263,114 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                 )}
                 {/* <div className="body_detailusermanagement"> */}
                 <Dialog
-  open={isEditDialogOpen}
-  onClose={handleEditClose}
-  maxWidth="sm"
-  fullWidth
-  style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}
->
-  <DialogContent>
-    <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
-      Sửa Thông Tin Người Dùng
-    </h3>
-    <form id="editUserForm">
-      <div className="form-group" style={{ marginBottom: '15px' }}>
-        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Họ và Tên</label>
-        <input
-          type="text"
-          className="form-control"
-          defaultValue={userItem?.fullName}
-          id="fullName"
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontSize: '1rem',
-          }}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '15px' }}>
-        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Email</label>
-        <input
-          type="email"
-          className="form-control"
-          defaultValue={userItem?.email}
-          id="email"
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontSize: '1rem',
-          }}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '15px' }}>
-        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Số điện thoại</label>
-        <input
-          type="text"
-          className="form-control"
-          defaultValue={userItem?.phone}
-          id="phone"
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontSize: '1rem',
-          }}
-        />
-      </div>
-      <div className="form-group" style={{ marginBottom: '15px' }}>
-        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Địa chỉ</label>
-        <input
-          type="text"
-          className="form-control"
-          defaultValue={`${userItem?.street}, ${userItem?.ward}, ${userItem?.province}`}
-          id="address"
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontSize: '1rem',
-          }}
-        />
-      </div>
-      {/* Thêm trường ảnh đại diện */}
-      <div className="form-group" style={{ marginBottom: '15px' }}>
-        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Ảnh Đại Diện</label>
-        <input
-          type="file"
-          className="form-control"
-          id="avatar"
-          accept="image/*"
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontSize: '1rem',
-          }}
-          onChange={handleChangeImage}
-        />
-      </div>
-    </form>
-  </DialogContent>
-  <DialogActions style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-    <Button onClick={handleEditClose} color="secondary" style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}>
-      Hủy
-    </Button>
-    <Button
-      onClick={() => handleEditSubmit(userItem?._id || '')}
-      color="primary"
-      style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}
-    >
-      Lưu
-    </Button>
-  </DialogActions>
+                    open={isEditDialogOpen}
+                    onClose={handleEditClose}
+                    maxWidth="sm"
+                    fullWidth
+                    style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}
+                >
+                    <DialogContent>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
+                            Sửa Thông Tin Người Dùng
+                        </h3>
+                        <form id="editUserForm">
+                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Họ và Tên</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={userItem?.fullName}
+                                    id="fullName"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Email</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    defaultValue={userItem?.email}
+                                    id="email"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Số điện thoại</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={userItem?.phone}
+                                    id="phone"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Địa chỉ</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={`${userItem?.street}, ${userItem?.ward}, ${userItem?.province}`}
+                                    id="address"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            {/* Thêm trường ảnh đại diện */}
+                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Ảnh Đại Diện</label>
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    id="avatar"
+                                    accept="image/*"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '1rem',
+                                    }}
+                                    onChange={handleChangeImage}
+                                />
+                            </div>
+                        </form>
+                    </DialogContent>
+                    <DialogActions style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                        <Button onClick={handleEditClose} color="secondary" style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}>
+                            Hủy
+                        </Button>
+                        <Button
+                            onClick={() => handleEditSubmit(userItem?._id || '')}
+                            color="primary"
+                            style={{ padding: '10px 20px', fontSize: '1rem', borderRadius: '4px' }}
+                        >
+                            Lưu
+                        </Button>
+                    </DialogActions>
                 </Dialog>
-
 
                 <h2>THÔNG TIN NGƯỜI DÙNG</h2>
                 <div className="container">
@@ -424,7 +427,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                         <label>Trạng thái: </label>
                                         <span>{
                                             userItem?.status === 'active' ? 'Hoạt động' : 'Ngừng hoạt động'
-                                            }</span>
+                                        }</span>
                                     </td>
                                 </tr>
                                 <tr className="row">
@@ -436,18 +439,35 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                             </tbody>
                         </table>
                         <div className='button' style={{ display: "flex", justifyContent: "end", alignContent: "center" }}>
-                        
+
                             <button
                                 className="btn btn-primary"
-                                style={{ padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500 }}
+                                style={{
+                                    padding: "10px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 500, display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
+                                    alignItems: "center",  // Căn giữa icon và text
+                                    gap: "5px",
+                                    color: "white",
+                                    backgroundColor: "#007bff"
+                                }}
                                 onClick={handleEditOpen}
                             >
-                                Sửa thông tin
+                                <LibraryBooksIcon /> Sửa thông tin
                             </button>
                             {userItem?.status === 'active' ? (
-                                <button className="btn btn-danger" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleDelete(userItem._id)}>Dừng hoạt động</button>
+                                <button className="btn btn-danger" style={{
+                                    padding: "10px", border: "none", fontSize: "18px", fontWeight: 500, display: "flex",
+                                    backgroundColor: "#fd7e14",  // Màu cam cho nút Dừng hoạt động
+                                    color: "white",// Sử dụng flexbox để căn chỉnh icon và chữ
+                                    alignItems: "center",  // Căn giữa icon và text
+                                    gap: "5px"
+                                }} onClick={() => userItem?._id && handleDelete(userItem._id)}><BlockIcon />Dừng hoạt động</button>
                             ) : (
-                                <button className="btn btn-success" style={{ padding: "10px", border: "none", fontSize: "18px", fontWeight: 500 }} onClick={() => userItem?._id && handleActive(userItem._id)}>Cho hoạt động</button>
+                                <button className="btn btn-success" style={{
+                                    padding: "10px", border: "none", fontSize: "18px", fontWeight: 500, display: "flex", backgroundColor: "#28a745", // Màu xanh lá cho nút Cho hoạt động
+                                    color: "white",  // Sử dụng flexbox để căn chỉnh icon và chữ
+                                    alignItems: "center",  // Căn giữa icon và text
+                                    gap: "5px"
+                                }} onClick={() => userItem?._id && handleActive(userItem._id)}><DoneOutlineIcon />Cho hoạt động</button>
                             )}
                         </div>
                     </div>
@@ -525,14 +545,34 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                         </td>
                                         <td>
                                             <button
-                                                className="btn btn-primary"
-                                                style={{ padding: "15px", marginRight: "5px", border: "none" }}
+                                                className="btn"
+                                                style={{
+                                                    padding: "10px 20px",  // Điều chỉnh padding cho phù hợp
+                                                    marginRight: "10px",  // Cách lề phải thêm chút để không bị sát nhau
+                                                    border: "none",
+                                                    borderRadius: "5px",  // Bo góc cho button
+                                                    display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
+                                                    alignItems: "center",  // Căn giữa icon và text
+                                                    gap: "5px",  // Khoảng cách giữa icon và chữ
+                                                    backgroundColor: "#dc3545",  // Màu đỏ cho nút Xoá bình chọn
+                                                    color: "white"  // Màu chữ trắng để nổi bật trên nền đỏ
+                                           // Màu hover cho nút Xoá bình chọn
+                                                }}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handleDeletePoll(poll._id);
                                                 }}
-                                            >Xoá bình chọn</button>
+                                            >
+                                                <DeleteOutlineIcon
+                                                    style={{
+                                                        fontSize: '20px',  // Cỡ icon vừa phải
+                                                    }}
+                                                />
+                                                Xoá bình chọn
+                                            </button>
+
                                         </td>
+
                                     </tr>
                                 ))
                             )}
@@ -556,3 +596,5 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
         </>
     );
 };
+
+
