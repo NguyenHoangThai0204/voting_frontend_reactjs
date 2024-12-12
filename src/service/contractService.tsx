@@ -10,7 +10,8 @@ import { ListResultsResponseSm } from "../typeObject";
 let provider: BrowserProvider;
 let signer: JsonRpcSigner | ContractRunner | null | undefined;
 let contract: Contract;
-const CONTRACT_ADDRESS = '0xC213bbcca3dDebD9409C53204A253b61E3482945'
+// const CONTRACT_ADDRESS = '0xC213bbcca3dDebD9409C53204A253b61E3482945'
+const CONTRACT_ADDRESS = '0x9F04e24B3F0eF0Edbe768E3E557A60b8Bfc8fF73'
 // const CONTRACT_ADDRESS=  0xa6CfE96f68C310427dC13c13995CE6E4687BEb18
 // Function to initialize the provider, signer, and contract
 
@@ -30,61 +31,62 @@ initialize();
 
 // Function to create a poll and add options
 export const createPollWithOptions = async (
-    title: string,
-    options: { contentOption: string }[]
-  ): Promise<number | undefined> => {
-    if (!contract) return;
-  
-    try {
-      // Gửi giao dịch tạo poll
-      const tx = await contract.create(title, options);
-      console.log(`Transaction sent: ${tx.hash}`);
-  
-      // Chờ giao dịch hoàn tất
-      const receipt = await tx.wait();
-      console.log("Transaction mined:", receipt);
-  
-      // Tìm sự kiện PollCreated trong log giao dịch
-      const event = receipt.logs
-        .map((log: { topics: ReadonlyArray<string>; data: string; }) => contract.interface.parseLog(log))
-        .find((parsedLog: { name: string; }) => parsedLog.name === "created");
-        
-        const parsedLogs = receipt.logs.map((log: { topics: ReadonlyArray<string>; data: string; }) => {
-            try {
-              return contract.interface.parseLog(log);
-            } catch (err) {
-              console.error("Error parsing log:", log, err);
-              return null;
-            }
-          });
-        console.log("Parsed logs:", parsedLogs);
-  
-      if (event) {
-        const pollId = event.args?.pollId;
-        console.log("Poll created with ID:", pollId);
-  
-        // Thêm từng option vào poll
-       // Thêm từng option vào poll
-for (const option of options) {
-    try {
-      const optionTx = await contract.addOptionsToPoll(pollId, option.contentOption); // Sửa từ `optionName` thành `option.contentOption`
-      await optionTx.wait();
-      console.log(`Option '${option.contentOption}' added to poll ${pollId}`);
-    } catch (error) {
-      console.error(`Error adding option '${option.contentOption}' to poll:`, error);
-    }
-  }
-  
-        return pollId; // Trả về ID của poll sau khi thêm option
-      } else {
-        console.error("PollCreated event not found in transaction logs");
-        return undefined;
+  title: string,
+  options: { contentOption: string }[]
+): Promise<number | undefined> => {
+  if (!contract) return;
+
+  try {
+    // Gửi giao dịch tạo poll
+    const tx = await contract.create(title);
+    console.log(`Transaction sent: ${tx.hash}`);
+
+    // Chờ giao dịch hoàn tất
+    const receipt = await tx.wait();
+    console.log("Transaction mined:", receipt);
+
+    // Tìm sự kiện PollCreated trong log giao dịch
+    const event = receipt.logs
+      .map((log: { topics: ReadonlyArray<string>; data: string; }) => contract.interface.parseLog(log))
+      .find((parsedLog: { name: string; }) => parsedLog.name === "PollCreated");
+
+    const parsedLogs = receipt.logs.map((log: { topics: ReadonlyArray<string>; data: string; }) => {
+      try {
+        return contract.interface.parseLog(log);
+      } catch (err) {
+        console.error("Error parsing log:", log, err);
+        return null;
       }
-    } catch (error) {
-      console.error("Error creating poll:", error);
+    });
+    console.log("Parsed logs:", parsedLogs);
+
+    if (event) {
+      const pollId = event.args?.pollId;
+      console.log("Poll created with ID:", pollId);
+
+      // Thêm từng option vào poll
+      // Thêm từng option vào poll
+      for (const option of options) {
+        try {
+          const optionTx = await contract.addOpt(pollId, option.contentOption); // Sửa từ `optionName` thành `option.contentOption`
+          await optionTx.wait();
+          console.log(`Option '${option.contentOption}' added to poll ${pollId}`);
+        } catch (error) {
+          console.error(`Error adding option '${option.contentOption}' to poll:`, error);
+        }
+      }
+
+
+      return pollId; // Trả về ID của poll sau khi thêm option
+    } else {
+      console.error("PollCreated event not found in transaction logs");
       return undefined;
     }
-  };
+  } catch (error) {
+    console.error("Error creating poll:", error);
+    return undefined;
+  }
+};
   
 // Function to vote for an option in a poll
 export const voteSmartcontract = async (pollId: number, optionId: number): Promise<void> => {
@@ -162,7 +164,7 @@ export const changePollState = async (pollId: number, newState: number): Promise
     // const hasBalance = await checkEthBalance();
     // if (!hasBalance) return;
 
-    const tx = await contract.changePollState(pollId, newState);
+    const tx = await contract.state(pollId, newState);
     await tx.wait();
     console.log(`Poll ${pollId} state changed to ${newState}`);
   } catch (error) {
