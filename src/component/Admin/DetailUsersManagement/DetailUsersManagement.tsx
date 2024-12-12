@@ -547,7 +547,7 @@ export const DetailUsersManagement: React.FC<Props> = ({ userItem, pollItem, ref
                                             <button
                                                 className="btn"
                                                 style={{
-                                                    padding: "10px 20px",  // Điều chỉnh padding cho phù hợp
+                                                    padding: "7px 12px",  // Điều chỉnh padding cho phù hợp
                                                     marginRight: "10px",  // Cách lề phải thêm chút để không bị sát nhau
                                                     border: "none",
                                                     borderRadius: "5px",  // Bo góc cho button

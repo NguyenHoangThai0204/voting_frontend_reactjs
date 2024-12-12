@@ -175,14 +175,13 @@ export const BookManagement = () => {
   return (
     <div className="bookManagement">
       <div className="userManaLeft">
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'start', alignItems:'center' }}>
-        
-          <h3>Tạo bài viết mới: </h3>
+        <div style={{ display: 'flex', width: '100%', justifyContent: 'start', fontSize:'25px', fontWeight:'700'
+          ,alignItems:'center' }}>
             <AddIcon
-              style={{ fontSize: '45px', color: 'black', marginLeft: '5px' }}
+              style={{ fontSize: '40px', color: 'black', marginLeft: '5px' }}
               onClick={handleAddClick}
             />
-          
+          Tạo bài viết
         </div>
       </div>
       <div className="userManaRight">

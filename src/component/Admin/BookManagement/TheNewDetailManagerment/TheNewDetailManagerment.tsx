@@ -8,6 +8,9 @@ import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { FormUpdate } from '../FormUpdateThenew/FormUpdate';
 import io from 'socket.io-client';
 const socket = io("https://api-1.pollweb.io.vn", { transports: ['websocket'] });
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+
 interface TheNewId {
     id: string;
     onDeleted?: (id: string) => void; // Thêm callback
@@ -56,10 +59,32 @@ interface TheNewId {
             <h2>CHI TIẾT BÀI VIẾT</h2>
           </div>
           <div style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "end" }}>
-            <button onClick={handleClickDelete}>Delete</button>
+            <button onClick={handleClickDelete}
+            style={{
+              width:"20%",
+              padding: "12px",  // Điều chỉnh padding cho phù hợp
+              marginRight: "10px",  // Cách lề phải thêm chút để không bị sát nhau
+              border: "none",
+              borderRadius: "5px",  // Bo góc cho button
+              display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
+              alignItems: "center",  // Căn giữa icon và text
+              gap: "5px",  // Khoảng cách giữa icon và chữ
+              backgroundColor: "#dc3545",  // Màu đỏ cho nút Xoá bình chọn
+              color: "white"  // Màu chữ trắng để nổi bật trên nền đỏ
+     // Màu hover cho nút Xoá bình chọn
+          }}
+            ><DeleteOutlineIcon />Xoá bài viết</button>
+
             <button
+              style={{width:"20%",
+                padding: "12px", marginRight: "8px", border: "none", fontSize: "18px", fontWeight: 700, display: "flex",  // Sử dụng flexbox để căn chỉnh icon và chữ
+                alignItems: "center",  // Căn giữa icon và text
+                gap: "5px",
+                color: "white",
+                backgroundColor: "#007bff"
+            }}
               onClick={handleAddClick}
-            >Edit</button>
+            ><LibraryBooksIcon />Sửa bài viết</button>
           </div>
         </div>
         <h2>{theNew?.tenBaiViet}</h2>

@@ -1,7 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -130,7 +129,6 @@ export const FormUpdate: React.FC<TheNewId> = ({ id }) => {
             <div className="label">Chủ đề:</div>
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Chủ đề</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -150,14 +148,16 @@ export const FormUpdate: React.FC<TheNewId> = ({ id }) => {
               value={noiDungBaiViet}
               onChange={(e) => setNoiDungBaiViet(e.target.value)}
               multiline
-              rows={4}
+              rows={7}
               variant="outlined"
             />
           </div>
         </div>
+        <div style={{width:"100%", textAlign:'end'}}>
         <Button variant="contained" color="primary" onClick={handleUpdateTheNew}>
           Update
         </Button>
+        </div>
       </form>
     </div>
   );
