@@ -4,7 +4,7 @@ StatisticsDialogPolling
 ContentDetailPoll
 UsersManagement
 InputSearchAdmin
-
+TheNewDetailManagerment
 
 Dùng:
     + TypeScript:Nó có thể tự sữa lỗi khi biên dịch mà không cần chạy chương tình.

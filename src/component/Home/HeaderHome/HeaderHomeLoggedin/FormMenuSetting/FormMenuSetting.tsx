@@ -6,25 +6,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import Swal from "sweetalert2";
-import {logout} from "../../../../../api/CallApi";
+import { logout } from "../../../../../api/CallApi";
 
 export function FormMenuSetting() {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    // Kiểm tra ví trong localStorage khi trang được load lại
-    const savedWalletAddress = localStorage.getItem("walletAddress");
-  
-    // Nếu có ví lưu trong localStorage và không rỗng, cập nhật vào AuthContext
-    if (savedWalletAddress && savedWalletAddress !== "") {
-      authContext?.setWalletAddress(savedWalletAddress);
-    } else {
-      // Nếu không có ví trong localStorage, xóa khỏi AuthContext
-      authContext?.setWalletAddress("");
-    }
-  
+    // Lắng nghe sự kiện thay đổi tài khoản
     if (window.ethereum) {
-      // Lắng nghe sự kiện thay đổi tài khoản
       window.ethereum.on("accountsChanged", (accounts: string[]) => {
         if (accounts.length > 0) {
           const newWalletAddress = accounts[0];
@@ -36,7 +25,7 @@ export function FormMenuSetting() {
         }
       });
     }
-  
+
     // Dọn dẹp sự kiện khi component unmount
     return () => {
       if (window.ethereum && window.ethereum.removeListener) {
@@ -44,20 +33,19 @@ export function FormMenuSetting() {
       }
     };
   }, [authContext]);
-  
 
   const handleListMenuSetting = async (index: number) => {
-    if (index === 2) { // Log out
+    if (index === 2) {
+      // Log out
       await logout(authContext?.user?._id || ""); // Gọi hàm logout từ CallApi
 
       authContext?.logout(); // Gọi hàm logout từ AuthContext
       localStorage.removeItem("walletAddress"); // Xóa ví khỏi localStorage
       authContext?.setWalletAddress(""); // Xóa ví khỏi AuthContext
-
-      
     }
 
-    if (index === 1) { // Connect wallet
+    if (index === 1) {
+      // Connect wallet
       if (window.ethereum) {
         try {
           // Yêu cầu quyền truy cập tài khoản và lấy danh sách tài khoản

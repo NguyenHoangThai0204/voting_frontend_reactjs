@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../contextapi/AuthContext';
 import './ContentInformation.css';
 import Button from '@mui/material/Button';
@@ -8,6 +8,8 @@ import DialogActions from '@mui/material/DialogActions';
 import Swal from "sweetalert2";
 import { updateUser, uploadImage } from '../../../api/CallApi';
 
+
+// 
 const ContenInformation = () => {
   const authContext = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
@@ -81,6 +83,7 @@ const ContenInformation = () => {
 
       // Gửi API cập nhật
       await updateUser(updatedUser);
+
 
       // Thông báo thành công
       Swal.fire('Thành công', 'Cập nhật thông tin người dùng thành công!', 'success');

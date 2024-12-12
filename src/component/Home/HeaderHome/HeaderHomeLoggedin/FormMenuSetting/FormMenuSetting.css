@@ -1,14 +1,16 @@
 .menu_layout_setting {
+  width: -moz-max-content;
   width: max-content;
   padding: 2px;
   background-color: white;
   box-shadow: 0 0 20px rgb(161, 159, 159);
   position: relative;
-  top: 18px;
+  top: 30px;
   border-radius: 10px;
 }
 .menu_layout_setting .menu_content {
   list-style: none;
+  width: -moz-max-content;
   width: max-content;
   padding: 0;
 }
@@ -37,7 +39,7 @@
 @media screen and (max-width: 900px) {
   .wrapper {
     display: flex;
-    margin: 0;
+    padding: 0;
   }
   .wrapper .menu {
     width: 100%;
@@ -46,7 +48,6 @@
   }
   .wrapper .icon_menu {
     display: inline-block;
-    margin: 10px;
     width: 100%;
     font-size: 15px;
     font-weight: 500;
@@ -56,6 +57,4 @@
     border-radius: 15px;
     font-size: 16px;
   }
-}
-
-/*# sourceMappingURL=FormMenuSetting.css.map */
+}/*# sourceMappingURL=FormMenuSetting.css.map */

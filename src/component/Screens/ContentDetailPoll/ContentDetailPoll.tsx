@@ -25,7 +25,9 @@ import Swal from "sweetalert2";
 import io from "socket.io-client";
 import { useNavigate } from 'react-router-dom';
 import { voteSmartcontract, changePollState } from "../../../service/contractService";
-
+import CircularProgress from "@mui/material/CircularProgress";
+// const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [nameAuthor, setNameAuthor] = useState<string[]>([""]);
@@ -38,6 +40,7 @@ export const ContentDetailPoll: React.FC = () => {
   const [vote, setVote] = useState<Poll | null>(null);
   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
   const [voteSMLength, setVoteSMLength] = useState<Vote[]>([]);
+  const [isVoting, setIsVoting] = useState(false);
 
   const fetchVote = async () => {
     try {
@@ -73,13 +76,11 @@ export const ContentDetailPoll: React.FC = () => {
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
-    const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
-
 
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
       if (!updatedVote) {
-        navigate("/poll"); // Ví dụ: chuyển hướng về trang chủ nếu cuộc bình chọn không còn
+        navigate("/poll"); 
       } else {
         fetchVote();
       }
@@ -107,6 +108,7 @@ export const ContentDetailPoll: React.FC = () => {
     content: string,
     optionsId: number
   ) => {
+    setIsVoting(true);
     try {
       if (!vote) {
         Swal.fire({
@@ -163,7 +165,7 @@ export const ContentDetailPoll: React.FC = () => {
             popup: "", // Tắt hiệu ứng biến mất
           },
         });
-
+        setIsVoting(false);
         return;
       }
 
@@ -183,7 +185,7 @@ export const ContentDetailPoll: React.FC = () => {
             popup: "", // Tắt hiệu ứng biến mất
           },
         });
-
+        setIsVoting(false);
         return;
       }
 
@@ -192,21 +194,15 @@ export const ContentDetailPoll: React.FC = () => {
         try {
           if (authContext?.user) {
             if (authContext?.walletAddress) {
-              try {
-                if (voteSMLength.length === 0) {
-                  // await changeState({
-                  //   pollIdSm: Number(vote.pollIdSm),
-                  //   newState: 1,
-                  //   author: addRessWallet || "",
-                  // });
-                  await changePollState(Number(vote.pollIdSm), 1);
-                }
-                // const checkVote = await checkVoteAddress({
-                //   pollId: Number(vote.pollIdSm),
-                //   voter: addRessWallet || "",
-                // });
+              if (
+                vote.listEmailVote?.includes(authContext?.user?.email) === true
+              ) {
+                try {
+                  if (voteSMLength.length === 0) {
 
-                // if (checkVote.result === false) {
+                    await changePollState(Number(vote.pollIdSm), 1);
+                  }
+
                   try {
                     await postVotePrivate({
                       pollId: vote._id,
@@ -216,13 +212,7 @@ export const ContentDetailPoll: React.FC = () => {
                       timestamp: new Date().toISOString(),
                       addRessWallet: addRessWallet || "",
                     });
-
                     try {
-                      // await voteSm({
-                      //   pollIdSm: Number(vote.pollIdSm),
-                      //   optionId: optionsId,
-                      //   author: addRessWallet || "",
-                      // });
                       await voteSmartcontract(Number(vote.pollIdSm), optionsId);
                       Swal.fire({
                         icon: "success",
@@ -237,6 +227,7 @@ export const ContentDetailPoll: React.FC = () => {
                           popup: "",
                         },
                       });
+                      setIsVoting(false);
                       return;
 
                     } catch {
@@ -254,6 +245,7 @@ export const ContentDetailPoll: React.FC = () => {
                           popup: "",
                         },
                       });
+                      setIsVoting(false);
                       return;
                     }
 
@@ -275,33 +267,32 @@ export const ContentDetailPoll: React.FC = () => {
                         popup: "",
                       },
                     });
+                    setIsVoting(false);
                     return;
                   }
-               
-                // }
-                // else {
-                //   Swal.fire({
-                //     icon: "error",
-                //     title: "Oops...",
-                //     text: "Tài khoản đã vote rồi.",
-                //     showConfirmButton: false,
-                //     timer: 1500,
-                //     timerProgressBar: true,
-                //     showClass: {
-                //       popup: "swal2-no-animation",
-                //     },
-                //     hideClass: {
-                //       popup: "",
-                //     },
-                //   });
-                //   return;
-                // }
-
-              } catch {
+                  
+                } catch {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Ví này đã vote.", showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showClass: {
+                      popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                    },
+                    hideClass: {
+                      popup: "", // Tắt hiệu ứng biến mất
+                    },
+                  });
+                  setIsVoting(false);
+                  return;
+                }
+              } else {
                 Swal.fire({
                   icon: "error",
                   title: "Oops...",
-                  text: "Ví này đã vote.", showConfirmButton: false,
+                  text: "Tài khoản có email không được cấp quyền.", showConfirmButton: false,
                   timer: 1500,
                   timerProgressBar: true,
                   showClass: {
@@ -311,6 +302,7 @@ export const ContentDetailPoll: React.FC = () => {
                     popup: "", // Tắt hiệu ứng biến mất
                   },
                 });
+                setIsVoting(false);
                 return;
               }
             }
@@ -328,7 +320,7 @@ export const ContentDetailPoll: React.FC = () => {
                   popup: "", // Tắt hiệu ứng biến mất
                 },
               });
-
+              setIsVoting(false);
               return;
             }
           }
@@ -347,6 +339,7 @@ export const ContentDetailPoll: React.FC = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             });
+            setIsVoting(false);
             return;
           }
         } catch (error) {
@@ -364,7 +357,9 @@ export const ContentDetailPoll: React.FC = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
+          setIsVoting(false);
           return;
+          
         }
       } else if (vote.typeContent === "private") {
         try {
@@ -391,6 +386,7 @@ export const ContentDetailPoll: React.FC = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             });
+            setIsVoting(false);
           }
           // Gửi dữ liệu bình chọn lên backend
           else {
@@ -407,7 +403,7 @@ export const ContentDetailPoll: React.FC = () => {
                 popup: "", // Tắt hiệu ứng biến mất
               },
             });
-
+            setIsVoting(false);
             return;
           }
         } catch (error) {
@@ -426,7 +422,9 @@ export const ContentDetailPoll: React.FC = () => {
             },
           });
         }
+        setIsVoting(false);
         return;
+        
       } else {
         // Bình chọn không sử dụng smart contract
         const dataVote = {
@@ -453,7 +451,7 @@ export const ContentDetailPoll: React.FC = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
-
+          setIsVoting(false);
         } catch (error) {
           console.error("Error voting:", error);
           Swal.fire({
@@ -469,9 +467,10 @@ export const ContentDetailPoll: React.FC = () => {
               popup: "", // Tắt hiệu ứng biến mất
             },
           });
-
+          setIsVoting(false);
         }
       }
+      setIsVoting(false);
     } catch (error) {
       console.error("Error: " + error);
       Swal.fire({
@@ -487,7 +486,7 @@ export const ContentDetailPoll: React.FC = () => {
           popup: "", // Tắt hiệu ứng biến mất
         },
       });
-
+      setIsVoting(false);
     }
   };
 
@@ -520,186 +519,213 @@ export const ContentDetailPoll: React.FC = () => {
   };
 
   return (
-    <div className="wrapper_detail_vote">
+    <div className={`wrapper_detail_vote ${isVoting ? "loading-active" : ""}`}>
+      {isVoting ? (
+        <div className="loading-container">
+          <CircularProgress />
+          <p>Đang xử lý bình chọn...</p>
+        </div>
+      ):(
+        <div className="form-container">
+
+        </div>
+      )}
       <h1>Chi tiết cuộc bình chọn</h1>
-
-      <form>
-        <div className="header_content_form">
-          <div className="header_content_detail_right">
-            <div className="avatar_poll">
-              <img src={vote?.avatar ?? undefined} alt="upload" />
+        <form>
+          <div className="header_content_form">
+            <div className="header_content_detail_right">
+              <div className="avatar_poll">
+                <img src={vote?.avatar ?? undefined} alt="upload" />
+              </div>
             </div>
-          </div>
-          <div className="header_content_detail_left">
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "90%" }}>
-                <div className="label">Tên cuộc bình chọn:</div>
-                <TextField
-                  className="text_namevote"
-                  value={vote?.title || ""}
-                  inputProps={{ readOnly: true }}
-                  variant="outlined"
-                />
-              </div>
-
-              <div style={{ margin: "auto" }}>
-                <IconButton
-                  onClick={handleClickOpen}
-                  aria-label="statistics"
-                  style={{ transform: "scale(1.5)" }} // Tăng kích thước nút
-                >
-                  <AssessmentIcon style={{ fontSize: 50 }} />{" "}
-                  {/* Tăng kích thước icon */}
-                </IconButton>
-              </div>
-
-              {/* Modal */}
-              <div>
-                {vote?.timeEnd &&
-                  new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
-                  <StatisticsDialogPolling
-                    open={open}
-                    handleClose={handleClose}
-                    pollId={vote._id}
+            <div className="header_content_detail_left">
+              <div style={{ display: "flex" }}>
+                <div style={{ width: "90%" }}>
+                  <div className="label">Tên cuộc bình chọn:</div>
+                  <TextField
+                    className="text_namevote"
+                    value={vote?.title || ""}
+                    inputProps={{ readOnly: true }}
+                    variant="outlined"
                   />
-                ) : (
-                  vote?._id && (
-                    <StatisticsDialog
-                      open={open}
+                </div>
 
+                <div style={{ margin: "auto" }}>
+                  <IconButton
+                    onClick={handleClickOpen}
+                    aria-label="statistics"
+                    style={{ transform: "scale(1.5)" }} // Tăng kích thước nút
+                  >
+                    <AssessmentIcon style={{ fontSize: 50 }} />{" "}
+                    {/* Tăng kích thước icon */}
+                  </IconButton>
+                </div>
+
+                {/* Modal */}
+                <div>
+                  {vote?.timeEnd &&
+                    new Date(vote.timeEnd).getTime() > new Date().getTime() ? (
+                    <StatisticsDialogPolling
+                      open={open}
                       handleClose={handleClose}
                       pollId={vote._id}
                     />
-                  )
-                )}
-              </div>
-            </div>
-            <div className="label">Miêu tả:</div>
-            <TextField
-              className="text_namevote"
-              value={vote?.description || ""}
-              multiline
-              rows={4}
-              inputProps={{ readOnly: true }}
-              variant="outlined"
-            />
-            <div className="label">Tác giả:</div>
-            <TextField
-              className="text_namevote"
-              value={nameAuthor || ""}
-              multiline
-              rows={1}
-              inputProps={{ readOnly: true }}
-              variant="outlined"
-            />
-          </div>
-        </div>
-        <div className="label">Lựa chọn:</div>
-        {vote?.options.map((select, index) => (
-          <div key={index} className="choice-wrapper">
-            <TextField
-              className="text_namechoice"
-              variant="outlined"
-              style={{
-                marginBottom: "10px",
-                width: "100%",
-                backgroundColor: select._id === votedOptionId ? "#44fd24" : "#f5f5f5", // Màu nền đỏ nếu id trùng
-                border: select._id === votedOptionId ? "2px solid #44fd24" : "none", // Đường viền đỏ nếu id trùng
-              }}
-              placeholder={`Choice ${index + 1}`}
-              value={select.contentOption || ""}
-              onClick={() =>
-                handleVote(select._id, select.contentOption, index + 1)
-              }
-              onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      aria-label="add description"
-                      onClick={(e) => {
-                        toggleDescriptionInput(index);
-                        e.stopPropagation();
-                      }}
-                    >
-                      <DescriptionIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+                  ) : (
+                    vote?._id && (
+                      <StatisticsDialog
+                        open={open}
 
-
-            {showDescriptions[index] && (
-              <div className="text_description">
-                <div className="avatar-wrapper-description">
-                  {/* Avatar */}
-                  <img
-                    src={select.avatarContentOption || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
-                    alt="avatar"
-                    className="choice-avatar"
-                  />
+                        handleClose={handleClose}
+                        pollId={vote._id}
+                      />
+                    )
+                  )}
                 </div>
-                <TextField
-                  className="text_description_field"
-                  variant="outlined"
-                  multiline
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  value={select?.descriptionContentOption || ""}
-                  onChange={(e) =>
-                    handleDescriptionChangeContent(index, e.target.value)
-                  }
-                />
-              </div>)}
+              </div>
+              <div className="label">Miêu tả:</div>
+              <TextField
+                className="text_namevote"
+                value={vote?.description || ""}
+                multiline
+                rows={4}
+                inputProps={{ readOnly: true }}
+                variant="outlined"
+              />
+              <div className="label">Tác giả:</div>
+              <TextField
+                className="text_namevote"
+                value={nameAuthor || ""}
+                multiline
+                rows={1}
+                inputProps={{ readOnly: true }}
+                variant="outlined"
+              />
+            </div>
           </div>
-        ))
-        }
+          <div className="label">Lựa chọn:</div>
+          {vote?.options.map((select, index) => (
+            <div key={index} className="choice-wrapper">
+              <TextField
+                className="text_namechoice"
+                variant="outlined"
+                style={{
+                  marginBottom: "10px",
+                  width: "100%",
+                  backgroundColor: select._id === votedOptionId ? "#44fd24" : "#f5f5f5", // Màu nền đỏ nếu id trùng
+                  border: select._id === votedOptionId ? "2px solid #44fd24" : "none", // Đường viền đỏ nếu id trùng
+                }}
+                placeholder={`Choice ${index + 1}`}
+                value={select.contentOption || ""}
+                onClick={() =>
+                  handleVote(select._id, select.contentOption, index + 1)
+                }
+                onChange={(e) => handleChoiceChangeContent(index, e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        aria-label="add description"
+                        onClick={(e) => {
+                          toggleDescriptionInput(index);
+                          e.stopPropagation();
+                        }}
+                      >
+                        <DescriptionIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-        <div className="form_date">
-          <div className="date">
-            <div className="label">Ngày bắt đầu:</div>
-            <TextField
-              type="text"
-              className="labelField"
-              value={formattedTimeStart || ""}
-              variant="outlined"
-            />
-          </div>
-          <div className="date">
-            <div className="label">Ngày kết thúc:</div>
-            <TextField
-              type="text"
-              className="labelField"
-              value={formattedTimeEnd || ""}
-              variant="outlined"
-            />
-          </div>
-          <div className="date">
-            <div className="label">Kiểu bình chọn:</div>
-            <TextField
-              type="text"
-              className="labelField"
-              value={vote?.typeContent === "public" ? "Công khai" : vote?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}
-              variant="outlined"
-            />
-          </div>
 
-          {
-            authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
-              <div className="date">
-                <button
-                  className="btn_end_vote"
-                  onClick={async () => {
-                    try {
-                      if (vote) {
-                        await updateTimeEnd(vote._id);
+              {showDescriptions[index] && (
+                <div className="text_description">
+                  <div className="avatar-wrapper-description">
+                    {/* Avatar */}
+                    <img
+                      src={select.avatarContentOption || "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-19.jpg"} // Avatar mặc định nếu chưa có
+                      alt="avatar"
+                      className="choice-avatar"
+                    />
+                  </div>
+                  <TextField
+                    className="text_description_field"
+                    variant="outlined"
+                    multiline
+                    style={{ width: "100%", marginBottom: "10px" }}
+                    value={select?.descriptionContentOption || ""}
+                    onChange={(e) =>
+                      handleDescriptionChangeContent(index, e.target.value)
+                    }
+                  />
+                </div>)}
+            </div>
+          ))
+          }
+
+          <div className="form_date">
+            <div className="date">
+              <div className="label">Ngày bắt đầu:</div>
+              <TextField
+                type="text"
+                className="labelField"
+                value={formattedTimeStart || ""}
+                variant="outlined"
+              />
+            </div>
+            <div className="date">
+              <div className="label">Ngày kết thúc:</div>
+              <TextField
+                type="text"
+                className="labelField"
+                value={formattedTimeEnd || ""}
+                variant="outlined"
+              />
+            </div>
+            <div className="date">
+              <div className="label">Kiểu bình chọn:</div>
+              <TextField
+                type="text"
+                className="labelField"
+                value={vote?.typeContent === "public" ? "Công khai" : vote?.typeContent === "private" ? "Riêng tư" : "Nâng cao"}
+                variant="outlined"
+              />
+            </div>
+
+            {
+              authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
+                <div className="date">
+                  <button
+                    className="btn_end_vote"
+                    onClick={async () => {
+                      try {
+                        if (vote) {
+                          navigate("/poll");
+                          await updateTimeEnd(vote._id);
+                          Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                            showClass: {
+                              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                            },
+                            hideClass: {
+                              popup: "", // Tắt hiệu ứng biến mất
+                            },
+                          });
+                        }
+                        
+                      } catch (error) {
+                        console.error("Error ending vote:", error);
                         Swal.fire({
-                          icon: "success",
-                          title: "Thành công",
-                          text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
+                          icon: "error",
+                          title: "Oops...",
+                          text: "Lỗi trong quá trình kết thúc bình chọn.",
+                          showConfirmButton: false,
                           timer: 1500,
-                          timerProgressBar: true,
                           showClass: {
                             popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
                           },
@@ -708,32 +734,16 @@ export const ContentDetailPoll: React.FC = () => {
                           },
                         });
                       }
-                      navigate("/", { replace: true });
-                    } catch (error) {
-                      console.error("Error ending vote:", error);
-                      Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Lỗi trong quá trình kết thúc bình chọn.",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        showClass: {
-                          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                        },
-                        hideClass: {
-                          popup: "", // Tắt hiệu ứng biến mất
-                        },
-                      });
                     }
-                  }
-                  }
-                >
-                  Kết thú
-                </button></div>)
-          }
+                    }
+                  >
+                    Kết thúc
+                  </button></div>)
+            }
 
-        </div>
-      </form>
+          </div>
+        </form>
     </div>
+
   );
 };

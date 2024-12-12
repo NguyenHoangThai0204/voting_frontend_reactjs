@@ -35,9 +35,11 @@ const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
 const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
 const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
 const API_AI = "https://api-1.pollweb.io.vn/api/ai";
-
 const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
+
 // kiểm tra xem ví có vote chưa
+
+
 
 export const checkVoteAddress = async (data: {
   pollId: number;
@@ -361,6 +363,11 @@ export const deleteTheNewById = async (id: string): Promise<boolean> => {
     console.error("Error deleting the document:", error);
     return false; // Trả về `false` nếu có lỗi
   }
+};
+// cập nhật bài viết
+export const updateTheNew = async (id: string, updatedData: Partial<TheNew>): Promise<TheNew> => {
+  const response = await axios.put(`${API_TheNew}/update_the_new/${id}`, updatedData);
+  return response.data;
 };
 
 // tạo cuộc bình chọn

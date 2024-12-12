@@ -4,6 +4,30 @@
   padding: 10px;
   width: 100%;
   overflow: hidden;
+  position: relative; 
+}
+.loading-container {
+  position: fixed; /* Giữ loading ở giữa màn hình */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999; /* Hiển thị phía trên tất cả các phần tử khác */
+  background-color: rgba(255, 255, 255, 0.9); /* Làm nền mờ */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.wrapper_detail_vote.loading-active {
+  pointer-events: none; /* Ngăn chặn thao tác */
+  opacity: 0.5; /* Làm mờ trang */
+}
+
+
+.form-container {
+  opacity: 0.5; /* Làm mờ form khi đang tải */
+  pointer-events: none; /* Vô hiệu hóa tương tác khi loading */
+  filter: blur(2px); /* Làm mờ thêm nếu cần */
+  transition: opacity 0.3s ease, filter 0.3s ease; /* Hiệu ứng mờ dần */
 }
 .wrapper_detail_vote h1 {
   color: #41b3a2;
@@ -15,6 +39,7 @@
   padding: 10px;
   display: block;
 }
+
 .wrapper_detail_vote form .label {
   font-size: 22px;
   font-weight: bold;

@@ -10,7 +10,8 @@ export const ItemComent: React.FC<TheNewObj> = ({ theNew }) => {
     <div className='itemComment'>
       <div className="header">
         <div className="avatar">
-          <img src="" alt="admin" />
+          <img src = "https://voting-app-tm.s3.ap-southeast-1.amazonaws.com/logo-m-t-min.jpg" 
+           alt="admin" />
         </div>
         <div className="name">
           <p>Admin</p>
