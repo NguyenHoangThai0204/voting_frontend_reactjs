@@ -701,6 +701,7 @@ export const ContentDetailPoll: React.FC = () => {
                     onClick={async () => {
                       try {
                         if (vote) {
+                          navigate("/poll");
                           await updateTimeEnd(vote._id);
                           Swal.fire({
                             icon: "success",
@@ -716,7 +717,7 @@ export const ContentDetailPoll: React.FC = () => {
                             },
                           });
                         }
-                        navigate("/", { replace: true });
+                        
                       } catch (error) {
                         console.error("Error ending vote:", error);
                         Swal.fire({
