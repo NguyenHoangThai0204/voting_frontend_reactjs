@@ -98,9 +98,9 @@ export default function LoginForm({
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Lỗi trong quá trình đăng nhập.",
+        text: "Sai tài khoản hoặc mật khẩu.",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
         timerProgressBar: true,
         showClass: {
           popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
