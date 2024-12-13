@@ -86,15 +86,14 @@ export const ContentPollLayout = () => {
                             if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
                                 // Truyền id_vote vào hàm getPollById
                                 const vote = await getPollById(listVote[i].id_vote);
-                                if(vote.data.authorId !== authContext?.user?._id) {
+                                // if(vote.data.authorId !== authContext?.user?._id) {
                                     listPollJoined.push(vote.data);
-                                }
+                                // }
                             } else {
                                 console.error('Danh sách vote không đúng định dạng.');
                             }
                         }
 
-                        // Cập nhật lại state sau khi đã có danh sách các Poll
                         setPollPollJoined(listPollJoined);
                     }
 
