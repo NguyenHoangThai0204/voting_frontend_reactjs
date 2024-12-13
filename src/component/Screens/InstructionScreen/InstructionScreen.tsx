@@ -179,7 +179,7 @@ export const InstructionScreen = () => {
                 <div className="container_instrcction_right"><h1>Hướng dẫn chi tiết qua video: </h1>
                     <div className="video-container">
                         <iframe
-                            src="https://www.youtube.com/embed/PtEhS0wVT2M"
+                            src="https://www.youtube.com/embed/dnqmkIUeJE8"
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

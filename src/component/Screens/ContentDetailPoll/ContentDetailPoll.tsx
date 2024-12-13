@@ -98,8 +98,7 @@ export const ContentDetailPoll: React.FC = () => {
     return () => {
       socket.off("voteUpdateSL")  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
-  },
-    [id, vote, navigate]);
+  });
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";
@@ -218,16 +217,16 @@ export const ContentDetailPoll: React.FC = () => {
                   if (responseCheck.status === "OK") {
                     try {
                       const isVoteSuccessful = await voteSmartcontract(Number(vote.pollIdSm), optionsId);
-
                       if (isVoteSuccessful) {
-                        await postVotePrivate({
+                        const dataVote = {
                           pollId: vote._id,
                           optionId: optionId,
-                          transactionHash: 0, // Add transaction hash if needed
+                          transactionHash: 0,
                           userId: authContext?.user?._id ?? null,
                           timestamp: new Date().toISOString(),
-                          addRessWallet: addRessWallet || "",
-                        });
+                          addRessWallet: null,
+                        };
+                        await postVotePrivate(dataVote);
                         await addPollIdToListVote({
                           pollId: vote._id,
                           id: authContext?.user?._id ?? "",

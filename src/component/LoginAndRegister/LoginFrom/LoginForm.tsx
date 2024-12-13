@@ -162,6 +162,20 @@ export default function LoginForm({
       }
   
       console.error("Login error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sai tài khoản hoặc mật khẩu.",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        showClass: {
+          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+        },
+        hideClass: {
+          popup: "", // Tắt hiệu ứng biến mất
+        },
+      });
     }
   };
   
