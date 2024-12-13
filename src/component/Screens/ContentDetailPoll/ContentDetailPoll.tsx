@@ -30,6 +30,7 @@ import { voteSmartcontract, changePollState } from "../../../service/contractSer
 import CircularProgress from "@mui/material/CircularProgress";
 // const socket = io("http://localhost:3000", { transports: ["websocket"] });
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
   const [nameAuthor, setNameAuthor] = useState<string[]>([""]);
@@ -97,7 +98,8 @@ export const ContentDetailPoll: React.FC = () => {
     return () => {
       socket.off("voteUpdateSL")  // Đảm bảo đóng kết nối socket khi component bị unmount
     };
-  });
+  },
+    [id, vote, navigate]);
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";

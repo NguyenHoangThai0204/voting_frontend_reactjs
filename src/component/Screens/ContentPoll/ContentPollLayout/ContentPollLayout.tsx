@@ -22,6 +22,7 @@ export const ContentPollLayout = () => {
     const [errorMessage, setErrorMessage] = useState<string>(''); // State để lưu thông báo lỗi
 
     useEffect(() => {
+        const controller = new AbortController(); // Define the controller
         const fetchVotes = async () => {
             if (!user) {
                 console.log('User not logged in');
@@ -98,11 +99,14 @@ export const ContentPollLayout = () => {
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);
                 }
+                
             }
+            return () => controller.abort();
         };
 
         fetchVotes();
-    }); // Thêm walletAddress vào dependency để theo dõi sự thay đổi
+    }, [user, walletAddress]
+); // Thêm walletAddress vào dependency để theo dõi sự thay đổi
 
     // Hàm xử lý khi người dùng click vào nút "Tạo bình chọn"
     const handleCreatePollClick = (event: React.MouseEvent) => {
