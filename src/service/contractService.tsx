@@ -8,7 +8,9 @@ let contract: Contract;
 // const CONTRACT_ADDRESS = '0xC213bbcca3dDebD9409C53204A253b61E3482945' // đang dùng của mình
 // const CONTRACT_ADDRESS = '0x9F04e24B3F0eF0Edbe768E3E557A60b8Bfc8fF73' // Mai tạo hồi chiều 12/12
 // mới tạo Thái
-const CONTRACT_ADDRESS = '0xFD60f9F233C728Ed0a0Ea50082B7d6995066EBB2'
+// const CONTRACT_ADDRESS = '0xFD60f9F233C728Ed0a0Ea50082B7d6995066EBB2'
+const CONTRACT_ADDRESS = '0x59B16aF9ED5Bf04BD17Df18ECBaA392172Cc528f'
+
 
 // Initialize provider, signer, and contract
 const initialize = async () => {

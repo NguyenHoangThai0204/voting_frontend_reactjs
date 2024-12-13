@@ -708,62 +708,76 @@ export const ContentDetailPoll: React.FC = () => {
               <div className="date">
                 <button
                   className="btn_end_vote"
-                  onClick={async () => {
-                    try {
-                      if (vote) {
-                        // Hiển thị xác nhận trước khi kết thúc
-                        const result = await Swal.fire({
-                          icon: "warning",
-                          title: "Xác nhận",
-                          text: "Bạn có chắc chắn muốn kết thúc bình chọn này không?",
-                          showCancelButton: true,
-                          confirmButtonText: "Có",
-                          cancelButtonText: "Hủy",
-                          reverseButtons: true, // Đảo vị trí nút "Có" và "Hủy"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    Swal.fire({
+                      title: 'Xác nhận',
+                      text: 'Bạn có muốn ngừng hoạt động của người này không?',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Đồng ý',
+                      cancelButtonText: 'Hủy',
+                    }).then(async (result) => {
+                      if (result.isConfirmed) {
+                        navigate("/poll");
+                        await updateTimeEnd(vote._id);
+                        Swal.fire({
+                          icon: "success",
+                          title: "Thành công",
+                          text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
+                          timer: 1500,
+                          timerProgressBar: true,
+                          showClass: {
+                            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                          },
+                          hideClass: {
+                            popup: "", // Tắt hiệu ứng biến mất
+                          },
                         });
-
-                        if (result.isConfirmed) {
-                          // Người dùng nhấn "Có", thực hiện kết thúc
-                          await updateTimeEnd(vote._id);
-                          navigate("/poll");
-
-                          Swal.fire({
-                            icon: "success",
-                            title: "Thành công",
-                            text: "Kết thúc bình chọn thành công!",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            showClass: {
-                              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                            },
-                            hideClass: {
-                              popup: "", // Tắt hiệu ứng biến mất
-                            },
-                          });
-                        }
                       }
-                    } catch (error) {
-                      console.error("Error ending vote:", error);
-                      Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Lỗi trong quá trình kết thúc bình chọn.",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        showClass: {
-                          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                        },
-                        hideClass: {
-                          popup: "", // Tắt hiệu ứng biến mất
-                        },
-                      });
-                    }
-                  }}
+                    });
+                    // try {
+                    //   if (vote) {
+                    //     navigate("/poll");
+                    //     await updateTimeEnd(vote._id);
+                    //     Swal.fire({
+                    //       icon: "success",
+                    //       title: "Thành công",
+                    //       text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
+                    //       timer: 1500,
+                    //       timerProgressBar: true,
+                    //       showClass: {
+                    //         popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                    //       },
+                    //       hideClass: {
+                    //         popup: "", // Tắt hiệu ứng biến mất
+                    //       },
+                    //     });
+                    //   }
+
+                    // } catch (error) {
+                    //   console.error("Error ending vote:", error);
+                    //   Swal.fire({
+                    //     icon: "error",
+                    //     title: "Oops...",
+                    //     text: "Lỗi trong quá trình kết thúc bình chọn.",
+                    //     showConfirmButton: false,
+                    //     timer: 1500,
+                    //     showClass: {
+                    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                    //     },
+                    //     hideClass: {
+                    //       popup: "", // Tắt hiệu ứng biến mất
+                    //     },
+                    //   });
+                    // }
+                  }
+                  }
                 >
                   Kết thúc
-                </button>
-              </div>)
+                </button></div>)
           }
 
         </div>
