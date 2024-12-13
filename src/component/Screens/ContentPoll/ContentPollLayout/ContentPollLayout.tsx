@@ -75,7 +75,8 @@ export const ContentPollLayout = () => {
                     }
 
                     // Kiểu dữ liệu của listVote phải là một mảng các đối tượng chứa id_vote
-                    if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0) {
+                    if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0
+                    ) {
                         const listVote = authContext?.user?.listVote;
                         const listPollJoined: Poll[] = [];
 
@@ -85,7 +86,9 @@ export const ContentPollLayout = () => {
                             if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
                                 // Truyền id_vote vào hàm getPollById
                                 const vote = await getPollById(listVote[i].id_vote);
-                                listPollJoined.push(vote.data);
+                                if(vote.data.authorId !== authContext?.user?._id) {
+                                    listPollJoined.push(vote.data);
+                                }
                             } else {
                                 console.error('Danh sách vote không đúng định dạng.');
                             }
