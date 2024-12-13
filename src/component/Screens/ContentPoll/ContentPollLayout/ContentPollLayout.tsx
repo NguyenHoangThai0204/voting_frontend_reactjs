@@ -4,11 +4,10 @@ import './ContentPollLayout.css';
 import { AuthContext } from '../../../../contextapi/AuthContext';
 import { useContext, useEffect, useState } from "react";
 // import { getAllVoteUser, getAllVoteByUserid, getPollById } from '../../../../api/CallApi';
-import { getAllVoteUser} from '../../../../api/CallApi';
+import { getAllVoteUser, getPollById } from '../../../../api/CallApi';
 
 import { Poll } from '../../../../typeObject';
 import Swal from 'sweetalert2';  // Import SweetAlert2
-
 export const ContentPollLayout = () => {
     const authContext = useContext(AuthContext); // Lấy thông tin người dùng
     const { user, walletAddress } = authContext!; // Lấy thêm walletAddress từ AuthContext
@@ -17,13 +16,10 @@ export const ContentPollLayout = () => {
     const [polling, setPolling] = useState<Poll[]>([]);
     const [polled, setPolled] = useState<Poll[]>([]);
     const [pollSM, setPollSM] = useState<Poll[]>([]);
-    //eslint-disable-next-line
+
     const [pollPollJoined, setPollPollJoined] = useState<Poll[]>([]);
     const [canCreatePoll, setCanCreatePoll] = useState<boolean>(true); // Kiểm tra xem có thể tạo bình chọn hay không
     const [errorMessage, setErrorMessage] = useState<string>(''); // State để lưu thông báo lỗi
-
-    //eslint-disable-next-line
-    const [listPollid, setListPollid] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchVotes = async () => {
@@ -76,8 +72,29 @@ export const ContentPollLayout = () => {
                         setCanCreatePoll(true);
                         setErrorMessage('');
                     }
-                    
-                    
+
+                    // Kiểu dữ liệu của listVote phải là một mảng các đối tượng chứa id_vote
+                    if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0) {
+                        const listVote = authContext?.user?.listVote;
+                        const listPollJoined: Poll[] = [];
+
+                        // Lặp qua từng phần tử trong listVote
+                        for (let i = 0; i < listVote.length; i++) {
+                            // Kiểm tra xem phần tử trong listVote có phải là đối tượng với id_vote hay không
+                            if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
+                                // Truyền id_vote vào hàm getPollById
+                                const vote = await getPollById(listVote[i].id_vote);
+                                listPollJoined.push(vote.data);
+                            } else {
+                                console.error('Danh sách vote không đúng định dạng.');
+                            }
+                        }
+
+                        // Cập nhật lại state sau khi đã có danh sách các Poll
+                        setPollPollJoined(listPollJoined);
+                    }
+
+
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);
                 }
@@ -104,8 +121,8 @@ export const ContentPollLayout = () => {
 
     return (
         <div className="wrapper_votelayout">
-            <div className="content_vote">
-                {/* Nội dung khác của bạn */}
+            <div className="content_vote" style={{ textAlign: "center" }}>
+                <h1>Trang cá nhân</h1>
             </div>
             <div className="list_vote">
                 <div style={{ display: "flex", justifyContent: "end" }}>
@@ -130,12 +147,19 @@ export const ContentPollLayout = () => {
                     <ListPoll vote={pollSM} />
                 </div>
             </div>}
+            {pollPollJoined.length > 0 && <div className="list_vote">
+                <h2>Danh sách bình chọn đã tham gia:</h2>
+                <div className="list_item_vote">
+                    <ListPoll vote={pollPollJoined} />
+                </div>
+            </div>}
             {polled.length > 0 && <div className="list_vote">
                 <h2>Danh sách bình chọn đã kết thúc:</h2>
                 <div className="list_item_vote">
                     <ListPoll vote={polled} />
                 </div>
             </div>}
+            
         </div>
     );
 };

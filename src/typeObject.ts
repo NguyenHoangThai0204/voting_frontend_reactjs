@@ -10,7 +10,9 @@ export interface User {
     gender?: string;
     province?: string;
     district?: string;
-    listVote?: string[];
+    listVote?: [{
+      id_vote: string;
+    }];
     status?: string;
     ward?: string;
     street?: string;
