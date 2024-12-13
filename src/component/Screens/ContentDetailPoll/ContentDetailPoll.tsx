@@ -13,6 +13,7 @@ import {
   updateTimeEnd,
   getInforAuthor,
   checkVotePrivate,
+  addPollIdToListVote,
 } from "../../../api/CallApi";
 import { Poll, Vote } from "../../../typeObject";
 import { format } from "date-fns";
@@ -225,7 +226,10 @@ export const ContentDetailPoll: React.FC = () => {
                           timestamp: new Date().toISOString(),
                           addRessWallet: addRessWallet || "",
                         });
-
+                        await addPollIdToListVote({
+                          pollId: vote._id,
+                          id: authContext?.user?._id ?? "",
+                        });
                         Swal.fire({
                           icon: "success",
                           title: "Thành công",
@@ -383,6 +387,10 @@ export const ContentDetailPoll: React.FC = () => {
               addRessWallet: null,
             };
             await postVotePrivate(dataVote);
+            await addPollIdToListVote({
+              pollId: vote._id,
+              id: authContext?.user?._id ?? null,
+            });
             Swal.fire({
               icon: "success",
               title: "Thành công",
@@ -448,6 +456,10 @@ export const ContentDetailPoll: React.FC = () => {
 
         try {
           await postVote(dataVote);
+          await addPollIdToListVote({
+            pollId: vote._id,
+            id: authContext?.user?._id ||"",
+          });
           Swal.fire({
             icon: "success",
             title: "Thành công",

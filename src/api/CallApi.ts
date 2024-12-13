@@ -40,6 +40,21 @@ const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 
 // kiểm tra xem ví có vote chưa
 
+// hàm thêm pollid vào listVote
+export const addPollIdToListVote = async (data: {
+  pollId: string;
+  id: string;
+}): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_USER}/add_pollid_to_listvote`, data);
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error addPollIdToListVote:", error);
+    return false;
+  }
+};
+
+
 // hàm kiểm tra vote private
 export const checkVotePrivate = async (data: Vote): Promise<CheckPrivateResponse> => {
   const response = await axios.post(`${API_VOTE}/check_vote_private`, data);
