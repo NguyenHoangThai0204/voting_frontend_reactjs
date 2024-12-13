@@ -215,7 +215,7 @@ export const ContentDetailPoll: React.FC = () => {
                   if (responseCheck.status === "OK") {
                     try {
                       const isVoteSuccessful = await voteSmartcontract(Number(vote.pollIdSm), optionsId);
-                      
+
                       if (isVoteSuccessful) {
                         await postVotePrivate({
                           pollId: vote._id,
@@ -225,7 +225,7 @@ export const ContentDetailPoll: React.FC = () => {
                           timestamp: new Date().toISOString(),
                           addRessWallet: addRessWallet || "",
                         });
-                  
+
                         Swal.fire({
                           icon: "success",
                           title: "Thành công",
@@ -711,23 +711,38 @@ export const ContentDetailPoll: React.FC = () => {
                   onClick={async () => {
                     try {
                       if (vote) {
-                        navigate("/poll");
-                        await updateTimeEnd(vote._id);
-                        Swal.fire({
-                          icon: "success",
-                          title: "Thành công",
-                          text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
-                          timer: 1500,
-                          timerProgressBar: true,
-                          showClass: {
-                            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                          },
-                          hideClass: {
-                            popup: "", // Tắt hiệu ứng biến mất
-                          },
+                        // Hiển thị xác nhận trước khi kết thúc
+                        const result = await Swal.fire({
+                          icon: "warning",
+                          title: "Xác nhận",
+                          text: "Bạn có chắc chắn muốn kết thúc bình chọn này không?",
+                          showCancelButton: true,
+                          confirmButtonText: "Có",
+                          cancelButtonText: "Hủy",
+                          reverseButtons: true, // Đảo vị trí nút "Có" và "Hủy"
                         });
-                      }
 
+                        if (result.isConfirmed) {
+                          // Người dùng nhấn "Có", thực hiện kết thúc
+                          await updateTimeEnd(vote._id);
+                          navigate("/poll");
+
+                          Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: "Kết thúc bình chọn thành công!",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                            showClass: {
+                              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+                            },
+                            hideClass: {
+                              popup: "", // Tắt hiệu ứng biến mất
+                            },
+                          });
+                        }
+                      }
                     } catch (error) {
                       console.error("Error ending vote:", error);
                       Swal.fire({
@@ -744,11 +759,11 @@ export const ContentDetailPoll: React.FC = () => {
                         },
                       });
                     }
-                  }
-                  }
+                  }}
                 >
                   Kết thúc
-                </button></div>)
+                </button>
+              </div>)
           }
 
         </div>

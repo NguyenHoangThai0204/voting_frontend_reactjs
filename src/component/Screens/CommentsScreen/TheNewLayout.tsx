@@ -8,8 +8,11 @@ import { Dialog, DialogContent, CircularProgress } from '@mui/material';
 import './TheNewPage.css';
 
 import emailjs from '@emailjs/browser';
+import { AuthContext } from '../../../contextapi/AuthContext';
+import { useContext } from 'react';
 
 export const TheNewLayout = () => {
+  const authContext = useContext(AuthContext) as { user: { email: string } | null };
   const itemsPerPage = 5; // Số lượng item trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const [listNew, setListNew] = useState<TheNew[]>([]);
@@ -46,7 +49,9 @@ export const TheNewLayout = () => {
       await emailjs.send(
         'service_4b0syui', // Service ID của bạn
         'template_ec6kjhl', // Template ID của bạn
-        {message: feedback }, // Gửi nội dung phản hồi
+        {message: feedback,
+          sender: authContext?.user?.email || 'Guest'
+         }, // Gửi nội dung phản hồi
         '_czO9WyrQaQWEk05M' // Public Key của bạn
       );
       
