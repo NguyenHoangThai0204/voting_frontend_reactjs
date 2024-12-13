@@ -54,7 +54,9 @@ export const ContentHomeVote = () => {
         };
 
         fetchVotes();
-    }, []);
+    }, [
+        
+    ]);
 
     return (
         <div className="wrapper_votelayout">

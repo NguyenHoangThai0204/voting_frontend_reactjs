@@ -10,6 +10,7 @@ import { Poll } from '../../../../typeObject';
 import Swal from 'sweetalert2';  // Import SweetAlert2
 
 import io from "socket.io-client";
+// const socket = io("http://localhost:3000", { transports: ["websocket"] });
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 
 export const ContentPollLayout = () => {
@@ -24,30 +25,6 @@ export const ContentPollLayout = () => {
     const [pollPollJoined, setPollPollJoined] = useState<Poll[]>([]);
     const [canCreatePoll, setCanCreatePoll] = useState<boolean>(true); // Kiểm tra xem có thể tạo bình chọn hay không
     const [errorMessage, setErrorMessage] = useState<string>(''); // State để lưu thông báo lỗi
-
-    const setAddPollIdInListVoteOfUser = async () => {
-        if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0
-        ) {
-            const listVote = authContext?.user?.listVote;
-            const listPollJoined: Poll[] = [];
-
-            // Lặp qua từng phần tử trong listVote
-            for (let i = 0; i < listVote.length; i++) {
-                // Kiểm tra xem phần tử trong listVote có phải là đối tượng với id_vote hay không
-                if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
-                    // Truyền id_vote vào hàm getPollById
-                    const vote = await getPollById(listVote[i].id_vote);
-                    // if(vote.data.authorId !== authContext?.user?._id) {
-                        listPollJoined.push(vote.data);
-                    // }
-                } else {
-                    console.error('Danh sách vote không đúng định dạng.');
-                }
-            }
-
-            setPollPollJoined(listPollJoined);
-        }
-    }
 
     useEffect(() => {
         const controller = new AbortController(); // Define the controller
@@ -103,25 +80,72 @@ export const ContentPollLayout = () => {
                     }
 
                     // Kiểu dữ liệu của listVote phải là một mảng các đối tượng chứa id_vote
-                    
-                    setAddPollIdInListVoteOfUser();
+
+                    if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0
+                    ) {
+                        const listVote = authContext?.user?.listVote;
+                        const listPollJoined: Poll[] = [];
+
+                        // Lặp qua từng phần tử trong listVote
+                        for (let i = 0; i < listVote.length; i++) {
+                            // Kiểm tra xem phần tử trong listVote có phải là đối tượng với id_vote hay không
+                            if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
+                                // Truyền id_vote vào hàm getPollById
+                                const vote = await getPollById(listVote[i].id_vote);
+                                // if(vote.data.authorId !== authContext?.user?._id) {
+                                listPollJoined.push(vote.data);
+                                // }
+                            } else {
+                                console.error('Danh sách vote không đúng định dạng.');
+                            }
+                        }
+
+                        setPollPollJoined(listPollJoined);
+                    }
 
                     if (socket) {
+                       
                         socket.on("addPollIdInListVoteOfUser", async () => {
                             setPollPollJoined([]);
-                            setAddPollIdInListVoteOfUser();
+                            if (authContext?.user?.listVote && authContext?.user?.listVote.length > 0
+                            ) {
+                                const listVote = authContext?.user?.listVote;
+                                const listPollJoined: Poll[] = [];
+
+                                // Lặp qua từng phần tử trong listVote
+                                for (let i = 0; i < listVote.length; i++) {
+                                    // Kiểm tra xem phần tử trong listVote có phải là đối tượng với id_vote hay không
+                                    if (typeof listVote[i] === 'object' && listVote[i]?.id_vote) {
+                                        // Truyền id_vote vào hàm getPollById
+                                        const vote = await getPollById(listVote[i].id_vote);
+                                        // if(vote.data.authorId !== authContext?.user?._id) {
+                                        listPollJoined.push(vote.data);
+                                        // }
+                                    } else {
+                                        console.error('Danh sách vote không đúng định dạng.');
+                                    }
+                                }
+
+                                setPollPollJoined(listPollJoined);
+                            }
                         });
+                    }
+
+                    return () => {
+
+                        socket.off("addPollIdInListVoteOfUser");
                     }
                 } catch (error) {
                     console.error('Failed to fetch votes:', error);
                 }
-                
+
             }
             return () => controller.abort();
         };
 
         fetchVotes();
-    }); // Thêm walletAddress vào dependency để theo dõi sự thay đổi
+    }, [user, walletAddress, authContext?.user?.listVote]); // Thêm user vào dependency để theo dõi sự thay đổi
+// Thêm walletAddress vào dependency để theo dõi sự thay đổi
 
     // Hàm xử lý khi người dùng click vào nút "Tạo bình chọn"
     const handleCreatePollClick = (event: React.MouseEvent) => {
@@ -178,7 +202,7 @@ export const ContentPollLayout = () => {
                     <ListPoll vote={polled} />
                 </div>
             </div>}
-            
+
         </div>
     );
 };
