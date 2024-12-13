@@ -32,7 +32,6 @@ export default function LoginForm({
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleLogin = async () => {
     if (!username || !password) {
       Swal.fire({
@@ -43,25 +42,25 @@ export default function LoginForm({
         timer: 1500,
         timerProgressBar: true,
         showClass: {
-          popup: "swal2-no-animation", 
+          popup: "swal2-no-animation",
         },
         hideClass: {
-          popup: "", 
+          popup: "",
         },
       });
-
       return;
     }
-
+  
     try {
       const response = await loginUser({ email: username, password: password });
-      // Kiểm tra và lấy dữ liệu người dùng từ response.data
-      if (response.message === "Login success") {
+  
+      // Xử lý phản hồi từ backend
+      if (response.status === "Ok" && response.message === "Login success") {
         if (response.data.status === "active") {
           authContext?.login(response.data);
           const redirectTo = location.state?.from ; // Kiểm tra URL gốc từ state hoặc điều hướng mặc định
           navigate(redirectTo, { replace: true });
-        } else {
+        }  else {
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -70,10 +69,78 @@ export default function LoginForm({
             timer: 1500,
             timerProgressBar: true,
             showClass: {
-              popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+              popup: "swal2-no-animation",
             },
             hideClass: {
-              popup: "", // Tắt hiệu ứng biến mất
+              popup: "",
+            },
+          });
+        }
+      } else if (response.message === "Email is not defined") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Email không tồn tại!",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation",
+          },
+          hideClass: {
+            popup: "",
+          },
+        });
+      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      // Kiểm tra thông tin lỗi từ response của backend
+      if (error.response.status === 404) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Tài khoản không tồn tại!",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          showClass: {
+            popup: "swal2-no-animation",
+          },
+          hideClass: {
+            popup: "",
+          },
+        });
+      } else
+      if (error.response?.status === 401) {
+        const errorMessage = error.response.data?.message || "Unauthorized";
+        if (errorMessage === "Password is incorrect") {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Mật khẩu không đúng!",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation",
+            },
+            hideClass: {
+              popup: "",
+            },
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: errorMessage,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            showClass: {
+              popup: "swal2-no-animation",
+            },
+            hideClass: {
+              popup: "",
             },
           });
         }
@@ -81,36 +148,24 @@ export default function LoginForm({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Tài khoản hoặc mật khẩu không đúng!",
+          text: "Đăng nhập thất bại. Vui lòng thử lại!",
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
           showClass: {
-            popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
+            popup: "swal2-no-animation",
           },
           hideClass: {
-            popup: "", // Tắt hiệu ứng biến mất
+            popup: "",
           },
         });
       }
-    } catch (error) {
+  
       console.error("Login error:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Lỗi trong quá trình đăng nhập.",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        showClass: {
-          popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-        },
-        hideClass: {
-          popup: "", // Tắt hiệu ứng biến mất
-        },
-      });
     }
   };
+  
+  
 
   // Google login
   const handleGoogleLogin = async (response: CredentialResponse) => {

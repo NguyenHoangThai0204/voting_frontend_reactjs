@@ -17,7 +17,7 @@ export const ContentHome = () => {
         </h2>
         <div className="criteria_row">
           <div className="criteria_item">
-            <p className="criteria_title">Nhanh chống, dễ dàng</p>
+            <p className="criteria_title">Nhanh chóng, dễ dàng</p>
             <p className="criteria_description">
             Tạo trong vài phút, dùng ngây không cần đăng nhập.
             </p>

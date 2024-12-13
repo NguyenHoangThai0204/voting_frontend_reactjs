@@ -56,7 +56,8 @@ const ContenInformation = () => {
 
       // Kiểm tra dữ liệu đầu vào (nếu cần)
       if (!fullName || !email || !phone || !address) {
-        Swal.fire('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
+        // Thông báo lỗi
+        Swal.fire('Lỗi', 'Vui lòng nhập đầy đủ thông tin!', 'error');
         return;
       }
 
@@ -104,11 +105,11 @@ const ContenInformation = () => {
           open={isEditing}
           maxWidth="lg"
           fullWidth
-          style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}
+          style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', zIndex: 1000  }}
         >
           <DialogContent>
             <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
-              Sửa Thông Tin
+              Cập Nhật Thông Tin
             </h3>
             <form id="editUserForm_infor" style={{margin:0, width:'100%', padding:'5px'}}>
               <div className="form-group" style={{ marginBottom: '15px' }}>
@@ -333,7 +334,7 @@ const ContenInformation = () => {
                       color: "white",
                       backgroundColor: "#007bff"
                   }}
-                  ><LibraryBooksIcon />Sửa thông tin</button>
+                  ><LibraryBooksIcon />Cập nhật thông tin</button>
 
                 </>
 

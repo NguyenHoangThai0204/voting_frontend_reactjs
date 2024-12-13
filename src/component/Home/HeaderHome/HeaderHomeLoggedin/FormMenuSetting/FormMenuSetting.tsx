@@ -64,11 +64,11 @@ export function FormMenuSetting() {
               params: [{ eth_accounts: {} }],
             });
 
-            Swal.fire("Success", "Connected to MetaMask.", "success");
+            Swal.fire("Success", "Đã kết nối ví MetaMask.", "success");
           } else {
             Swal.fire({
               title: "Oops...",
-              text: "No account selected. Please choose an account to connect.",
+              text: "Không tìm thấy tài khoản MetaMask!",
               icon: "warning",
             });
           }
@@ -76,15 +76,15 @@ export function FormMenuSetting() {
           console.error("User denied account access", error);
           Swal.fire({
             title: "Oops...",
-            text: "You denied account access to MetaMask!",
+            text: "Bạn đã từ chối quyền truy cập tài khoản MetaMask!",
           });
         }
       } else {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "MetaMask not detected!",
-          footer: '<a href="https://metamask.io/download.html">Download MetaMask</a>',
+          text: "MetaMask không được cài đặt!",
+          footer: '<a href="https://metamask.io/download.html">Download MetaMask để tiếp tục</a>',
         });
       }
     }
@@ -93,19 +93,19 @@ export function FormMenuSetting() {
   const listItemMenuSetting = [
     {
       icon: <AccountCircleIcon sx={{ fontSize: 18 }} />,
-      name: "Personal page",
+      name: "Trang cá nhân",
       link: "/personal-page",
     },
     {
       icon: <CurrencyBitcoinIcon sx={{ fontSize: 18 }} />,
       name: authContext?.walletAddress
-        ? `Connected: ${authContext.walletAddress}`
-        : "Connect wallet",
+        ? `Địa chỉ ví: ${authContext.walletAddress}`
+        : "Kết nối ví MetaMask",
       link: "#",
     },
     {
       icon: <LogoutIcon sx={{ fontSize: 18 }} />,
-      name: "Log out",
+      name: "Đăng xuất",
       link: "/",
     },
   ];
