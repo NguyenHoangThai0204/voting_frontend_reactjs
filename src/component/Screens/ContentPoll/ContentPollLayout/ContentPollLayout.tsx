@@ -165,7 +165,7 @@ export const ContentPollLayout = () => {
     return (
         <div className="wrapper_votelayout">
             <div className="content_vote" style={{ textAlign: "center" }}>
-                <h1>Trang cá nhân</h1>
+                <h1>Danh sách cuộc bình chọn của tôi</h1>
             </div>
             <div className="list_vote">
                 <div style={{ display: "flex", justifyContent: "end" }}>
