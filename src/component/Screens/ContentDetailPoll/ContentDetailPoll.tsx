@@ -725,7 +725,7 @@ export const ContentDetailPoll: React.FC = () => {
                     e.preventDefault();
                     Swal.fire({
                       title: 'Xác nhận',
-                      text: 'Bạn có muốn ngừng hoạt động của người này không?',
+                      text: 'Bạn có muốn kết thúc thời cuộc bình chọn này ngây không?',
                       icon: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
