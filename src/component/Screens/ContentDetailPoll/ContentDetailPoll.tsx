@@ -151,7 +151,7 @@ export const ContentDetailPoll: React.FC = () => {
             popup: "", // Tắt hiệu ứng biến mất
           },
         });
-
+        setIsVoting(false);
         return;
       }
 
