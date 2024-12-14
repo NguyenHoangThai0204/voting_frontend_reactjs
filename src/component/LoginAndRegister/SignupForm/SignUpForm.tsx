@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contextapi/AuthContext";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import emailjs from '@emailjs/browser';
 
 // import {
 //   RecaptchaVerifier,
@@ -111,13 +112,15 @@ export default function SignUpForm({ onLoginClick }: SignUpFormProps) {
         "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản."
       );
       // Nếu đăng ký thành công, gửi email xác nhận
-      const res = await confirmGmail({ userMail: email });
-  
-      // Kiểm tra phản hồi từ API gửi email xác nhận
-      if (!res) {
-        alert("Gửi email xác nhận thất bại. Vui lòng thử lại.");
-        return;
-      }
+      // const res = await confirmGmail({ userMail: email });
+      await emailjs.send(
+        'service_3km6kz9', // Service ID của bạn
+        'template_d0wxxjb', // Template ID của bạn
+        {
+          email: email
+         }, // Gửi nội dung phản hồi
+        'GZglHOpvZnbumTNEZ' // Public Key của bạn
+      );
       authContext?.logout(); // Đăng xuất người dùng hiện tại
       navigate("/home"); // Điều hướng sau khi đăng ký thành công
     }

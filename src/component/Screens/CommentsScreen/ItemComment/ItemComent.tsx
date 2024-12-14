@@ -40,14 +40,6 @@ export const ItemComent: React.FC<TheNewObj> = ({ theNew }) => {
           <img src={theNew.hinhAnhBaiViet} alt="avatar" />
         </div>
       </div>
-      <div className="footer">
-        <div className="like">
-          <p>Like</p>
-        </div>
-        <div className="dislike">
-          <p>Dislike</p>
-        </div>
-      </div>
     </div>
   )
 }

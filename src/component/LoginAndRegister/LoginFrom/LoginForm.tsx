@@ -309,7 +309,7 @@ export default function LoginForm({
           onSuccess={handleGoogleLogin}
           containerProps={{
             style: {
-              marginTop: "1.5rem",
+              marginTop: "0.5rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

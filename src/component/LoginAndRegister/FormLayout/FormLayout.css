@@ -51,6 +51,7 @@
 .body .wrapperFormLayout .content_login_left {
   width: 50%;
   display: contents;
+  overflow-y: scroll;
 }
 
 @media screen and (max-width: 900px) {
