@@ -26,7 +26,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import io from "socket.io-client";
 import { useNavigate } from 'react-router-dom';
-import { voteSmartcontract, changePollState } from "../../../service/contractService";
+import { voteSmartcontract } from "../../../service/contractService";
 import CircularProgress from "@mui/material/CircularProgress";
 // const socket = io("http://localhost:3000", { transports: ["websocket"] });
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
@@ -42,6 +42,7 @@ export const ContentDetailPoll: React.FC = () => {
   const navigate = useNavigate();
   const [vote, setVote] = useState<Poll | null>(null);
   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
+  // eslint-disable-next-line
   const [voteSMLength, setVoteSMLength] = useState<Vote[]>([]);
   const [isVoting, setIsVoting] = useState(false);
 
@@ -201,10 +202,10 @@ export const ContentDetailPoll: React.FC = () => {
                 vote.listEmailVote?.includes(authContext?.user?.email) === true
               ) {
                 try {
-                  if (voteSMLength.length === 0) {
+                  // if (voteSMLength.length === 0) {
 
-                    await changePollState(Number(vote.pollIdSm), 1);
-                  }
+                  //   await changePollState(Number(vote.pollIdSm), 1);
+                  // }
 
                   const responseCheck = await checkVotePrivate({
                     pollId: vote._id,
