@@ -1,10 +1,13 @@
-.wrapper_detail_vote {
+.wrapper_detail_newpoll {
   display: block;
   text-align: center;
   padding: 10px;
   width: 100%;
   overflow: hidden;
   position: relative;
+}
+.swal2-popup-custom {
+  z-index: 1400 ; /* Đảm bảo cao hơn Dialog */
 }
 .loading-container {
   position: fixed; /* Giữ loading ở giữa màn hình */
@@ -17,7 +20,7 @@
   border-radius: 10px;
   text-align: center;
 }
-.wrapper_detail_vote.loading-active {
+.wrapper_detail_newpoll.loading-active {
   pointer-events: none; /* Ngăn chặn thao tác */
   opacity: 0.5; /* Làm mờ trang */
 }
@@ -30,58 +33,58 @@
     opacity 0.3s ease,
     filter 0.3s ease; /* Hiệu ứng mờ dần */
 }
-.wrapper_detail_vote h1 {
+.wrapper_detail_newpoll h1 {
   color: #41b3a2;
   font-weight: bold;
 }
-.wrapper_detail_vote form {
+.wrapper_detail_newpoll form {
   width: 100%;
   text-align: left;
   padding: 10px;
   display: block;
 }
 
-.wrapper_detail_vote form .label {
+.wrapper_detail_newpoll form .label {
   font-size: 22px;
   font-weight: bold;
   margin: 10px 10px;
 }
-.wrapper_detail_vote form .header_content_form {
+.wrapper_detail_newpoll form .header_content_form {
   display: flex;
   width: 100%;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_left {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_left {
   width: 73%;
   margin-right: auto;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_left h1 {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_left h1 {
   margin-left: 15px;
   margin-bottom: 10px;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_left .label {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_left .label {
   width: 100%;
   font-size: 23px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_left .text_namevote {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_left .text_namevote {
   width: 100%;
   margin-bottom: 10px;
   background-color: white;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_right {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_right {
   width: 27%;
   padding: 15px;
   margin: auto 10px;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_right .avatar_poll {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
 }
-.wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll img {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_right .avatar_poll img {
   max-height: 350px; /* Chiều cao tối đa */
   max-width: 100%; /* Chiều rộng tối đa */
   border-radius: 8px; /* Bo góc */
@@ -98,27 +101,27 @@
   display: block; /* Để căn chỉnh ảnh dễ dàng */
 }
 
-.wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll img:hover {
+.wrapper_detail_newpoll form .header_content_form .header_content_detail_right .avatar_poll img:hover {
   background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); /* Đổi màu nền khi hover */
   transform: scale(1.05); /* Phóng to nhẹ khi hover */
   transition: all 0.3s ease; /* Hiệu ứng mượt */
 }
 
-.wrapper_detail_vote form .header_content_form .choice-wrapper:hover {
+.wrapper_detail_newpoll form .header_content_form .choice-wrapper:hover {
   cursor: pointer;
   background-color: rgb(180, 175, 175);
 }
-.wrapper_detail_vote form .form_date {
+.wrapper_detail_newpoll form .form_date {
   width: 100%;
   display: flex;
   margin-top: 15px;
   justify-content: space-between;
 }
-.wrapper_detail_vote form .form_date .date {
+.wrapper_detail_newpoll form .form_date .date {
   display: flex;
   align-items: center;
 }
-.wrapper_detail_vote form .form_date .btn_end_vote {
+.wrapper_detail_newpoll form .form_date .btn_end_vote {
   background-color: #f44336;
   color: white;
   padding: 15px 25px;
@@ -127,13 +130,13 @@
   cursor: pointer;
   margin-top: 10px;
 }
-.wrapper_detail_vote .text_description {
+.wrapper_detail_newpoll .text_description {
   display: flex;
   padding: 15px;
   margin-bottom: 15px;
   border: 1px solid #41b3a2;
 }
-.wrapper_detail_vote .text_description .avatar-wrapper-description {
+.wrapper_detail_newpoll .text_description .avatar-wrapper-description {
   width: 25%;
   height: 250px;
   display: flex;
@@ -151,40 +154,40 @@
   background-color: #aa98ed;
 }
 @media screen and (max-width: 900px) {
-  .wrapper_detail_vote {
+  .wrapper_detail_newpoll {
     width: 100%;
   }
-  .wrapper_detail_vote h1 {
+  .wrapper_detail_newpoll h1 {
     font-size: 20px;
   }
-  .wrapper_detail_vote form .header_content_form {
+  .wrapper_detail_newpoll form .header_content_form {
     display: block;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_left {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_left {
     width: 100%;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_left .label {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_left .label {
     font-size: 15px;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_left .text_namevote {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_left .text_namevote {
     width: 100%;
     margin-bottom: 15px;
     background-color: white;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_right {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_right {
     width: 100%;
     margin: auto;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_right .avatar_poll {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_right .avatar_poll {
     width: 100%;
     height: 100%;
     cursor: pointer;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_right .upload_button {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_right .upload_button {
     height: 100%;
     width: 100%;
   }
-  .wrapper_detail_vote form .header_content_form .header_content_detail_right img {
+  .wrapper_detail_newpoll form .header_content_form .header_content_detail_right img {
     background-repeat: no-repeat;
     margin: auto;
     background-size: cover;
@@ -192,46 +195,46 @@
     object-position: center;
     max-height: 400px;
   }
-  .wrapper_detail_vote form .label {
+  .wrapper_detail_newpoll form .label {
     font-size: 15px;
   }
-  .wrapper_detail_vote form .text_namechoice {
+  .wrapper_detail_newpoll form .text_namechoice {
     width: 100%;
     margin-bottom: 15px;
     background-color: white;
   }
-  .wrapper_detail_vote form .form_date {
+  .wrapper_detail_newpoll form .form_date {
     width: 100%;
     display: block;
     margin-top: 15px;
   }
-  .wrapper_detail_vote form .form_date .date {
+  .wrapper_detail_newpoll form .form_date .date {
     width: 100%;
     margin: 15px;
   }
-  .wrapper_detail_vote form .form_date .date .label {
+  .wrapper_detail_newpoll form .form_date .date .label {
     width: 30%;
     text-align: left;
   }
-  .wrapper_detail_vote form .form_date .date .labelField {
+  .wrapper_detail_newpoll form .form_date .date .labelField {
     width: 60%;
   }
-  .wrapper_detail_vote .text_description {
+  .wrapper_detail_newpoll .text_description {
     display: flex;
     padding: 15px;
     margin-bottom: 15px;
     border: 1px solid #41b3a2;
   }
-  .wrapper_detail_vote .text_description {
+  .wrapper_detail_newpoll .text_description {
     display: block;
   }
-  .wrapper_detail_vote .text_description .avatar-wrapper-description {
+  .wrapper_detail_newpoll .text_description .avatar-wrapper-description {
     width: 95%;
     margin: auto;
     max-height: 200px;
     margin: 0 10px 10px 0;
   }
-  .wrapper_detail_vote form .form_date .button_end {
+  .wrapper_detail_newpoll form .form_date .button_end {
     width: 100%;
     text-align: end;
   }

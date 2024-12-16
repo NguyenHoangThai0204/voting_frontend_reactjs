@@ -168,8 +168,16 @@ export interface CreateTheNew{
   thoiGianViet: string| null;
 }
 
-
-
+export interface RoundVote{
+  status : string;
+}
+export interface RoundPoll{
+  status: string;
+  data: {
+    roundName: string;
+    idPollRound: string[];
+  }
+}
 export interface ListResultsResponse {
   optionIds: number;
   voteCounts: results[];

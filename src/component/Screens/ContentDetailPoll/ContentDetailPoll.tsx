@@ -14,7 +14,11 @@ import {
   getInforAuthor,
   checkVotePrivate,
   addPollIdToListVote,
+  checkRound,
+  // addPollToRound,
 } from "../../../api/CallApi";
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { getPollResult } from '../../../service/contractService';
 import { Poll, Vote } from "../../../typeObject";
 import { format } from "date-fns";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -30,6 +34,9 @@ import { voteSmartcontract } from "../../../service/contractService";
 import CircularProgress from "@mui/material/CircularProgress";
 // const socket = io("http://localhost:3000", { transports: ["websocket"] });
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+import { ListResultsResponseSm } from "../../../typeObject";
+import { ContentCreateNewRound } from "./ContentCreateNewRound";
+// import { createPoll } from "../../../api/CallApi"
 
 export const ContentDetailPoll: React.FC = () => {
   const [choices, setChoices] = useState<string[]>([""]);
@@ -45,7 +52,8 @@ export const ContentDetailPoll: React.FC = () => {
   // eslint-disable-next-line
   const [voteSMLength, setVoteSMLength] = useState<Vote[]>([]);
   const [isVoting, setIsVoting] = useState(false);
-
+  // mở hội thoại tạo new round
+  const [openNewRound, setOpenNewRound] = useState(false);
   const fetchVote = async () => {
     try {
       if (id) {
@@ -76,10 +84,11 @@ export const ContentDetailPoll: React.FC = () => {
       console.error("Error fetching vote data:", error);
     }
   };
-
+  const [roundName, setRoundName] = useState(false);
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
+    
 
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
@@ -460,7 +469,7 @@ export const ContentDetailPoll: React.FC = () => {
           await postVote(dataVote);
           await addPollIdToListVote({
             pollId: vote._id,
-            id: authContext?.user?._id ||"",
+            id: authContext?.user?._id || "",
           });
           Swal.fire({
             icon: "success",
@@ -541,6 +550,88 @@ export const ContentDetailPoll: React.FC = () => {
   const handleClose = () => {
     setOpen(false); // Đóng modal
   };
+
+  //eslint-disable-next-line
+  const [roundPoll, setRoundPoll] = useState<number>(0);
+  const [voteResult, setVoteResult] = useState<ListResultsResponseSm[]>([]);
+  const [newPoll, setNewPoll] = useState<Poll | null>(vote);
+
+  useEffect(() => {
+    console.log("Vote: bắt đầu checkname");
+    if (vote?.typeContent === "privatesmc") {
+      const checkRoundName = async () => {
+        const res = await checkRound({
+          pollId: vote?._id ?? "",
+          roundName: vote?.title || "",
+        });
+        console.log("Check round name:", res);
+        if( res.status === "OK"){
+          setRoundName(true);
+        }else{
+          setRoundName(false);
+        }
+      };
+      // console.log("Check round name:", roundName);  
+      checkRoundName();
+    }
+    const fetchRoundPoll = async () => {
+      try {
+        const voteEndDate = vote?.timeEnd ? new Date(vote?.timeEnd) : null;
+        const re = await getPollResult(Number(vote?.pollIdSm));
+
+        // Chỉ setVoteResult nếu dữ liệu thực sự khác
+        if (JSON.stringify(re) !== JSON.stringify(voteResult)) {
+          if (re) {
+            setVoteResult(re);
+          }
+        }
+        console.log("Vote result:", voteResult);
+        if (
+          vote?.typeContent === "privatesmc" &&
+          voteEndDate &&
+          new Date() >= voteEndDate &&
+          voteResult.length >= 3
+        ) {
+
+          const totalVotes = voteResult.reduce((sum, result) => sum + result.voteCounts, 0);
+
+          console.log("Total votes:", totalVotes);
+          // console.log("Options cũ:", vote?.options);
+
+          // Tìm số lượng phiếu bầu thấp nhất
+          const minVoteCounts = Math.min(...voteResult.map((result) => result.voteCounts));
+          // console.log("Min Vote Counts:", minVoteCounts);
+
+          // Lấy các optionIds cần xóa
+          const optionIdsToRemove = voteResult
+            .filter((result) => result.voteCounts === minVoteCounts)
+            .map((result) => Number(result.optionIds));
+          // console.log("Option IDs to Remove:", optionIdsToRemove);
+
+          // Lọc các options mới
+          const newOptions = vote?.options.filter((option, index) => {
+            const shouldRemove = optionIdsToRemove.includes(index + 1);
+            // console.log(`Index: ${index}, Should Remove: ${shouldRemove}`);
+            return !shouldRemove;
+          });
+
+          // console.log("New options:", newOptions);
+
+          // Tạo newPoll mới với options mới
+          setNewPoll({
+            ...vote, // Sao chép toàn bộ thuộc tính từ `vote`
+            options: newOptions, // Ghi đè thuộc tính `options` bằng `newOptions`
+          });
+          
+
+        }
+      } catch (error) {
+        console.error("Error fetching round poll:", error);
+      }
+    };
+
+    fetchRoundPoll();
+  }, [vote, voteResult]); // Chỉ phụ thuộc vào vote và voteResult
 
   return (
     <div className={`wrapper_detail_vote ${isVoting ? "loading-active" : ""}`}>
@@ -752,41 +843,6 @@ export const ContentDetailPoll: React.FC = () => {
                         });
                       }
                     });
-                    // try {
-                    //   if (vote) {
-                    //     navigate("/poll");
-                    //     await updateTimeEnd(vote._id);
-                    //     Swal.fire({
-                    //       icon: "success",
-                    //       title: "Thành công",
-                    //       text: "Kết thúc bình chọn thành công!", showConfirmButton: false,
-                    //       timer: 1500,
-                    //       timerProgressBar: true,
-                    //       showClass: {
-                    //         popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                    //       },
-                    //       hideClass: {
-                    //         popup: "", // Tắt hiệu ứng biến mất
-                    //       },
-                    //     });
-                    //   }
-
-                    // } catch (error) {
-                    //   console.error("Error ending vote:", error);
-                    //   Swal.fire({
-                    //     icon: "error",
-                    //     title: "Oops...",
-                    //     text: "Lỗi trong quá trình kết thúc bình chọn.",
-                    //     showConfirmButton: false,
-                    //     timer: 1500,
-                    //     showClass: {
-                    //       popup: "swal2-no-animation", // Tắt hiệu ứng xuất hiện
-                    //     },
-                    //     hideClass: {
-                    //       popup: "", // Tắt hiệu ứng biến mất
-                    //     },
-                    //   });
-                    // }
                   }
                   }
                 >
@@ -796,7 +852,41 @@ export const ContentDetailPoll: React.FC = () => {
 
         </div>
       </form>
-    </div>
+      {
+        // nếu newPoll khác rỗng hoặc null thì sẽ hiển thị button để tạo round mới create new poll with new options
+        newPoll && vote?.authorId === authContext?.user?._id && roundName
+          === false
+         && (
+          <div className="create-round-poll">
+            <button
+              className="btn-create-round-poll"
+              onClick={() => setOpenNewRound(true)}
+            >
+              Tạo round mới
+            </button>
+          </div>
+        
+        )
+      }
+      <Dialog open={openNewRound} onClose={handleClose} fullWidth maxWidth="lg">
+  <DialogContent>
+    {newPoll && (
+      <ContentCreateNewRound
+        newPoll={newPoll}
+        onCloseDialog={() => setOpenNewRound(false)} // Truyền hàm đóng dialog xuống
+      />
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button
+      onClick={() => setOpenNewRound(false)}
+      color="primary"
+    >
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
 
+    </div>
   );
 };

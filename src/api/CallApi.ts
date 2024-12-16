@@ -12,6 +12,8 @@ import {
   ListResultsResponse,
   CheckPrivateResponse,
   ResultCheckVoteSm,
+  RoundVote,
+  RoundPoll,
 } from "../typeObject"; // Nhập các định nghĩa từ tệp chung
 import { ListVoteResponse } from "../typeObject";
 import { VoteResponse } from "../typeObject";
@@ -20,25 +22,72 @@ import { Vote } from "../typeObject";
 import { PollResponse } from "../typeObject";
 import Cookies from "universal-cookie";
 
-// const API_USER = "http://localhost:3000/api/user";
-// const API_VOTE = "http://localhost:3000/api/vote";
-// const API_POLL = "http://localhost:3000/api/poll";
-// const API_SSO = "http://localhost:3000/api/auth";
-// const API_TheNew = "http://localhost:3000/api/theNew";
-// const API_UPLOAD = "http://localhost:3000/api/upload";
-// const API_PRIVATE = "http://localhost:3000/api/private";
-// const API_AI = "http://localhost:3000/api/ai";
+const API_USER = "http://localhost:3000/api/user";
+const API_VOTE = "http://localhost:3000/api/vote";
+const API_POLL = "http://localhost:3000/api/poll";
+const API_SSO = "http://localhost:3000/api/auth";
+const API_TheNew = "http://localhost:3000/api/theNew";
+const API_UPLOAD = "http://localhost:3000/api/upload";
+const API_PRIVATE = "http://localhost:3000/api/private";
+const API_AI = "http://localhost:3000/api/ai";
+const API_ROUND = "http://localhost:3000/api/round";
 
-const API_USER = "https://api-1.pollweb.io.vn/api/user";
-const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
-const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
-const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
-const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
-const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
-const API_AI = "https://api-1.pollweb.io.vn/api/ai";
-const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
+// const API_USER = "https://api-1.pollweb.io.vn/api/user";
+// const API_VOTE = "https://api-1.pollweb.io.vn/api/vote";
+// const API_POLL = "https://api-1.pollweb.io.vn/api/poll";
+// const API_SSO = "https://api-1.pollweb.io.vn/api/auth";
+// const API_TheNew = "https://api-1.pollweb.io.vn/api/theNew";
+// const API_UPLOAD = "https://api-1.pollweb.io.vn/api/upload";
+// const API_AI = "https://api-1.pollweb.io.vn/api/ai";
+// const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 
 // kiểm tra xem ví có vote chưa
+// thêm poll mới vào round
+export const addPollToRound = async (data: {
+  roundName: string;
+  pollIdOld: string;
+}): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_ROUND}/add_poll_to_round`, data);
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error addPollToRound:", error);
+    return false;
+  }
+};
+
+// tìm round theo tên
+export const findRoundByName = async (roundName: string): Promise<RoundVote> => {
+  const response = await axios.post(`${API_ROUND}/find_round_by_name`, { roundName });
+  return response.data;
+};
+export const findRoundPollByName = async (roundName: string): Promise<RoundPoll> => {
+  const response = await axios.post(`${API_ROUND}/get_round_poll_by_name`, { roundName });
+  return response.data;
+};
+export const checkRound = async (data:{roundName: string, pollId: string}): Promise<RoundVote> => {
+  const response = await axios.post(`${API_ROUND}/check_round`,  data );
+  return response.data;
+};
+
+// đếm số round của poll
+export const countRound = async (roundName: string): Promise<number> => {
+  const response = await axios.post(`${API_ROUND}/get_round_by_name`, { roundName });
+  return response.data;
+};
+// tạo round
+export const createRound = async (data: {
+  pollId:string;
+  roundName: string;
+}): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${API_ROUND}/create_round`, data);
+    return response.status === 200;
+  } catch (error) {
+    console.error("Error createRound:", error);
+    return false;
+  }
+};
 
 // hàm thêm pollid vào listVote
 export const addPollIdToListVote = async (data: {
