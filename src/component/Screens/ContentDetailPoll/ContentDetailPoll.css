@@ -150,6 +150,15 @@
 .btn-create-round-poll:hover {
   background-color: #aa98ed;
 }
+.wrapper_detail_vote form .form_date .btn_update_vote {
+  background-color: #36f43c;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
 @media screen and (max-width: 900px) {
   .wrapper_detail_vote {
     width: 100%;
@@ -230,6 +239,11 @@
     margin: auto;
     max-height: 200px;
     margin: 0 10px 10px 0;
+  }
+  .wrapper_detail_vote form .form_date .btn_end_vote,
+  .wrapper_detail_vote form .form_date .btn_update_vote  {
+    width: 95%;
+    margin: 5px;
   }
   .wrapper_detail_vote form .form_date .button_end {
     width: 100%;

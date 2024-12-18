@@ -36,6 +36,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
 import { ListResultsResponseSm } from "../../../typeObject";
 import { ContentCreateNewRound } from "./ContentCreateNewRound";
+import { ContentUpdatePoll } from "./ContentUpdatePoll";
 // import { createPoll } from "../../../api/CallApi"
 
 export const ContentDetailPoll: React.FC = () => {
@@ -54,6 +55,11 @@ export const ContentDetailPoll: React.FC = () => {
   const [isVoting, setIsVoting] = useState(false);
   // mở hội thoại tạo new round
   const [openNewRound, setOpenNewRound] = useState(false);
+
+
+  const formattedTimeEnd = vote?.timeEnd
+    ? format(new Date(vote.timeEnd), "dd/MM/yyyy HH:mm")
+    : "";
   const fetchVote = async () => {
     try {
       if (id) {
@@ -112,10 +118,9 @@ export const ContentDetailPoll: React.FC = () => {
   const formattedTimeStart = vote?.timeStart
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";
-  const formattedTimeEnd = vote?.timeEnd
-    ? format(new Date(vote.timeEnd), "dd/MM/yyyy HH:mm")
-    : "";
 
+    const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
+    const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
   const handleVote = async (
     optionId: string,
     content: string,
@@ -142,8 +147,7 @@ export const ContentDetailPoll: React.FC = () => {
         return;
       }
 
-      const voteEndDate = vote.timeEnd ? new Date(vote.timeEnd) : null;
-      const voteStartDate = vote.timeStart ? new Date(vote.timeStart) : null;
+
 
       // Kiểm tra thời gian bình chọn
       if (voteStartDate && new Date() < voteStartDate) {
@@ -555,6 +559,7 @@ export const ContentDetailPoll: React.FC = () => {
   const [roundPoll, setRoundPoll] = useState<number>(0);
   const [voteResult, setVoteResult] = useState<ListResultsResponseSm[]>([]);
   const [newPoll, setNewPoll] = useState<Poll | null>(vote);
+  const [openUpdatePoll, setOpenUpdatePoll] = useState(false);
 
   useEffect(() => {
     console.log("Vote: bắt đầu checkname");
@@ -847,9 +852,21 @@ export const ContentDetailPoll: React.FC = () => {
                   }
                 >
                   Kết thúc
-                </button></div>)
+                </button>
+                </div>)
           }
-
+ {
+            authContext?.user?._id && vote?.authorId === authContext?.user?._id && voteStartDate && new Date() < voteStartDate && 
+            (
+              <div className="date">
+                <button
+                  className="btn_update_vote"
+                  onClick={()=>setOpenUpdatePoll(true)}
+                >
+                  Cập nhật
+                </button>
+                </div>)
+          }
         </div>
       </form>
       {
@@ -886,7 +903,24 @@ export const ContentDetailPoll: React.FC = () => {
     </Button>
   </DialogActions>
 </Dialog>
-
+<Dialog open={openUpdatePoll} onClose={handleClose} fullWidth maxWidth="lg">
+  <DialogContent>
+    {vote && (
+      <ContentUpdatePoll
+        newPoll={vote}
+        onCloseDialog={() => setOpenUpdatePoll(false)} // Truyền hàm đóng dialog xuống
+      />
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button
+      onClick={() => setOpenUpdatePoll(false)}
+      color="primary"
+    >
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
     </div>
   );
 };

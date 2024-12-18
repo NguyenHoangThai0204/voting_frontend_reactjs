@@ -6,6 +6,7 @@ import {
   CreateTheNew,
   UserResponse,
   TheNewResponse,
+  Poll,
   ListVotePollidResponse,
   UserCreate,
   VoteResultResponse,
@@ -43,6 +44,10 @@ const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 const API_ROUND = "https://api-1.pollweb.io.vn/api/round";
 
 // kiểm tra xem ví có vote chưa
+export const createUpdatePoll = async (data: Poll): Promise<PollResponse> => {
+  const response = await axios.post(`${API_POLL}/update_poll`, data);
+  return response.data;
+};
 // thêm poll mới vào round
 export const addPollToRound = async (data: {
   roundName: string;
