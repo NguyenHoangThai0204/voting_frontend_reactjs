@@ -36,7 +36,7 @@
   .wrapper_votelayout {
     flex-direction: column;
   }
-  .wrapper_votelayout .content_vote {
+  .wrapper_votelayout .content_vote h1{
     display: none;
   }
   .wrapper_votelayout .content_list_vote .list_vote {
