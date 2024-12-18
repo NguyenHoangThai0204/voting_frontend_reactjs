@@ -221,7 +221,6 @@ export const ContentUpdatePoll = ({ newPoll, onCloseDialog }: ContentDetailPollP
                             }}
                             variant="outlined"
                         />
-                        <div className="label">Tác giả:</div>
                     </div>
                 </div>
                 <div className="label">Lựa chọn:</div>
