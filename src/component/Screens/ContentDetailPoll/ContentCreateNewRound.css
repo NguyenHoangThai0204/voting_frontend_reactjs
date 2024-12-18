@@ -156,6 +156,7 @@
 @media screen and (max-width: 900px) {
   .wrapper_detail_newpoll {
     width: 100%;
+    padding: 2px;
   }
   .wrapper_detail_newpoll h1 {
     font-size: 20px;
