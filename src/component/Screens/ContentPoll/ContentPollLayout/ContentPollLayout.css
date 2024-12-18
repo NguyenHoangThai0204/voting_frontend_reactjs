@@ -36,6 +36,9 @@
   .wrapper_votelayout {
     flex-direction: column;
   }
+  .wrapper_votelayout .content_vote {
+    display: none;
+  }
   .wrapper_votelayout .content_list_vote .list_vote {
     width: 100%;
     height: max-content;
