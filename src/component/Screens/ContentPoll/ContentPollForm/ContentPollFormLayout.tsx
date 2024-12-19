@@ -509,6 +509,14 @@ export const ContentPollFormLayout = () => {
                 placeholder="Enter image URL"
                 value={imageUrl}
                 onChange={handleUrlChange}
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  fontSize: '16px',
+                  margin: '10px auto',
+                  borderRadius: '5px',
+                  border: 'none',
+                }}
               />
             </div>
           </div>
@@ -558,6 +566,7 @@ export const ContentPollFormLayout = () => {
                       <img
                         src={avatarItemUrls[index] || "https://via.placeholder.com/30"} // Avatar mặc định nếu chưa có
                         alt="avatar"
+                        style={{maxWidth:"90%"}}
                         className="choice-avatar"
                       />
                       <input
