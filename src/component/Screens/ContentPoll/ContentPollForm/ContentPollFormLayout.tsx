@@ -450,14 +450,14 @@ export const ContentPollFormLayout = () => {
       // Duyệt qua danh sách email và gửi email từng cái
       for (const email of emails) {
         await emailjs.send(
-          "service_4b0syui", // Service ID của bạn
-          "template_6agbwle", // Template ID của bạn
+          "service_3km6kz9", // Service ID của bạn
+          "template_rj7s5mn", // Template ID của bạn
           {
             email: email, // Email người nhận
             idPoll: idPoll, // Nội dung ID poll
             creater: authContext?.user?.fullName, // Email người tạo poll
           },
-          "_czO9WyrQaQWEk05M" // Public Key của bạn
+          "GZglHOpvZnbumTNEZ" // Public Key của bạn
         );
   
         console.log(`Email đã gửi thành công đến: ${email}`);
