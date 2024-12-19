@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState} from 'react'
 import './ContentCreateNewRound.css'
 import { Poll } from '../../../typeObject'
 import TextField from '@mui/material/TextField';
-import { IconButton, InputAdornment } from "@mui/material";
+import { CircularProgress, IconButton, InputAdornment } from "@mui/material";
 interface ContentDetailPollProps {
   newPoll: Poll;
   onCloseDialog: () => void; // Thêm prop onCloseDialog
@@ -30,6 +30,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
     newPoll.options = newOptions;
 
   };
+  const [loading, setLoading] = useState(false);
 
   const [roundCount, setRoundCount] = React.useState<number>(0);
   const [check, setCheck] = React.useState(false);
@@ -91,9 +92,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
     }
   };
   const handleCreateVote = async () => {
-    // setLoading(true); // Bắt đầu quá trình tải
-
-    
+    setLoading(true); 
     if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
       onCloseDialog();
       Swal.fire({
@@ -106,6 +105,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
           popup: 'swal2-popup-custom', // Tùy chỉnh class
         },
       });
+      setLoading(false);
       return;
     }
     if ( !startDate || !endDate) {
@@ -124,6 +124,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
           popup: "", // Tắt hiệu ứng biến mất
         },
       })
+      setLoading(false);
       return;
     }
     const formattedStartDate = startDate ? formatISO(new Date(startDate)) : '';
@@ -190,13 +191,13 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
               popup: "", // Tắt hiệu ứng biến mất
             },
           })
-          // setLoading(false);
+          setLoading(false);
           return;
         }
-        await addPollToRound({
-          pollIdOld: newPoll._id,
-          roundName: newPoll.title,
-        });
+        // await addPollToRound({
+        //   pollIdOld: newPoll._id,
+        //   roundName: newPoll.title,
+        // });
         try {
           
           if (check) {
@@ -212,7 +213,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
               newPoll.options.map((option) => ({ contentOption: option.contentOption })),
             );
             if (response) {
-
+              setLoading(false);
               Swal.fire({
                 icon: 'success',
                 title: 'Tạo bình chọn thành công!',
@@ -252,6 +253,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
               navigate("/poll");
 
             } else {
+              setLoading(false);
               onCloseDialog();
               Swal.fire({
                 icon: 'error',
@@ -281,6 +283,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
                 pollIdOld: newPoll._id,
                 roundName: newPoll.title,
               });
+              setLoading(false);
               Swal.fire({
                 icon: 'success',
                 title: 'Tạo bình chọn thành công!',
@@ -316,7 +319,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
                 sendEmails(newPoll.listEmailVote, idPoll);
               }
               console.log("Round đã được tạo", idPoll);
-
+              setLoading(false);
               navigate("/poll");
 
             } else {
@@ -343,6 +346,7 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
 
         } catch (error) {
           console.log(error);
+          setLoading(false);
           onCloseDialog();
           Swal.fire({
             icon: 'error',
@@ -363,8 +367,20 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
   };
 
   return (
-    // <div className={`wrapper_detail_newPoll ${isVoting ? "loading-active" : ""}`}>
-    <div className="wrapper_detail_newpoll">
+    // <div className={`wrapper_detail_newPoll ${loading ? "loading-active" : ""}`}>
+    <div className={`wrapper_detail_newpoll ${loading ? "loading-active" : ""}`}>
+
+      {/* // <div className="wrapper_detail_newpoll">  */}
+      {loading ? (
+              <div className="loading-container">
+                <CircularProgress />
+                <p>Đang tải...</p>
+              </div>
+            ) : (
+              <div className="form-container">
+      
+              </div>
+            )}
       <h1>Chi tiết cuộc bình chọn</h1>
       <form>
         <div className="header_content_form">
