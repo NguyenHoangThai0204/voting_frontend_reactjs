@@ -43,6 +43,12 @@ const API_AI = "https://api-1.pollweb.io.vn/api/ai";
 const API_PRIVATE = "https://api-1.pollweb.io.vn/api/private";
 const API_ROUND = "https://api-1.pollweb.io.vn/api/round";
 
+// hàm trả về mảng các bình chọn cùng tên được truyền vào
+// export const getPollsByTitle = async (title: string): Promise<ListVoteResponse> => {
+//   const response = await axios.post(`${API_POLL}/find_polls_by_name`, { title} );
+//   return response.data;
+// };
+
 // kiểm tra xem ví có vote chưa
 export const createUpdatePoll = async (data: Poll): Promise<PollResponse> => {
   const response = await axios.post(`${API_POLL}/update_poll`, data);

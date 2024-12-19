@@ -15,6 +15,7 @@ import {
   checkVotePrivate,
   addPollIdToListVote,
   checkRound,
+  // getPollsByTitle,
   // addPollToRound,
 } from "../../../api/CallApi";
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
@@ -49,6 +50,8 @@ export const ContentDetailPoll: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [vote, setVote] = useState<Poll | null>(null);
+  // eslint-disable-next-line
+  const [pollByName, setPollByName] = useState<string[]>([]);
   const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
   // eslint-disable-next-line
   const [voteSMLength, setVoteSMLength] = useState<Vote[]>([]);
@@ -581,6 +584,10 @@ export const ContentDetailPoll: React.FC = () => {
     }
     const fetchRoundPoll = async () => {
       try {
+
+        // const response = await getPollsByTitle(vote?.title ?? "");
+        // setPollByName(response.data.map((poll) => poll._id));
+
         const voteEndDate = vote?.timeEnd ? new Date(vote?.timeEnd) : null;
         const re = await getPollResult(Number(vote?.pollIdSm));
 

@@ -7,7 +7,7 @@ interface ContentDetailPollProps {
   newPoll: Poll;
   onCloseDialog: () => void; // Thêm prop onCloseDialog
 }
-// import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 import { createPollWithOptions } from '../../../service/contractService';
 import Swal from 'sweetalert2';
 import Button from "@mui/material/Button";
@@ -60,36 +60,36 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
   };
   const [startDate, setStartDate] = React.useState<string | null>(null);
   const [endDate, setEndDate] = React.useState<string | null>(null);
-  // const sendEmails = async (emails: string[], idPoll: string) => {
-  //   if (emails.length === 0) {
-  //     console.error("Danh sách email trống!");
-  //     return;
-  //   }
+  const sendEmails = async (emails: string[], idPoll: string) => {
+    if (emails.length === 0) {
+      console.error("Danh sách email trống!");
+      return;
+    }
 
-  //   console.log("Đang gửi email đến:", emails); // Kiểm tra danh sách email
+    console.log("Đang gửi email đến:", emails); // Kiểm tra danh sách email
 
-  //   try {
-  //     // Duyệt qua danh sách email và gửi email từng cái
-  //     for (const email of emails) {
-  //       await emailjs.send(
-  //         "service_4b0syui", // Service ID của bạn
-  //         "template_6agbwle", // Template ID của bạn
-  //         {
-  //           email: email, // Email người nhận
-  //           idPoll: idPoll, // Nội dung ID poll
-  //           creater: authContext?.user?.fullName, // Email người tạo poll
-  //         },
-  //         "_czO9WyrQaQWEk05M" // Public Key của bạn
-  //       );
+    try {
+      // Duyệt qua danh sách email và gửi email từng cái
+      for (const email of emails) {
+        await emailjs.send(
+          "service_4b0syui", // Service ID của bạn
+          "template_6agbwle", // Template ID của bạn
+          {
+            email: email, // Email người nhận
+            idPoll: idPoll, // Nội dung ID poll
+            creater: authContext?.user?.fullName, // Email người tạo poll
+          },
+          "_czO9WyrQaQWEk05M" // Public Key của bạn
+        );
 
-  //       console.log(`Email đã gửi thành công đến: ${email}`);
-  //     }
-  //     alert("Email đã được gửi đến tất cả danh sách!");
-  //   } catch (error) {
-  //     console.error("Đã xảy ra lỗi khi gửi email:", error);
-  //     alert("Đã xảy ra lỗi khi gửi email. Vui lòng thử lại sau!");
-  //   }
-  // };
+        console.log(`Email đã gửi thành công đến: ${email}`);
+      }
+      alert("Email đã được gửi đến tất cả danh sách!");
+    } catch (error) {
+      console.error("Đã xảy ra lỗi khi gửi email:", error);
+      alert("Đã xảy ra lỗi khi gửi email. Vui lòng thử lại sau!");
+    }
+  };
   const handleCreateVote = async () => {
     // setLoading(true); // Bắt đầu quá trình tải
 
@@ -244,9 +244,9 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
               //   pollIdNew: idPoll,
               // });
 
-              // if (newPoll.listEmailVote) {
-              //   sendEmails(newPoll.listEmailVote, idPoll);
-              // }
+              if (newPoll.listEmailVote) {
+                sendEmails(newPoll.listEmailVote, idPoll);
+              }
               console.log("Round đã được tạo", idPoll);
 
               navigate("/poll");
@@ -312,9 +312,9 @@ export const ContentCreateNewRound = ({ newPoll , onCloseDialog }: ContentDetail
               //   pollIdNew: idPoll,
               // });
 
-              // if (newPoll.listEmailVote) {
-              //   sendEmails(newPoll.listEmailVote, idPoll);
-              // }
+              if (newPoll.listEmailVote) {
+                sendEmails(newPoll.listEmailVote, idPoll);
+              }
               console.log("Round đã được tạo", idPoll);
 
               navigate("/poll");
