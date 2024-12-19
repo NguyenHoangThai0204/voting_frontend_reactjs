@@ -15,7 +15,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { formatISO } from 'date-fns';
 import { AuthContext } from '../../../contextapi/AuthContext';
 // import { createPoll, createRound, countRound, checkRound } from '../../../api/CallApi';
-import { createUpdatePoll } from '../../../api/CallApi';
+import { createUpdatePoll,uploadImage } from '../../../api/CallApi';
 
 import { useNavigate } from "react-router-dom";
 interface ContentDetailPollProps {
@@ -33,9 +33,25 @@ export const ContentUpdatePoll = ({ newPoll, onCloseDialog }: ContentDetailPollP
         newShowDescriptions[index] = !newShowDescriptions[index];
         setShowDescriptions(newShowDescriptions);
     };
+    const [avatar, setAvatar] = useState(newPoll?.avatar || '');
     const [startDate, setStartDate] = React.useState<string | null>(null);
     const [endDate, setEndDate] = React.useState<string | null>(null);
-
+     const handleChangeImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+          const file = event.target.files[0];
+    
+          // Gọi hàm uploadImage để upload file
+          const formData = new FormData();
+          formData.append('file', file);
+          const uploadedImageUrl = await uploadImage(formData);
+    
+          if (uploadedImageUrl) {
+            setAvatar(uploadedImageUrl);  
+          } else {
+            console.error('Upload ảnh không thành công');
+          }
+        }
+      };
     const handleCreateVote = async () => {
         // setLoading(true); // Bắt đầu quá trình tải
 
@@ -88,7 +104,7 @@ export const ContentUpdatePoll = ({ newPoll, onCloseDialog }: ContentDetailPollP
                 avatarContentOption: option.avatarContentOption ?? '',
                 votes: [], // Ensure votes is an empty array to match the expected type
             })),
-            avatar: newPoll.avatar ?? '',
+            avatar: avatar,
             typeContent: newPoll.typeContent,
             timeStart: formattedStartDate,
             timeEnd: formattedEndDate,
@@ -96,7 +112,7 @@ export const ContentUpdatePoll = ({ newPoll, onCloseDialog }: ContentDetailPollP
             pollIdSm: null,
             listEmailVote: newPoll.listEmailVote,
         };
-
+        console.log(avatar);
         try {
             if (voteData.typeContent === "privatesmc") {
                 if (!addRessWallet) {
@@ -193,7 +209,20 @@ export const ContentUpdatePoll = ({ newPoll, onCloseDialog }: ContentDetailPollP
                 <div className="header_content_form">
                     <div className="header_content_detail_right">
                         <div className="avatar_poll">
-                            <img src={newPoll?.avatar ?? undefined} alt="upload" />
+                            <img src={avatar || 'https://via.placeholder.com/150'} alt="Avatar" />
+                            <Button
+                                variant="outlined"
+                                component="label"
+                                style={{ marginTop: '10px' }}
+                            >
+                                Upload Avatar
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    hidden
+                                    onChange={handleChangeImage}
+                                />
+                            </Button>
                         </div>
                     </div>
                     <div className="header_content_detail_left">
