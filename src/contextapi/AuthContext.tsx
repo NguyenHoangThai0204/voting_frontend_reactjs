@@ -4,8 +4,8 @@ import io from "socket.io-client";
 import React from 'react';
 
 // Khởi tạo socket
-const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
-// const socket = io("http://localhost:3000", { transports: ["websocket"] });
+// const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+const socket = io("http://localhost:3000", { transports: ["websocket"] });
 
 interface AuthContextType {
   isLogged: boolean;
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (user && isLogged) {
       socket.on("user-updated", (data) => {
         // Cập nhật thông tin user chỉ khi data khớp với user hiện tại
-        if (data.id === user._id && user.role !== "admin") {
+        if (data._id === user._id && user.role !== "admin") {
           setUser(data);
         }
       });
