@@ -97,7 +97,7 @@ export const ContentDetailPoll: React.FC = () => {
 
   // Tạo kết nối với server WebSocket
   useEffect(() => {
-    
+
 
     // Lắng nghe sự kiện "voteUpdate" từ server
     socket.on("voteUpdateSL", (updatedVote) => {
@@ -122,8 +122,8 @@ export const ContentDetailPoll: React.FC = () => {
     ? format(new Date(vote.timeStart), "dd/MM/yyyy HH:mm")
     : "";
 
-    const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
-    const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
+  const voteEndDate = vote?.timeEnd ? new Date(vote.timeEnd) : null;
+  const voteStartDate = vote?.timeStart ? new Date(vote.timeStart) : null;
   const handleVote = async (
     optionId: string,
     content: string,
@@ -573,9 +573,9 @@ export const ContentDetailPoll: React.FC = () => {
           roundName: vote?.title || "",
         });
         console.log("Check round name:", res);
-        if( res.status === "OK"){
+        if (res.status === "OK") {
           setRoundName(true);
-        }else{
+        } else {
           setRoundName(false);
         }
       };
@@ -634,7 +634,7 @@ export const ContentDetailPoll: React.FC = () => {
             ...vote, // Sao chép toàn bộ thuộc tính từ `vote`
             options: newOptions, // Ghi đè thuộc tính `options` bằng `newOptions`
           });
-          
+
 
         }
       } catch (error) {
@@ -819,10 +819,10 @@ export const ContentDetailPoll: React.FC = () => {
               variant="outlined"
             />
           </div>
-
+          <div className="date">
           {
             authContext?.user?._id && vote?.authorId === authContext?.user?._id && vote?.timeEnd && new Date(vote.timeEnd).getTime() > new Date().getTime() && (
-              <div className="date">
+             
                 <button
                   className="btn_end_vote"
                   onClick={async (e) => {
@@ -860,27 +860,28 @@ export const ContentDetailPoll: React.FC = () => {
                 >
                   Kết thúc
                 </button>
-                </div>)
+             )
           }
- {
-            authContext?.user?._id && vote?.authorId === authContext?.user?._id && voteStartDate && new Date() < voteStartDate && 
+          {
+            authContext?.user?._id && vote?.authorId === authContext?.user?._id && voteStartDate && new Date() < voteStartDate &&
             (
-              <div className="date">
+            
                 <button
                   className="btn_update_vote"
-                  onClick={()=>setOpenUpdatePoll(true)}
+                  onClick={() => setOpenUpdatePoll(true)}
                 >
                   Cập nhật
                 </button>
-                </div>)
+              )
           }
+           </div>
         </div>
       </form>
       {
         // nếu newPoll khác rỗng hoặc null thì sẽ hiển thị button để tạo round mới create new poll with new options
         newPoll && vote?.authorId === authContext?.user?._id && roundName
-          === false
-         && (
+        === false
+        && (
           <div className="create-round-poll">
             <button
               className="btn-create-round-poll"
@@ -889,45 +890,45 @@ export const ContentDetailPoll: React.FC = () => {
               Tạo round mới
             </button>
           </div>
-        
+
         )
       }
       <Dialog open={openNewRound} onClose={handleClose} fullWidth maxWidth="lg">
-  <DialogContent>
-    {newPoll && (
-      <ContentCreateNewRound
-        newPoll={newPoll}
-        onCloseDialog={() => setOpenNewRound(false)} // Truyền hàm đóng dialog xuống
-      />
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button
-      onClick={() => setOpenNewRound(false)}
-      color="primary"
-    >
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
-<Dialog open={openUpdatePoll} onClose={handleClose} fullWidth maxWidth="lg">
-  <DialogContent>
-    {vote && (
-      <ContentUpdatePoll
-        newPoll={vote}
-        onCloseDialog={() => setOpenUpdatePoll(false)} // Truyền hàm đóng dialog xuống
-      />
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button
-      onClick={() => setOpenUpdatePoll(false)}
-      color="primary"
-    >
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
+        <DialogContent>
+          {newPoll && (
+            <ContentCreateNewRound
+              newPoll={newPoll}
+              onCloseDialog={() => setOpenNewRound(false)} // Truyền hàm đóng dialog xuống
+            />
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenNewRound(false)}
+            color="primary"
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openUpdatePoll} onClose={handleClose} fullWidth maxWidth="lg">
+        <DialogContent>
+          {vote && (
+            <ContentUpdatePoll
+              newPoll={vote}
+              onCloseDialog={() => setOpenUpdatePoll(false)} // Truyền hàm đóng dialog xuống
+            />
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenUpdatePoll(false)}
+            color="primary"
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

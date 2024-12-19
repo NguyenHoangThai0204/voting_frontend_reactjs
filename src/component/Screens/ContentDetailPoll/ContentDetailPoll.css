@@ -125,7 +125,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-right: 10px;
 }
 .wrapper_detail_vote .text_description {
   display: flex;
@@ -157,7 +157,6 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
 }
 @media screen and (max-width: 900px) {
   .wrapper_detail_vote {
