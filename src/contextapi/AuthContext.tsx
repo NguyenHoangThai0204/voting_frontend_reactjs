@@ -4,8 +4,8 @@ import io from "socket.io-client";
 import React from 'react';
 
 // Khởi tạo socket
-// const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
-const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io("https://api-1.pollweb.io.vn", { transports: ["websocket"] });
+// const socket = io("http://localhost:3000", { transports: ["websocket"] });
 
 interface AuthContextType {
   isLogged: boolean;
