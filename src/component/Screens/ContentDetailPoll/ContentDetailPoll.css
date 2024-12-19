@@ -121,7 +121,7 @@
 .wrapper_detail_vote form .form_date .btn_end_vote {
   background-color: #f44336;
   color: white;
-  padding: 15px 25px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -153,7 +153,7 @@
 .wrapper_detail_vote form .form_date .btn_update_vote {
   background-color: #36f43c;
   color: white;
-  padding: 15px 25px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
