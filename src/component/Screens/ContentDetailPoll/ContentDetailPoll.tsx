@@ -868,7 +868,10 @@ export const ContentDetailPoll: React.FC = () => {
             
                 <button
                   className="btn_update_vote"
-                  onClick={() => setOpenUpdatePoll(true)}
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    setOpenUpdatePoll(true);
+                  }}
                 >
                   Cập nhật
                 </button>
