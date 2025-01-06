@@ -292,7 +292,20 @@ const ContenInformation = () => {
                         name="address"
                       />
                     ) : (
-                      <span>{`${user?.street}, ${user?.ward}, ${user?.province}`}</span>
+                      <span>
+  {user ? (
+    <>
+      {user.street !== undefined ? `xã: ${user.street}` : "xã: ..."}
+      {user.ward !== undefined ? `, huyện: ${user.ward}` : ", huyện: ..."}
+      {user.province !== undefined ? `, tỉnh/tp: ${user.province}` : ", tỉnh/tp: ..."}
+    </>
+  ) : (
+    "Không có thông tin địa chỉ"
+  )}
+</span>
+            
+                    
+
                     )}
                   </td>
                 </tr>
