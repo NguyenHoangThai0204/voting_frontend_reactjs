@@ -13,7 +13,7 @@ import { useContext } from 'react';
 
 export const TheNewLayout = () => {
   const authContext = useContext(AuthContext) as { user: { email: string } | null };
-  const itemsPerPage = 5; // Số lượng item trên mỗi trang
+  const itemsPerPage = 2; // Số lượng item trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const [listNew, setListNew] = useState<TheNew[]>([]);
   const [selectedNew, setSelectedNew] = useState<TheNew | null>(null); // Bài viết được chọn
