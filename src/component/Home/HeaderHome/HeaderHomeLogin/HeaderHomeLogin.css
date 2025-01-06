@@ -58,27 +58,26 @@
 }
 @media screen and (max-width: 900px) {
   .wrapper_formlogin .but_login::before {
-    content: "DN";
+    content: ""; /* Xóa chữ "DN" */
+    display: none; /* Đảm bảo không hiển thị text dư thừa */
   }
-  .wrapper_formlogin {
-    width: 90%; 
-    margin: 15px auto; 
-    margin-left: 10px;
-    /* width: 20%; */
-  }
-  .wrapper_formlogin .but_signup {
-    display: none;
-  }
+
   .wrapper_formlogin .but_login {
     width: 100%;
     text-align: center;
-    white-space: nowrap;
     font-size: 0.8rem;
     margin-left: -1px;
+    display: flex; /* Kích hoạt flex để căn giữa */
+    justify-content: center;
+    align-items: center;
   }
-  .wrapper_formlogin .overlay .close {
-    right: 0;
-    top: -18px;
+
+  .wrapper_formlogin .but_login .icon_login {
+    display: inline-block; /* Hiển thị icon ở mobile */
+    font-size: 1.5rem; /* Tăng kích thước icon nếu cần */
+  }
+
+  .wrapper_formlogin .but_signup {
+    display: none; /* Ẩn nút đăng ký */
   }
 }
-
